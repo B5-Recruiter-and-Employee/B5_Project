@@ -33,4 +33,46 @@ The curl command to test logRequestPaths function:
 ```
 curl --data "first_name=Haruki&last_name=Murakami" http://localhost:3000
 ```
+## Install MongoDB on device:
 
+Windows
+
+Link: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
+1) Download the MongoDB installer: https://www.mongodb.com/try/download/community?tck=docs_server
+2) Click on the downloaded .msi file anf go through installation steps.
+3) Create db directory: folder db inside of folder data on C:\ 
+```
+cd C:\
+```
+```
+md "\data\db"
+```
+4) Add MongoDB to your path: 
+- copy the path to the \bin folder inside installed MongoDB folder
+- search for environment variables
+- find "User variables" section in opened window & choose Path from the list
+- click on "Edit" button
+- in the opened window click "New" button
+- insert the copied path in the line e.g.
+```
+ C:\Program Files\MongoDB\Server\4.4\bin\
+```
+5) Start the MongoDB service & db run in separate cmd:  
+NB! Always make sure the mongod is running before starting an app!
+``` 
+mongod
+```
+"mongo" command will open a MongoDB shell where you can write commands and see data.
+```
+mongo 
+```
+Packages to be installed for db setup:
+``` 
+npm i mpngodb -s
+npm i mongoose -s
+```
+Packages to install for db:
+``` 
+npm i mongoose-type-phone
+``` 

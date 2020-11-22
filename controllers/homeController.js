@@ -11,11 +11,6 @@ exports.getIndex = (req, res) => {
     res.render("index");
 };
 
-//render contact.ejs file (contact page)
-exports.getContact = (req, res) => {
-    res.render("contact");
-};
-
 //render the name.ejs file with the route parameter as the name variable
 exports.respondWithName = (req, res) => {
     let paramsName = req.params.myName;
