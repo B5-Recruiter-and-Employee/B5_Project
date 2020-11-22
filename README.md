@@ -18,7 +18,7 @@ node main.js
 ```
 ## The MVC architecture (folders):
 - views: contains the html/ejs files. The current files won't probably be relevant as they are but for now for learning purposes.
-- controllers: contains the controllers
+- controllers: contains the controllers which contain all functions
 - main.js file contains our routes (there will be a separate routes file later)
 - public: doesn't contain anything yet, will contain js, css files and images
 
