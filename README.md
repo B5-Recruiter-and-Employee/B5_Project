@@ -15,6 +15,18 @@ Initialize these packages for the project:
 ```
 npm install express ejs express-ejs-layouts http-status-codes --save
 ```
+
+Packages to be installed for db setup:
+``` 
+npm i mpngodb -s
+npm i mongoose -s
+```
+
+Packages to install for db:
+``` 
+npm i mongoose-type-phone
+``` 
+
 For more simple testing you should also install nodemon (it is included in package.json). It updates the view on localhost automatically when the file is saved and lets you start with the npm start command:
 ```
 npm i nodemon -g
@@ -87,24 +99,6 @@ md "\data\db"
 ```
  C:\Program Files\MongoDB\Server\4.4\bin\
 ```
-5) Start the MongoDB service & db run in separate cmd:  
-NB! Always make sure the mongod is running before starting an app!
-``` 
-mongod
-```
-"mongo" command will open a MongoDB shell where you can write commands and see data.
-```
-mongo 
-```
-Packages to be installed for db setup:
-``` 
-npm i mpngodb -s
-npm i mongoose -s
-```
-Packages to install for db:
-``` 
-npm i mongoose-type-phone
-``` 
 
 ## macOS
 Link to installation with Homebrew  :
