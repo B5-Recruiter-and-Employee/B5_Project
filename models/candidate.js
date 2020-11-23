@@ -27,7 +27,7 @@ const mongoose = require("mongoose"),
         hard_skills: [{
             type: String
         }],
-        soft_skils: [{
+        soft_skills: [{
             type: String
         }],
         preferred_location: [{
@@ -44,6 +44,7 @@ const mongoose = require("mongoose"),
         }
     });
 
+    // get the full name of the candidate for convenience ex. in candidates.ejs
     candidateSchema.virtual('fullName')
 	.get(function() {
 		return `${this.name.firstname} ${this.name.lastname}`;

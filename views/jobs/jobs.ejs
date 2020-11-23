@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>All job offers</title>
+</head>
+
+<body class="body">
+    <h1>All job offers</h1>
+    </div>
+    <div>
+        <% jobs.forEach(job => { %>
+
+        <div>
+            Job Title: <%= job.job_title%> <br>
+            Company Location: <%= job.location %> <br>
+            Company Name: <%= job.company_name %> <br>
+            Job Description: <%= job.description_text %> <br>
+        </div>
+        <br>
+
+        <% }); %>
+
+    </div>
+</body>
+
+</html>
