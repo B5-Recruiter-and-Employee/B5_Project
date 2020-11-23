@@ -1,6 +1,17 @@
-# B5_Project
+# B5_Project How to run the App
 
-The packages you need for initializing the project in terminal:
+- Assuming you already installed MongoDB, if not, check the instruction below.
+- Start the MongoDB service & db run in a separate cmd (or terminal ):  
+```
+mongod
+```
+- "mongo" command will open a MongoDB shell where you can write commands and see data. If you want to see pretty formatted data, check out the Mongo Compass Installation below
+```
+mongo 
+```
+- Open a new terminal/cmd, cd to the B5_Project folder
+
+Initialize these packages for the project:
 ```
 npm install express ejs express-ejs-layouts http-status-codes --save
 ```
@@ -16,11 +27,12 @@ or
 ```
 node main.js
 ```
-## The MVC architecture (folders):
-- views: contains the html/ejs files. The current files won't probably be relevant as they are but for now for learning purposes.
-- controllers: contains the controllers which contain all functions
-- main.js file contains our routes (there will be a separate routes file later)
-- public: doesn't contain anything yet, will contain js, css files and images
+
+- If you get this line below then your app is running. (Dont mind for now if you have the DeprecationWarning)
+
+```
+Server running on port: http://localhost:3000
+```
 
 ## Something to try for learning purposes:
 When the application is running, type in URL
@@ -42,6 +54,14 @@ The curl command to test logRequestPaths function:
 ```
 curl --data "first_name=Haruki&last_name=Murakami" http://localhost:3000
 ```
+
+## The MVC architecture (folders):
+- views: contains the html/ejs files. The current files won't probably be relevant as they are but for now for learning purposes.
+- controllers: contains the controllers which contain all functions
+- main.js file contains our routes (there will be a separate routes file later)
+- public: doesn't contain anything yet, will contain js, css files and images
+
+
 ## Install MongoDB on device:
 
 ## Windows
@@ -174,3 +194,21 @@ Build Info: {
     }
 }
 ```
+
+## Install Mongo Compass:
+Mongo Compass is a MongoDB graphical user interface. You don't have to download it but if you want to see the data in an easy-to-read way, you can install it. It's easy and really fast.
+
+Link to download: 
+https://www.mongodb.com/try/download/compass
+
+Link to instruction: 
+https://docs.mongodb.com/compass/master/install 
+
+After running the app, you can open Mongo Compass to see the data that have been stored in our DB
+- Open Mongo Compass, you'll see 
+Click edit to modify your connection string (SRV or Standard ):
+- Type in this line below:
+```
+mongodb://localhost:27017
+```
+- You'll be able to see our data folders on the left side
