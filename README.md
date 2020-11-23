@@ -23,11 +23,20 @@ node main.js
 - public: doesn't contain anything yet, will contain js, css files and images
 
 ## Something to try for learning purposes:
-When the application is running, type 
+When the application is running, type in URL
 ```
 localhost:3000/name/<your own name here>
 ```
 and see what happens. Try to understand why this happens :)
+
+To view all jobs:
+```
+localhost:3000/jobs  
+```
+To add new job:
+```
+localhost:3000/jobs/new 
+```
 
 The curl command to test logRequestPaths function:
 ```
@@ -35,7 +44,7 @@ curl --data "first_name=Haruki&last_name=Murakami" http://localhost:3000
 ```
 ## Install MongoDB on device:
 
-Windows
+## Windows
 
 Link: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
@@ -76,3 +85,92 @@ Packages to install for db:
 ``` 
 npm i mongoose-type-phone
 ``` 
+
+## macOS
+Link to installation with Homebrew  :
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+
+Try out with Homebrew, if it doesn't work, then you can download the package on MongoDB website
+
+Link to installation by downloading package:
+https://www.mongodb.com/try/download/community
+
+Link to instruction: https://blog.londonappbrewery.com/how-to-download-install-mongodb-on-mac-2895ccd2b5c1
+
+Or you can read what I write below:
+
+1. If you download the package of the MongoDB community server, check the available download (version: current release, platform: macOS, package: tgz).
+
+2. Extract the file from the downloaded archive.
+
+3. If your downloaded file is not in the root of the computer, you should move it to the root so that all users can be able to access it
+- Open terminal, opy this command below, replace what inside <> with the exact path to your downloaded mongoDB file (can use drag and drop the file into terminal to be exact):
+
+```
+sudo mv <mongodb-install-directory> /usr/local/mongodb
+```
+- Now you might have to enter your password that you use to log in to your computer (admin privilege). It won't show any thing on the terminal window, just keep typing the password and hit ENTER after that.
+- Once you're done you'll get back the prompt 
+- To check if you successfully moved it there, just type in terminal:
+```
+open /usr/local/mongodb
+```
+
+4. Ensure the binaries are in a directory listed in your PATH environment variable:
+
+- Open Terminal, make sure you're in the Home folder
+```
+cd ~
+```
+- Create a file ".bash_profile", it'll be in the hidden file so that's why there's a dot.
+```
+touch .bash_profile
+```
+- Now you have to edit that file:
+```
+vim .bash_profile
+```
+- Change to insert mode -> hit the button i 
+- Copy paste this command below:
+
+```
+export PATH=$PATH:/usr/local/mongodb/bin
+```
+- Now exit insert mode with ESC key
+- Save and exit Vim: type this below
+```
+:wq!
+```
+
+5. Creating the Local Data Storage Location for MongoDB:
+- Create a folder called data and inside create another called db at the root of your computer with the following command
+```
+sudo mkdir -p /data/db
+```
+(you might have to type the password again because we use sudo)
+- Check your current username with 'whoami' and hit enter to see your username
+- Set the current user to own the newly created data folder with the following command, replacing <your-username> with the one you got in the step above. 
+```
+sudo chown <your-username> /data/db
+```
+
+6. Test it:
+- Quit terminal and open a new terminal window
+- Type this command :
+```
+mongo --version
+```
+- If you have something like this below then you're good to go.
+```
+MongoDB shell version v4.4.1
+Build Info: {
+    "version": "4.4.1",
+    "gitVersion": "ad91a93a5a31e175f5cbf8c69561e788bbc55ce1",
+    "modules": [],
+    "allocator": "system",
+    "environment": {
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
+```
