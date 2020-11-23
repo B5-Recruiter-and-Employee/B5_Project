@@ -44,7 +44,7 @@ const mongoose = require("mongoose"),
         }
     });
 
-    // get the full name of the candidate for convenience ex. in candidates.ejs
+    // get the full name of the candidate.
     candidateSchema.virtual('fullName')
 	.get(function() {
 		return `${this.name.firstname} ${this.name.lastname}`;

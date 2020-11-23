@@ -13,10 +13,12 @@
         <% jobs.forEach(job => { %>
 
         <div>
-            Job Title: <%= job.job_title%> <br>
-            Company Location: <%= job.location %> <br>
-            Company Name: <%= job.company_name %> <br>
-            Job Description: <%= job.description_text %> <br>
+            <ul>
+            <b>Job Title:</b> <%= job.job_title%> <br>
+            <b>Company Location:</b> <%= job.location %> <br>
+            <b>Company Name:</b> <%= job.company_name %> <br>
+            <b>Job Description:</b> <%= job.description_text %> <br>
+            </ul>
         </div>
         <br>
 
