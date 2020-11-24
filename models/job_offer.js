@@ -5,9 +5,6 @@ jobSchema = mongoose.Schema({
         type: String,
         required : true
     },
-    // zip_code: {
-    //     type: 
-    // }
     location: {
         type: String
     },
@@ -26,11 +23,5 @@ jobSchema = mongoose.Schema({
     }]
 
 });
-
-// get the full name of the candidate for convenience ex. in candidates.ejs
-// jobSchema.virtual('')
-// .get(function() {
-//     return `${this.name.firstname} ${this.name.lastname}`;
-// });
 
 module.exports = mongoose.model('Job', jobSchema);

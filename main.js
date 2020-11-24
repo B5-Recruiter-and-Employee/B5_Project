@@ -39,12 +39,12 @@ app.get("/name/:myName", homeController.respondWithName);
 //the overview of all candidates
 app.get("/candidates", candidatesController.getAllCandidates);
 //when contact form is submitted, the candidate is added to db
-app.get("/contact", candidatesController.getSubscriptionPage);
-app.post("/subscribe", candidatesController.saveCandidate);
+app.get("/candidates/new", candidatesController.getSubscriptionPage);
+app.post("/candidates/create", candidatesController.saveCandidate);
 
-//overview of job offers
+//overview of job offers & form for creating jobs
 app.get("/jobs", jobController.getAllJobs);
-app.get("/jobs/new", jobController.createJobs); // create jobs
+app.get("/jobs/new", jobController.createJobs); 
 app.post("/jobs/create", jobController.saveJob);
 
 //routes for the error catching functions (have to be below all the other routes)

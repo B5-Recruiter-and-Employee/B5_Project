@@ -4,7 +4,7 @@ exports.getAllCandidates = (req, res) => {
     Candidate.find({})
         .exec()
         .then((candidates) => {
-            res.render("candidates", {
+            res.render("candidates/candidatesOverview", {
                 candidates : candidates
             });
         })
@@ -18,7 +18,7 @@ exports.getAllCandidates = (req, res) => {
 };
 
 exports.getSubscriptionPage = (req, res) => {
-    res.render("contact");
+    res.render("candidates/new");
 }
 exports.saveCandidate = (req, res) => {
     let newCandidate = new Candidate({

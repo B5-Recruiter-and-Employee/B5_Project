@@ -4,7 +4,7 @@ exports.getAllJobs = (req, res) => {
     Job.find({})
         .exec()
         .then((jobs) => {
-            res.render("jobs/jobs", { //render jobs.ejs
+            res.render("jobs/jobsOverview", { //render jobs.ejs
                 jobs: jobs // assign jobs to jobs property
             });
         })

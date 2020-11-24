@@ -8,13 +8,17 @@
 
 <body class="body">
     <h1>All candidates</h1>
-    </div>
     <div>
         <% candidates.forEach(candidate => { %>
-        <%= candidate.fullName %>
-        <%= candidate.email %>
-        <% }); %>
 
+        <div>
+            <ul>
+                <b>Full name:</b> <%= candidate.fullName%> <br>
+                <b>Email:</b> <%= candidate.email %> <br>
+            </ul>
+        </div>
+        <br>
+        <% }); %>
     </div>
 </body>
 
