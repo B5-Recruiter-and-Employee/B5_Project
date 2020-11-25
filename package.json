@@ -16,6 +16,7 @@
     "http-status-codes": "^2.1.4",
     "mongodb": "^3.6.3",
     "mongoose": "^5.10.15",
-    "mongoose-type-phone": "^1.0.1"
+    "mongoose-type-phone": "^1.0.1",
+    "path": "^0.12.7"
   }
 }
