@@ -11,7 +11,7 @@ jobSchema = mongoose.Schema({
         required: true
     },
     salary: String,
-    description: String,
+    description_text: String,
     job_type: String,
     work_culture_keywords: [{
         type: String,
