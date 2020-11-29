@@ -36,6 +36,7 @@ app.use(require('./routes/errorRouter'));
 app.use(require('./routes/homeRouter'));
 app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
+app.use(require('./routes/loginRouter'));
 
 //connect to the port
 app.listen(port, () => {
