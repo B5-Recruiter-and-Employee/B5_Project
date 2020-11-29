@@ -64,7 +64,51 @@ module.exports = {
 	
 	showView: (req, res) => {
         res.render('candidates/show');
-    }
+    },
+  edit: (req,res,next)=>{
+
+    let candidateId = req.params.id;
+    Candidate.findById(candidateId).then(candidate => {
+      res.render("candidates/edit",
+      {
+        candidate: candidate
+      });
+    })
+      .catch(error => {
+        console.log(`Error fetching user by ID: ${error.message}`);
+        next(error);
+      });
+  },
+  update: (req,res,next) => {
+    let candidateId = req.params.id;
+    let candidateParams = {
+      preferred_position: req.body.preferred_position,
+      soft_skills: req.body.soft_skills,
+      other_aspects: req.body.other_aspects,
+      work_culture_preferences: req.body.work_culture_preferences,
+    };
+    Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams})
+    .then(candidate => {
+      res.locals.redirect = `/candidates/${candidateId}`;
+      res.locals.candidate = candidate;
+      next();
+      })
+      .catch(error => {
+        console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+      });
+  },
+  delete: (req, res, next) => {
+    let candidateId = req.params.id;
+    Candidate.findByIdAndRemove(candidateId)
+    .then(() => {
+      res.locals.redirect = "/candidates";
+      next();
+    })
+    .catch(error => {
+      console.log(`Error deleting candidate by ID: ${error.message}`);
+      next();
+    })
+  }
 
     //TODO Edit, Update, Delete
 }

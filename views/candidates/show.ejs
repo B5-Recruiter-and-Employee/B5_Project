@@ -11,10 +11,12 @@
     <div>
         <div>
             <ul>
+                <a href="<%=`/candidates/${candidate._id}/edit` %>">
                     <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
                     <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
                     <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
-                
+                </a>
+               
             </ul>
         </div>
     </div>

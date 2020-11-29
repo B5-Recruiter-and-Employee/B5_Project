@@ -1,0 +1,16 @@
+
+  <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
+    <h2>Edit information:</h2>
+    <label>Preferred position: </label>
+    <input type="text" placeholder="Job you are looking for" name="preferred_position"  value = "<%= candidate.preferred_position %>" autofocus>
+    <label>Soft skills: </label>
+    <input type="text" placeholder="Soft skills" name="soft_skills" value = "<%= candidate.soft_skills %>">
+    <label>Other aspects: </label>
+    <input type="text" placeholder="Other aspects" name="other_aspects" value = "<%= candidate.other_aspects %>">
+    <label>Work culture preferences</label>
+    <input type="text" placeholder="Values, benefits..." name="work_culture_preferences" value = "<%= candidate.work_culture_preferences %>">
+    <button type="submit" >Update</button>
+  </form>
+  
+  <button class="delete_candidate" onclick="location.href='/candidates/<%= candidate.id %>/delete?_method=DELETE'">DELETE</button>
+ 
