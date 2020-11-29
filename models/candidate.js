@@ -1,46 +1,29 @@
 const mongoose = require("mongoose"),
     mongooseTypePhone = require('mongoose-type-phone'),
     candidateSchema = mongoose.Schema({
-        name: {
-            firstname: {
-                type: String,
-                trim: true
-            },
-            lastname: {
-                type: String,
-                trim: true
-            }
-        },
-        workrole: {
-            type: String
-        },
-        email: {
+        preferred_position: {
             type: String,
-            lowercase: true,
-            unique: true,
+            required: true
         },
-        // validates phone number & allows empty strings
-        phone: {
-            type: mongoose.SchemaTypes.Phone,
-            allowBlank: true
-        },
-        hard_skills: [{
-            type: String
-        }],
-        soft_skills: [{
-            type: String
-        }],
-        preferred_location: [{
-            type: String
-        }],
-        current_Location: {
-            type: String
-        },
-        relocate: Boolean,
-        expected_salary: Number,
         start_date: {
             type: Date,
             default: Date.now
+        },
+        expected_salary: String,
+        current_location: String,
+        preferred_location: [String],
+        willing_to_relocate: Boolean,
+        work_experience: [String],
+        hard_skills: [String],
+        soft_skills: [String],
+        other_aspects: [String],
+        work_culture_preferences: [{
+            type: String,
+            required: true
+        }],
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
         }
     });
 
