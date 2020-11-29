@@ -1,6 +1,5 @@
 const mongoose = require("mongoose"),
     mongooseTypePhone = require('mongoose-type-phone'),
-    User = require("./user"),
     candidateSchema = mongoose.Schema({
         preferred_position: {
             type: String,
@@ -28,5 +27,10 @@ const mongoose = require("mongoose"),
         }
     });
 
+    // get the full name of the candidate.
+    candidateSchema.virtual('fullName')
+	.get(function() {
+		return `${this.name.firstname} ${this.name.lastname}`;
+    });
     
 module.exports = mongoose.model('Candidate', candidateSchema);
