@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>All candidates</title>
+</head>
+
+<body class="body">
+    <h1>All candidates</h1>
+    <div>
+        <% candidates.forEach(candidate => { %>
+        <div>
+            <ul>
+                <a href="<%= `/candidates/${candidate._id}` %>">
+                    <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
+                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
+                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+                </a>
+            </ul>
+        </div>
+        <br>
+        <% }); %>
+    </div>
+</body>
+
+</html>
