@@ -18,4 +18,8 @@ userSchema = mongoose.Schema({
     }
 });
 
+userSchema.virtual('fullName')
+.get(function() {
+ 	return `${this.name.firstname} ${this.name.lastname}`;
+});
 exports = mongoose.model("User", userSchema);
