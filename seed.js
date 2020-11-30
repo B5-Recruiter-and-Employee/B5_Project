@@ -61,19 +61,19 @@ var job_offers = [
         job_title: 'Carpenter',
         location: 'LA',
         company_name: 'Carpenter Inc.',
-        description_text: 'Small carpenter store in Los Angeles',
+        description: 'Small carpenter store in Los Angeles',
     },
     {
         job_title: 'Carpenter',
         location: 'LA',
         company_name: 'Carpenter Inc.',
-        description_text: 'Small carpenter store in Los Angeles',
+        description: 'Small carpenter store in Los Angeles',
     },
     {
         job_title: 'Film Maker',
         location: 'NY',
         company_name: 'Movie Inc.',
-        description_text: 'Small movie studio in New York',
+        description: 'Small movie studio in New York',
     }
 ]
 
@@ -107,7 +107,7 @@ job_offers.forEach((c) => {
         job_title: c.job_title,
         location: c.location,
         company_name: c.company_name,
-        description_text: c.description_text
+        description: c.description
     }));
 });
 
