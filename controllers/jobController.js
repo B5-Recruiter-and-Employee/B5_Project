@@ -24,7 +24,7 @@ exports.saveJob = (req, res) => {
         location: req.body.location,
         salary : req.body.salary,
         company_name: req.body.company_name,
-        description_text: req.body.description_text,
+        description: req.body.description,
     });
     newJob.save()
         .then(() => {
@@ -66,7 +66,7 @@ exports.updateJob = (req, res) => {
         location: req.body.location,
         salary : req.body.salary,
         company_name: req.body.company_name,
-        description_text: req.body.description_text,
+        description: req.body.description,
     };
 
     Job.findByIdAndUpdate(jobId, {
