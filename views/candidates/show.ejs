@@ -11,12 +11,13 @@
     <div>
         <div>
             <ul>
+                <b>Preferred position:</b> <%= candidate.preferred_position%> <br>
+                <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
+                <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
+                <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
                 <a href="<%=`/candidates/${candidate._id}/edit` %>">
-                    <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
-                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
-                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+                    <button class="edit">Edit</button>
                 </a>
-               
             </ul>
         </div>
     </div>

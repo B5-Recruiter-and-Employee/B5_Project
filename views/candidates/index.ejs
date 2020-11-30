@@ -12,10 +12,18 @@
         <% candidates.forEach(candidate => { %>
         <div>
             <ul>
-                <a href="<%= `/candidates/${candidate._id}` %>">
-                    <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
-                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
-                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+                <b>Preferred position:</b> <%= candidate.preferred_position%> <br>
+                <b>Soft skills:</b> <%= candidate.soft_skills%> <br>
+                <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
+                <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+                <a href="<%= `/candidates/${candidate._id}/edit`%>">
+                    <button class="edit">Edit</button>
+                </a>
+                <a href="<%= `/candidates/${candidate._id}/delete`%>">
+                    <button class="edit">Delete</button>
+                </a>
+                <a href="<%= `/candidates/${candidate._id}`%>">
+                    <button class="edit">Detailed info</button>
                 </a>
             </ul>
         </div>
