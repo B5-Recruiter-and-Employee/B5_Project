@@ -26,11 +26,5 @@ const mongoose = require("mongoose"),
             ref: "User"
         }
     });
-
-    // get the full name of the candidate.
-    candidateSchema.virtual('fullName')
-	.get(function() {
-		return `${this.name.firstname} ${this.name.lastname}`;
-    });
     
 module.exports = mongoose.model('Candidate', candidateSchema);
