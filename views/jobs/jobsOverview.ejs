@@ -12,13 +12,15 @@
     <div>
         <% jobs.forEach(job => { %>
 
+        
         <div>
             <ul>
             <b>Job Title:</b> <%= job.job_title%> <br>
             <b>Company Location:</b> <%= job.location %> <br>
             <b>Company Name:</b> <%= job.company_name %> <br>
-            <b>Job Description:</b> <%= job.description_text %> <br>
+            <b>Job Description:</b> <%= job.description %> <br>
             </ul>
+            <button class="single_view" onclick="location.href='/jobs/<%= job.id %>'">View</button>
         </div>
         <br>
 

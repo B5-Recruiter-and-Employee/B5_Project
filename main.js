@@ -2,14 +2,16 @@ const port = 3000,
     express = require("express"),
     app = express(),
     layouts = require("express-ejs-layouts"),
-    path = require("path");
+    path = require("path"),
     methodOverride = require("method-override"),
     router = express.Router();
+
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/rem_matching_test", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/rem_matching_test", {useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
+
 
 db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
@@ -25,6 +27,7 @@ app.use(
         extended: false
     })
 );
+
 app.use(express.json());
 app.use(layouts);
 
