@@ -1,17 +1,17 @@
 #footer{
-    background: darkslategray;
+    background: #343a40; //take from bg-dark in bootstrap.css
     color: white;
     position: fixed;
     bottom: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     width: 100%;
     left: 0;
     text-align: center;
 }
 
 #header{
-    background-color: darkslategray;
+    background-color: #343a40;
     display: flex;
     color: white;
     position: fixed;
@@ -24,8 +24,9 @@
 }
 
 .headerItem{
+    color: white;
     width: 25%;
-    font-size: 1.5em;
+    font-size: 2.5em;
 }
 
 #body{
