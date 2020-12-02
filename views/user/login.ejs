@@ -1,5 +1,20 @@
-<form id="form-login">
-    <label for="email">E-Mail</label>
-    <input type="email" name="email">
-    <input type="submit" value="Login">
+<body class="text-center" data-gr-c-s-loaded="true">
+<form class="form-login-signup" action = "/login" method="post">
+
+  <img class="mb-4" src="/images/logo1.png" alt="" width="100" height="100">
+
+  <h1 class="h3 mb-3 font-weight-normal"> Log In </h1>
+
+  <input type="email" class="form-control top" name="email" placeholder="Email" required="" autofocus="">
+  <input type="text" class="form-control bottom" name="password" placeholder="Password" required="">
+
+  <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+  <p class="mt-5 mb-3 text-muted"> © ReMatch 2020 </p>
+
 </form>
+</body>
