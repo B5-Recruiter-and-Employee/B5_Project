@@ -10,6 +10,8 @@ router.post("/jobs/create", jobController.saveJob);
 
 router.post("/jobs/:jobId/update", jobController.updateJob);
 
+// router.post("/jobs/update", jobController.updateJob);
+
 router.get("/jobs/:jobId/delete", jobController.deleteJob);
 
 router.get('/jobs/:jobId', jobController.renderSingleJob);

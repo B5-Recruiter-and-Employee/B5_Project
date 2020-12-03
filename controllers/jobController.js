@@ -1,6 +1,7 @@
 const { db } = require("../models/job_offer");
 const Job = require("../models/job_offer");
 
+//READ
 exports.getAllJobs = (req, res) => {
     Job.find({})
         .exec()
@@ -18,6 +19,7 @@ exports.getAllJobs = (req, res) => {
         });
 };
 
+//CREATE
 exports.saveJob = (req, res) => {
     let newJob = new Job({
         job_title: req.body.job_title,
@@ -29,16 +31,19 @@ exports.saveJob = (req, res) => {
     newJob.save()
         .then(() => {
             res.render('thanks')
+            console.log('a job saved into both MongoDB and Elasticsearch')
         })
         .catch(error => {
             res.send(error);
         });
-};
+}
 
+//render the page where new jobs can be created
 exports.createJobs = (req, res) => {
     res.render("jobs/new");
 }
 
+//GET a specific job by Id
 exports.renderSingleJob = (req, res) => {
     let jobId = req.params.jobId;
 
@@ -55,13 +60,13 @@ exports.renderSingleJob = (req, res) => {
         })
         .then(() => {
             console.log("promise complete");
-        });
-}
+        });}
 
-exports.updateJob = (req, res) => {
+//UPDATE (WORKS)
+exports.updateJob = (req, res, next) => {
     let jobId = req.params.jobId;
 
-    jobParams = {
+    let updatedJob = {
         job_title: req.body.job_title,
         location: req.body.location,
         salary : req.body.salary,
@@ -69,32 +74,29 @@ exports.updateJob = (req, res) => {
         description: req.body.description,
     };
 
-    Job.findByIdAndUpdate(jobId, {
-        $set: jobParams
-    })
-        .then(job => {
-            res.redirect(`/jobs/${jobId}`);
-            next();
-        })
-        .catch(error => {
+    Job.findOneAndUpdate({_id: jobId}, {$set: updatedJob}, {new: true}, (err, job) => {
+        if(err) {
             console.log(`Error updating job by ID: ${error.message}`);
-            next(error);
-        });
-}
+        } else {
+            res.redirect(`/jobs/`);
+            console.log('job updated in MongoDB and Elasticsearch')
+            console.log(job);
+        }
+    });
+ 
+} 
 
-
+ //DELETE (WORKS)
 exports.deleteJob = (req, res) => {
     let jobId = req.params.jobId;
-
-    Job.findByIdAndDelete(jobId)
-        .then(() => {
-            res.redirect(`/jobs`);
-            next();
-        })
-        .catch(error => {
-            console.log(`Error deleting job by ID: ${error.message}`);
-            next(error);
+    Job.findById(jobId, function (err, job){
+        job.remove(function (err, job){
+            if(err) {
+                console.log(err)
+            } else {
+                console.log('job deleted from MongoDB and Elasticsearch')
+                res.redirect(`/jobs/`);
+            }
         });
-}
-
-
+    });
+ }

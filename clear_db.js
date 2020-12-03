@@ -9,6 +9,7 @@ mongoose.connect(
 
 mongoose.connection;
 
+//change into form document.remove (from model.remove)
 Candidate.deleteMany()
     .exec()
     .then(() => {

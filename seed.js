@@ -1,6 +1,7 @@
 const mongoose = require("mongoose"),
     Candidate = require("./models/candidate"),
-    Job = require("./models/job_offer");
+    Job = require("./models/job_offer"),
+    mongoosastic = require("mongoosastic");
 
 mongoose.connect(
     "mongodb://localhost:27017/rem_matching_test",
