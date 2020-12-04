@@ -1,5 +1,51 @@
+/* base layout css */
+
+header{
+  background-color: #4D5B80;
+  color: white;
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  left: 0;
+  text-align: center;
+}
+
+header .headerItem{
+    font-family: 'Abang', sans-serif;
+    color: white;
+    font-size: 3rem;
+}
+
+a.headerItem:hover {
+  color: #9AB3F5 !important;
+  text-decoration: none;
+}
+
+header .nav-link {
+  color: white !important;
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: 0 1rem;
+}
+
+header a.nav-link:hover:not(.btn) {
+  color: #7579E7 !important;
+}
+
+/* smaller font-sizes for mobile screen */
+@media (max-width: 576px) {
+  .headerItem {
+    font-size: 2rem;
+  }
+  header .nav-link {
+    font-size: 1rem;
+  }
+}
+
 footer{
-    background-color: #9AB3F5; //take from bg-dark in bootstrap.css
+    background-color: #9AB3F5;
     color: white !important;
     position: fixed;
     bottom: 0;
@@ -11,29 +57,19 @@ footer{
 }
 footer p {
   color: white !important;
-  font-size: 2rem !important;
-}
-header{
-    background-color: #4D5B80;
-    color: white;
-    position: fixed;
-    top: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 100%;
-    left: 0;
-    text-align: center;
+  font-size: 1.2rem !important;
+  font-weight: 300;
+  margin: 0.5rem 0;
 }
 
-.headerItem{
-    font-family: 'Abang', sans-serif;
-    color: white;
-    width: 25%;
-    font-size: 3em;
+@media (max-width: 576px) {
+  footer p {
+    font-size: 1rem !important;
+  }
 }
 
 main{
-    margin-top: 10%;
+    margin-top: 2.5rem;
     padding-bottom: 10%;
     text-align: center;
 }
@@ -45,20 +81,29 @@ input{
     margin-bottom: 10px;
 }
 
+a, .btn {
+  transition: 0.3s;
+  -moz-transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+
+
+/* overwrite bootstrap classes */
+
 .btn-primary{
    color : white !important;
    font-weight: bold !important;
    background-color: #9AB3F5 !important;
-   border-color: #9AB3F5 !important;
-   margin: 0 0.50rem;
+   border: 0;
+   margin: 0 0.5rem;
+   padding: 0.3rem 1rem 0.5rem !important;
 }
 
-.nav-link {
-  color: white !important;
-  font-size: 1.5rem;
-  font-weight: 300;
-  margin: 0 1rem;
+.btn-primary:hover {
+  background-color: #7579E7 !important;
 }
+
+
 /* styles for login */
 /* .bd-placeholder-img {
   font-size: 1.125rem;
@@ -74,24 +119,9 @@ input{
     font-size: 3.5rem;
   }
 } */
-
-body#form-login-signup {
-  height: 100%;
-}
-
-body#form-login-signup {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-
 .form-login-signup {
   width: 100%;
-  max-width: 330px;
+  max-width: 350px;
   padding: 15px;
   margin: auto;
 }
@@ -115,10 +145,11 @@ body#form-login-signup {
   border-bottom-left-radius: 0;
 }
 .middle {
-
+  margin-bottom: -1px;
+  border-radius: 0;
 }
 .bottom {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
