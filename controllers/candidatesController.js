@@ -34,13 +34,19 @@ module.exports = {
         }
 		Candidate.create(candidateParams)
 			.then(candidate => {
+        req.flash('success', `${candidate.preferred_position} candidate created successfully!`);
 				res.locals.redirect = '/candidates';
 				res.locals.candidate = candidate;
 				next();
 			})
 			.catch(error => {
-				console.log(`Error saving candidate profile: ${error.message}`);
-				next(error);
+        console.log(`Error saving candidate profile: ${error.message}`);
+        res.locals.redirect = "/candidates/new";
+        req.flash(
+          "error", 
+          `Failed to create user account because: ${error.message}.`
+        );
+				next();
 			});
     },
     

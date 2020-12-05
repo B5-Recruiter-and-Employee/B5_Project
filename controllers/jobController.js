@@ -28,7 +28,11 @@ exports.saveJob = (req, res) => {
     });
     newJob.save()
         .then(() => {
-            res.render('thanks')
+            res.render('thanks', {
+                flashMessages: {
+                    success: "The job has been created!"
+                }
+            })
         })
         .catch(error => {
             res.send(error);
@@ -73,10 +77,12 @@ exports.updateJob = (req, res) => {
         $set: jobParams
     })
         .then(job => {
+            req.flash('success', `The job offer has been updated successfully!`);
             res.redirect(`/jobs/${jobId}`);
             next();
         })
         .catch(error => {
+            req.flash('error', `There has been an error while updating the job offer: ${error.message}`);
             console.log(`Error updating job by ID: ${error.message}`);
             next(error);
         });
@@ -88,10 +94,12 @@ exports.deleteJob = (req, res) => {
 
     Job.findByIdAndDelete(jobId)
         .then(() => {
+            req.flash('success', `The job offer has been deleted successfully!`);
             res.redirect(`/jobs`);
             next();
         })
         .catch(error => {
+            req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
             console.log(`Error deleting job by ID: ${error.message}`);
             next(error);
         });
