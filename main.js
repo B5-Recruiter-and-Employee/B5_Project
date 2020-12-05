@@ -6,6 +6,27 @@ const port = 3000,
     methodOverride = require("method-override"),
     router = express.Router();
 
+const expressSession = require("express-session"),
+    cookieParser = require("cookie-parser"),
+    flash = require("connect-flash");
+
+    
+app.use(cookieParser("secret_passcode"));
+//flash messages
+app.use(expressSession({
+    secret: "secret_passcode",  //obviously need to change that to something more secure
+    cookie: {
+        maxAge: 4000000
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
+
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
 const mongoose = require("mongoose");

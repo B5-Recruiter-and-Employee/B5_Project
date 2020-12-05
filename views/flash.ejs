@@ -1,0 +1,9 @@
+<div class="flashes">
+    <% if (flashMessages) { %>
+        <% if (flashMessages.success) { %>
+            <div class="flash_success"><%= flashMessages.success %></div>
+        <% } else if (flashMessages.error) { %>
+            <div class="flash_error"><%= flashMessages.error %></div>
+        <% } %>
+    <% } %>
+</div>>

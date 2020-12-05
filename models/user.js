@@ -14,7 +14,7 @@ userSchema = mongoose.Schema({
     email: {
         type: String,
         lowercase: true,
-        unique: true,
+        // unique: true,
     }
 });
 
