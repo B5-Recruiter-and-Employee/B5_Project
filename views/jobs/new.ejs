@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <form action="<%= `/user/${user._id}/add_job`%>" method="post">
     <label for="job_title">Job Title: </label>
     <input type="text" placeholder="Job Title" name="job_title" required>
@@ -13,4 +14,85 @@
     <input type="text" placeholder="Job Description" name="description">
     <input type="submit" value="Submit">
     
+=======
+<form action="/jobs/create" method="post">
+
+    <div class="container-fluid">
+        <h2> Create your new profile </h2>
+
+    <section class = "questions">
+        <div>What is the job title? </div>
+        <div>
+            <input type="text" name="job_title" required>
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What is the company name? </div>
+        <div>
+            <input type="text" name="company_name">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What is the location of the company? </div>
+        <div>
+            <input type="text" name="location">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What type of contract are you offering? </div>
+        <div>
+            <input type="text" name="job_type">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What is the company expecting to pay? </div>
+        <div>
+            <input type="text" name="salary">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What hard job-specific skills do you expect from the employee? </div>
+        <div>
+            <input type="text" name="hard_skills">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>Which soft skills are essential for the job? </div>
+        <div>
+            <input type="text" name="soft_skills">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What kind of person are you looking for? </div>
+        <div>
+            <input type="text" name="other_aspects">
+        </div>        
+    </section>
+
+    <section class = "questions">
+        <div>What will be the detailed tasks of the employee? </div>
+        <div>
+            <input type="text" name="description">
+        </div>        
+    </section>
+    
+    <section class = "questions">
+        <div>Do you offer any of these options? </div>
+        <div>
+            <input type="text" name="work_culture_keywords">
+        </div>        
+    </section>
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+    
+    </div>
+>>>>>>> 78b9eec (Added job questions)
 </form>
