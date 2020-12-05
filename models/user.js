@@ -15,6 +15,9 @@ userSchema = mongoose.Schema({
         type: String,
         lowercase: true,
         // unique: true,
+    },
+    password: {
+        type: String
     }
 });
 
@@ -24,4 +27,4 @@ userSchema.virtual('fullName')
 	return `${this.name.firstname} ${this.name.lastname}`;
 });
 
-exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

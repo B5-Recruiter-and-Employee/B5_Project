@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>User Profile</title>
+</head>
+
+<body class="body">
+    <h1>User Profile</h1>
+    <div>
+        <div>
+            <ul>
+                <b>First Name:</b> <%= user.name.firstname%> <br>
+                <b>Last Name:</b> <%= user.name.lastname%> <br>
+                <b>E-Mail:</b> <%= user.email %> <br>
+                <b>Password:</b> <%= user.password %> <br>
+                <a href="<%=`/user/${user._id}/edit` %>">
+                    <button class="edit">Edit</button>
+                </a>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
