@@ -5,7 +5,6 @@ const port = 3000,
     path = require("path"),
     methodOverride = require("method-override"),
     router = express.Router(),
-   // mongoosastic = require(mongoosastic);
 
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
@@ -16,8 +15,6 @@ const db = mongoose.connection;
 db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
-
-
 
 //set the viewing engine to use ejs and the port
 app.set("view engine", "ejs");
@@ -36,7 +33,6 @@ app.use(layouts);
 //defines the folder for static files (css f.e.)
 app.use(express.static(path.join(__dirname, 'public')));
  
-
 //all the routers:
 app.use(require('./routes/errorRouter')); 
 app.use(require('./routes/homeRouter'));

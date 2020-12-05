@@ -1,7 +1,6 @@
 const mongoose = require("mongoose"),
     Candidate = require("./models/candidate"),
-    Job = require("./models/job_offer"),
-    mongoosastic = require("mongoosastic");
+    Job = require("./models/job_offer");
 
 mongoose.connect(
     "mongodb://localhost:27017/rem_matching_test",
@@ -10,52 +9,20 @@ mongoose.connect(
 
 mongoose.connection;
 
-//program doesn't push the first element for some reason. So I just hardcoded the first one twice :/
 var candidates = [
     {
-        name: {
-            firstname: "John",
-            lastname: "Smith"
-        },
-        email: "John@Smith.com",
+        preferred_position: 'Hamburger eater',
+        work_culture_preferences: 'Everyone is nice to each other'
     },
     {
-        name: {
-            firstname: "John",
-            lastname: "Smith"
-        },
-        email: "John@Smith.com",
+        preferred_position: 'Dog sitter',
+        work_culture_preferences: 'Dogs must be able to stand on their hands'
     },
     {
-        name: {
-            firstname: "Hans",
-            lastname: "Zimmer"
-        },
-        email: "Hans@Zimmer.com",
-    },
-    {
-        name: {
-            firstname: "Julia",
-            lastname: "Romero"
-        },
-        email: "Julia@Romero.com",
-    },
-    {
-        name: {
-            firstname: "Quentin",
-            lastname: "Tarantino"
-        },
-        email: "Quentin@Tarantino.com",
-    },
-    {
-        name: {
-            firstname: "Frodo",
-            lastname: "Baggins"
-        },
-        email: "Frodo@Middleearth.com",
+        preferred_position: 'Software engineer',
+        work_culture_preferences: 'I want to beep boop'
     }
 ];
-
 
 var job_offers = [
     {
@@ -78,33 +45,54 @@ var job_offers = [
     }
 ]
 
-Candidate.deleteMany()
-    .exec()
-    .then(() => {
-        console.log("Candidates data is empty!");
-    });
+//DELETE all jobs
+//find all jobs, create an array of jobs
+Job.find({}, function(err, jobs_array) {
+    if (err){
+        console.log(err);
+    } else {
+        //Loop through jobs_array and delete all
+         for (i = 0; i < jobs_array.length; i++){
+             jobs_array[i].remove(function (err){
+                if(err) {
+                    console.log(err)
+                } else {}
+            });
+         }
+         console.log('-> All jobs deleted from MongoDB and Elasticsearch');    
+    }
+});
 
-Job.deleteMany()
-    .exec()
-    .then(() => {
-        console.log("Job data is empty!");
-    });
+//DELETE all candidates
+//find all candidates, create an array of candidates
+Candidate.find({}, function(err, cand_array) {
+    if (err){
+        console.log(err);
+    } else {
+         //Loop through candidates_array and delete all
+         for (i = 0; i < cand_array.length; i++){
+            cand_array[i].remove(function (err){
+                if(err) {
+                    console.log(err)
+                } else {}
+            });
+         }
+         console.log('-> All candidates deleted from MongoDB and Elasticsearch');    
+    }
+});
 
-var commands = [];
-var commands2 = [];
+var cand_array = [];
+var job_array = [];
 
 candidates.forEach((c) => {
-    commands.push(Candidate.create({
-        name: {
-            firstname: c.firstname,
-            lastname: c.lastname
-        },
-        email: c.email
+    cand_array.push(Candidate.create({
+        preferred_position: c.preferred_position,
+        work_culture_preferences: c.work_culture_preferences
     }));
 });
 
 job_offers.forEach((c) => {
-    commands2.push(Job.create({
+    job_array.push(Job.create({
         job_title: c.job_title,
         location: c.location,
         company_name: c.company_name,
@@ -112,18 +100,18 @@ job_offers.forEach((c) => {
     }));
 });
 
-Promise.all(commands)
+Promise.all(cand_array)
     .then(r => {
-        console.log(JSON.stringify(r));
+        console.log("++ The amount of candidates seeded: " + cand_array.length)
         mongoose.connection.close();
     })
     .catch(error => {
         console.log(`ERROR: ${error}`);
     });
 
-Promise.all(commands2)
+ Promise.all(job_array)
     .then(r => {
-        console.log(JSON.stringify(r));
+       console.log("++ The amount of jobs seeded: " + job_array.length)
         mongoose.connection.close();
     })
     .catch(error => {
