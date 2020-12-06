@@ -14,6 +14,8 @@ mongo
 Initialize these packages for the project:
 ```
 npm install express ejs express-ejs-layouts http-status-codes --save
+npm i express-session accesscontrol -s
+npm i passport passport-local-mongoose -s
 ```
 
 Packages to be installed for db setup:

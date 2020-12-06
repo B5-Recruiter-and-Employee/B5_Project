@@ -5,8 +5,8 @@ exports.getAllJobs = (req, res) => {
     Job.find({})
         .exec()
         .then((jobs) => {
-            res.render("jobs/jobsOverview", { //render jobs.ejs
-                jobs: jobs // assign jobs to jobs property
+            res.render("jobs/index", { //render jobs.ejs
+                jobs: jobs
             });
         })
         .catch((error) => {
@@ -49,7 +49,7 @@ exports.renderSingleJob = (req, res) => {
     Job.findOne({'_id': jobId})
         .exec()
         .then((job) => {
-            res.render("jobs/singleJob", { 
+            res.render("jobs/edit", { 
                 job: job 
             });
         })
@@ -78,7 +78,7 @@ exports.updateJob = (req, res) => {
     })
         .then(job => {
             req.flash('success', `The job offer has been updated successfully!`);
-            res.redirect(`/jobs/${jobId}`);
+            res.redirect(`/jobs/${job._id}`);
             next();
         })
         .catch(error => {

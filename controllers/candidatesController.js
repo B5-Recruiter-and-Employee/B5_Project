@@ -1,4 +1,5 @@
 const Candidate = require("../models/candidate");
+const User = require("../models/user");
 
 module.exports = {
     index: (req, res, next) => {
@@ -114,7 +115,27 @@ module.exports = {
       console.log(`Error deleting candidate by ID: ${error.message}`);
       next();
     })
-  }
+  },
 
-    //TODO Edit, Update, Delete
+  add: (res, req, next) => {
+    let userID = req.param.id,
+      currentUser = req.user;
+
+    if (currentUser) {
+      User.findByIdAndUpdate(currentUser, {
+        $set: {
+          candidateProfile: currentUser
+        }
+      })
+        .then(() => {
+          res.locals.success = true;
+          next();
+        })
+        .catch(error => {
+          next(error);
+        });
+    } else {
+      next(new Error("User must log in."));
+    }
+  }
 }
