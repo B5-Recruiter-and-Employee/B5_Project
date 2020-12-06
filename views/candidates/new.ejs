@@ -1,4 +1,4 @@
-<form action="/candidates/create" method="post">
+<form action="<%= `/user/${user._id}/add`%>" method="post">
   <h2>Create a new candidate profile</h2>
   <div class="container">
     <div class="input-group mb-3">
@@ -12,7 +12,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Soft Skills</span>
       </div>
-      <input type="text" class="form-control" placeholder="Tell us all about your soft skills" name="sofr_skills" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" placeholder="Tell us all about your soft skills" name="soft_skills" aria-describedby="basic-addon1">
     </div>
 
     <div class="input-group mb-3">

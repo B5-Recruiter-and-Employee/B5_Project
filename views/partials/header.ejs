@@ -17,10 +17,7 @@
       <ul class="navbar-nav ml-auto">
         <% if (user.role === 'candidate') { %>
         <li class="nav-item">
-          <a class="nav-link" href="/candidates/new"> New Candidate </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/candidates"> All Candidates </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New Candidate </a>
         </li>
         <% } else { %>
         <li class="nav-item">

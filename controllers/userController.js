@@ -1,7 +1,7 @@
 const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
-
+const Candidate = require("../models/candidate");
 
 module.exports = {
   login: (req, res) => {
@@ -23,7 +23,11 @@ module.exports = {
       res.locals.user = user;
       res.locals.loggedIn = user;
       console.log('show: ', res.locals.loggedIn);
-      next();
+      Candidate.findById(user.candidateProfile).then(candidate => {
+        res.locals.candidate = candidate;
+        next();
+      })
+      
     })
       .catch(error => {
         console.log(`Error fetching user by ID: ${error.message}`);
@@ -48,30 +52,6 @@ module.exports = {
     res.locals.redirect = "/";
     next();
   },
-  // deprecated.
-  // authenticate: (req, res, next) => {
-  //   User.findOne({
-  //     email: req.body.email
-  //   })
-  //     .then(user => {
-  //       if (user && user.password === req.body.password) {
-  //         res.locals.redirect = `${user._id}`;
-  //         req.flash("success", `${user.fullName}'s logged in successfully!`);
-  //         res.locals.user = user;
-  //         res.locals.loggedIn = user;
-  //         console.log('auth: ', res.locals.loggedIn);
-  //         next();
-  //       } else {
-  //         req.flash("error", "Your account or password is incorrect. Please try again!");
-  //         res.locals.redirect = "/user/login";
-  //         next();
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(`Error loggin in user: ${error.message}`);
-  //       next(error);
-  //     });
-  // },
 
   createAccount: (req, res, next) => {
     let userParams = {
@@ -82,23 +62,7 @@ module.exports = {
       email: req.body.email,
       role: req.body.role
     };
-    // deprecated.
-    // User.create(userParams)
-    //   .then(user => {
-    //     req.flash('success', `The user ${user.fullName} was created successfully!`);
-    //     res.locals.redirect = `/user/${userId}`;
-    //     res.locals.user = user;
-    //     next();
-    //   })
-    //   .catch(error => {
-    //     console.log(`Error saving user profile: ${error.message}`);
-    //     res.locals.redirect = "/user/signup";
-    //     req.flash(
-    //       "error",
-    //       `Failed to create user account because: ${error.message}.`
-    //     );
-    //     next();
-    //   });
+    
     if (req.skip) next();
     let newUSer = new User( userParams);
     User.register(newUSer, req.body.password, (error, user) => {
@@ -208,6 +172,52 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-  }
-
+  },
+  /**
+   * Add the candidate profile information to the user that
+   * is currently logged in.
+   */
+  add: (req, res, next) => {
+    userId = req.params.id;
+    let candidate = new Candidate({
+      preferred_position: req.body.preferred_position,
+      soft_skills: req.body.soft_skills,
+      other_aspects: req.body.other_aspects,
+      work_culture_preferences: req.body.work_culture_preferences
+    })
+    candidate.save().
+      then((candidate) => {
+        console.log("candidate:", candidate)
+        User.findByIdAndUpdate(userId, {
+          $set: {
+            candidateProfile: candidate
+          }
+        })
+          .then(user => {
+            res.locals.redirect = `/user/${user._id}`;
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+          });
+      })
+  },
+ /**
+  * Shows the questionnaire page for logged in user.
+  */
+  newCandidateView: (req, res) => {
+    let userId = req.params.id;
+    console.log("new link", userId);
+		User.findById(userId)
+			.then(user => {
+				res.locals.user = user;
+				res.render('candidates/new', {
+					user: user
+				});
+			})
+			.catch(error => {
+				console.log(`Error fetching user by ID: ${error.message}`);
+				next(error);
+			});
+  },
 }

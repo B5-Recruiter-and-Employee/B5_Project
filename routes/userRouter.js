@@ -13,6 +13,6 @@ router.get("/user/:id/edit", userController.edit);
 router.post("/user/:id/update", userController.update, userController.redirectView);
 router.get("/user/:id/delete", userController.delete, userController.redirectView);
 
-//router.get("/user/:id/candidates", userController.indexCandidate, userController.indexViewCandidate);
-
+router.get("/user/:id/create_candidate", userController.newCandidateView);
+router.post("/user/:id/add", userController.add, userController.redirectView);
 module.exports = router;

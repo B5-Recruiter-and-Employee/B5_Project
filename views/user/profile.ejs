@@ -14,7 +14,11 @@
                 <b>First Name:</b> <%= user.name.firstname%> <br>
                 <b>Last Name:</b> <%= user.name.lastname%> <br>
                 <b>E-Mail:</b> <%= user.email %> <br>
-                <b>Password:</b> <%= user.password %> <br>
+                <% if (user.candidateProfile) { %>
+                    <b>Preferred position:</b> <%= candidate.preferred_position %> <br>
+                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
+                <% } %> 
                 <a href="<%=`/user/${user._id}/edit` %>">
                     <button class="edit">Edit</button>
                 </a>
