@@ -1,0 +1,166 @@
+body {
+  font-family: 'Crimson Pro', serif;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Crimson Pro', serif;
+  margin: 20px;
+}
+h5 {
+  color :#C1CAF4;
+}
+
+
+/* Headings */
+
+.big-heading {
+  font-family: 'Crimson Pro', serif;
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+/* Containers */
+
+.container-fluid{
+  padding:0;
+}
+
+/* Sections */
+
+.colored-section {
+  background-color: #3115A0;
+  color: #fff;
+}
+
+.white-section {
+  background-color: #fff;
+}
+
+/* Buttons */
+
+.download-button {
+  margin: 5% 2% 5% 3%;
+}
+
+/* Title Section */
+
+#title {
+  background-color: #3115A0;
+  color: #fff;
+  text-align: center;
+}
+
+#title .container-fluid {
+  padding: 5% 16% 7%;
+}
+
+/* Title Image */
+
+.title-image {
+  width: 70%;
+  transform: rotate(0);
+  position: absolute;
+  right: 0%;
+  top: 10%;
+
+}
+
+/* Features Section */
+
+#features {
+  margin-top: 10%;
+  margin-bottom:10%;
+  position: relative;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+}
+
+.feature-box {
+  padding: 4.5%;
+}
+
+.icon {
+  color: #3115A0;
+  margin-bottom: 1rem;
+}
+
+.icon:hover {
+  color: #9AB3F5;
+}
+
+/* Testimonial Section */
+
+#testimonials {
+  background-color: #9AB3F5;
+}
+#testimonials .container-fluid{
+  padding: 7% 15%;
+}
+.testimonial-text {
+  font-size: 2rem;
+  line-height: 1.5;
+}
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 100%;
+  margin: 20px;
+}
+
+
+.press-logo {
+  width: 15%;
+  margin: 20px 20px 50px;
+}
+
+/* Steps */
+
+#pricing {
+  padding: 100px;
+}
+.card-header{
+  background-color:#9AB3F5 !important;
+}
+.card-body{
+  text-align: center !important;
+}
+.card-body p{
+  text-align: left !important;
+  padding-left: 20px;
+  color: #8f8f8f;
+}
+.price-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.pricing-column {
+  padding: 3% 2%;
+}
+.btn-outline-light:hover{
+ color: #7579E7 !important;
+ margin: 5;
+}
+/* Footer Section */
+
+
+.social-icon {
+  margin: 20px 10px;
+}
+
+@media (max-width: 1028px) {
+
+  #title {
+    text-align: center;
+  }
+
+
+}
