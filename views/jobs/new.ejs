@@ -18,7 +18,7 @@
 <form action="/jobs/create" method="post">
 
     <div class="container-fluid">
-        <h2> Create your new profile </h2>
+        <h2> Create a new job offer </h2>
 
     <section class = "questions">
         <div>What is the job title? </div>
@@ -44,7 +44,12 @@
     <section class = "questions">
         <div>What type of contract are you offering? </div>
         <div>
-            <input type="text" name="job_type">
+            <select name="job_type">
+                <option value="permanent">Permanent employment (full-time)</option>
+                <option value="internship">Internship (full-time)</option>
+                <option value="working_student">Working student (part-time)</option>
+                <option value="flexible">Flexible</option>
+            </select>
         </div>        
     </section>
 
@@ -70,7 +75,9 @@
     </section>
 
     <section class = "questions">
-        <div>What kind of person are you looking for? </div>
+        <div>What kind of person are you looking for? <br>
+            Who will fit in your team? <br>
+            What is important for you/the company/the team? </div>
         <div>
             <input type="text" name="other_aspects">
         </div>        
