@@ -4,7 +4,7 @@ var router = require('express').Router();
 //router.get("/user/profile", userController.show, userController.showView);
 router.get("/user/login", userController.login);
 router.post("/user/login", userController.authenticate);
-router.get("/users/logout", userController.logout, userController.redirectView);
+router.get("/user/logout", userController.logout, userController.redirectView);
 // router.post("/user/login", userController.login)
 router.get("/user/signup", userController.signup);
 router.post("/user/signup", userController.createAccount, userController.redirectView);
