@@ -7,7 +7,7 @@
 </head>
 
 <body class="body">
-    <h1>Job offer with the ID: <%= job._id %> </h1>
+    <h1>Job offer: <%= job.position %> </h1>
     </div>
     <div>
         <form method="POST" action="<%= `/jobs/${job._id}/update?_method=PUT`%>">

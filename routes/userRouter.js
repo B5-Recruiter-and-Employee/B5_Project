@@ -14,7 +14,7 @@ router.get("/thanks", userController.showThank)
 router.get("/user/:id", userController.show, userController.showView);  
 router.get("/user/:id/edit", userController.edit);
 router.post("/user/:id/update", userController.update, userController.redirectView);
-router.get("/user/:id/delete", userController.delete, userController.redirectView);
+//router.get("/user/:id/delete", userController.delete, userController.redirectView); - user does not have to have the option to delete its account.
 
 //for candidate user
 router.get("/user/:id/create_candidate", userController.newCandidateView);

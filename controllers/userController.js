@@ -91,9 +91,10 @@ module.exports = {
   },
   
   edit: (req, res, next) => {
-
     let userId = req.params.id;
     User.findById(userId).then(user => {
+      res.locals.user = user;
+      res.locals.loggedIn = user;
       res.render("user/edit",
         {
           user: user

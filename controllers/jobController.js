@@ -1,5 +1,6 @@
 const { db } = require("../models/job_offer");
 const Job = require("../models/job_offer");
+const USer = require("../models/user");
 
 module.exports = { 
     getAllJobs: (req, res) => {
@@ -78,8 +79,9 @@ module.exports = {
             $set: jobParams
         })
             .then(job => {
+                let user = res.locals.user;
                 req.flash('success', `The job offer has been updated successfully!`);
-                res.redirect(`/jobs/${job._id}`);
+                res.redirect(`/user/${user._id}/offers`);
                 next();
             })
             .catch(error => {
@@ -95,8 +97,10 @@ module.exports = {
 
         Job.findByIdAndDelete(jobId)
             .then(() => {
+                let user = res.locals.user;
+                res.locals.job
                 req.flash('success', `The job offer has been deleted successfully!`);
-                res.redirect(`/jobs`);
+                res.redirect(`/user/${user._id}/offers`);
                 next();
             })
             .catch(error => {
@@ -105,5 +109,31 @@ module.exports = {
                 next(error);
             });
     },
+    // in progress update and delete of job offer
+    // updateJobForRecruiter: (req, res) => {
+    //     let jobId = req.params.jobId;
+    //     let user = res.locals.user;
+    //     jobParams = {
+    //         job_title: req.body.job_title,
+    //         location: req.body.location,
+    //         salary : req.body.salary,
+    //         company_name: req.body.company_name,
+    //         description: req.body.description,
+    //     };
+    //     Job.findByIdAndUpdate(jobId, {
+    //         $set: jobParams
+    //     })
+    //         .then(job => {
+    //             let user = res.locals.user;
+    //             req.flash('success', `The job offer has been updated successfully!`);
+    //             res.redirect(`/user/${user._id}/offers`);
+    //             next();
+    //         })
+    //         .catch(error => {
+    //             req.flash('error', `There has been an error while updating the job offer: ${error.message}`);
+    //             console.log(`Error updating job by ID: ${error.message}`);
+    //             next(error);
+    //         });
+    // },
 }
 

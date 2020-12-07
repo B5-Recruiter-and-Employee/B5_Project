@@ -28,11 +28,11 @@ db.once("open", () => {
 app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 
-app.use(
-    methodOverride("_method", {
-      methods: ["POST", "GET"]
-    })
-  );
+// app.use(
+//     methodOverride("_method", {
+//       methods: ["POST", "GET"]
+//     })
+//   ); //after it was deleted the update worked again.
 
 app.use(layouts);
 //defines the folder for static files (css f.e.)
