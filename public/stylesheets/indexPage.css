@@ -10,7 +10,9 @@ h1, h2, h3, h4, h5, h6 {
 h5 {
   color :#C1CAF4;
 }
-
+h4{
+  margin : 30px;
+}
 
 /* Headings */
 
@@ -18,6 +20,7 @@ h5 {
   font-family: 'Crimson Pro', serif;
   font-size: 3rem;
   line-height: 1.5;
+
 }
 
 .section-heading {
@@ -57,18 +60,16 @@ h5 {
 }
 
 #title .container-fluid {
-  padding: 5% 16% 7%;
+  padding: 5% 12% 7%;
 }
 
 /* Title Image */
 
 .title-image {
-  width: 70%;
+  width: 80%;
+  border-radius: 100%;
   transform: rotate(0);
-  position: absolute;
-  right: 0%;
-  top: 10%;
-
+  margin-top: 10%;
 }
 
 /* Features Section */
@@ -76,7 +77,6 @@ h5 {
 #features {
   margin-top: 10%;
   margin-bottom:10%;
-  position: relative;
 }
 
 .feature-title {
@@ -123,11 +123,21 @@ h5 {
 
 /* Steps */
 
-#pricing {
+#steps {
   padding: 100px;
 }
-.card-header{
+#steps .section-heading {
+  font-family: 'Patrick Hand', cursive !important;
+  color: #3115A0 !important;
+}
+.card-header {
   background-color:#9AB3F5 !important;
+  padding: 5px;
+}
+
+.card-header h3{
+  font-family: 'Patrick Hand', cursive !important;
+  color :#3115A0;
 }
 .card-body{
   text-align: center !important;
@@ -137,23 +147,18 @@ h5 {
   padding-left: 20px;
   color: #8f8f8f;
 }
-.price-text {
+.step-text {
   font-size: 3rem;
   line-height: 1.5;
 }
 
-.pricing-column {
+.step-column {
   padding: 3% 2%;
 }
-.btn-outline-light:hover{
- color: #7579E7 !important;
- margin: 5;
-}
-/* Footer Section */
 
-
-.social-icon {
-  margin: 20px 10px;
+/* Call To Action */
+#cta{
+ padding :5%;
 }
 
 @media (max-width: 1028px) {
@@ -162,5 +167,7 @@ h5 {
     text-align: center;
   }
 
-
+  .title-image {
+    position: static;
+  }
 }

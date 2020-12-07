@@ -55,7 +55,7 @@ header .navbar-brand:hover{
 }
 
 footer{
-   
+
     margin-top: 30px;
     background-color: #9AB3F5;
     color: white !important;
@@ -147,4 +147,11 @@ a, .btn {
   margin-bottom: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.navbar-toggler-icon{
+  width: 2em;
+  height: 2em;
+  background-color: #9AB3F5 !important;
+  border-radius: 10%;
 }
