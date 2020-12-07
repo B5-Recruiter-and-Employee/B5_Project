@@ -25,6 +25,7 @@ module.exports = {
         res.render("candidates/new");
     },
 
+    //CREATE
     create: (req, res, next) => {
 		let candidateParams = {
             preferred_position: req.body.preferred_position,
@@ -35,13 +36,14 @@ module.exports = {
 		Candidate.create(candidateParams)
 			.then(candidate => {
 				res.locals.redirect = '/candidates';
-				res.locals.candidate = candidate;
+        res.locals.candidate = candidate;
+        console.log('a candidate saved into both MongoDB and Elasticsearch')
 				next();
 			})
 			.catch(error => {
 				console.log(`Error saving candidate profile: ${error.message}`);
 				next(error);
-			});
+      });
     },
     
     redirectView: (req, res, next) => {
@@ -65,7 +67,7 @@ module.exports = {
 	showView: (req, res) => {
         res.render('candidates/show');
     },
-  edit: (req,res,next)=>{
+  edit: (req,res,next) => {
 
     let candidateId = req.params.id;
     Candidate.findById(candidateId).then(candidate => {
@@ -79,24 +81,32 @@ module.exports = {
         next(error);
       });
   },
+  //UPDATE (WORKS)
   update: (req,res,next) => {
     let candidateId = req.params.id;
+
     let candidateParams = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
       work_culture_preferences: req.body.work_culture_preferences,
     };
-    Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams})
+    //has to be findOneAndUpdate bc it works with mongoosastic
+    Candidate.findOneAndUpdate({_id: candidateId}, 
+      {$set: candidateParams}, 
+      {new: true})
     .then(candidate => {
       res.locals.redirect = `/candidates/${candidateId}`;
       res.locals.candidate = candidate;
       next();
       })
       .catch(error => {
-        console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+        console.log(`Error updating candidate by ID: ${error.message}`); 
+        next(error);
       });
   },
+
+  //DELETE (WORKS)
   delete: (req, res, next) => {
     let candidateId = req.params.id;
     Candidate.findByIdAndRemove(candidateId)

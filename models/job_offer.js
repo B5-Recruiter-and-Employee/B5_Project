@@ -1,4 +1,5 @@
-const mongoose = require("mongoose"), 
+const mongoose = require("mongoose"),
+mongoosastic = require("mongoosastic"),
    
 jobSchema = mongoose.Schema({
     job_title: {
@@ -26,4 +27,21 @@ jobSchema = mongoose.Schema({
     }
 });
 
+
+//connect to elasticsearch using mongoosastic plugin
+jobSchema.plugin(mongoosastic, {
+    "host": "localhost",
+    "port": 9200
+});
+
+//created a model for mapping
+var Job = mongoose.model('Job', jobSchema);
+
+//create a mapping
+Job.createMapping((err, mapping) => {
+    console.log('** elasticsearch mapping created for Jobs');
+});
+
+
+//exports the mongoDB model
 module.exports = mongoose.model('Job', jobSchema);
