@@ -19,12 +19,12 @@
         <li class="nav-item">
           <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New Candidate </a>
         </li>
-        <% } else { %>
+        <% } else if (user.role === 'recruiter') { %>
         <li class="nav-item">
-          <a class="nav-link" href="/jobs/new"> New Job </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/create_offers` %>"> Add job </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/jobs"> All Jobs </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/offers` %>">Your Jobs </a>
         </li>
         <% } %>
         <li class="nav-item">

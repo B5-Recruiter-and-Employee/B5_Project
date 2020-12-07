@@ -5,7 +5,7 @@ exports.getAllJobs = (req, res) => {
     Job.find({})
         .exec()
         .then((jobs) => {
-            res.render("jobs/index", { //render jobs.ejs
+            res.render("jobs/index", {
                 jobs: jobs
             });
         })

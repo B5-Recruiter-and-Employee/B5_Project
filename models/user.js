@@ -22,23 +22,27 @@ userSchema = mongoose.Schema({
         type: String
     },
     role: {
-        type:String,
+        type: String,
         enum: ["candidate", "recruiter"]
     },
-     candidateProfile: {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "Candidate"
-     } //probably we have to add here the associations as well for the convenience. but not sure for now. this is for add method in userController.
+    candidateProfile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Candidate"
+    }, //probably we have to add here the associations as well for the convenience. but not sure for now. this is for add method in userController.
+    jobOffers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job"
+    }],
 });
 
-    // get the full name of the candidate.
+// get the full name of the candidate.
 userSchema.virtual('fullName')
-.get(function() {
-	return `${this.name.firstname} ${this.name.lastname}`;
-});
+    .get(function () {
+        return `${this.name.firstname} ${this.name.lastname}`;
+    });
 
 userSchema.plugin(passportLocalMongoose, {
-    usernameField : "email"
+    usernameField: "email"
 });
 
 module.exports = mongoose.model("User", userSchema);

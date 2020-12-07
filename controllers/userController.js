@@ -2,6 +2,7 @@ const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
+const Job = require("../models/job_offer");
 
 module.exports = {
   login: (req, res) => {
@@ -27,7 +28,7 @@ module.exports = {
         res.locals.candidate = candidate;
         next();
       })
-      
+
     })
       .catch(error => {
         console.log(`Error fetching user by ID: ${error.message}`);
@@ -62,24 +63,24 @@ module.exports = {
       email: req.body.email,
       role: req.body.role
     };
-    
+
     if (req.skip) next();
-    let newUSer = new User( userParams);
+    let newUSer = new User(userParams);
     User.register(newUSer, req.body.password, (error, user) => {
       console.log('bitte', user);
       if (user) {
         req.flash('success', `The user ${user.fullName} was created successfully!`);
-         res.locals.redirect = `/user/${user._id}`;
-         res.locals.user = user;
-         next();
+        res.locals.redirect = `/user/${user._id}`;
+        res.locals.user = user;
+        next();
       } else {
         console.log(`Error saving user profile: ${error.message}`);
-         res.locals.redirect = "/user/signup";
-         req.flash(
-           "error",
-           `Failed to create user account because: ${error.message}.`
-         );
-         next();
+        res.locals.redirect = "/user/signup";
+        req.flash(
+          "error",
+          `Failed to create user account because: ${error.message}.`
+        );
+        next();
       }
     })
   },
@@ -202,22 +203,101 @@ module.exports = {
           });
       })
   },
- /**
-  * Shows the questionnaire page for logged in user.
-  */
+  /**
+   * Shows the questionnaire page for logged in candidate user.
+   */
   newCandidateView: (req, res) => {
     let userId = req.params.id;
     console.log("new link", userId);
-		User.findById(userId)
-			.then(user => {
-				res.locals.user = user;
-				res.render('candidates/new', {
-					user: user
-				});
-			})
-			.catch(error => {
-				console.log(`Error fetching user by ID: ${error.message}`);
-				next(error);
-			});
+    User.findById(userId)
+      .then(user => {
+        res.locals.user = user;
+        res.render('candidates/new', {
+          user: user
+        });
+      })
+      .catch(error => {
+        console.log(`Error fetching user by ID: ${error.message}`);
+        next(error);
+      });
   },
+
+  /**
+ * Add the candidate profile information to the user that
+ * is currently logged in.
+ */
+  addJobOffers: (req, res, next) => {
+    userId = req.params.id;
+    let job = new Job({
+      location: req.body.location,
+      company_name: req.body.company_name,
+      job_title: req.body.job_title,
+      salary: req.body.salary,
+      description: req.body.description
+    })
+    job.save().
+      then((job) => {
+        User.findByIdAndUpdate(userId, {
+          $addToSet: {
+            jobOffers: job
+          }
+        })
+          .then(user => {
+
+            res.locals.redirect = `/user/${user._id}`;
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+          });
+      })
+  },
+
+  /**
+ * Shows the questionnaire page for logged in recruiter user.
+ */
+  newJobOffer: (req, res) => {
+    let userId = req.params.id;
+    console.log("new link", userId);
+    User.findById(userId)
+      .then(user => {
+        res.locals.user = user;
+        res.render('jobs/new', {
+          user: user
+        });
+      })
+      .catch(error => {
+        console.log(`Error fetching user by ID: ${error.message}`);
+        next(error);
+      });
+  },
+  /**
+   * Shows only those job offers that are added
+   * by a particular logged in recruiter.
+   */
+  indexJobOffers: (req, res, next) => {
+    let userId = req.params.id;
+    let currentUser = res.locals.user;
+    Job.find({}).then(jobs => {
+      res.locals.jobs = jobs;
+      let mappedOffers = jobs.filter(offer => {
+        let userAdded = currentUser.jobOffers.some(userOffer => {
+          console.log("comparison: ", JSON.stringify(userOffer) === JSON.stringify(offer._id))
+          return JSON.stringify(userOffer) === JSON.stringify(offer._id);
+        });
+        if (userAdded) return offer;
+
+      });
+      res.locals.jobs = mappedOffers;
+      next();
+    })
+      .catch((error) => {
+        console.log(`Error fetching candidates: ${error.message}`);
+        return [];
+      })
+  },
+
+  indexViewJobOffers: (req, res) => {
+    res.render("jobs/index");
+  }
 }
