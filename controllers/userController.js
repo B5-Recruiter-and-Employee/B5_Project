@@ -61,7 +61,8 @@ module.exports = {
         lastname: req.body.lastname
       },
       email: req.body.email,
-      role: req.body.role
+      role: req.body.role,
+      password: req.body.password
     };
 
     if (req.skip) next();
@@ -70,7 +71,7 @@ module.exports = {
       console.log('bitte', user);
       if (user) {
         req.flash('success', `The user ${user.fullName} was created successfully!`);
-        res.locals.redirect = `/user/${user._id}`;
+        res.locals.redirect = `/thanks`;
         res.locals.user = user;
         next();
       } else {
@@ -85,6 +86,10 @@ module.exports = {
     })
   },
 
+  showThank: (req, res) => {
+    res.render("thanks")
+  },
+  
   edit: (req, res, next) => {
 
     let userId = req.params.id;
