@@ -1,8 +1,10 @@
 /* base layout css */
+body {
+  overflow-x: hidden;
+}
 
 header{
   background-color: #FFFFFF;
-  color: white;
   position: sticky;
   top: 0;
   padding-top: 10px;
@@ -10,7 +12,7 @@ header{
   width: 100%;
   left: 0;
   text-align: center;
-
+  z-index: 999;
 }
 
 header .headerItem{
@@ -55,16 +57,16 @@ header .navbar-brand:hover{
 }
 
 footer{
-
-    margin-top: 30px;
-    background-color: #9AB3F5;
-    color: white !important;
-    bottom: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 100%;
-    left: 0;
-    text-align: center;
+  position: relative;
+  margin-top: 30px;
+  background-color: #9AB3F5;
+  color: white !important;
+  bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  left: 0;
+  text-align: center;
 }
 footer p {
   color: white !important;
@@ -80,7 +82,6 @@ footer p {
 }
 
 main{
-    /* margin-top: 2.5rem; */
     padding-bottom: 10%;
     text-align: center;
 }
@@ -113,6 +114,15 @@ a, .btn {
 .btn-primary:hover {
   background-color: #7579E7 !important;
 }
+
+.navbar-toggler-icon{
+  width: 2em;
+  height: 2em;
+  background-color: #9AB3F5 !important;
+  border-radius: 10%;
+}
+
+/* login page */
 
 .form-login-signup {
   width: 100%;
@@ -147,11 +157,4 @@ a, .btn {
   margin-bottom: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
-
-.navbar-toggler-icon{
-  width: 2em;
-  height: 2em;
-  background-color: #9AB3F5 !important;
-  border-radius: 10%;
 }

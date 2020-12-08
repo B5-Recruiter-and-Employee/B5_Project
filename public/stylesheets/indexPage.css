@@ -1,8 +1,3 @@
-body {
-  font-family: 'Crimson Pro', serif;
-  text-align: center;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Crimson Pro', serif;
   margin: 20px;
@@ -26,12 +21,6 @@ h4{
 .section-heading {
   font-size: 3rem;
   line-height: 1.5;
-}
-
-/* Containers */
-
-.container-fluid{
-  padding:0;
 }
 
 /* Sections */
