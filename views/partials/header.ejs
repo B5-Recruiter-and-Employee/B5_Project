@@ -1,6 +1,44 @@
-<div id='header'>
-    <p class ='headerItem' onclick="location.href='../candidates/new'">New candidate</p>
-    <p class ='headerItem' onclick="location.href='../candidates'">All candidates</p>
-    <p class ='headerItem' onclick="location.href='../jobs/new'">New Job</p>
-    <p class ='headerItem' onclick="location.href='../jobs'">All Jobs</p>
-</div>
+<header>
+
+  <nav class="navbar navbar-expand-xl navbar-dark">
+    <a class="navbar-brand headerItem mx-lg-5" href="/">ReMatch</a>
+
+    <%# button to toggle menu on mobile screen %>
+    <button class="navbar-toggler ml-auto mr-lg-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <%# links when logged in %>
+      <li class="nav-item">
+        <a class="nav-link" href="/candidates/new"> New Candidate </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/candidates"> All Candidates </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jobs/new"> New Job </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jobs"> All Jobs </a>
+      </li>
+
+      <%# links when logged out %>
+      <li class="nav-item">
+        <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/login"> Log In </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link btn btn-primary" href="/user/signup"> Sign Up </a>
+      </li>
+    </ul>
+    </div>
+
+  </nav>
+</header>
+<!-- <div id='header'> -->
+<!-- <p class='headerItem' onclick="location.href='../candidates/new'">New candidate</p>
+  <p class='headerItem' onclick="location.href='../candidates'">All candidates</p>
+  <p class='headerItem' onclick="location.href='../jobs/new'">New Job</p>
+  <p class='headerItem' onclick="location.href='../jobs'">All Jobs</p> -->
+<!-- </div> -->

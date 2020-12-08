@@ -1,5 +1,5 @@
-const router = require('express').Router();
 const homeController = require('../controllers/homeController');
+const router = require('express').Router();
 
 //create route to home page and log requests body
 //(send data with a curl command, just for practice)
