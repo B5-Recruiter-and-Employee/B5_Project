@@ -20,8 +20,13 @@
                     <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
                 <% } %> 
                 <a href="<%=`/user/${user._id}/edit` %>">
-                    <button class="edit">Edit</button>
+                    <button class="edit">Edit Personal Data</button>
                 </a>
+                <% if (user.candidateProfile) { %>
+                    <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>">
+                        <button class="edit">Edit Candidate Profile</button>
+                    </a>
+                <% } %> 
             </ul>
         </div>
     </div>

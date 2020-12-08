@@ -1,5 +1,6 @@
 const Candidate = require("../models/candidate");
 const User = require("../models/user");
+const app = require("express")();
 
 module.exports = {
   index: (req, res, next) => {
@@ -96,7 +97,7 @@ module.exports = {
     };
     Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
       .then(candidate => {
-        res.locals.redirect = `/candidates/${candidateId}`;
+        res.locals.redirect = `/user/${req.app.locals.user._id}`;
         res.locals.candidate = candidate;
         next();
       })

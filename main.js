@@ -67,7 +67,8 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     res.locals.loggedIn = req.isAuthenticated();
     console.log('status of user: ' ,res.locals.loggedIn)
-    res.locals.user = req.user;
+    // res.locals.user = req.user;
+    app.locals.user = req.user;
     console.log('current user: ',  req.user) //somehow empty
     res.locals.session = req.session;
     next();
