@@ -1,3 +1,8 @@
+body {
+  font-family: 'Crimson Pro', serif;
+  text-align: center;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Crimson Pro', serif;
   margin: 20px;
@@ -23,6 +28,12 @@ h4{
   line-height: 1.5;
 }
 
+/* Containers */
+
+.container-fluid{
+  padding:0;
+}
+
 /* Sections */
 
 .colored-section {
@@ -40,6 +51,9 @@ h4{
   margin: 5% 2% 5% 3%;
 }
 
+.download-button:hover{
+  color: #3115A0;
+}
 /* Title Section */
 
 #title {
