@@ -1,17 +1,11 @@
-body {
+section {
   font-family: 'Crimson Pro', serif;
   text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+section h1, section h2, section h3, section h4, section h5, section h6 {
   font-family: 'Crimson Pro', serif;
   margin: 20px;
-}
-h5 {
-  color :#C1CAF4;
-}
-h4{
-  margin : 30px;
 }
 
 /* Headings */
@@ -110,6 +104,7 @@ h4{
 .testimonial-text {
   font-size: 2rem;
   line-height: 1.5;
+  margin: 20px;
 }
 
 .testimonial-image {

@@ -1,6 +1,14 @@
 /* base layout css */
 body {
   overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+#wrapper {
+  min-height: 100%;
+  position: relative;
 }
 
 header{
@@ -57,8 +65,7 @@ header .navbar-brand:hover{
 }
 
 footer{
-  position: relative;
-  margin-top: 30px;
+  position: absolute;
   background-color: #9AB3F5;
   color: white !important;
   bottom: 0;
@@ -82,8 +89,8 @@ footer p {
 }
 
 main{
-    padding-bottom: 10%;
-    text-align: center;
+  padding-bottom: 55px;
+  text-align: center;
 }
 
 input{
@@ -120,6 +127,10 @@ a, .btn {
   height: 2em;
   background-color: #9AB3F5 !important;
   border-radius: 10%;
+}
+
+.text-primary {
+  color :#C1CAF4 !important;
 }
 
 /* login page */
