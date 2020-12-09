@@ -32,7 +32,6 @@ userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Job"
     }],
-    }
 });
 
 // get the full name of the candidate.
