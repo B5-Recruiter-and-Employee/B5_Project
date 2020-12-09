@@ -11,8 +11,6 @@ const expressSession = require("express-session"),
     flash = require("connect-flash");
 const passport = require("passport");
 
-
-
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
 const mongoose = require("mongoose");
@@ -67,9 +65,8 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     res.locals.loggedIn = req.isAuthenticated();
     console.log('status of user: ' ,res.locals.loggedIn)
-    // res.locals.user = req.user;
+    res.locals.user = req.user;
     app.locals.user = req.user;
-    console.log('current user: ',  req.user) //somehow empty
     res.locals.session = req.session;
     next();
 });
@@ -82,7 +79,6 @@ app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
 app.use(require('./routes/userRouter'));
 
-//app.use("/", router);
 //connect to the port
 app.listen(port, () => {
     console.log(`Server running on port: http://localhost:${ app.get("port")}`);
