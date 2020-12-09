@@ -87,14 +87,18 @@ module.exports = {
         next(error);
       });
   },
-  update: (req, res, next) => {
+
+  //UPDATE (WORKS)
+  update: (req,res,next) => {
     let candidateId = req.params.id;
+
     let candidateParams = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
       work_culture_preferences: req.body.work_culture_preferences,
     };
+
     Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
       .then(candidate => {
         res.locals.redirect = `/user/${req.app.locals.user._id}`;
@@ -102,9 +106,11 @@ module.exports = {
         next();
       })
       .catch(error => {
-        console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+        console.log(`Error updating candidate by ID: ${error.message}`); 
+        next(error);
       });
   },
+
   delete: (req, res, next) => {
     let candidateId = req.params.id;
     Candidate.findByIdAndRemove(candidateId)

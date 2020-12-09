@@ -16,7 +16,6 @@ userSchema = mongoose.Schema({
     email: {
         type: String,
         lowercase: true,
-        // unique: true,
     },
     password: {
         type: String
@@ -28,11 +27,12 @@ userSchema = mongoose.Schema({
     candidateProfile: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Candidate"
-    }, //probably we have to add here the associations as well for the convenience. but not sure for now. this is for add method in userController.
+    }, 
     jobOffers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Job"
     }],
+    }
 });
 
 // get the full name of the candidate.

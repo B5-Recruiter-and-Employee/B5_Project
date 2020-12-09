@@ -1,37 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
 
-<head>
-    <title>ReMatch</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <html lang="en" dir="ltr">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+ <head>
+   <title>ReMatch</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <%# Bootstrap style sheet %>
-    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <%# Google Font %>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
-    <%# Abang font for header item ReMatch %>
-    <link href="http://fonts.cdnfonts.com/css/abang" rel="stylesheet">
+   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
-    <%# our custom style sheets - link here to overwrite bootstrap %>
-    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+   <%# Bootstrap style sheet %>
+   <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   <%# Font %>
+   <link href="http://fonts.cdnfonts.com/css/abang" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@500&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
-</head>
+   <%# Abang font for header item ReMatch %>
+   <link href="http://fonts.cdnfonts.com/css/abang" rel="stylesheet">
+   <!-- Font Awesome -->
+   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
-<body>
-    
-    <%- include ('./partials/header') %>
-    <%- include('./flash'); -%>
-    <main class="container"> <%- body %> </main>
-    <%- include ('./partials/footer') %>
+  <%# our custom style sheets - link here to overwrite bootstrap %>
+   <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+   <link rel="stylesheet" href="/stylesheets/indexPage.css">
 
-    <%# bootstrap and jQuery scripts %>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="/javascripts/bootstrap.bundle.min.js"></script>
-</body>
+ </head>
 
-</html>
+ <body>
+
+  <div id="wrapper">
+   <%- include ('./partials/header') %>
+   <%- include('./flash'); -%>
+   <main> <%- body %> </main>
+   <%- include ('./partials/footer') %>
+  </div>
+   
+   <!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
+ </body>
+
+ </html>

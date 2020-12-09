@@ -19,7 +19,7 @@ module.exports = {
                 console.log("promise complete");
             });
     },
-
+  
     saveJob: (req, res) => {
         let newJob = new Job({
             job_title: req.body.job_title,
@@ -121,4 +121,3 @@ module.exports = {
 
     },
 }
-

@@ -1,8 +1,18 @@
 /* base layout css */
+body {
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+#wrapper {
+  min-height: 100%;
+  position: relative;
+}
 
 header{
-  background-color: #4D5B80;
-  color: white;
+  background-color: #FFFFFF;
   position: sticky;
   top: 0;
   padding-top: 10px;
@@ -10,11 +20,11 @@ header{
   width: 100%;
   left: 0;
   text-align: center;
+  z-index: 999;
 }
 
 header .headerItem{
     font-family: 'Abang', sans-serif;
-    color: white;
     font-size: 3rem;
 }
 
@@ -24,13 +34,23 @@ a.headerItem:hover {
 }
 
 header .nav-link {
-  color: white !important;
+  color: #120078 !important;
   font-size: 1.2rem;
   font-weight: 300;
   margin: 0 1rem;
 }
 
 header a.nav-link:hover:not(.btn) {
+  color: #7579E7 !important;
+}
+
+header .navbar-brand{
+  font-weight:bolder;
+  background: -webkit-linear-gradient(left, #120078, #98acf8 );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+header .navbar-brand:hover{
   color: #7579E7 !important;
 }
 
@@ -45,15 +65,15 @@ header a.nav-link:hover:not(.btn) {
 }
 
 footer{
-    background-color: #9AB3F5;
-    color: white !important;
-    position: fixed;
-    bottom: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 100%;
-    left: 0;
-    text-align: center;
+  position: absolute;
+  background-color: #9AB3F5;
+  color: white !important;
+  bottom: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  left: 0;
+  text-align: center;
 }
 footer p {
   color: white !important;
@@ -69,9 +89,8 @@ footer p {
 }
 
 main{
-    margin-top: 2.5rem;
-    padding-bottom: 10%;
-    text-align: center;
+  padding-bottom: 55px;
+  text-align: center;
 }
 
 input{
@@ -103,27 +122,24 @@ a, .btn {
   background-color: #7579E7 !important;
 }
 
-
-/* styles for login */
-/* .bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.navbar-toggler-icon{
+  width: 2em;
+  height: 2em;
+  background-color: #9AB3F5 !important;
+  border-radius: 10%;
 }
 
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-} */
+.text-primary {
+  color :#C1CAF4 !important;
+}
+
+/* login page */
+
 .form-login-signup {
   width: 100%;
   max-width: 350px;
   padding: 15px;
-  margin: auto;
+  margin : auto;
 }
 .form-login-signup .checkbox {
   text-align: center;

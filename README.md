@@ -208,3 +208,45 @@ Click edit to modify your connection string (SRV or Standard ):
 mongodb://localhost:27017
 ```
 - You'll be able to see our data folders on the left side
+
+## Adding new data into MongoDB and Elasticsearch
+(In this example I will talk about the collection jobs as an example, but everything applies for candidates too!)
+
+Packages needed:
+``` 
+npm i elasticsearch
+npm i mongoosastic
+```
+1. Open three separate terminal tabs. Run Elasticsearch, our app and Kibana respectively in them. You run Elasticsearch and Kibana like this after navigating into their folders:
+```
+bin/elasticsearch
+bin/kibana
+```
+2. Open MongoDB compass and connect with the current database ```mongodb://localhost:27017/rem_matching_test``` and open the jobs collection (optional but handy). 
+
+3. You can now save, delete and edit jobs in the app while they are saved both in MongoDB and Elasticsearch. Elasticsearch runs on ```localhost:9200```. Use this query to see the jobs in Elasticsearch: ```http://localhost:9200/jobs/_search```
+
+4. You can also seed data or delete everything by using the seed.js and clear_db.js files. Open a fourth terminal tab and use these commands after navigating into the project folder:
+```
+node clear_db.js
+node seed.js
+```
+5. Add a couple new jobs. Now you can go to Kibana (runs at ```http://localhost:5601```) and create a new index pattern for our jobs collection.
+
+### Additional tip: 
+if you get an unique key error while trying to insert new candidates:
+go to candidates collection on MongoCompass -> Indexes -> Drop the email index
+
+### In Kibana
+For the Kibana part I used this tutorial: https://youtu.be/RUw1WUsRuH8?t=471 starting around 14:10.
+
+Go to Kibana and navigate: -> Management -> Stack Management -> Index Patterns -> Create Index pattern. 
+Give your index pattern the same name as the collection has in MongoDB (in this case: jobs). If everything goes right Kibana should already suggest this below.
+Click ”Create index pattern” in ”Step 2 of 2: Configure settings”. Now you can see the different fields. 
+
+Query the jobs in your database on Kibana. 
+Navigate: Management -> dev tool
+and query this:
+```GET jobs/_search```
+
+The jobs are saved in MongoDB first and after that into Elasticsearch. If you use queries to edit the data in Kibana, the changes won’t be saved into MongoDB. 
