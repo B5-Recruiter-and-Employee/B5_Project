@@ -1,56 +1,114 @@
 <form action="<%= `/user/${user._id}/add`%>" method="post">
-  <h2>Create a new candidate profile</h2>
-  <div class="container">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Preferred position</span>
-      </div>
-      <input type="text" class="form-control" placeholder="The job position you're looking for" name="preferred_position" aria-describedby="basic-addon1">
-    </div>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Soft Skills</span>
+  <div class="container-fluid" id="questionaires">
+    <h2> Create your new profile </h2>
+    <section class="questions">
+      <div> What is your full name? </div>
+      <div>
+        <input type="text" name="name">
       </div>
+    </section>
+
+    <section class="questions">
+      <div> Which city do you live in? </div>
+      <div>
+        <input type="text" name="current_location">
+      </div>
+<<<<<<< HEAD
       <input type="text" class="form-control" placeholder="Tell us all about your soft skills" name="soft_skills" aria-describedby="basic-addon1">
     </div>
+=======
+    </section>
+>>>>>>> 370eb63 (update questionaires with input tags)
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Other Aspects</span>
+    <section class="questions">
+      <div> Where do you want to work? </div>
+      <div>
+        <input type="text" name="preferred_location">
       </div>
-      <input type="text" class="form-control" placeholder="Tell us more about your strengths and goals in life" name="other_aspects" aria-describedby="basic-addon1">
+      <div> Are you willing to relocate?</div>
+      <div>
+
+        <select name="willing_to_relocate">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+
+        </select>
+
+      </div>
+    </section>
+
+    <section class="questions">
+      <div> What is the job position you want to apply for? </div>
+      <div>
+        <input type="text" name="preferred_position">
+      </div>
+    </section>
+
+    <section class="questions">
+      <div> What are your soft skills? </div>
+      <div class="tag-container">
+       <input class = "inputanswer" id="input_softskill" type="text" name="soft_skills" data-role="tagsinput" >
+      </div>
+    </section>
+
+    <section class="questions">
+      <div> What does your tech stack look like? </div>
+      <div class="tag-container">
+        <input class = "inputanswer" id="input_techstack" type="text" name="hard_skills" data-role="tagsinput" >
+      </div>
+    </section>
+
+
+
+    <section class="questions">
+      <div> What are your other strengths or your goals that you want to share with the recruiters? </div>
+      <div>
+        <input type="text" name="other_aspects">
+      </div>
+    </section>
+
+    <section class="questions">
+      <div> What is important to you when you work in a team regarding working culture? </div>
+      <div class="tag-container">
+       <input class = "inputanswer" id="input_workculture" type="text" name="work_culture_preferences" data-role="tagsinput" value="">
+      </div>
+    </section>
+
+    <section class="questions">
+      <div> What is your desired monthly salary? </div>
+      <div>
+        <input type="text" name="salary">
+      </div>
+    </section>
+
+    <div>
+      <input type="submit" value="Submit">
     </div>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Work Culture Preferences</span>
-      </div>
-      <input type="text" class="form-control" placeholder="Tell us something about your desired team/company " name="work_culture_preferences" aria-describedby="basic-addon1">
-    </div>
-    <input type="submit" value="Submit">
 
   </div>
-
 </form>
 
-      <!--Commented out because the function for adding candidate profile to User should be implemented.
-
-      <label for="firstname">First name: </label>
-      <input type="text" placeholder="First Name" name="firstname">
-      <label for="lastname" >Last name: </label>
-      <input type="text" placeholder="Last Name" name="lastname">
-      <label for="email">Email</label>
-      <input type="email" placeholder="Email" name="email">
-      <input type="submit" value="Submit"> -->
 
 
-      <!-- <label> Preferred position: </label>
-        <input type="text" placeholder="Job you are looking for" name="preferred_position">
-        <label>Soft skills: </label>
-        <input type="text" placeholder="Soft skills" name="soft_skills">
-        <label>Other aspects: </label>
-        <input type="text" placeholder="Other aspects" name="other_aspects">
-        <label>Work culture preferences</label>
-        <input type="text" placeholder="Values, benefits..." name="work_culture_preferences">
-        <input type="submit" value="Submit"> -->
+
+<!--
+  <label>Preferred position: </label>
+  <input type="text" placeholder="Job you are looking for" name="preferred_position">
+  <label>Soft skills: </label>
+  <input type="text" placeholder="Soft skills" name="soft_skills">
+  <label>Other aspects: </label>
+  <input type="text" placeholder="Other aspects" name="other_aspects">
+  <label>Work culture preferences</label>
+  <input type="text" placeholder="Values, benefits..." name="work_culture_preferences">
+  <input type="submit" value="Submit">
+ -->
+<!--Commented out because the function for adding candidate profile to User should be implemented.
+  <label for="firstname">First name: </label>
+  <input type="text" placeholder="First Name" name="firstname">
+  <label for="lastname" >Last name: </label>
+  <input type="text" placeholder="Last Name" name="lastname">
+  <label for="email">Email</label>
+  <input type="email" placeholder="Email" name="email">
+  <input type="submit" value="Submit"> -->
