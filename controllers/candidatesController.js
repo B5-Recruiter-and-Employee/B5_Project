@@ -20,7 +20,7 @@ module.exports = {
     indexView: (req, res) => {
         res.render("candidates/index");
     },
-    
+
     new: (req, res) => {
         res.render("candidates/new");
     },
@@ -45,7 +45,7 @@ module.exports = {
 				next(error);
       });
     },
-    
+
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
@@ -63,7 +63,7 @@ module.exports = {
 				next(error);
 			});
 	},
-	
+
 	showView: (req, res) => {
         res.render('candidates/show');
     },
@@ -92,8 +92,8 @@ module.exports = {
       work_culture_preferences: req.body.work_culture_preferences,
     };
     //has to be findOneAndUpdate bc it works with mongoosastic
-    Candidate.findOneAndUpdate({_id: candidateId}, 
-      {$set: candidateParams}, 
+    Candidate.findOneAndUpdate({_id: candidateId},
+      {$set: candidateParams},
       {new: true})
     .then(candidate => {
       res.locals.redirect = `/candidates/${candidateId}`;
@@ -101,7 +101,7 @@ module.exports = {
       next();
       })
       .catch(error => {
-        console.log(`Error updating candidate by ID: ${error.message}`); 
+        console.log(`Error updating candidate by ID: ${error.message}`);
         next(error);
       });
   },

@@ -21,7 +21,7 @@ const mongoose = require("mongoose"),
         other_aspects: [String],
         work_culture_preferences: [{
             type: String,
-            required: true
+          //  required: true
         }],
         user: {
             type: mongoose.Schema.Types.ObjectId,

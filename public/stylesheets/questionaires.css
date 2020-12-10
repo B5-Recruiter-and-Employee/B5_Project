@@ -1,0 +1,98 @@
+/* Questionaires page */
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  /* margin: 8px 0; */
+  /* display: inline-block; */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+section.questions {
+  text-align: left;
+  font-size: 1.5em;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin:15px;
+}
+
+.container-fluid#questionaires{
+  padding : 5% 10%
+}
+
+input[type=submit] {
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px 10px;
+  background-color: #9ab3f5
+}
+input[type=submit]:hover {
+  background-color: #7579e7 ;
+}
+
+/* Questions with tags */
+.bootstrap-tagsinput{
+  color: black !important;
+  width: 100% !important;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.bootstrap-tagsinput input{
+  flex: 1;
+  font-size: 25px;
+  padding: 12px 20px;
+  outline: none;
+  border:0;
+  color: black !important;
+}
+
+
+.bootstrap-tagsinput .tag{
+  background-color: #f2f2ff;
+  color: black;
+  padding : 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 5px;
+  display: inline-block;
+  align-items: center;
+  cursor : default;
+}
+
+/* .tag-container{
+  background-color: #FFF;
+  border: 2px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  display:flex;
+  color: black;
+} */
+
+/* .tag-container .tag{
+  background-color: #f2f2ff;
+  color: black;
+  padding : 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 5px;
+  display: inline-block;
+  align-items: center;
+  cursor : default;
+} */
+
+/* .tag i{
+  font-size: 16px;
+  margin-left: 5px;
+} */
+
+/* .tag-container input{
+  flex: 1;
+  font-size: 25px;
+  padding: 12px 20px;
+  outline: none;
+  border:0;
+} */
