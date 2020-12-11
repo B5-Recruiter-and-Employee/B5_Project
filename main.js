@@ -4,7 +4,13 @@ const port = 3000,
     layouts = require("express-ejs-layouts"),
     path = require("path"),
     methodOverride = require("method-override"),
-    router = express.Router(),
+
+    router = express.Router();
+const User = require("./models/user");
+const expressSession = require("express-session"),
+    cookieParser = require("cookie-parser"),
+    flash = require("connect-flash");
+const passport = require("passport");
 
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
@@ -20,26 +26,59 @@ db.once("open", () => {
 app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 
+// app.use(
+//     methodOverride("_method", {
+//       methods: ["POST", "GET"]
+//     })
+//   ); //after it was deleted the update worked again.
+
+app.use(layouts);
+//defines the folder for static files (css f.e.)
+app.use(express.static(path.join(__dirname, 'public')));
 //tell express to parse URL-encoded data (request bodies)
 app.use(
     express.urlencoded({
         extended: false
     })
 );
-
 app.use(express.json());
-app.use(layouts);
 
-//defines the folder for static files (css f.e.)
-app.use(express.static(path.join(__dirname, 'public')));
- 
+app.use(cookieParser("secret_passcode"));
+//flash messages
+app.use(expressSession({
+    secret: "secret_passcode",  //obviously need to change that to something more secure
+    cookie: {
+        maxAge: 4000000
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    res.locals.loggedIn = req.isAuthenticated();
+    console.log('status of user: ' ,res.locals.loggedIn)
+    res.locals.user = req.user;
+    app.locals.user = req.user;
+    res.locals.session = req.session;
+    next();
+});
+
+
+
 //all the routers:
 app.use(require('./routes/errorRouter')); 
 app.use(require('./routes/homeRouter'));
 app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
-app.use(require('./routes/loginRouter'));
-app.use(require('./routes/signupRouter'));
+app.use(require('./routes/userRouter'));
 
 //connect to the port
 app.listen(port, () => {

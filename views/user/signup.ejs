@@ -2,14 +2,18 @@
 
     <%#form class="form-login-signup" action="/signup" method="post"
     -> no functionality implemented yet so should be changed when done %>
-    <form class="form-login-signup">
+    <form class="form-login-signup" action="/user/signup" method="post">
         <h1 class="h3 font-weight-normal">Almost done!</h1>
         <p class="mb-4 font-weight-light text-muted">Please sign up to see your matches.</p>
 
-        <input type="text" class="form-control top" name="first_name" placeholder="First name" required="" autofocus="">
-        <input type="text" class="form-control middle" name="last_name" placeholder="Last name" required="" autofocus="">
-        <input type="email" class="form-control bottom" name="email" placeholder="E-mail" required="">
-
+        <input type="text" class="form-control top" name="firstname" placeholder="First name" required="" autofocus="">
+        <input type="text" class="form-control middle" name="lastname" placeholder="Last name" required="" autofocus="">
+        <input type="email" class="form-control middle" name="email" placeholder="E-mail" required="">
+        <input type="password" class="form-control bottom" name="password" placeholder="password" required="">
+        <input type="radio" name="role" value="candidate" required="">
+        <label for="male">Candidate</label>
+        <input type="radio" name="role" value="recruiter" required="">
+        <label for="male">Recruiter</label>
         <button class="btn btn-lg btn-primary btn-block mx-0" type="submit">Sign up</button>
 
     </form>

@@ -1,0 +1,15 @@
+<form action="<%=`/user/${user._id}/update?_method=PUT`%>" method="post">
+  <h2>Edit information:</h2>
+  <label>First Name: </label>
+  <input type="text" name="firstname" value="<%= user.name.firstname %>" autofocus>
+  <label>Last Name: </label>
+  <input type="text" name="lastname" value="<%= user.name.lastname %>">
+  <label>E-Mail: </label>
+  <input type="email" name="email" value="<%= user.email %>">
+  <label>Password:</label>
+  <input type="password" name="password" value="<%= user.password %>">
+  <button type="submit">Update</button>
+</form>
+<!-- do not delete it completely in case we need an admin in the end.
+<button class="delete_user" onclick="location.href='/user/<%= user.id %>/delete?_method=DELETE'">Delete</button>
+-->
