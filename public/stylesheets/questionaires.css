@@ -33,6 +33,10 @@ input[type=submit]:hover {
   background-color: #7579e7 ;
 }
 
+.questions p{
+  font-size: 14px;
+}
+
 /* Questions with tags */
 .bootstrap-tagsinput{
   color: black !important;
