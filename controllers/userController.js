@@ -2,7 +2,10 @@ const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
+const { Client } = require('elasticsearch');
 const Job = require("../models/job_offer");
+const candidate = require('../models/candidate');
+const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
   login: (req, res) => {
@@ -34,6 +37,37 @@ module.exports = {
         console.log(`Error fetching user by ID: ${error.message}`);
         next(error);
       });
+  },
+
+  ////////////////////////////////////////// MATCHES /////////////////////////////////////
+  getMatches: (req, res, next) => {
+    let userId = req.params.id;
+
+    let user = User.findById(userId).then(user => {
+      let candidate = Candidate.findById(user.candidateProfile).then(candidate => {
+        let query = {
+          index: 'job_offers',
+          body: {
+            query: {
+              "bool": {
+                "must": [
+                  { "match": { "job_title": candidate.preferred_position } }
+                ],
+                // TODO: add the new fields of the models here and sort by importance
+              }
+            }
+          }
+        }
+
+        let hits;
+        client.search(query, (err, result) => {
+          if (err) { console.log(err) }
+          res.locals.matches = result.hits.hits;
+          console.log(result.hits.hits)
+          next()
+        });
+      });
+    });
   },
 
   showView: (req, res) => {
@@ -89,7 +123,7 @@ module.exports = {
   showThank: (req, res) => {
     res.render("thanks")
   },
-  
+
   edit: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId).then(user => {

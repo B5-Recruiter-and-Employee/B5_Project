@@ -1,35 +1,34 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>User Profile</title>
-</head>
-
-<body class="body">
-    <h1>User Profile</h1>
+<h1>User Profile</h1>
+<div>
     <div>
-        <div>
-            <ul>
-                <b>First Name:</b> <%= user.name.firstname%> <br>
-                <b>Last Name:</b> <%= user.name.lastname%> <br>
-                <b>E-Mail:</b> <%= user.email %> <br>
-                <% if (user.candidateProfile) { %>
-                    <b>Preferred position:</b> <%= candidate.preferred_position %> <br>
-                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
-                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
-                <% } %> 
-                <a href="<%=`/user/${user._id}/edit` %>">
-                    <button class="edit">Edit Personal Data</button>
-                </a>
-                <% if (user.candidateProfile) { %>
-                    <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>">
-                        <button class="edit">Edit Candidate Profile</button>
-                    </a>
-                <% } %> 
-            </ul>
-        </div>
-    </div>
-</body>
+        <ul>
+            <b>First Name:</b> <%= user.name.firstname%> <br>
+            <b>Last Name:</b> <%= user.name.lastname%> <br>
+            <b>E-Mail:</b> <%= user.email %> <br>
+            <% if (user.candidateProfile) { %>
+            <b>Preferred position:</b> <%= candidate.preferred_position %> <br>
+            <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
+            <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
+            <% } %>
+            <a href="<%=`/user/${user._id}/edit` %>">
+                <button class="edit">Edit Personal Data</button>
+            </a>
+            <% if (user.candidateProfile) { %>
+            <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>">
+                <button class="edit">Edit Candidate Profile</button>
+            </a>
+            <% } %>
+        </ul>
 
-</html>
+        <ul>
+            <h3>Your Matches:</h3>
+            <% for (let index = 0; index < matches.length; index++) { 
+                let source = matches[index]._source %>
+            <li><%= source.job_title %><br>
+                <b>Required tech stack:</b>
+                <% for (let i = 0; i < source.hard_skills.length; i++) { %>
+                <%= source.hard_skills[i] %><% if (i !== source.hard_skills.length-1) { %>,<% }} %></li>
+            <% } %>
+        </ul>
+    </div>
+</div>
