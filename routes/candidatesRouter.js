@@ -5,7 +5,7 @@ var router = require('express').Router();
 router.get("/candidates", candidatesController.index, candidatesController.indexView);
 
 //form for creating candidate
-router.get("/candidates/new", candidatesController.new);
+ router.get("/candidates/new", candidatesController.new);
 //when submitting the form
 router.post("/candidates/create", candidatesController.create, candidatesController.redirectView);
 //get the view of one candidate
