@@ -129,18 +129,6 @@ module.exports = {
       });
 
   },
-  delete: (req, res, next) => {
-    let userId = req.params.id;
-    User.findByIdAndRemove(userId)
-      .then(() => {
-        res.locals.redirect = "/user/login";
-        next();
-      })
-      .catch(error => {
-        console.log(`Error deleting user by ID: ${error.message}`);
-        next();
-      })
-  },
 
   signup: (req, res) => {
     res.render("user/signup");
@@ -313,3 +301,16 @@ module.exports = {
     res.render("jobs/index");
   }
 }
+
+ // delete: (req, res, next) => {
+  //   let userId = req.params.id;
+    // User.findByIdAndRemove(userId)
+    //   .then(() => {
+    //     res.locals.redirect = "/user/login";
+    //     next();
+    //   })
+    //   .catch(error => {
+    //     console.log(`Error deleting user by ID: ${error.message}`);
+    //     next();
+    //   })
+  // },

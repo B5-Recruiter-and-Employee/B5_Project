@@ -15,6 +15,6 @@ router.get("/candidates/:id/edit", candidatesController.edit);
 // update the information
 router.post("/candidates/:id/update", candidatesController.update, candidatesController.redirectView);
 //delete candidate
-router.get("/candidates/:id/delete", candidatesController.delete, candidatesController.redirectView);
+//router.get("/candidates/:id/delete", candidatesController.delete, candidatesController.redirectView);
 
 module.exports = router;
