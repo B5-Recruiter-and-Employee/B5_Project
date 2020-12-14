@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
 mongoosastic = require("mongoosastic"),
-   
+
 jobSchema = mongoose.Schema({
     job_title: {
         type: String,
@@ -18,8 +18,20 @@ jobSchema = mongoose.Schema({
         type: String,
         required: true
     }],
-    soft_skills: [String],
-    hard_skills: [String],
+    workculture_importance: {
+      enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
+    },
+    soft_skills: [{
+      type : String,
+      required : true
+    }],
+    hard_skills: [{
+      type : String,
+      required : true
+    }],
+    hardskills_importance: {
+      enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
+    },
     other_aspects: [String],
     user: {
         type: mongoose.Schema.Types.ObjectId,
