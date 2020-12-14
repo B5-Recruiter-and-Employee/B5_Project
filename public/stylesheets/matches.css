@@ -27,6 +27,7 @@ body{
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+    margin-bottom: 5px;
 }
 
 .card-body {
