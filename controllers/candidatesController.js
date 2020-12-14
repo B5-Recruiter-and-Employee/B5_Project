@@ -19,9 +19,13 @@ module.exports = {
       });
   },
 
-  indexView: (req, res) => {
-    res.render("candidates/index");
-  },
+    indexView: (req, res) => {
+        res.render("candidates/index");
+    },
+
+    new: (req, res) => {
+        res.render("candidates/new");
+    },
 
   new: (req, res) => {
     res.render("candidates/new");
@@ -176,4 +180,7 @@ module.exports = {
 
     //TODO Edit, Update, Delete
 }
+<<<<<<< HEAD
 >>>>>>> 370eb63 (update questionaires with input tags)
+=======
+>>>>>>> 7621aebbe1db561feb08e8fd13afabdfe7e72a95
