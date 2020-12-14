@@ -1,88 +1,175 @@
 <form action="<%= `/user/${user._id}/add_job`%>" method="post">
+  <div id="job_questions" class="carousel slide" data-ride="carousel" data-interval="false">
+    <ol class="carousel-indicators">
+      <li data-target="#job_questions" data-slide-to="0" class="active"></li>
+      <li data-target="#job_questions" data-slide-to="1"></li>
+      <li data-target="#job_questions" data-slide-to="2"></li>
+      <li data-target="#job_questions" data-slide-to="3"></li>
+      <li data-target="#job_questions" data-slide-to="4"></li>
+      <li data-target="#job_questions" data-slide-to="5"></li>
+      <li data-target="#job_questions" data-slide-to="6""></li>
+      <li data-target=" #job_questions" data-slide-to="7"></li>
+      <li data-target="#job_questions" data-slide-to="8"></li>
+      <li data-target="#job_questions" data-slide-to="9"></li>
+    </ol>
+    <div class="container-fluid" id="questionaires">
+      <div class="carousel-inner">
 
-    <div class="container-fluid" id= "questionaires">
-        <h2> Create a new job offer </h2>
-
-    <section class = "questions">
-        <div>What is the job title? </div>
-        <div>
-            <input type="text" name="job_title" required>
+        <!-- 1. What is the job title? -->
+        <div class="carousel-item active">
+          <section class="questions">
+            <div class="sentence">What is the job title? </div>
+            <div>
+              <input type="text" name="job_title" placeholder="...type here" required>
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What is the company name? </div>
-        <div>
-            <input type="text" name="company_name">
+        <!-- 2. What is the company name? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the company name? </div>
+            <div>
+              <input type="text" name="company_name" placeholder="...type here">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What is the location of the company? </div>
-        <div>
-            <input type="text" name="location">
+        <!-- 3. What is the location of the company? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the location of the company? </div>
+            <div>
+              <input type="text" name="location" placeholder="...type here">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What type of contract are you offering? </div>
-        <div>
-            <select name="job_type">
+        <!-- 4. What type of contract are you offering? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What type of contract are you offering? </div>
+            <div>
+              <select name="job_type">
                 <option value="permanent">Permanent employment (full-time)</option>
                 <option value="internship">Internship (full-time)</option>
                 <option value="working_student">Working student (part-time)</option>
                 <option value="flexible">Flexible</option>
-            </select>
+              </select>
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What is the company expecting to pay? </div>
-        <div>
-            <input type="text" name="salary">
+        <!-- 5. What is the company expecting to pay? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the company expecting to pay? </div>
+            <div>
+              <input type="text" name="salary" placeholder="...type here">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What tech-stack do you expect from the employee? </div>
-        <div>
-            <input class = "inputanswer" id="input_hardskill" type="text" name="hard_skills" data-role="tagsinput" value="">
+        <!-- 6. What tech-stack do you expect from the employee -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What tech-stack do you expect from the employee? </div>
+            <div>
+              <input class="inputanswer" id="input_hardskill" type="text" name="hard_skills" data-role="tagsinput" placeholder="...type here" value="">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>Which soft skills are essential for the job? </div>
-        <div>
-            <input class = "inputanswer" id="input_softskill" type="text" name="soft_skills" data-role="tagsinput" value="">
+        <!-- 7. Which soft skills are essential for the job? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Which soft skills are essential for the job? </div>
+            <div>
+              <input class="inputanswer" id="input_softskill" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput" value="">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>What kind of person are you looking for? <br>
-            <p>(Who will fit in your team? What is important for you/the company/the team?)</p>
-             </div>
-        <div>
-            <input type="text" name="other_aspects">
-        </div>
-    </section>
+        <!-- 8. What kind of person are you looking for? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What kind of person are you looking for?</div>
+            <p class="sub_sentence">(Who will fit in your team? What is important for you/the company/the team?)</p>
 
-    <section class = "questions">
-        <div>What will be the detailed tasks of the employee? </div>
-        <div>
-            <input type="text" name="description">
+            <div>
+              <input type="text" name="other_aspects" placeholder="...type here">
+            </div>
+          </section>
         </div>
-    </section>
 
-    <section class = "questions">
-        <div>Do you offer any of these options? </div>
-        <div>
-            <input class = "inputanswer" id="input_workculture" type="text" name="work_culture_keywords" data-role="tagsinput" value="">
+        <!-- 9. What will be the detailed tasks of the employee? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What will be the detailed tasks of the employee? </div>
+            <div>
+              <input type="text" name="description" placeholder="...type here">
+            </div>
+          </section>
         </div>
-    </section>
-    <div>
-        <input type="submit" value="Submit">
+
+        <!-- 10. Do you offer any of these options? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Do you offer any of these options? </div>
+
+            <div class="checkboxes">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="annual_bonus" id="annual_bonus">
+              <label class="form-check-label" for="annual_bonus"> Annual bonus potential </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="social_events" id="social_events">
+              <label class="form-check-label" for="social_events"> Social events </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="pto" id="pto">
+              <label class="form-check-label" for="pto"> Unlimited PTO </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="flexible_schedule" id="flexible_schedule">
+              <label class="form-check-label" for="flexible_schedule"> Flexible schedule </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="free_food/drink" id="free_food/drink">
+              <label class="form-check-label" for="free_food/drink"> Free Food/Drinks </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="fitness_wellness" id="fitness_wellness">
+              <label class="form-check-label" for="fitness_wellness"> Onsite Fitness and Wellness Centers</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="special_pricing" id="special_pricing">
+              <label class="form-check-label" for="special_pricing"> Special pricing on company’s products</label>
+            </div>
+            </div>
+
+            <div>
+              <input class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords" placeholder="...any other benefits? Type here" data-role="tagsinput" value="">
+            </div>
+
+          </section>
+
+          <div>
+            <input type="submit" value="Submit" id = "submit_job">
+          </div>
+
+        </div>
+      </div>
     </div>
-
+    <div class="carousel-controls">
+      <a class="carousel-control-prev" href="#job_questions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#job_questions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
-
+  </div>
 </form>

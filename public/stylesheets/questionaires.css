@@ -3,9 +3,7 @@
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
-  /* margin: 8px 0; */
-  /* display: inline-block; */
-  border: 1px solid #ccc;
+  border: #fff;
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -13,47 +11,65 @@ input[type=text], select {
 section.questions {
   text-align: left;
   font-size: 1.5em;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  margin:15px;
+  padding-top: 0;
+  padding-left: 5%;
+  margin: auto;
 }
 
+div.sentence{
+  font-size: 1.5em;
+}
+div.sub_sentence{
+  font-size: 1em;
+  margin-top: 5%;
+}
+p.sub_sentence{
+  color: #818181;
+}
+
+div.checkboxes{
+  margin-top: 2%;
+}
 .container-fluid#questionaires{
-  padding : 5% 10%
+  padding: 5% 15% 5%;
 }
 
-input[type=submit] {
+input[type=submit]#submit_job{
+  margin-top: 5%;
   font-size: 20px;
-  border-radius: 5px;
+  border-radius: 10%;
   padding: 10px 10px;
   background-color: #9ab3f5
 }
-input[type=submit]:hover {
-  background-color: #7579e7 ;
-}
 
-.questions p{
-  font-size: 14px;
+input[type=submit]#submit_candidate {
+  margin-top: 15%;
+  font-size: 20px;
+  border-radius: 10%;
+  padding: 10px 10px;
+  background-color: #9ab3f5
+}
+input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
+  background-color: #7579e7 ;
 }
 
 /* Questions with tags */
 .bootstrap-tagsinput{
   color: black !important;
   width: 100% !important;
-  border: 1px solid #ccc;
+  border: #fff;
   border-radius: 4px;
   box-sizing: border-box;
+  box-shadow: none;
 }
 .bootstrap-tagsinput input{
   flex: 1;
   font-size: 25px;
   padding: 12px 20px;
   outline: none;
-  border:0;
+  border: #fff;
   color: black !important;
 }
-
 
 .bootstrap-tagsinput .tag{
   background-color: #f2f2ff;
@@ -65,6 +81,28 @@ input[type=submit]:hover {
   display: inline-block;
   align-items: center;
   cursor : default;
+}
+
+/* Bootstrap Carousel */
+.carousel-indicators{
+  position: fixed;
+}
+.carousel-indicators li {
+  background-color: #2b2eb9 !important;
+  height: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.carousel-control-prev, .carousel-control-next  {
+  position: fixed !important;
+  background-color: none !important;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #2b2eb9 !important;
+  border-radius : 10%;
 }
 
 /* .tag-container{
