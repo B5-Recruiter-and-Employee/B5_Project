@@ -23,18 +23,18 @@ jobSchema = mongoose.Schema({
       importance: {
         type: Number,
         min : 1,
-        max : 4
-      },
-      required : true
+        max : 4,
+        required : true
+      }
     }],
     hard_skills: [{
       name: String,
       importance: {
         type: Number,
         min : 1,
-        max : 4
-      },
-      required : true
+        max : 4,
+        required : true
+      }
     }],
     other_aspects: [String],
     user: {

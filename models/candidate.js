@@ -17,9 +17,9 @@ const mongoose = require("mongoose"),
           importance: {
             type: Number,
             min : 1,
-            max : 4
-          },
-          required : true
+            max : 4,
+            required : true
+          }
         }],
         soft_skills: [{
           type : String,
@@ -31,9 +31,9 @@ const mongoose = require("mongoose"),
           importance: {
             type: Number,
             min : 1,
-            max : 4
-          },
-          required : true
+            max : 4,
+            required : true
+          }
         }],
         workculture_importance :{
             enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
