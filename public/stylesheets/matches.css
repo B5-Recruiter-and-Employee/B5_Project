@@ -63,5 +63,8 @@ body{
     width: 100% !important;
     margin-right: 10px;
     margin-left: 10px;
-    
+}
+
+#empty p{
+    text-align: center !important;
 }
