@@ -18,20 +18,24 @@ jobSchema = mongoose.Schema({
         type: String,
         required: true
     }],
-    workculture_importance: {
-      enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
-    },
     soft_skills: [{
-      type : String,
+      name: String,
+      importance: {
+        type: Number,
+        min : 1,
+        max : 4
+      },
       required : true
     }],
     hard_skills: [{
-      type : String,
+      name: String,
+      importance: {
+        type: Number,
+        min : 1,
+        max : 4
+      },
       required : true
     }],
-    hardskills_importance: {
-      enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
-    },
     other_aspects: [String],
     user: {
         type: mongoose.Schema.Types.ObjectId,

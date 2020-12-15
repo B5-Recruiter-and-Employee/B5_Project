@@ -11,23 +11,29 @@ const mongoose = require("mongoose"),
         expected_salary: String,
         current_location: String,
         preferred_location: [String],
-        willing_to_relocate: Boolean,
         work_experience: [String],
         hard_skills: [{
-          type : String,
-          required : true,
+          name: String,
+          importance: {
+            type: Number,
+            min : 1,
+            max : 4
+          },
+          required : true
         }],
-        hardskills_importance : {
-          enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
-        },
         soft_skills: [{
           type : String,
           required : true
         }],
         other_aspects: [String],
         work_culture_preferences: [{
-            type: String,
-            required: true
+          name: String,
+          importance: {
+            type: Number,
+            min : 1,
+            max : 4
+          },
+          required : true
         }],
         workculture_importance :{
             enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
