@@ -35,9 +35,6 @@ const mongoose = require("mongoose"),
             required : true
           }
         }],
-        workculture_importance :{
-            enum : ['very important', 'quite important', 'somewhat important', 'a little bit important', 'not important']
-        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
