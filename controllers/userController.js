@@ -219,10 +219,10 @@ module.exports = {
       });
   },
 
-  //EDITED, WORKS
   /**
  * Add the candidate profile information to the user that
- * is currently logged in. New jobs are being saved here!
+ * is currently logged in. 
+ * New jobs are being saved here!
  */
   addJobOffers: (req, res, next) => {
     userId = req.params.id;
@@ -235,11 +235,13 @@ module.exports = {
     })
     job.save().
       then((job) => {
-        User.findByIdAndUpdate(userId, {
+        // User.findByIdAndUpdate(userId, {
+          User.findOneAndUpdate({_id : userId}, {
           $addToSet: {
             jobOffers: job
-          }
-        })
+          }},
+          {new : true}
+          )
           .then(user => {
             req.flash('success', `The job offer has been created successfully!`);
             res.locals.redirect = `/user/${user._id}/offers`;
@@ -255,7 +257,6 @@ module.exports = {
   /**
  * Shows the questionnaire page for logged in recruiter user.
  */
-
   newJobOffer: (req, res) => {
     let userId = req.params.id;
     console.log("new link", userId);
@@ -271,6 +272,7 @@ module.exports = {
         next(error);
       });
   },
+
   /**
    * Shows only those job offers that are added
    * by a particular logged in recruiter.

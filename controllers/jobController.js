@@ -56,28 +56,26 @@ module.exports = {
         let jobId = req.params.jobId;
         let user = req.user;
 
-        // Job.findByIdAndDelete(jobId)
-        Job.findById(jobId, function (err, job){
-            job.remove(function (err, job){
-                if(err) {
-                    console.log(err)
-                } else {
-                    console.log('job deleted from MongoDB and Elasticsearch')
-                    console.log('user to update:', user);
-                    User.findOneAndUpdate({_id: user._id}, {new: true}, (err, job) => {
-                        if(err){
-                            req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
-                            console.log(`Error deleting job by ID: ${error.message}`);
-                        } else { 
-                            req.flash('success', `The job offer has been deleted successfully!`);
-                            res.redirect(`/user/${user._id}/offers`);
-                        }
-                    });
-                }
-            });
-        });
-
+        Job.findOneAndRemove({_id: jobId})
+            .then((job) =>{    
+                console.log('user to update:', user);
+                // delete job from user's jobs array (both in MongoDB and ES)
+                User.findOneAndUpdate({_id : user._id}, 
+                {$pull: {jobOffers: job._id}},
+                {new : true}   
+                    ).then((user) => {
+                    console.log('job deleted from the jobOffers Array')
+                    req.flash('success', `The job offer has been deleted successfully!`);
+                    res.redirect(`/user/${user._id}/offers`);
+                })
+                .catch(error => {
+                    req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
+                     console.log(`Error deleting job by ID: ${error.message}`);
+                     next(error);
+                })
+            })
     },
+}
 
         // getAllJobs: (req, res) => {
     //     Job.find({})
@@ -120,4 +118,3 @@ module.exports = {
     // createJobs: (req, res) => {
     //     res.render("jobs/new");
     // },
-}
