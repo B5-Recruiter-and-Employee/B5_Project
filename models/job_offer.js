@@ -6,7 +6,7 @@ jobSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    location: String,
+    location: [String],
     company_name: {
         type: String,
         required: true
