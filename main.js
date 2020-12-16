@@ -64,7 +64,6 @@ app.use(flash());
 app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     res.locals.loggedIn = req.isAuthenticated();
-    console.log('status of user: ' ,res.locals.loggedIn)
     res.locals.user = req.user;
     app.locals.user = req.user;
     res.locals.session = req.session;
@@ -79,6 +78,7 @@ app.use(require('./routes/homeRouter'));
 app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
 app.use(require('./routes/userRouter'));
+app.use(require('./routes/matchesRouter'));
 
 //connect to the port
 app.listen(port, () => {
