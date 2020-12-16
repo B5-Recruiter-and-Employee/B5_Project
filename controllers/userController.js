@@ -48,6 +48,7 @@ module.exports = {
         let query = {
           index: 'job_offers',
           body: {
+            size: 20,
             query: {
               "bool": {
                 "must": [
@@ -63,7 +64,6 @@ module.exports = {
         client.search(query, (err, result) => {
           if (err) { console.log(err) }
           res.locals.matches = result.hits.hits;
-          console.log(result.hits.hits)
           next()
         });
       });

@@ -25,6 +25,7 @@
             <% for (let index = 0; index < matches.length; index++) { 
                 let source = matches[index]._source %>
             <li><%= source.job_title %><br>
+                <%= matches[index]._score %><br>
                 <b>Required tech stack:</b>
                 <% for (let i = 0; i < source.hard_skills.length; i++) { %>
                 <%= source.hard_skills[i] %><% if (i !== source.hard_skills.length-1) { %>,<% }} %></li>
