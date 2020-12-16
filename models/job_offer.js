@@ -1,12 +1,12 @@
 const mongoose = require("mongoose"),
 mongoosastic = require("mongoosastic"),
-   
+
 jobSchema = mongoose.Schema({
     job_title: {
         type: String,
         required: true
     },
-    location: String,
+    location: [String],
     company_name: {
         type: String,
         required: true
