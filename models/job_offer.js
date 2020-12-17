@@ -1,12 +1,12 @@
 const mongoose = require("mongoose"),
 mongoosastic = require("mongoosastic"),
-   
+
 jobSchema = mongoose.Schema({
     job_title: {
         type: String,
         required: true
     },
-    location: String,
+    location: [String],
     company_name: {
         type: String,
         required: true
@@ -18,8 +18,24 @@ jobSchema = mongoose.Schema({
         type: String,
         required: true
     }],
-    soft_skills: [String],
-    hard_skills: [String],
+    soft_skills: [{
+      name: String,
+      importance: {
+        type: Number,
+        min : 1,
+        max : 4,
+        required : true
+      }
+    }],
+    hard_skills: [{
+      name: String,
+      importance: {
+        type: Number,
+        min : 1,
+        max : 4,
+        required : true
+      }
+    }],
     other_aspects: [String],
     user: {
         type: mongoose.Schema.Types.ObjectId,
