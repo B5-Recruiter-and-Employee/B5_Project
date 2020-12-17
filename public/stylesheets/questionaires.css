@@ -34,15 +34,7 @@ div.checkboxes{
   padding: 5% 15% 5%;
 }
 
-input[type=submit]#submit_job{
-  margin-top: 5%;
-  font-size: 20px;
-  border-radius: 10%;
-  padding: 10px 10px;
-  background-color: #9ab3f5
-}
-
-input[type=submit]#submit_candidate {
+input[type=submit]#submit_candidate, input[type=submit]#submit_job {
   margin-top: 15%;
   font-size: 20px;
   border-radius: 10%;
@@ -94,12 +86,12 @@ input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
   margin-left: 5px;
 }
 
-.questionaires_page .carousel-control-prev, .questionaires_page .carousel-control-next  {
+.questionaires-carousel .carousel-control-prev, .questionaires-carousel .carousel-control-next  {
   position: fixed !important;
   background-color: none !important;
 }
 
-.questionaires_page .carousel-control-next-icon, .questionaires_page .carousel-control-prev-icon {
+.questionaires-carousel .carousel-control-next-icon, .questionaires-carousel .carousel-control-prev-icon {
   width: 40px;
   height: 40px;
   background-color: #2b2eb9 !important;
