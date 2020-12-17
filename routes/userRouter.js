@@ -16,12 +16,13 @@ router.get("/user/:id/edit", userController.edit);
 router.post("/user/:id/update", userController.update, userController.redirectView);
 //router.get("/user/:id/delete", userController.delete, userController.redirectView); - user does not have to have the option to delete its account.
 
-//for candidate user
+//for candidate user: create candidate form & adding the information to the user.
 router.get("/user/:id/create_candidate", userController.newCandidateView);
 router.post("/user/:id/add", userController.add, userController.redirectView);
 
-//for recruiter user
+//for recruiter user.
 router.get("/user/:id/create_offers", userController.newJobOffer);
 router.get("/user/:id/offers", userController.indexJobOffers, userController.indexViewJobOffers);
 router.post("/user/:id/add_job", userController.addJobOffers, userController.redirectView);
+
 module.exports = router;
