@@ -68,3 +68,12 @@ body{
 #empty p{
     text-align: center !important;
 }
+
+.card hr {
+    width: 90%;
+}
+
+.btn-outline-primary {
+    color: #9AB3F5 !important;
+    border-color: #9AB3F5 !important;
+}
