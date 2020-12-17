@@ -1,13 +1,26 @@
 /* Questionaires page */
 
-input[type=text], select {
-  width: 100%;
+#questionaires input[type=text] {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  display: inline-block;
   padding: 12px 20px;
-  border: #fff;
+  color: black !important;
+  vertical-align: middle;
   border-radius: 4px;
+  max-width: 100%;
+  line-height: 22px;
+  cursor: text;
+  width: 100% !important;
   box-sizing: border-box;
-}
+  margin-top:15px;
 
+}
+#questionaires select{
+  margin: 3% 0%;
+  border:none;
+}
 section.questions {
   text-align: left;
   font-size: 1.5em;
@@ -22,6 +35,12 @@ div.sentence{
 div.sub_sentence{
   font-size: 1em;
   margin-top: 5%;
+}
+p.sub_sub_sentence{
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+  font-size: 1em;
+  color: black;
 }
 p.sub_sentence{
   color: #818181;
@@ -49,18 +68,17 @@ input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
 .bootstrap-tagsinput{
   color: black !important;
   width: 100% !important;
-  border: #fff;
   border-radius: 4px;
   box-sizing: border-box;
-  box-shadow: none;
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+  border:none;
+  padding:none;
 }
 .bootstrap-tagsinput input{
   flex: 1;
-  font-size: 25px;
-  padding: 12px 20px;
-  outline: none;
-  border: #fff;
   color: black !important;
+  border:none;
+  outline:none;
 }
 
 .bootstrap-tagsinput .tag{
