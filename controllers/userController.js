@@ -54,6 +54,7 @@ module.exports = {
                 "must": [
                   { "match": { "job_title": candidate.preferred_position } }
                 ],
+                "should":[{ "match": {"hard_skills":{query: "java" } }}]
                 // TODO: add the new fields of the models here and sort by importance
               }
             }

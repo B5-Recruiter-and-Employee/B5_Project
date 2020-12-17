@@ -7,7 +7,7 @@ var router = require('express').Router();
 // Routes for matches.
 // This is just an example for FE to work.
 
-router.get("/matches", matchesController.getAllMatches);
-router.get("/matches/candidate", matchesController.getCandidateMatch);
-router.get("/matches/job", matchesController.getJobMatch);
+router.get("/matches/:id",matchesController.getMatches,matchesController.getAllMatches);
+router.get("/matches/candidate/:cardId", matchesController.getCandidateMatch);
+router.get("/matches/job/:cardId", matchesController.getJobMatch);
 module.exports = router;
