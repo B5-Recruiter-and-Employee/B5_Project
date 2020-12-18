@@ -9,5 +9,5 @@ var router = require('express').Router();
 
 router.get("/matches/:id",matchesController.getMatches,matchesController.getAllMatches);
 router.get("/matches/candidate/:cardId", matchesController.getCandidateMatch);
-router.get("/matches/job/:cardId", matchesController.getJobMatch);
+router.get("/matches/job/:cardId", matchesController.getSingleMatch, matchesController.getJobMatch);
 module.exports = router;

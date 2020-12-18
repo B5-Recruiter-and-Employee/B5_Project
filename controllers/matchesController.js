@@ -16,6 +16,17 @@ module.exports = {
     getJobMatch: (req, res) => {
         res.render("matches/jobs/show");
     },
+
+    getSingleMatch: (req, res, next) => {
+        // let cardId = req.params.cardId
+
+        // Job.findById(cardId).then(card => {
+        //   res.locals.card = card;
+        //   console.log(card)
+        //   next()
+        // })
+    },
+
     getMatches: (req, res, next) => {
         let userId = req.params.id;
     
