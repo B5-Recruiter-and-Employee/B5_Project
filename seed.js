@@ -96,11 +96,20 @@ var job_array = [];
 // });
 
 data.forEach((c) => {
+    let techstack = [];
+    for (let i = 0; i < c.hard_skills.length ; i++){
+        techstack.push({
+            name : c.hard_skills[i],
+            importance : 3
+        })
+    }
         job_array.push( new Job({
+        hard_skills: techstack,
         job_title: c.job_title,
         location: c.location,
         company_name: c.company_name,
-        description: c.description
+        description: c.description,
+        work_culture_keywords: c.work_culture_keywords
     }).save());
 });
 
