@@ -106,10 +106,11 @@ module.exports = {
         next();
       })
       .catch(error => {
-        console.log(`Error updating candidate by ID: ${error.message}`); 
+        console.log(`Error updating candidate by ID: ${error.message}`);
         next(error);
       });
   },
+
 
   // delete: (req, res, next) => {
   //   let candidateId = req.params.id;
@@ -124,3 +125,4 @@ module.exports = {
   //     })
   // },
 }
+
