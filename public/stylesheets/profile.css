@@ -1,0 +1,22 @@
+.profile-buttons {
+    margin-top: 20px;
+    align-items: flex-end;
+}
+
+.message-btn {
+    margin-top: 40px;
+}
+
+.edit-form {
+    margin-left: 20px;
+}
+
+#edit-container {
+    text-align: left !important;
+    justify-content: center !important;
+}
+
+.personal-info {
+    margin-bottom: 30px;
+    text-align: center;
+}
