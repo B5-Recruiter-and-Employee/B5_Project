@@ -35,7 +35,7 @@ jobSchema.plugin(mongoosastic, {
 });
 
 //created a model for mapping
-var Job = mongoose.model('Job', jobSchema);
+var Job = mongoose.model('Job_offer', jobSchema);
 
 //create a mapping
 Job.createMapping((err, mapping) => {
@@ -44,4 +44,4 @@ Job.createMapping((err, mapping) => {
 
 
 //exports the mongoDB model
-module.exports = mongoose.model('Job', jobSchema);
+module.exports = mongoose.model('Job_offer', jobSchema);

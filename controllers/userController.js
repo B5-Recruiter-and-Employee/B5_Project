@@ -38,38 +38,6 @@ module.exports = {
       });
   },
 
-  ////////////////////////////////////////// MATCHES /////////////////////////////////////
-  getMatches: (req, res, next) => {
-    let userId = req.params.id;
-
-    let user = User.findById(userId).then(user => {
-      let candidate = Candidate.findById(user.candidateProfile).then(candidate => {
-        let query = {
-          index: 'job_offers',
-          body: {
-            size: 20,
-            query: {
-              "bool": {
-                "must": [
-                  { "match": { "job_title": candidate.preferred_position } }
-                ],
-                "should":[{ "match": {"hard_skills":{query: "java" } }}]
-                // TODO: add the new fields of the models here and sort by importance
-              }
-            }
-          }
-        }
-
-        let hits;
-        client.search(query, (err, result) => {
-          if (err) { console.log(err) }
-          res.locals.matches = result.hits.hits;
-          next()
-        });
-      });
-    });
-  },
-
   showView: (req, res) => {
     res.render('user/profile');
   },
