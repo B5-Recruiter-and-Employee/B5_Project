@@ -57,13 +57,15 @@
               </div>
               <hr>
 
+              <% if (typeof card.job_type !== 'undefined'){ %>
               <div class="col-sm-4 col-lg-3">
                 Employment type
               </div>
               <div class="col-sm-8 col-lg-9 text-secondary">
-                IN PROCESS
+                <%= card.job_type %>
               </div>
               <hr>
+              <% } %>
 
               <% if (typeof card.salary !== 'undefined'){ %>
               <div class="col-sm-4 col-lg-3">
@@ -92,37 +94,32 @@
                 Work culture
               </div>
               <div class="col-sm-8 col-lg-9 card-body">
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Fruits</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Drinks</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Home office</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Animal friendly</a>
+                <% for (let i = 0; i < card.work_culture_keywords.length; i++) { %>
+                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.work_culture_keywords[i] %></a>
+                <% } %>
               </div>
               <hr>
 
               <div class="col-sm-4 col-lg-3 my-auto">
-                Hard skills
+                Tech stack
               </div>
               <div class="col-sm-8 col-lg-9 card-body">
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">HTML</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">JavaScript</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Sass</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Angular</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Vue</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">React</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Redux</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">UI</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">UX</a>
+                <% for (let i = 0; i < card.hard_skills.length; i++) { %>
+                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.hard_skills[i].name %></a>
+                <% } %>
               </div>
-              <hr>
 
+              <% if ((typeof card.soft_skills !== 'undefined') && (card.soft_skills.length !== 0)){ %>
+              <hr>
               <div class="col-sm-4 col-lg-3 my-auto">
                 Soft skills
               </div>
               <div class="col-sm-8 col-lg-9 card-body">
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">creative</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">stress management</a>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1">team work</a>
+                <% for (let i = 0; i < card.soft_skills.length; i++) { %>
+                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.soft_skills[i].name %></a>
+                <% } %>
               </div>
+              <% } %>
             </div>
           </div>
         </div>

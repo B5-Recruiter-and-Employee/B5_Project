@@ -73,6 +73,13 @@ module.exports = {
   // showView: (req, res) => {
   //   res.render('candidates/show');
   // },
+
+
+
+showSingleCandidate: (req, res) => {
+    res.render("candidates/showSingleCandidate");
+},
+
   edit: (req, res, next) => {
 
     let candidateId = req.params.id;

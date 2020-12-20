@@ -1,36 +1,28 @@
-<!DOCTYPE html>
-<html>
+<h1>All job offers</h1>
 
-<head>
-    <meta charset="utf-8">
-    <title>All job offers</title>
-</head>
+<div>
+    <% jobs.forEach(job => { %>
 
-<body class="body">
-    <h1>All job offers</h1>
 
     <div>
-        <% jobs.forEach(job => { %>
-
-
-        <div>
-            <ul>
-                <b>Job Title:</b> <%= job.job_title%> <br>
-                <b>Company Location:</b> <%= job.location %> <br>
-                <b>Company Name:</b> <%= job.company_name %> <br>
-                <b>Job Description:</b> <%= job.description %> <br>
-            </ul>
-            <button class="single_view" onclick="location.href='/jobs/<%= job.id %>'">Edit offer</button>
-            <a href="<%= `/jobs/${job._id}/delete`%>">
-                <button class="single_view">Delete offer</button>
-            </a>
-        </div>
-        <br>
-
-        <% }); %>
-
+        <ul>
+            <b>Job Title:</b> <%= job.job_title%> <br>
+            <b>Company Location:</b> <%= job.location %> <br>
+            <b>Company Name:</b> <%= job.company_name %> <br>
+            <b>Job Description:</b> <%= job.description %> <br>
+        </ul>
+        <a href="<%= `/jobs/${job._id}/edit`%>">
+            <button class="single_view">Edit offer</button>
+        </a>
+        <a href="<%= `/jobs/${job._id}/delete`%>">
+            <button class="single_view">Delete offer</button>
+        </a>
+        <a href="<%= `/jobs/${job._id}`%>">
+            <button class="single_view">View offer</button>
+        </a>
     </div>
+    <br>
 
-</body>
+    <% }); %>
 
-</html>
+</div>

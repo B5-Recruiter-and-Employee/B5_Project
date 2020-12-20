@@ -45,7 +45,7 @@ module.exports = {
     //     res.render("jobs/new");
     // },
 
-    renderSingleJob: (req, res) => {
+    renderSingleJobEdit: (req, res) => {
         let jobId = req.params.jobId;
 
         Job.findOne({ '_id': jobId })
@@ -62,6 +62,24 @@ module.exports = {
             .then(() => {
                 console.log("promise complete");
             });
+    },
+
+    getSingleJob: (req, res, next) => {
+        let jobId = req.params.jobId
+
+        Job.findById(jobId).then(card => {
+          res.locals.card = card;
+          console.log(card)     
+          next()
+        })
+        .catch((error) => {
+            console.log(error.message);
+            return [];
+        })
+    },
+
+    renderJobMatch: (req, res) => {
+        res.render("jobs/showSingleJob");
     },
 
     updateJob: (req, res) => {
