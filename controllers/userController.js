@@ -157,7 +157,7 @@ module.exports = {
         if (!permission.granted) {
           return res.status(401).json({
             error: "You don't have enough permission to perform this action"
-          });
+          });v
         }
         next()
       } catch (error) {
@@ -184,31 +184,42 @@ module.exports = {
    * Add the candidate profile information to the user that
    * is currently logged in.
    */
-  add: (req, res, next) => {
-    userId = req.params.id;
-    let candidate = new Candidate({
-      preferred_position: req.body.preferred_position,
-      soft_skills: req.body.soft_skills,
-      other_aspects: req.body.other_aspects,
-      work_culture_preferences: req.body.work_culture_preferences
-    })
-    candidate.save().
-      then((candidate) => {
-        console.log("candidate:", candidate)
-        User.findByIdAndUpdate(userId, {
-          $set: {
-            candidateProfile: candidate
-          }
-        })
-          .then(user => {
-            res.locals.redirect = `/user/${user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-          });
-      })
-  },
+  // TODO: Uncomment later on, when the questionairre is updated
+  // add: (req, res, next) => {
+  //   userId = req.params.id;
+  //   let candidate = new Candidate({
+  //     job_type: req.body.job_type,
+  //     expected_salary: req.body.expected_salary,
+  //     preferred_position: req.body.preferred_position,
+  //     work_experience: req.body.work_experience,
+  //     hard_skills: {
+  //       name: req.body.name,
+  //       importance: req.body.importance,
+  //     },
+  //     soft_skills: req.body.soft_skills,
+  //     other_aspects: req.body.other_aspects,
+  //     work_culture_preferences: {
+  //       name: req.body.name,
+  //       importance: req.body.importance,
+  //     },
+  //   })
+  //   candidate.save().
+  //     then((candidate) => {
+  //       console.log("candidate:", candidate)
+  //       User.findByIdAndUpdate(userId, {
+  //         $set: {
+  //           candidateProfile: candidate
+  //         }
+  //       })
+  //         .then(user => {
+  //           res.locals.redirect = `/user/${user._id}`;
+  //           next();
+  //         })
+  //         .catch(error => {
+  //           console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+  //         });
+  //     })
+  // },
   /**
    * Shows the questionnaire page for logged in candidate user.
    */
@@ -232,32 +243,44 @@ module.exports = {
  * Add the candidate profile information to the user that
  * is currently logged in.
  */
-  addJobOffers: (req, res, next) => {
-    userId = req.params.id;
-    let job = new Job({
-      location: req.body.location,
-      company_name: req.body.company_name,
-      job_title: req.body.job_title,
-      salary: req.body.salary,
-      description: req.body.description
-    })
-    job.save().
-      then((job) => {
-        User.findByIdAndUpdate(userId, {
-          $addToSet: {
-            jobOffers: job
-          }
-        })
-          .then(user => {
+// TODO: Uncomment
+  // addJobOffers: (req, res, next) => {
+  //   userId = req.params.id;
+  //   let job = new Job({
+  //     job_title: req.body.job_title,
+  //     location: req.body.location,
+  //     company_name: req.body.company_name,
+  //     salary: req.body.salary,
+  //     description: req.body.description,
+  //     work_culture_keywords: req.body.work_culture_keywords,
+  //     soft_skills: {
+  //       name: req.body.name,
+  //       importance: req.body.importance,
+  //     },
+  //     hard_skills: {
+  //       name: req.body.name,
+  //       importance: req.body.impotance,
+  //     },
+  //     other_aspects: req.body.other_aspects,
+  //     user: req.body.user,
+  //   })
+  //   job.save().
+  //     then((job) => {
+  //       User.findByIdAndUpdate(userId, {
+  //         $addToSet: {
+  //           jobOffers: job
+  //         }
+  //       })
+  //         .then(user => {
 
-            res.locals.redirect = `/user/${user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-          });
-      })
-  },
+  //           res.locals.redirect = `/user/${user._id}`;
+  //           next();
+  //         })
+  //         .catch(error => {
+  //           console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+  //         });
+  //     })
+  // },
 
   /**
  * Shows the questionnaire page for logged in recruiter user.
@@ -305,5 +328,112 @@ module.exports = {
 
   indexViewJobOffers: (req, res) => {
     res.render("jobs/index");
+  },
+
+  // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
+  addJobOffers: (req, res, next) => {
+    userId = req.params.id;
+    let job = new Job({
+      job_title: 'Web Developer',
+      location: 'New York',
+      company_name: 'Salesforce',
+      salary: '50.000-60.000',
+      description: 'This is a Full Stack Developer position at Salesforce, NY.',
+      work_culture_keywords: ['party', 'loose', 'happy'],
+      soft_skills: [
+        {
+        name: 'honesty',
+        importance: 4,
+      },
+      {
+        name: 'leadership',
+        importance: 3,
+      },
+      {
+        name: 'trust',
+        importance: 2,
+      }],
+      hard_skills: [
+        {
+        name: 'NodeJS',
+        importance: 2,
+      },
+      {
+        name: 'ExpressJS',
+        importance: 3,
+      },
+      {
+        name: "Docker",
+        importance: 2,
+      }],
+      other_aspects: ["nothing","specific"],
+    })
+    job.save().
+      then((job) => {
+        User.findByIdAndUpdate(userId, {
+          $addToSet: {
+            jobOffers: job
+          }
+        })
+          .then(user => {
+
+            res.locals.redirect = `/user/${user._id}`;
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+          });
+      })
+  },
+
+  // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
+  add: (req, res, next) => {
+    userId = req.params.id;
+    let candidate = new Candidate({
+      job_type: 'Internship?',
+      expected_salary: '60000-63000',
+      preferred_position: 'Full Stack Developer',
+      work_experience: ['nothing so far, currently studying'],
+      hard_skills: [
+        {
+        name: "Java",
+        importance: 4,
+      },
+      {
+        name: "Javascript",
+        importance: 2,
+      },
+      {
+        name: "Python",
+        importance: 1,
+      }],
+      soft_skills: ["no", "idea"],
+      other_aspects: [''],
+      work_culture_preferences: [
+        {
+        name: 'boni',
+        importance: 3,
+      },
+      {
+        name: 'company parties',
+        importance: 4,
+      }],
+    })
+    candidate.save().
+      then((candidate) => {
+        console.log("candidate:", candidate)
+        User.findByIdAndUpdate(userId, {
+          $set: {
+            candidateProfile: candidate
+          }
+        })
+          .then(user => {
+            res.locals.redirect = `/user/${user._id}`;
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+          });
+      })
   }
 }

@@ -91,12 +91,18 @@ module.exports = {
   //UPDATE (WORKS)
   update: (req,res,next) => {
     let candidateId = req.params.id;
+    let work_culture_preferences = candidateId.work_culture_preferences;
+    let work_culture_preferences_params = {
+      name: work_culture_preferences.name,
+      importance: work_culture_preferences.importance,
+    };
 
     let candidateParams = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
-      work_culture_preferences: req.body.work_culture_preferences,
+      work_culture_preferences: work_culture_preferences_params
+      // work_culture_preferences: req.body.work_culture_preferences,
     };
 
     Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
