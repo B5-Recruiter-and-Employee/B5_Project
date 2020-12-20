@@ -1,7 +1,27 @@
-.profile-buttons {
-    margin-top: 20px;
-    align-items: flex-end;
+@media only screen and (min-width: 450px) {
+    .profile-buttons {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
 }
+
+@media only screen and (max-width: 450px) {
+    .profile-buttons {
+        margin: 20px 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .profile-buttons button{
+        margin-top: 5px;
+    }
+}
+
 
 .message-btn {
     margin-top: 40px;
@@ -19,4 +39,18 @@
 .personal-info {
     margin-bottom: 30px;
     text-align: center;
+    background-color:  #9AB3F5 !important;
+    padding: 10px 0px;
+    border-radius: 20px;
+    color: #f8f9fa !important;
+}
+
+.tag {
+    background-color: #9ab3f5 !important;
+    padding: 7px !important;
+}
+
+.color-cancel {
+    background-color: #f8f9fa !important;
+    color: #9AB3F5 !important;
 }

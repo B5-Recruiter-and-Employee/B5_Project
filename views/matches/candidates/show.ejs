@@ -1,15 +1,7 @@
 <div class="container">
   <div class="main-body">
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/matches">Matches</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Candidate info</li>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
+    <%- include('../../partials/matches/nav.ejs') %>
 
     <div class="row gutters-sm">
       <!-- Left column -->
@@ -23,7 +15,7 @@
                 <p class="text-secondary mb-1">Full Stack Developer</p>
                 <!-- Here we will insert the current location. -->
                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                <button class="btn btn-outline-primary">Message</button>
+                <%- include('../../partials/matches/connect.ejs') %>
               </div>
             </div>
           </div>
