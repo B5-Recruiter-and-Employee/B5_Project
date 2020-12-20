@@ -192,7 +192,9 @@ module.exports = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
-      work_culture_preferences: req.body.work_culture_preferences
+      //just for elasticsearch testing
+      hard_skills: {name: req.body.work_culture_preferences,
+                                importance: 3}
     })
     candidate.save().
       then((candidate) => {
