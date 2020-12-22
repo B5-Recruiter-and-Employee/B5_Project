@@ -115,7 +115,9 @@ module.exports = {
       email: req.body.email,
       password: req.body.password
     };
-    User.findByIdAndUpdate(userId, { $set: userParams })
+    //we need to use findOneAndUpdate instead of findByIdAndUpdate!
+    // User.findByIdAndUpdate(userId, { $set: userParams })
+    User.findOneAndUpdate({_id: userId}, {$set: userParams}, {new: true})
       .then(user => {
         res.locals.redirect = `/user/${userId}`;
         res.locals.user = user;
@@ -125,18 +127,7 @@ module.exports = {
         console.log(`Error updating user by ID: ${error.message}`);
         next(error);
       });
-  },
-  delete: (req, res, next) => {
-    let userId = req.params.id;
-    User.findByIdAndRemove(userId)
-      .then(() => {
-        res.locals.redirect = "/user/login";
-        next();
-      })
-      .catch(error => {
-        console.log(`Error deleting user by ID: ${error.message}`);
-        next();
-      })
+
   },
 
   signup: (req, res) => {
@@ -156,7 +147,7 @@ module.exports = {
         const permission = roles.can(req.user.role)[action](resource);
         if (!permission.granted) {
           return res.status(401).json({
-            error: "You don't have enough permission to perform this action"
+            error: "You don't have a permission to perform this action"
           });
         }
         next()
@@ -230,7 +221,8 @@ module.exports = {
 
   /**
  * Add the candidate profile information to the user that
- * is currently logged in.
+ * is currently logged in. 
+ * New jobs are being saved here!
  */
   addJobOffers: (req, res, next) => {
     userId = req.params.id;
@@ -243,14 +235,17 @@ module.exports = {
     })
     job.save().
       then((job) => {
-        User.findByIdAndUpdate(userId, {
+        // User.findByIdAndUpdate(userId, {
+          User.findOneAndUpdate({_id : userId}, {
           $addToSet: {
             jobOffers: job
-          }
-        })
+          }},
+          {new : true}
+          )
           .then(user => {
-
-            res.locals.redirect = `/user/${user._id}`;
+            req.flash('success', `The job offer has been created successfully!`);
+            res.locals.redirect = `/user/${user._id}/offers`;
+            //res.locals.redirect = `/user/${user._id}`;
             next();
           })
           .catch(error => {
@@ -277,12 +272,13 @@ module.exports = {
         next(error);
       });
   },
+
   /**
    * Shows only those job offers that are added
    * by a particular logged in recruiter.
    */
   indexJobOffers: (req, res, next) => {
-    let userId = req.params.id;
+    // let userId = req.params.id;
     let currentUser = res.locals.user;
     Job.find({}).then(jobs => {
       res.locals.jobs = jobs;
@@ -307,3 +303,16 @@ module.exports = {
     res.render("jobs/index");
   }
 }
+
+ // delete: (req, res, next) => {
+  //   let userId = req.params.id;
+    // User.findByIdAndRemove(userId)
+    //   .then(() => {
+    //     res.locals.redirect = "/user/login";
+    //     next();
+    //   })
+    //   .catch(error => {
+    //     console.log(`Error deleting user by ID: ${error.message}`);
+    //     next();
+    //   })
+  // },
