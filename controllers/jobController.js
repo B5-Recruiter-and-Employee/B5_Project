@@ -19,7 +19,7 @@ module.exports = {
     //             console.log("promise complete");
     //         });
     // },
-  
+
     // saveJob: (req, res) => {
     //     let newJob = new Job({
     //         job_title: req.body.job_title,
@@ -64,22 +64,19 @@ module.exports = {
             });
     },
 
-    getSingleJob: (req, res, next) => {
+    renderSingleJob: (req, res, next) => {
         let jobId = req.params.jobId
 
         Job.findById(jobId).then(card => {
-          res.locals.card = card;
-          console.log(card)     
-          next()
+            res.render("jobs/showSingleJob", {
+                card: card
+            });
+            next()
         })
-        .catch((error) => {
-            console.log(error.message);
-            return [];
-        })
-    },
-
-    renderJobMatch: (req, res) => {
-        res.render("jobs/showSingleJob");
+            .catch((error) => {
+                console.log(error.message);
+                return [];
+            })
     },
 
     updateJob: (req, res) => {

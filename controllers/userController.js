@@ -39,7 +39,21 @@ module.exports = {
   },
 
   showView: (req, res) => {
-    res.render('user/profile');
+    let userId = req.params.id;
+    User.findById(userId).then(user => {
+      if (user.candidateProfile) {
+        Candidate.findById(user.candidateProfile).then(candidate => {
+          User.findById(candidate.user).then(user => {
+            res.render('user/profile', {
+              card: candidate,
+              name: user.fullName
+            });
+          })
+        })
+      } else {
+        res.render('user/profile');
+      }
+    })
   },
 
   authenticate: passport.authenticate("local", {
@@ -193,8 +207,11 @@ module.exports = {
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
       //just for elasticsearch testing
-      hard_skills: {name: req.body.work_culture_preferences,
-                                importance: 3}
+      hard_skills: {
+        name: req.body.work_culture_preferences,
+        importance: 3
+      },
+      user: userId
     })
     candidate.save().
       then((candidate) => {

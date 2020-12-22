@@ -74,10 +74,23 @@ module.exports = {
   //   res.render('candidates/show');
   // },
 
-
-
 showSingleCandidate: (req, res) => {
-    res.render("candidates/showSingleCandidate");
+  let cardId = req.params.cardId
+
+  Candidate.findById(cardId).then(card => {
+    User.findById(card.user).then(user => {
+    res.render("candidates/showSingleCandidate", {
+      card: card,
+      name: user.fullName,
+      // current logged in user
+      user: res.locals.user
+    });
+    })
+  })
+  .catch((error) => {
+      console.log(error.message);
+      return [];
+  })
 },
 
   edit: (req, res, next) => {
