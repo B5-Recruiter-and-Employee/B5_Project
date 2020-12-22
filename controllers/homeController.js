@@ -1,4 +1,3 @@
-
 //create route to home page and log requests body
 exports.logRequestPaths = (req,res) => {
     console.log(req.body);
