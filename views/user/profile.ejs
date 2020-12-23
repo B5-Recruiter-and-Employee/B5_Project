@@ -1,35 +1,217 @@
-<!DOCTYPE html>
-<html>
+<div class="container">
+    <div class="main-body">
+        <hr>
+        <h1 class="personal-info">Personal profile</h1>
+        <div class="row gutters-sm">
+            <!-- Left column -->
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
 
-<head>
-    <meta charset="utf-8">
-    <title>User Profile</title>
-</head>
+                            <div class="mt-3">
+                                <h2>
+                                    <%= user.fullName %>
+                                </h2>
+                                <% if (user.role==='candidate' && user.candidateProfile) { %>
+                                    <p class="text-secondary mb-1">Full Stack Developer</p>
+                                    <!-- Here we will insert the current location. -->
+                                    <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-globe mr-2 icon-inline">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path
+                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                    </path>
+                                </svg>Email</h6>
+                            <span class="text-secondary">
+                                <%= user.email %>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Right column -->
+            <div class="col-md-8">
+                <% if (user.candidateProfile) { %>
+                    <!-- Candidate view -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Preferred position
+                                    </h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= candidate.preferred_position %>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Expected salary
+                                    </h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= candidate.expected_salary %>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Employment type
+                                    </h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= candidate.job_type %>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
 
-<body class="body">
-    <h1>User Profile</h1>
-    <div>
-        <div>
-            <ul>
-                <b>First Name:</b> <%= user.name.firstname%> <br>
-                <b>Last Name:</b> <%= user.name.lastname%> <br>
-                <b>E-Mail:</b> <%= user.email %> <br>
-                <% if (user.candidateProfile) { %>
-                    <b>Preferred position:</b> <%= candidate.preferred_position %> <br>
-                    <b>Work culture preferences:</b> <%= candidate.work_culture_preferences %> <br>
-                    <b>Other aspects:</b> <%= candidate.other_aspects %> <br>
-                <% } %> 
-                <a href="<%=`/user/${user._id}/edit` %>">
-                    <button class="edit">Edit Personal Data</button>
-                </a>
-                <% if (user.candidateProfile) { %>
-                    <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>">
-                        <button class="edit">Edit Candidate Profile</button>
-                    </a>
-                <% } %> 
-            </ul>
+                                    <h6 class="mb-0">
+                                        Preferred location
+                                    </h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <%= candidate.preferred_location %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Work culture
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <% candidate.work_culture_preferences.forEach ( preference => { %>
+                                    <div>
+                                        <a href="#" class="badge badge-pill badge-primary mr-1 my-1 tag">
+                                            <%= preference %>
+                                        </a>
+                                    </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Hard skills
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <% candidate.hard_skills.forEach ( skill => { %>
+                                    <div>
+                                        <a href="#" class="badge badge-pill badge-primary mr-1 my-1 tag">
+                                            <%= skill%>
+                                        </a>
+                                    </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        Soft skills
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <% candidate.soft_skills.forEach ( skill => { %>
+                                    <div>
+                                        <a href="#" class="badge badge-pill badge-primary mr-1 my-1 tag">
+                                            <%= skill %>
+                                        </a>
+                                    </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters-sm">
+                        <div id="questionnaire">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3">Work experience</h6>
+                                    <p>
+                                        <%= candidate.work_experience %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else {%>
+                        <!-- Recruiter view -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">
+                                            First name
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= user.name.firstname%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">
+                                            Last name
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= user.name.lastname%>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">
+                                            Email
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <%= user.email %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <div class="profile-buttons">
+                                <a href="<%=`/user/${user._id}/edit` %>">
+                                    <button class="btn btn-primary">Edit Personal Data</button>
+                                </a>
+                                <% if (user.candidateProfile) { %>
+                                    <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>">
+                                        <button class="btn btn-primary">Edit Candidate Profile</button>
+                                    </a>
+                                    <% } %>
+                            </div>
+            </div>
         </div>
     </div>
-</body>
-
-</html>
+</div>

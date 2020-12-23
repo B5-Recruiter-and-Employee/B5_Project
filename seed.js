@@ -12,15 +12,18 @@ mongoose.connection;
 var candidates = [
     {
         preferred_position: 'Hamburger eater',
-        work_culture_preferences: 'Everyone is nice to each other'
+        work_culture_preferences: 'Everyone is nice to each other',
+        soft_skills: 'empathy, time management, teamwork'
     },
     {
         preferred_position: 'Dog sitter',
-        work_culture_preferences: 'Dogs must be able to stand on their hands'
+        work_culture_preferences: 'Dogs must be able to stand on their hands',
+        soft_skills: 'constructive feedback, creativity, discipline'
     },
     {
         preferred_position: 'Software engineer',
-        work_culture_preferences: 'I want to beep boop'
+        work_culture_preferences: 'I want to beep boop',
+        soft_skills: 'active listenng, optimism, humor, sensitivity'
     }
 ];
 
@@ -59,7 +62,7 @@ Job.find({}, function(err, jobs_array) {
                 } else {}
             });
          }
-         console.log('-> All jobs deleted from MongoDB and Elasticsearch');    
+         console.log('Before seeding: all jobs deleted from MongoDB and Elasticsearch');    
     }
 });
 
@@ -77,7 +80,7 @@ Candidate.find({}, function(err, cand_array) {
                 } else {}
             });
          }
-         console.log('-> All candidates deleted from MongoDB and Elasticsearch');    
+         console.log('Before seedind: all candidates deleted from MongoDB and Elasticsearch');    
     }
 });
 
@@ -87,7 +90,8 @@ var job_array = [];
 candidates.forEach((c) => {
     cand_array.push(Candidate.create({
         preferred_position: c.preferred_position,
-        work_culture_preferences: c.work_culture_preferences
+        work_culture_preferences: c.work_culture_preferences,
+        soft_skills: c.soft_skills
     }));
 });
 
