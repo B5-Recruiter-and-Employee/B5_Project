@@ -1,16 +1,201 @@
 <form action="<%= `/user/${user._id}/add_job`%>" method="post">
-    <label for="job_title">Job Title: </label>
-    <input type="text" placeholder="Job Title" name="job_title" required>
-    <label for="location" >Job Location: </label>
-    <input type="text" placeholder="Job Location" name="location">
-    <label for="company_name" >Company: </label>
-    <input type="text" placeholder="Company Name" name="company_name">
-    <!-- <label for="zipcode" >Zip Code: </label>
-    <input type="text" placeholder="Zip Code" name="zip_code"> -->
-    <label for="salary">Salary: </label>
-    <input type="text" placeholder="Salary" name="salary">
-    <label for="description">Description: </label>
-    <input type="text" placeholder="Job Description" name="description">
-    <input type="submit" value="Submit">
-    
+  <div id="job_questions" class="carousel slide" data-ride="carousel" data-interval="false">
+    <ol class="carousel-indicators">
+      <li data-target="#job_questions" data-slide-to="0" class="active"></li>
+      <li data-target="#job_questions" data-slide-to="1"></li>
+      <li data-target="#job_questions" data-slide-to="2"></li>
+      <li data-target="#job_questions" data-slide-to="3"></li>
+      <li data-target="#job_questions" data-slide-to="4"></li>
+      <li data-target="#job_questions" data-slide-to="5"></li>
+      <li data-target="#job_questions" data-slide-to="6"></li>
+      <li data-target=" #job_questions" data-slide-to="7"></li>
+      <li data-target="#job_questions" data-slide-to="8"></li>
+      <li data-target="#job_questions" data-slide-to="9"></li>
+    </ol>
+    <div class="container-fluid" id="questionaires">
+      <div class="carousel-inner">
+
+        <!-- 1. What is the job title? -->
+        <div class="carousel-item active">
+          <section class="questions">
+            <div class="sentence">What is the job title? </div>
+            <div>
+              <input type="text" name="job_title" placeholder="...type here" required>
+            </div>
+          </section>
+        </div>
+
+        <!-- 2. What is the company name? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the company name? </div>
+            <div>
+              <input type="text" name="company_name" placeholder="...type here">
+            </div>
+          </section>
+        </div>
+
+        <!-- 3. What is the location of the company? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the location of the company? </div>
+            <div>
+              <input type="text" name="location" placeholder="...type here">
+            </div>
+          </section>
+        </div>
+
+        <!-- 4. What type of contract are you offering? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What type of contract are you offering? </div>
+            <div>
+              <select name="job_type">
+                <option value="permanent">Permanent employment (full-time)</option>
+                <option value="internship">Internship (full-time)</option>
+                <option value="working_student">Working student (part-time)</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+          </section>
+        </div>
+
+        <!-- 5. What is the company expecting to pay? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What is the company expecting to pay? </div>
+            <div>
+              <input type="text" name="salary" placeholder="...type here">
+            </div>
+          </section>
+        </div>
+
+        <!-- 6. What tech-stack do you expect from the employee -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What tech-stack do you expect from the employee? </div>
+            <p class="sub_sentence"> Please input your expected tech stack in the order of importance  </p>
+            <p class="sub_sub_sentence"> Very Important  </p>
+            <div class ="tag-container">
+              <input class="inputanswer" id="techstack4" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Quite Important </p>
+            <div class ="tag-container">
+              <input class="inputanswer" id="techstack3" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Somewhat Important </p>
+            <div class ="tag-container">
+              <input class="inputanswer" id="techstack2" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Not Much Important </p>
+            <div class ="tag-container">
+              <input class="inputanswer" id="techstack1" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+          </section>
+        </div>
+
+        <!-- 7. Which soft skills are essential for the job? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Which soft skills are essential for the job? </div>
+            <p class="sub_sentence"> Please input your preferences in the order of their importance  </p>
+            <p class="sub_sub_sentence"> Essential  </p>
+            <div class="tag-container">
+              <input class="inputanswer" id="softskill4" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Quite Important  </p>
+            <div class="tag-container">
+              <input class="inputanswer" id="softskill3" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Somewhat Important  </p>
+            <div class="tag-container">
+              <input class="inputanswer" id="softskill2" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+            <p class="sub_sub_sentence"> Not Much Important  </p>
+            <div class="tag-container">
+              <input class="inputanswer" id="softskill1" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
+            </div>
+          </section>
+        </div>
+
+        <!-- 8. What kind of person are you looking for? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Who will fit in your team? What is important for the company?</div>
+            <div>
+              <input type="text" name="other_aspects" placeholder="...type here">
+            </div>
+          </section>
+        </div>
+
+        <!-- 9. What will be the detailed tasks of the employee? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">What will be the detailed tasks of the employee? </div>
+            <div>
+              <input type="text" name="description" placeholder="...type here">
+            </div>
+          </section>
+        </div>
+
+        <!-- 10. Do you offer any of these options? -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Do you offer any of these options? </div>
+
+            <div class="checkboxes">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="annual_bonus" id="annual_bonus">
+              <label class="form-check-label" for="annual_bonus"> Annual bonus potential </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="social_events" id="social_events">
+              <label class="form-check-label" for="social_events"> Social events </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="pto" id="pto">
+              <label class="form-check-label" for="pto"> Unlimited PTO </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="flexible_schedule" id="flexible_schedule">
+              <label class="form-check-label" for="flexible_schedule"> Flexible schedule </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="free_food/drink" id="free_food/drink">
+              <label class="form-check-label" for="free_food/drink"> Free Food/Drinks </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="fitness_wellness" id="fitness_wellness">
+              <label class="form-check-label" for="fitness_wellness"> Onsite Fitness and Wellness Centers</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="special_pricing" id="special_pricing">
+              <label class="form-check-label" for="special_pricing"> Special pricing on company’s products</label>
+            </div>
+            </div>
+
+            <div>
+              <input class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords" placeholder="...any other benefits? Type here" data-role="tagsinput" value="">
+            </div>
+
+          </section>
+
+          <div>
+            <input type="submit" value="Submit" id = "submit_job">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls questionaires-carousel">
+      <a class="carousel-control-prev" href="#job_questions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#job_questions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
 </form>

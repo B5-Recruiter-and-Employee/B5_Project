@@ -9,3 +9,4 @@ router.post("/", homeController.logRequestPaths);
 router.get("/", homeController.getIndex);
 
 module.exports = router;
+
