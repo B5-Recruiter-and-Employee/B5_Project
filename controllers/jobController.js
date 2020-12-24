@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 module.exports = {
 
-    renderSingleJob: (req, res) => {
+    renderSingleJobEdit: (req, res) => {
         let jobId = req.params.jobId;
 
         Job.findOne({ '_id': jobId })
@@ -21,6 +21,21 @@ module.exports = {
             .then(() => {
                 console.log("promise complete");
             });
+    },
+
+    renderSingleJob: (req, res, next) => {
+        let jobId = req.params.jobId
+
+        Job.findById(jobId).then(card => {
+            res.render("jobs/showSingleJob", {
+                card: card
+            });
+            next()
+        })
+            .catch((error) => {
+                console.log(error.message);
+                return [];
+            })
     },
 
     updateJob: (req, res) => {

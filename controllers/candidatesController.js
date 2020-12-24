@@ -73,6 +73,26 @@ module.exports = {
   // showView: (req, res) => {
   //   res.render('candidates/show');
   // },
+
+showSingleCandidate: (req, res) => {
+  let cardId = req.params.cardId
+
+  Candidate.findById(cardId).then(card => {
+    User.findById(card.user).then(user => {
+    res.render("candidates/showSingleCandidate", {
+      card: card,
+      cardOwner: {name: user.fullName, email: user.email},
+      // current logged in user
+      user: res.locals.user
+    });
+    })
+  })
+  .catch((error) => {
+      console.log(error.message);
+      return [];
+  })
+},
+
   edit: (req, res, next) => {
 
     let candidateId = req.params.id;
@@ -95,7 +115,9 @@ module.exports = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
-      work_culture_preferences: req.body.work_culture_preferences,
+      //just for testing elasticsearch
+      hard_skills: {name: req.body.work_culture_preferences,
+        importance: 4}
     };
 
     // Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })

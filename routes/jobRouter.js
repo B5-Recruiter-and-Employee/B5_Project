@@ -11,6 +11,10 @@ router.post("/jobs/:jobId/update", jobController.updateJob)
 
 router.get("/jobs/:jobId/delete", jobController.deleteJob);
 
-router.get('/jobs/:jobId', jobController.renderSingleJob);
+// edit form
+router.get('/jobs/:jobId/edit', jobController.renderSingleJobEdit);
+
+// render single job
+router.get("/jobs/:jobId", jobController.renderSingleJob);
 
 module.exports = router;

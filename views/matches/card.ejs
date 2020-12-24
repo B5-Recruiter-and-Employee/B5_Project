@@ -5,7 +5,8 @@
       <h5 class="card-title"><%= title %></h5>
       <h6 class="card-subtitle mb-2 text-muted"><%= description %></h6>
       <p class="card-text"><%= description_text %></p>
-      <a href="/matches/candidate" class="btn btn-primary">More...</a>
+      <!-- HARDCODED for jobs and doesn't work with candidates yet -->
+      <a href="/jobs/<%= id %>" class="btn btn-primary">More...</a>
     </div>
     <div class="card-footer bg-transparent border-success"></div>
   </div>

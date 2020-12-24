@@ -2,7 +2,9 @@ const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
+const { Client } = require('elasticsearch');
 const Job = require("../models/job_offer");
+const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
   login: (req, res) => {
@@ -37,7 +39,21 @@ module.exports = {
   },
 
   showView: (req, res) => {
-    res.render('user/profile');
+    let userId = req.params.id;
+    User.findById(userId).then(user => {
+      if (user.candidateProfile) {
+        Candidate.findById(user.candidateProfile).then(candidate => {
+          User.findById(candidate.user).then(user => {
+            res.render('user/profile', {
+              card: candidate,
+              cardOwner: {name: user.fullName, email: user.email}
+            });
+          })
+        })
+      } else {
+        res.render('user/profile');
+      }
+    })
   },
 
   authenticate: passport.authenticate("local", {
@@ -181,7 +197,12 @@ module.exports = {
       preferred_position: req.body.preferred_position,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
-      work_culture_preferences: req.body.work_culture_preferences
+      //just for elasticsearch testing
+      hard_skills: {
+        name: req.body.work_culture_preferences,
+        importance: 3
+      },
+      user: userId
     })
     candidate.save().
       then((candidate) => {
