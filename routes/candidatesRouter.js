@@ -16,5 +16,7 @@ var router = require('express').Router();
 router.get("/candidates/:id/edit", candidatesController.edit);
 // Update the candidate's info.
 router.post("/candidates/:id/update", candidatesController.update, candidatesController.redirectView);
+// Render single candidate profile. (TODO: add data)
+router.get("/candidates/:cardId", candidatesController.showSingleCandidate);
 
 module.exports = router;

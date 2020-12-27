@@ -10,9 +10,9 @@ router.get("/user/signup", userController.signup);
 router.post("/user/signup", userController.createAccount, userController.redirectView);
 router.get("/thanks", userController.showThank)
 
-
-//views for user and user's personal data.
+//views for user and user's personal data
 router.get("/user/:id", userController.show, userController.showView);  
+
 router.get("/user/:id/edit", userController.edit);
 router.post("/user/:id/update", userController.update, userController.redirectView);
 //router.get("/user/:id/delete", userController.delete, userController.redirectView); - user does not have to have the option to delete its account.

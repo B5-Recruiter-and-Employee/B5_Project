@@ -106,10 +106,14 @@ a, .btn {
   -webkit-transition: 0.3s;
 }
 
+a {
+  color: #9AB3F5 !important;
+}
+
 
 /* overwrite bootstrap classes */
 
-.btn-primary{
+.btn-primary, .badge-primary {
    color : white !important;
    font-weight: bold !important;
    background-color: #9AB3F5 !important;

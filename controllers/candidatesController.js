@@ -73,6 +73,26 @@ module.exports = {
   // showView: (req, res) => {
   //   res.render('candidates/show');
   // },
+
+showSingleCandidate: (req, res) => {
+  let cardId = req.params.cardId
+
+  Candidate.findById(cardId).then(card => {
+    User.findById(card.user).then(user => {
+    res.render("candidates/showSingleCandidate", {
+      card: card,
+      cardOwner: {name: user.fullName, email: user.email},
+      // current logged in user
+      user: res.locals.user
+    });
+    })
+  })
+  .catch((error) => {
+      console.log(error.message);
+      return [];
+  })
+},
+
   edit: (req, res, next) => {
 
     let candidateId = req.params.id;
@@ -88,7 +108,6 @@ module.exports = {
       });
   },
 
-  //UPDATE (WORKS)
   update: (req,res,next) => {
     let candidateId = req.params.id;
     let work_culture_preferences = candidateId.work_culture_preferences;
@@ -105,30 +124,36 @@ module.exports = {
       // work_culture_preferences: req.body.work_culture_preferences,
     };
 
-    Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
-      .then(candidate => {
-        res.locals.redirect = `/user/${req.app.locals.user._id}`;
-        res.locals.candidate = candidate;
-        next();
-      })
-      .catch(error => {
-        console.log(`Error updating candidate by ID: ${error.message}`);
-        next(error);
-      });
+    // Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
+    Candidate.findOneAndUpdate({_id: candidateId}, {$set: candidateParams}, {new: true}, (err, job) => {
+        if(err) {
+            req.flash('error', `There has been an error while updating the candidate data: ${error.message}`);
+            console.log(`Error updating candidate by ID: ${error.message}`);
+            next(error);
+        } else {
+            //let user = res.locals.user;
+            req.flash('success', `The candidate has been successfully updated!`);
+            res.locals.redirect = `/user/${req.app.locals.user._id}`;
+            console.log('candidate updated in MongoDB and Elasticsearch');
+            next();
+        }
+    });
   },
 
-
+  //candidate doesn't have the possibility to delete their profile yet
   // delete: (req, res, next) => {
   //   let candidateId = req.params.id;
-  //   Candidate.findByIdAndRemove(candidateId)
-  //     .then(() => {
-  //       res.locals.redirect = "/candidates";
-  //       next();
+  //     Candidate.findById(candidateId, function (err, candidate){
+  //       candidate.remove(function (err, job){
+  //         if(err) {
+  //           console.log(err)
+  //         } else {
+  //           req.flash('success', `The candidate data has been successfully deleted!`);
+  //           res.redirect(`/user/${user._id}`);
+  //           console.log('candidate deleted from MongoDB and Elasticsearch');
+  //         }
+  //       })
   //     })
-  //     .catch(error => {
-  //       console.log(`Error deleting candidate by ID: ${error.message}`);
-  //       next();
-  //     })
-  // },
-}
+  //  },
+ }
 
