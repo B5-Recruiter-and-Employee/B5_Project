@@ -146,10 +146,13 @@ module.exports = {
 
   },
 
-  signup: (req, res) => {
-    res.render("user/signup");
+  recruiterSignUp: (req, res) => {
+    res.render("user/signupRecruiter");
   },
 
+  candidateSignUp: (req, res) => {
+    res.render("user/signupCandidate");
+  },
   /**
    * Restricts access: allow user with certain roles to access the route.
    * @param action what action the user can perform. Value such as readAny, deleteAny etc.
@@ -231,19 +234,20 @@ module.exports = {
    * Shows the questionnaire page for logged in candidate user.
    */
   newCandidateView: (req, res) => {
-    let userId = req.params.id;
-    console.log("new link", userId);
-    User.findById(userId)
-      .then(user => {
-        res.locals.user = user;
-        res.render('candidates/new', {
-          user: user
-        });
-      })
-      .catch(error => {
-        console.log(`Error fetching user by ID: ${error.message}`);
-        next(error);
-      });
+    // let userId = req.params.id;
+    // console.log("new link", userId);
+    // User.findById(userId)
+    //   .then(user => {
+    //     res.locals.user = user;
+    //     res.render('candidates/new', {
+    //       user: user
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(`Error fetching user by ID: ${error.message}`);
+    //     next(error);
+    //   });
+    res.render('candidates/new');
   },
 
   /**
@@ -447,6 +451,53 @@ module.exports = {
     })
   },
 
+  signUpCandidate: (req, res, next) => {
+    // gets CandidateId -> create user -> $set candidate
+    // for candidate also $set userId
+    candidateId = req.params.candidateId;
+    res.locals.candidateId = candidateId;
+
+    let userParams = {
+      name: {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
+      },
+      email: req.body.email,
+      role: 'candidate',
+      password: req.body.password
+      
+    };
+
+    if (req.skip) next();
+    let newUSer = new User(userParams);
+    User.register(newUSer, req.body.password, (error, user) => {
+      console.log('bitte', user);
+      if (user) {
+        req.flash('success', `The user ${user.fullName} was created successfully!`);
+        res.locals.redirect = `/thanks`;
+        res.locals.user = user;
+
+        // assign userId to the created job
+        Job.findOneAndUpdate({_id: candidateId}, {$set: {user: user._id}}, {new: true})
+        .then(candidate => {
+          next();
+        })
+        .catch(error => {
+          console.log(`Error updating candidate with user ID: ${error.message}`);
+          next(error);
+        });
+      } else {
+        console.log(`Error saving user profile: ${error.message}`);
+        res.locals.redirect = "/user/signup";
+        req.flash(
+          "error",
+          `Failed to create user account because: ${error.message}.`
+        );
+        next();
+      }
+    })
+  },
+
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   add: (req, res, next) => {
     // userId = req.params.id;
@@ -483,7 +534,7 @@ module.exports = {
     candidate.save().
       then((candidate) => {
         console.log("candidate:", candidate)
-        res.locals.redirect = `/user/signup/${user._id}`;
+        res.locals.redirect = `/user/signup/${candidate._id}`;
         // create the candidate with entered data -> redirect to signup page
         // send candidateId to another method signUpCandidate()
         // signUpCandidate() -> gets candidateId -> create user -> $set candidateProfile

@@ -9,13 +9,15 @@ router.get("/user/logout", userController.logout, userController.redirectView);
 router.get("/thanks", userController.showThank)
 
 //sign up links candidate
-router.get("/signup/candidate", userController.newCandidateView);
-router.post("/user/:id/add", userController.add, userController.redirectView);
+router.get("/signup/candidate", userController.newCandidateView);  //render questionnaire
+router.post("/signup/candidate", userController.add, userController.redirectView); //handle data from questionnaire
+router.get("/user/signup/:candidateId", userController.candidateSignUp); // render signup page
+router.post("/user/signup/:candidateId", userController.signUpCandidate, userController.redirectView);
 
 //sign up links recruiter
 router.get("/signup/recruiter", userController.newJobOffer); // render questionnaire
 router.post("/signup/recruiter", userController.addJobOffers, userController.redirectView); // handle data
-router.get("/user/signup/:jobId", userController.signup); // render signup page
+router.get("/user/signup/:jobId", userController.recruiterSignUp); // render signup page
 router.post("/user/signup/:jobId", userController.signUpRecruiter, userController.redirectView);
 
 //views for user and user's personal data

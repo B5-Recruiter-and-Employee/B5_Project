@@ -1,6 +1,6 @@
 <div class="text-center">
 
-    <form class="form-login-signup" action="<%= `/user/signup/${jobId}`%>" method="post">
+    <form class="form-login-signup" action="<%= `/user/signup/${candidateId}`%>" method="post">
       <img class="mb-4" src="/images/logo7-2.png" alt="" width="100" height="100">
         <h1 class="h3 font-weight-normal">Almost done!</h1>
         <p class="mb-4 font-weight-light text-muted">Please sign up to see your matches.</p>
@@ -9,7 +9,7 @@
         <input type="text" class="form-control middle" name="lastname" placeholder="Last name" required="" autofocus="">
         <input type="email" class="form-control middle" name="email" placeholder="E-mail" required="">
         <input type="password" class="form-control bottom" name="password" placeholder="password" required="">
-        <input type="radio" name="role" value="candidate" required="">
+        <input type="radio" name="role" value="candidate" required="" checked>
         <label for="male">Candidate</label>
         <input type="radio" name="role" value="recruiter" required="">
         <label for="male">Recruiter</label>
