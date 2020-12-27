@@ -294,19 +294,20 @@ module.exports = {
  * Shows the questionnaire page for logged in recruiter user.
  */
   newJobOffer: (req, res) => {
-    let userId = req.params.id;
-    console.log("new link", userId);
-    User.findById(userId)
-      .then(user => {
-        res.locals.user = user;
-        res.render('jobs/new', {
-          user: user
-        });
-      })
-      .catch(error => {
-        console.log(`Error fetching user by ID: ${error.message}`);
-        next(error);
-      });
+    // let userId = req.params.id;
+    // console.log("new link", userId);
+    // User.findById(userId)
+    //   .then(user => {
+    //     res.locals.user = user;
+    //     res.render('jobs/new', {
+    //       user: user
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(`Error fetching user by ID: ${error.message}`);
+    //     next(error);
+    //   });
+    res.render('jobs/new');
   },
 
   /**
@@ -341,7 +342,7 @@ module.exports = {
 
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   addJobOffers: (req, res, next) => {
-    userId = req.params.id;
+    // userId = req.params.id;
     let job = new Job({
       job_title: 'Web Developer',
       location: 'New York',
@@ -379,25 +380,76 @@ module.exports = {
     })
     job.save().
       then((job) => {
-        User.findByIdAndUpdate(userId, {
-          $addToSet: {
-            jobOffers: job
-          }
-        })
-          .then(user => {
+        // create the job with entered data -> redirect to signup page
+        // send JobId to another method signUpJob()
+        res.locals.redirect = `/user/signup/${job._id}`;
+        
+      //   User.findByIdAndUpdate(userId, {
+      //     $addToSet: {
+      //       jobOffers: job
+      //     }
+      //   })
+      //     .then(user => {
 
-            res.locals.redirect = `/user/${user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-          });
+      //       res.locals.redirect = `/user/${user._id}`;
+      //       next();
+      //     })
+      //     .catch(error => {
+      //       console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+      //     });
       })
+  },
+
+  signUpRecruiter: (req, res, next) => {
+    // gets JobId -> create user -> $set jobOffer
+    // for Job also $set userId
+    jobId = req.params.jobId;
+    res.locals.jobId = jobId;
+
+    let userParams = {
+      name: {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
+      },
+      email: req.body.email,
+      role: 'recruiter',
+      password: req.body.password,
+      jobOffers: [jobId]
+    };
+
+    if (req.skip) next();
+    let newUSer = new User(userParams);
+    User.register(newUSer, req.body.password, (error, user) => {
+      console.log('bitte', user);
+      if (user) {
+        req.flash('success', `The user ${user.fullName} was created successfully!`);
+        res.locals.redirect = `/thanks`;
+        res.locals.user = user;
+
+        // assign userId to the created job
+        Job.findOneAndUpdate({_id: jobId}, {$set: {user: user._id}}, {new: true})
+        .then(job => {
+          next();
+        })
+        .catch(error => {
+          console.log(`Error updating job with user ID: ${error.message}`);
+          next(error);
+        });
+      } else {
+        console.log(`Error saving user profile: ${error.message}`);
+        res.locals.redirect = "/user/signup";
+        req.flash(
+          "error",
+          `Failed to create user account because: ${error.message}.`
+        );
+        next();
+      }
+    })
   },
 
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   add: (req, res, next) => {
-    userId = req.params.id;
+    // userId = req.params.id;
     let candidate = new Candidate({
       job_type: 'Internship?',
       expected_salary: '60000-63000',
@@ -431,18 +483,24 @@ module.exports = {
     candidate.save().
       then((candidate) => {
         console.log("candidate:", candidate)
-        User.findByIdAndUpdate(userId, {
-          $set: {
-            candidateProfile: candidate
-          }
-        })
-          .then(user => {
-            res.locals.redirect = `/user/${user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-          });
+        res.locals.redirect = `/user/signup/${user._id}`;
+        // create the candidate with entered data -> redirect to signup page
+        // send candidateId to another method signUpCandidate()
+        // signUpCandidate() -> gets candidateId -> create user -> $set candidateProfile
+        // candidate also $set userId
+
+        // User.findByIdAndUpdate(userId, {
+        //   $set: {
+        //     candidateProfile: candidate
+        //   }
+        // })
+        //   .then(user => {
+        //     res.locals.redirect = `/user/${user._id}`;
+        //     next();
+        //   })
+        //   .catch(error => {
+        //     console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+        //   });
       })
   }
 }
