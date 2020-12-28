@@ -18,9 +18,9 @@
         <!-- 1. What is the job title? -->
         <div class="carousel-item active">
           <section class="questions">
-            <div class="sentence">What is the job title? </div>
+            <div class="sentence">What is the job title?</div>
             <div>
-              <input type="text" name="job_title" placeholder="...type here" required>
+              <input type="text" name="job_title" placeholder="...type here">
             </div>
           </section>
         </div>
@@ -28,7 +28,7 @@
         <!-- 2. What is the company name? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What is the company name? </div>
+            <div class="sentence">What is the company name?</div>
             <div>
               <input type="text" name="company_name" placeholder="...type here">
             </div>
@@ -38,7 +38,7 @@
         <!-- 3. What is the location of the company? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What is the location of the company? </div>
+            <div class="sentence">What is the location of the company?</div>
             <div>
               <input type="text" name="location" placeholder="...type here">
             </div>
@@ -48,7 +48,7 @@
         <!-- 4. What type of contract are you offering? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What type of contract are you offering? </div>
+            <div class="sentence">What type of contract are you offering?</div>
             <div>
               <select name="job_type">
                 <option value="permanent">Permanent employment (full-time)</option>
@@ -63,7 +63,7 @@
         <!-- 5. What is the company expecting to pay? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What is the company expecting to pay? </div>
+            <div class="sentence">What is the company expecting to pay?</div>
             <div>
               <input type="text" name="salary" placeholder="...type here">
             </div>
@@ -73,22 +73,22 @@
         <!-- 6. What tech-stack do you expect from the employee -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What tech-stack do you expect from the employee? </div>
-            <p class="sub_sentence"> Please input your expected tech stack in the order of importance  </p>
-            <p class="sub_sub_sentence"> These techs are certainly required. Developer must have proven experience with them </p>
-            <div class ="tag-container">
+            <div class="sentence">What tech-stack do you expect from the employee?</div>
+            <p class="sub_sentence">Please sort the expected tech stack by importance.</p>
+            <label for="techstack4" class="sub_sub_sentence">Required and most important for the job:</label>
+            <div class="tag-container">
               <input class="inputanswer" id="techstack4" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> These techs are quite important, developer should be familiar with </p>
-            <div class ="tag-container">
+            <label for="techstack3" class="sub_sub_sentence">Quite important - preferable, but not a must:</label>
+            <div class="tag-container">
               <input class="inputanswer" id="techstack3" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> These techs are somewhat important, but not a must </p>
-            <div class ="tag-container">
+            <label class="sub_sub_sentence">Somewhat important:</label>
+            <div class="tag-container">
               <input class="inputanswer" id="techstack2" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> These are not much important, developer can learn on the go </p>
-            <div class ="tag-container">
+            <label class="sub_sub_sentence">Not much important, the employee can learn them on the go:</label>
+            <div class="tag-container">
               <input class="inputanswer" id="techstack1" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
             </div>
           </section>
@@ -97,21 +97,21 @@
         <!-- 7. Which soft skills are essential for the job? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">Which soft skills are essential for the job? </div>
-            <p class="sub_sentence"> Please input your preferences in the order of their importance  </p>
-            <p class="sub_sub_sentence"> Essential  </p>
+            <div class="sentence">Which soft skills are essential for the job?</div>
+            <p class="sub_sentence">Please sort your preferences by importance.</p>
+            <label for="softskill4" class="sub_sub_sentence">Essential, most important:</label>
             <div class="tag-container">
               <input class="inputanswer" id="softskill4" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> Quite Important  </p>
+            <label for="softskill3" class="sub_sub_sentence">Quite Important:</label>
             <div class="tag-container">
               <input class="inputanswer" id="softskill3" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> Somewhat Important  </p>
+            <label for="softskill2" class="sub_sub_sentence">Somewhat Important:</label>
             <div class="tag-container">
               <input class="inputanswer" id="softskill2" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
             </div>
-            <p class="sub_sub_sentence"> Not Much Important  </p>
+            <label for="softskill1" class="sub_sub_sentence">Not much Important:</label>
             <div class="tag-container">
               <input class="inputanswer" id="softskill1" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
             </div>
@@ -121,7 +121,7 @@
         <!-- 8. What kind of person are you looking for? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">Who will fit in your team? What is important for the company?</div>
+            <div class="sentence">Who will fit in your team? What else is important for the company?</div>
             <div>
               <input type="text" name="other_aspects" placeholder="...type here">
             </div>
@@ -131,9 +131,9 @@
         <!-- 9. What will be the detailed tasks of the employee? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">What will be the detailed tasks of the employee? </div>
+            <div class="sentence">What will be the detailed tasks of the employee?</div>
             <div>
-              <input type="text" name="description" placeholder="...type here">
+              <textarea class="form-control" name="description" placeholder="type here..."></textarea>
             </div>
           </section>
         </div>
@@ -141,47 +141,47 @@
         <!-- 10. Do you offer any of these options? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">Do you offer any of these options? </div>
+            <div class="sentence">What benefits or work-related extras do you offer?</div>
 
             <div class="checkboxes">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="annual_bonus" id="annual_bonus">
-              <label class="form-check-label" for="annual_bonus"> Annual bonus potential </label>
+              <label class="form-check-label" for="annual_bonus">Annual bonus potential</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="social_events" id="social_events">
-              <label class="form-check-label" for="social_events"> Social events </label>
+              <label class="form-check-label" for="social_events">Social events</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="pto" id="pto">
-              <label class="form-check-label" for="pto"> Unlimited PTO </label>
+              <label class="form-check-label" for="pto">Unlimited PTO</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="flexible_schedule" id="flexible_schedule">
-              <label class="form-check-label" for="flexible_schedule"> Flexible schedule </label>
+              <label class="form-check-label" for="flexible_schedule">Flexible schedule</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="free_food/drink" id="free_food/drink">
-              <label class="form-check-label" for="free_food/drink"> Free Food/Drinks </label>
+              <label class="form-check-label" for="free_food/drink">Free Food/Drinks</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="fitness_wellness" id="fitness_wellness">
-              <label class="form-check-label" for="fitness_wellness"> Onsite Fitness and Wellness Centers</label>
+              <label class="form-check-label" for="fitness_wellness">Onsite Fitness and Wellness Centers</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="special_pricing" id="special_pricing">
-              <label class="form-check-label" for="special_pricing"> Special pricing on company’s products</label>
+              <label class="form-check-label" for="special_pricing">Special pricing on company’s products</label>
             </div>
             </div>
 
             <div>
-              <input class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords" placeholder="...any other benefits? Type here" data-role="tagsinput" value="">
+              <input class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords" placeholder="Other..." data-role="tagsinput" value="">
             </div>
 
           </section>
 
           <div>
-            <input type="submit" value="Submit" id = "submit_job">
+            <input type="submit" value="Submit" id="submit_job">
           </div>
 
         </div>
