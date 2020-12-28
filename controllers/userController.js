@@ -291,10 +291,10 @@ module.exports = {
         firstname: req.body.firstname,
         lastname: req.body.lastname
       },
-      email: req.body.email,
-      role: 'recruiter',
-      password: req.body.password,
-      jobOffers: [jobId]
+      email:req.body.email,
+      role:'recruiter',
+      password:req.body.password,
+      jobOffers:[jobId]
     };
 
     if (req.skip) next();
@@ -361,8 +361,8 @@ module.exports = {
     })
     candidate.save().
       then((candidate) => {
+        res.locals.singUpName = {firstname: 'Test', lastname: 'User'};
         res.locals.redirect = `/signup/candidate/${candidate._id}`;
-        res.locals.signUpName = {firstname: 'Test', lastname: 'User'};
         next();
       })
   },

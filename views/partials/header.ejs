@@ -19,9 +19,9 @@
           <a class="nav-link" href="<%=`/matches/${user._id}` %>"> Matches </a>
         </li>
         <% if (user.role === 'candidate' && !user.candidateProfile) { %>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New Candidate </a>
-        </li>
+        </li> -->
         <% } else if (user.role === 'recruiter') { %>
         <li class="nav-item">
           <a class="nav-link" href="<%=`/user/${user._id}/create_offers` %>"> Add job </a>
