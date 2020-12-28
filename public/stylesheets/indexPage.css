@@ -43,10 +43,11 @@ section h1, section h2, section h3, section h4, section h5, section h6 {
 
 .download-button {
   margin: 5% 2% 5% 3%;
+  color: white !important;
 }
 
 .download-button:hover{
-  color: #3115A0;
+  color: #3115A0 !important;
 }
 /* Title Section */
 
