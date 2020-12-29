@@ -241,68 +241,13 @@ module.exports = {
     res.render("jobs/index");
   },
 
+
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   addJobOffers: (req, res, next) => {
-    let techstack = [];
-    console.log(req.body.techstack4);
-    if(Array.isArray(req.body.techstack4)){
-    for(let i = 0; i < req.body.techstack4.length; i++){
-      techstack.push({
-        name : req.body.techstack4[i],
-        importance: 4
-      });
-    }}else if(typeof req.body.techstack4 === 'undefined'){
-      //do nothing
-    }else{
-      techstack.push({
-        name : req.body.techstack4,
-        importance :4
-      })
-    }
-
-    if(Array.isArray(req.body.techstack3)){
-    for(let i = 0; i < req.body.techstack3.length; i++){
-      techstack.push({
-        name : req.body.techstack3[i],
-        importance: 3
-      });
-    }}else if(typeof req.body.techstack3 === 'undefined'){
-      //do nothing
-    }else{
-      techstack.push({
-        name : req.body.techstack3,
-        importance : 3
-      })
-    }
-    if(Array.isArray(req.body.techstack2)){
-      for(let i = 0; i < req.body.techstack2.length; i++){
-        techstack.push({
-          name : req.body.techstack2[i],
-          importance: 2
-        });
-      }}else if(typeof req.body.techstack2 === 'undefined'){
-        //do nothing
-      }else{
-        techstack.push({
-          name : req.body.techstack2,
-          importance : 2
-        })
-      }
-      if(Array.isArray(req.body.techstack1)){
-        for(let i = 0; i < req.body.techstack1.length; i++){
-          techstack.push({
-            name : req.body.techstack1[i],
-            importance: 1
-          });
-        }}else if(typeof req.body.techstack1 === 'undefined'){
-          //do nothing
-        }else{
-          techstack.push({
-            name : req.body.techstack1,
-            importance : 1
-          })
-        }
-
+    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
+    let techstack = sortTagInput(techArray);
+    let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
+    let softskills = sortTagInput(softskillsArray);
 
     let job = new Job({
       job_title: req.body.job_title,
@@ -310,23 +255,11 @@ module.exports = {
       company_name: req.body.company_name,
       salary: req.body.salary,
       description: req.body.description,
-      work_culture_keywords: ['party', 'loose', 'happy'],
+      work_culture_keywords: req.body.work_culture_keywords, //TODO: add checkbox values too
       job_type : req.body.job_type,
-      soft_skills: [
-        {
-        name: 'honesty',
-        importance: 4,
-      },
-      {
-        name: 'leadership',
-        importance: 3,
-      },
-      {
-        name: 'trust',
-        importance: 2,
-      }],
+      soft_skills: softskills,
       hard_skills: techstack,
-      other_aspects: ["nothing","specific"], 
+      other_aspects: req.body.other_aspects, 
     })
     job.save().
       then((job) => {
@@ -381,37 +314,23 @@ module.exports = {
 
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   addCandidate: (req, res, next) => {
+    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
+    let techstack = sortTagInput(techArray);
+    let workcultureArray = [req.body.workculture1, req.body.workculture2, req.body.workculture3, req.body.workculture4];
+    let work_culture_preferences = sortTagInput(workcultureArray);
+
+
     let candidate = new Candidate({
       current_location : req.body.current_location,
-      preferred_location: ['Berlin', 'Hamburg'],
+      preferred_location: req.body.preferred_location,
       job_type: req.body.job_type,
       expected_salary: req.body.salary,
       preferred_position: req.body.preferred_position,
    // work_experience: ['nothing so far, currently studying'],
-      hard_skills: [
-        {
-        name: "Java",
-        importance: 4,
-      },
-      {
-        name: "Javascript",
-        importance: 2,
-      },
-      {
-        name: "Python",
-        importance: 1,
-      }],
-      soft_skills: ["no", "idea"],
-      other_aspects: ['funny','dumb'],
-      work_culture_preferences: [
-        {
-        name: 'boni',
-        importance: 3,
-      },
-      {
-        name: 'company parties',
-        importance: 4,
-      }],
+      hard_skills: techstack,
+      soft_skills: req.body.soft_skills,
+      other_aspects: req.body.other_aspects,
+      work_culture_preferences: work_culture_preferences,
     })
     candidate.save().
       then((candidate) => {
@@ -466,7 +385,30 @@ module.exports = {
     })
   }
 }
-
+// this function is used for creating an array from input tags. 
+// @param tags is an array of tagsinput from bootstrap, they should be sorted from 1 to 4 not the other way around
+ let sortTagInput = (tags) => {
+  let tagsinput = [];
+  for(let i = 1; i <= tags.length; i++){
+    if(Array.isArray(tags[i])){
+    for(let j = 0; j < tags[i].length; j++){
+      tagsinput.push({
+        name : tags[i][j],
+        importance : i
+      });
+    } 
+  }
+  else if(typeof tags[i] === 'undefined'){
+      //do nothing
+    }else{
+      tagsinput.push({
+        name : tags[i],
+        importance : i
+      })
+    }
+  }
+  return tagsinput;
+ }
  // delete: (req, res, next) => {
   //   let userId = req.params.id;
     // User.findByIdAndRemove(userId)
