@@ -154,7 +154,9 @@ module.exports = {
 
   renderCandidateSignUp: (req, res) => {
     res.render("user/signupCandidate", {
-      candidateId: req.params.candidateId
+      candidateId: req.params.candidateId,
+      fname :req.query.firstname,
+      lname :req.query.lastname
     });
   },
   /**
@@ -241,13 +243,75 @@ module.exports = {
 
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   addJobOffers: (req, res, next) => {
+    let techstack = [];
+    console.log(req.body.techstack4);
+    if(Array.isArray(req.body.techstack4)){
+    for(let i = 0; i < req.body.techstack4.length; i++){
+      techstack.push({
+        name : req.body.techstack4[i],
+        importance: 4
+      });
+    }}else if(typeof req.body.techstack4 === 'undefined'){
+      //do nothing
+    }else{
+      techstack.push({
+        name : req.body.techstack4,
+        importance :4
+      })
+    }
+
+    if(Array.isArray(req.body.techstack3)){
+    for(let i = 0; i < req.body.techstack3.length; i++){
+      techstack.push({
+        name : req.body.techstack3[i],
+        importance: 3
+      });
+    }}else if(typeof req.body.techstack3 === 'undefined'){
+      //do nothing
+    }else{
+      techstack.push({
+        name : req.body.techstack3,
+        importance : 3
+      })
+    }
+    if(Array.isArray(req.body.techstack2)){
+      for(let i = 0; i < req.body.techstack2.length; i++){
+        techstack.push({
+          name : req.body.techstack2[i],
+          importance: 2
+        });
+      }}else if(typeof req.body.techstack2 === 'undefined'){
+        //do nothing
+      }else{
+        techstack.push({
+          name : req.body.techstack2,
+          importance : 2
+        })
+      }
+      if(Array.isArray(req.body.techstack1)){
+        for(let i = 0; i < req.body.techstack1.length; i++){
+          techstack.push({
+            name : req.body.techstack1[i],
+            importance: 1
+          });
+        }}else if(typeof req.body.techstack1 === 'undefined'){
+          //do nothing
+        }else{
+          techstack.push({
+            name : req.body.techstack1,
+            importance : 1
+          })
+        }
+
+
     let job = new Job({
-      job_title: 'Web Developer',
-      location: 'New York',
-      company_name: 'Salesforce',
-      salary: '50.000-60.000',
-      description: 'This is a Full Stack Developer position at Salesforce, NY.',
+      job_title: req.body.job_title,
+      location: req.body.location,
+      company_name: req.body.company_name,
+      salary: req.body.salary,
+      description: req.body.description,
       work_culture_keywords: ['party', 'loose', 'happy'],
+      job_type : req.body.job_type,
       soft_skills: [
         {
         name: 'honesty',
@@ -261,20 +325,8 @@ module.exports = {
         name: 'trust',
         importance: 2,
       }],
-      hard_skills: [
-        {
-        name: 'NodeJS',
-        importance: 2,
-      },
-      {
-        name: 'ExpressJS',
-        importance: 3,
-      },
-      {
-        name: "Docker",
-        importance: 2,
-      }],
-      other_aspects: ["nothing","specific"],
+      hard_skills: techstack,
+      other_aspects: ["nothing","specific"], 
     })
     job.save().
       then((job) => {
@@ -330,10 +382,12 @@ module.exports = {
   // TODO: Delete this later on. It's only for testing (we don't have a separate file for hardcoded testing)
   addCandidate: (req, res, next) => {
     let candidate = new Candidate({
-      job_type: 'Internship?',
-      expected_salary: '60000-63000',
-      preferred_position: 'Full Stack Developer',
-      work_experience: ['nothing so far, currently studying'],
+      current_location : req.body.current_location,
+      preferred_location: ['Berlin', 'Hamburg'],
+      job_type: req.body.job_type,
+      expected_salary: req.body.salary,
+      preferred_position: req.body.preferred_position,
+   // work_experience: ['nothing so far, currently studying'],
       hard_skills: [
         {
         name: "Java",
@@ -348,7 +402,7 @@ module.exports = {
         importance: 1,
       }],
       soft_skills: ["no", "idea"],
-      other_aspects: [''],
+      other_aspects: ['funny','dumb'],
       work_culture_preferences: [
         {
         name: 'boni',
@@ -361,20 +415,25 @@ module.exports = {
     })
     candidate.save().
       then((candidate) => {
-        res.locals.singUpName = {firstname: 'Test', lastname: 'User'};
-        res.locals.redirect = `/signup/candidate/${candidate._id}`;
+        //res.locals.signUpName = {firstname: 'Test', lastname: 'User'};
+        res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=test&lastname=user`;
         next();
       })
   },
 
   signUpCandidate: (req, res, next) => {
     let candidateId = req.params.candidateId;
+    console.log(req.query.firstname);
 
     let userParams = {
-      name: res.locals.signUpName,
+      name: {
+        firstname:req.query.firstname,
+        lastname:req.query.lastname
+      },
       email: req.body.email,
       role: 'candidate',
-      password: req.body.password
+      password: req.body.password,
+      candidateProfile : candidateId
     };
 
     if (req.skip) next();

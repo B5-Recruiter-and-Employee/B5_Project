@@ -77,20 +77,18 @@
             <p class="sub_sentence">Please sort the expected tech stack by importance.</p>
             <label for="techstack4" class="sub_sub_sentence">Required and most important for the job:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack4" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+              <select multiple class="inputanswer" id="techstack4" type="text" name="techstack4" placeholder="...type here" data-role="tagsinput"></select>
             </div>
             <label for="techstack3" class="sub_sub_sentence">Quite important - preferable, but not a must:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack3" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
+              <select multiple class="inputanswer" id="techstack3" type="text" name="techstack3" placeholder="...type here" data-role="tagsinput"></select>
             </div>
             <label class="sub_sub_sentence">Somewhat important:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack2" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
-            </div>
+              <select multiple class="inputanswer" id="techstack2" type="text" name="techstack2" placeholder="...type here" data-role="tagsinput"></select>            </div>
             <label class="sub_sub_sentence">Not much important, the employee can learn them on the go:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack1" type="text" name="hard_skills" placeholder="...type here" data-role="tagsinput">
-            </div>
+              <select multiple class="inputanswer" id="techstack1" type="text" name="techstack1" placeholder="...type here" data-role="tagsinput"></select>            </div>
           </section>
         </div>
 
@@ -118,12 +116,13 @@
           </section>
         </div>
 
-        <!-- 8. What kind of person are you looking for? -->
+        <!-- 8. What kind of person are you looking for?  tag input !!!!-->
         <div class="carousel-item">
           <section class="questions">
             <div class="sentence">Who will fit in your team? What else is important for the company?</div>
             <div>
-              <input type="text" name="other_aspects" placeholder="...type here">
+              <!-- <input type="text" name="other_aspects" placeholder="...type here"> -->
+              <select multiple name="other_aspects" data-role="tagsinput" placeholder="..type here"> </select>
             </div>
           </section>
         </div>

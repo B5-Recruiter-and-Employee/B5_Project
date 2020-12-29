@@ -7,7 +7,7 @@ input.onkeypress = function(e) {
     if (keyCode == 'Enter') {
       e.preventDefault(); //prevent submitting form
     }
-  };
+};
 
 // Hide prev, next carousel control accordingly on the first/last page
 // $('.carousel').carousel({
