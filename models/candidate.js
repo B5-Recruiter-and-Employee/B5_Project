@@ -11,7 +11,6 @@ const mongoose = require("mongoose"),
         expected_salary: String,
         current_location: String,
         preferred_location: [String],
-        work_experience: [String],
         hard_skills: [{
           name: String,
           importance: {

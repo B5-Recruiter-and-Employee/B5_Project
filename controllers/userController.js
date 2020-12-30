@@ -4,7 +4,6 @@ const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const { Client } = require('elasticsearch');
 const Job = require("../models/job_offer");
-const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
   login: (req, res) => {
@@ -242,53 +241,10 @@ module.exports = {
   },
 
  /**
- * Add the new job offer information to the user that
- * is currently logged in. 
- * 
- */
+  * Add a new job offer during signup or when recruiter is logged in.
+  * 
+  */
   addJobOffers: (req, res, next) => {
-    userId = req.params.id;
-    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
-    let techstack = sortTagInput(techArray);
-    let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
-    let softskills = sortTagInput(softskillsArray);
-
-    let job = new Job({
-      job_title: req.body.job_title,
-      location: req.body.location,
-      company_name: req.body.company_name,
-      salary: req.body.salary,
-      description: req.body.description,
-      work_culture_keywords: req.body.work_culture_keywords, //TODO: add checkbox values too
-      job_type : req.body.job_type,
-      soft_skills: softskills,
-      hard_skills: techstack,
-      other_aspects: req.body.other_aspects, 
-    })
-    job.save().
-      then((job) => {
-        User.findOneAndUpdate({_id : userId}, {
-        $addToSet: {
-          jobOffers: job
-        }},
-        {new : true}
-        )
-        .then(user => {
-          req.flash('success', `The job offer has been created successfully!`);
-          res.locals.redirect = `/user/${user._id}/offers`;
-          //res.locals.redirect = `/user/${user._id}`;
-          next();
-        })
-        .catch(error => {
-          console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-        });
-    })
-  },
-
-    /* 
-    * Create new job when recruiter sign up for the first time
-    */
-  newJobOffers: (req, res, next) => {
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
     let techstack = sortTagInput(techArray);
     let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
