@@ -12,6 +12,7 @@
         <li data-target="#candidate_questions" data-slide-to="7"></li>
         <li data-target="#candidate_questions" data-slide-to="8"></li>
         <li data-target="#candidate_questions" data-slide-to="9"></li>
+        <li data-target="#candidate_questions" data-slide-to="10"></li>
       </ol>
       <div class="container-fluid" id="questionnaires">
       <div class="carousel-inner">
@@ -21,7 +22,7 @@
           <section class="questions">
             <div class="sentence">What is your full name?</div>
             <div class="d-flex">
-              <input type="text" name="firstname" placeholder="First name" class="mr-2">
+              <input type="text" name="firstname" placeholder="First name" class="mr-2" autofocus>
               <input type="text" name="lastname" placeholder="Last name" class="ml-2">
             </div>
           </section>
@@ -32,7 +33,7 @@
           <section class="questions">
             <div class="sentence">Which city do you live in?</div>
             <div>
-              <input type="text" name="current_location" placeholder="...type here">
+              <input type="text" name="current_location" placeholder="...type here" >
             </div>
           </section>
         </div>
@@ -63,10 +64,11 @@
               <div class="sentence">What type of contract are you looking for?</div>
               <div>
                   <select name="job_type">
-                      <option value="permanent">Permanent employment (full-time)</option>
-                      <option value="internship">Internship (full-time)</option>
-                      <option value="working_student">Working student (part-time)</option>
-                      <option value="flexible">Flexible</option>
+                      <option value="Permanent(Full-time)">Permanent employment (full-time)</option>
+                      <option value="Internship(Full-time)">Internship (full-time)</option>
+                      <option value="Working-Student">Working student (part-time)</option>
+                      <option value="Flexible">Flexible</option>
+                      <option value="Remote">Remote</option>
                   </select>
               </div>
           </section>
@@ -116,7 +118,17 @@
           </section>
         </div>
 
-        <!-- 9. What is important to you when you work in a team regarding work culture? -->
+        <!-- 9. About me section -->
+        <div class="carousel-item">
+          <section class="questions">
+            <div class="sentence">Please write a short description about you. Let recruiter know something catchy about you!</div>
+            <div class="tag-container">
+              <textarea class="form-control" name="description" placeholder="...type here"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <!-- 10. What is important to you when you work in a team regarding work culture? -->
         <div class="carousel-item">
           <section class="questions">
             <div class="sentence">What is important to you regarding work culture and benefits?</div>
@@ -141,7 +153,7 @@
           </section>
         </div>
 
-        <!-- 10. What is your desired monthly salary? -->
+        <!-- 11. What is your desired monthly salary? -->
         <div class="carousel-item">
           <section class="questions">
             <div class="sentence">What is your desired monthly salary?</div>
@@ -177,22 +189,3 @@
 
 
 
-<!--
-  <label>Preferred position: </label>
-  <input type="text" placeholder="Job you are looking for" name="preferred_position">
-  <label>Soft skills: </label>
-  <input type="text" placeholder="Soft skills" name="soft_skills">
-  <label>Other aspects: </label>
-  <input type="text" placeholder="Other aspects" name="other_aspects">
-  <label>Work culture preferences</label>
-  <input type="text" placeholder="Values, benefits..." name="work_culture_preferences">
-  <input type="submit" value="Submit">
- -->
-<!--Commented out because the function for adding candidate profile to User should be implemented.
-  <label for="firstname">First name: </label>
-  <input type="text" placeholder="First Name" name="firstname">
-  <label for="lastname" >Last name: </label>
-  <input type="text" placeholder="Last Name" name="lastname">
-  <label for="email">Email</label>
-  <input type="email" placeholder="Email" name="email">
-  <input type="submit" value="Submit"> -->

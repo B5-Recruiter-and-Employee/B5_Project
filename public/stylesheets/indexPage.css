@@ -129,23 +129,7 @@ section h1, section h2, section h3, section h4, section h5, section h6 {
   font-family: 'Patrick Hand', cursive !important;
   color: #3115A0 !important;
 }
-.card-header {
-  background-color:#9AB3F5 !important;
-  padding: 5px;
-}
 
-.card-header h3{
-  font-family: 'Patrick Hand', cursive !important;
-  color :#3115A0;
-}
-.card-body{
-  text-align: center !important;
-}
-.card-body p{
-  text-align: left !important;
-  padding-left: 20px;
-  color: #8f8f8f;
-}
 .step-text {
   font-size: 3rem;
   line-height: 1.5;
@@ -169,4 +153,26 @@ section h1, section h2, section h3, section h4, section h5, section h6 {
   .title-image {
     position: static;
   }
+}
+
+/*Card, profile page*/
+.card-header {
+  background-color:#9AB3F5 !important;
+  padding: 5px;
+}
+
+.card-header h3{
+  font-family: 'Patrick Hand', cursive !important;
+  color :#3115A0;
+}
+.card-body{
+  text-align: center !important;
+}
+.card-body p{
+  text-align: left ;
+  padding-left: 20px;
+  color: #8f8f8f;
+}
+.curr-location, .position-title{
+  text-align: center !important;
 }

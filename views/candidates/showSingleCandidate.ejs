@@ -21,8 +21,8 @@
                           <h1 class="h4">
                             <%= cardOwner.name %>
                           </h1>
-                          <p class="text-secondary mb-1">Full Stack Developer</p>
-                          <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                          <p class="text-secondary mb-1 position-title"> Full Stack Developer</p>
+                          <p class="text-muted font-size-sm curr-location">Bay Area, San Francisco, CA</p>
                           <% if (!user.candidateProfile || !user.candidateProfile.equals(card._id)) { %>
                             <%- include('../partials/matches/connect.ejs') %>
                               <% } %>
@@ -72,15 +72,15 @@
                           Preferred position
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Developer
+                          <%=card.preferred_position%>
                         </div>
                         <hr>
 
                         <div class="col-sm-4 col-lg-3">
-                          Expected salary
+                          Desired salary
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          55000 / year
+                          <%=card.expected_salary%>
                         </div>
                         <hr>
 
@@ -88,7 +88,7 @@
                           Employment type
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Full-time
+                          <%=card.job_type%>
                         </div>
                         <hr>
 
@@ -96,7 +96,9 @@
                           Preferred location
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Bay Area, San Francisco, CA
+                          <!-- <%=card.preferred_location%> -->
+                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Berlin</a>
+                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Hamburg</a>
                         </div>
                       </div>
                     </div>
@@ -117,7 +119,7 @@
                         <hr>
 
                         <div class="col-sm-4 col-lg-3 my-auto">
-                          Hard skills
+                          Tech stack
                         </div>
                         <div class="col-sm-8 col-lg-9 card-body">
                           <a href="#" class="badge badge-pill badge-primary mr-1 my-1">HTML</a>
@@ -150,17 +152,11 @@
                         <div class="card-body">
                           <div class="d-flex align-items-center mb-3 h5">About me</div>
 
-                          <p>I have a clear, logical mind with a practical approach to problem-solving and a drive to
-                            see things
-                            through to completion. I have more than 2 years of experience in managing and leading teams
-                            across
-                            multiple sectors. I am eager to learn, I enjoy overcoming challenges, and I have a genuine
-                            interest in
-                            Business Management and making organisations successful.</p>
+                          <p><%=card.description%></p>
 
-                          <div class="d-flex align-items-center mb-3 h5">Work experience</div>
+                          <!-- <div class="d-flex align-items-center mb-3 h5">Work experience</div>
                           <p>A good understanding of Linux development and automation tools (we use Ansible to manage
-                            configuration, and you are expected to deploy your own application and features).</p>
+                            configuration, and you are expected to deploy your own application and features).</p> -->
                         </div>
                       </div>
                     </div>
