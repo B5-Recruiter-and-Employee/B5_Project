@@ -403,14 +403,14 @@ module.exports = {
     candidate.save().
       then((candidate) => {
         //res.locals.signUpName = {firstname: 'Test', lastname: 'User'};
-        res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=test&lastname=user`;
+        res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
         next();
       })
   },
 
   signUpCandidate: (req, res, next) => {
     let candidateId = req.params.candidateId;
-    console.log(req.query.firstname);
+    // console.log(req.query.firstname);
 
     let userParams = {
       name: {
