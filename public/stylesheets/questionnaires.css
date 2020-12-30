@@ -1,6 +1,6 @@
-/* Questionaires page */
+/* questionnaires page */
 
-#questionaires input[type=text] {
+#questionnaires input[type=text] {
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -18,11 +18,11 @@
 
 }
 
-#questionaires select{
+#questionnaires select{
   margin: 3% 0%;
   border:none;
 }
-section.questions {
+#questionnaires section.questions {
   text-align: left;
   font-size: 1.5em;
   padding-top: 0;
@@ -30,38 +30,38 @@ section.questions {
   margin: auto;
 }
 
-div.sentence{
+#questionnaires div.sentence{
   font-size: 1.5em;
 }
-div.sub_sentence{
+#questionnaires div.sub_sentence{
   font-size: 1em;
   margin-top: 5%;
 }
-label.sub_sub_sentence{
+#questionnaires label.sub_sub_sentence{
   margin-top: 1rem;
   margin-bottom: 0rem;
   font-size: 1em;
   color: black;
 }
-p.sub_sentence{
+#questionnaires p.sub_sentence{
   color: #818181;
 }
 
-div.checkboxes{
+#questionnaires div.checkboxes{
   margin-top: 2%;
 }
-.container-fluid#questionaires{
+.container-fluid#questionnaires{
   padding: 5% 15% 5%;
 }
 
-input[type=submit]#submit_candidate, input[type=submit]#submit_job {
+#questionnaires input[type=submit]#submit_candidate, input[type=submit]#submit_job {
   margin-top: 15%;
   font-size: 20px;
   border-radius: 10%;
   padding: 10px 10px;
   background-color: #9ab3f5
 }
-input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
+#questionnaires input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
   background-color: #7579e7 ;
 }
 
@@ -105,25 +105,25 @@ input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
   margin-left: 5px;
 }
 
-.questionaires-carousel .carousel-control-prev, .questionaires-carousel .carousel-control-next  {
+.questionnaires-carousel .carousel-control-prev, .questionnaires-carousel .carousel-control-next  {
   position: fixed !important;
   background-color: none !important;
 }
 
-.questionaires-carousel .carousel-control-next-icon, .questionaires-carousel .carousel-control-prev-icon {
+.questionnaires-carousel .carousel-control-next-icon, .questionnaires-carousel .carousel-control-prev-icon {
   width: 40px;
   height: 40px;
   background-color: #2b2eb9 !important;
   border-radius : 10%;
 }
 
-.form-control{
+#questionnaires .form-control{
   font-size: 1.5rem !important;
   color: black !important;
   margin: 3% 0%;
 }
 
-textarea.form-control::-webkit-input-placeholder {
+#questionnaires textarea.form-control::-webkit-input-placeholder {
   color: #a9a9a9;
 }
 /* .tag-container{

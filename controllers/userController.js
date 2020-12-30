@@ -46,7 +46,7 @@ module.exports = {
           User.findById(candidate.user).then(user => {
             res.render('user/profile', {
               card: candidate,
-              cardOwner: {name: user.fullName, email: user.email}
+              cardOwner: { name: user.fullName, email: user.email }
             });
           })
         })
@@ -133,7 +133,7 @@ module.exports = {
     };
     //we need to use findOneAndUpdate instead of findByIdAndUpdate!
     // User.findByIdAndUpdate(userId, { $set: userParams })
-    User.findOneAndUpdate({_id: userId}, {$set: userParams}, {new: true})
+    User.findOneAndUpdate({ _id: userId }, { $set: userParams }, { new: true })
       .then(user => {
         res.locals.redirect = `/user/${userId}`;
         res.locals.user = user;
@@ -155,8 +155,8 @@ module.exports = {
   renderCandidateSignUp: (req, res) => {
     res.render("user/signupCandidate", {
       candidateId: req.params.candidateId,
-      fname :req.query.firstname,
-      lname :req.query.lastname
+      fname: req.query.firstname,
+      lname: req.query.lastname
     });
   },
   /**
@@ -240,14 +240,13 @@ module.exports = {
   indexViewJobOffers: (req, res) => {
     res.render("jobs/index");
   },
-  
- /**
- * Add the new job offer information to the user that
- * is currently logged in. 
- * 
- */
+
+  /**
+  * Add the new job offer information to the user that
+  * is currently logged in. 
+  * 
+  */
   addJobOffers: (req, res, next) => {
-    userId = req.params.id;
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
     let techstack = sortTagInput(techArray);
     let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
@@ -260,56 +259,36 @@ module.exports = {
       salary: req.body.salary,
       description: req.body.description,
       work_culture_keywords: req.body.work_culture_keywords, //TODO: add checkbox values too
-      job_type : req.body.job_type,
+      job_type: req.body.job_type,
       soft_skills: softskills,
       hard_skills: techstack,
-      other_aspects: req.body.other_aspects, 
+      other_aspects: req.body.other_aspects,
     })
     job.save().
       then((job) => {
-        User.findOneAndUpdate({_id : userId}, {
-        $addToSet: {
-          jobOffers: job
-        }},
-        {new : true}
-        )
-        .then(user => {
-          req.flash('success', `The job offer has been created successfully!`);
-          res.locals.redirect = `/user/${user._id}/offers`;
-          //res.locals.redirect = `/user/${user._id}`;
-          next();
-        })
-        .catch(error => {
-          console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-        });
-    })
-  },
-
-    /* 
-    * Create new job when user sign up for the first time
-    */
-  newJobOffers: (req, res, next) => {
-    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
-    let techstack = sortTagInput(techArray);
-    let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
-    let softskills = sortTagInput(softskillsArray);
-
-    let job = new Job({
-      job_title: req.body.job_title,
-      location: req.body.location,
-      company_name: req.body.company_name,
-      salary: req.body.salary,
-      description: req.body.description,
-      work_culture_keywords: req.body.work_culture_keywords, //TODO: add checkbox values too
-      job_type : req.body.job_type,
-      soft_skills: softskills,
-      hard_skills: techstack,
-      other_aspects: req.body.other_aspects, 
-    })
-    job.save().
-      then((job) => {
-        res.locals.redirect = `/signup/recruiter/${job._id}`;
-        next();
+        let userId = req.params.id;
+        // if recruiter is logged in (= on route with userId)
+        if (userId) {
+          User.findOneAndUpdate({ _id: userId }, {
+            $addToSet: {
+              jobOffers: job
+            }
+          },
+            { new: true }
+          )
+            .then(user => {
+              req.flash('success', `The job offer has been created successfully!`);
+              res.locals.redirect = `/user/${user._id}/offers`;
+              next();
+            })
+            .catch(error => {
+              console.log(`ADD JOB: Error updating user. ${error.message}`);
+              next(error);
+            });
+        } else {
+          // else: not logged in, redirect to user signup page
+          res.locals.redirect = `/signup/recruiter/${job._id}`;
+          next();}
       })
   },
 
@@ -321,10 +300,10 @@ module.exports = {
         firstname: req.body.firstname,
         lastname: req.body.lastname
       },
-      email:req.body.email,
-      role:'recruiter',
-      password:req.body.password,
-      jobOffers:[jobId]
+      email: req.body.email,
+      role: 'recruiter',
+      password: req.body.password,
+      jobOffers: [jobId]
     };
 
     if (req.skip) next();
@@ -337,14 +316,14 @@ module.exports = {
         res.locals.user = user;
 
         // assign userId to the created job
-        Job.findOneAndUpdate({_id: jobId}, {$set: {user: user._id}}, {new: true})
-        .then(job => {
-          next();
-        })
-        .catch(error => {
-          console.log(`Error updating job with user ID: ${error.message}`);
-          next(error);
-        });
+        Job.findOneAndUpdate({ _id: jobId }, { $set: { user: user._id } }, { new: true })
+          .then(job => {
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating job with user ID: ${error.message}`);
+            next(error);
+          });
       } else {
         console.log(`Error saving user profile: ${error.message}`);
         res.locals.redirect = "/signup/recruiter";
@@ -366,12 +345,12 @@ module.exports = {
 
 
     let candidate = new Candidate({
-      current_location : req.body.current_location,
+      current_location: req.body.current_location,
       preferred_location: req.body.preferred_location,
       job_type: req.body.job_type,
       expected_salary: req.body.salary,
       preferred_position: req.body.preferred_position,
-   // work_experience: ['nothing so far, currently studying'],
+      // work_experience: ['nothing so far, currently studying'],
       hard_skills: techstack,
       soft_skills: req.body.soft_skills,
       other_aspects: req.body.other_aspects,
@@ -391,13 +370,13 @@ module.exports = {
 
     let userParams = {
       name: {
-        firstname:req.query.firstname,
-        lastname:req.query.lastname
+        firstname: req.query.firstname,
+        lastname: req.query.lastname
       },
       email: req.body.email,
       role: 'candidate',
       password: req.body.password,
-      candidateProfile : candidateId
+      candidateProfile: candidateId
     };
 
     if (req.skip) next();
@@ -410,14 +389,14 @@ module.exports = {
         res.locals.user = user;
 
         // assign userId to the created candidate profile
-        Candidate.findOneAndUpdate({_id: candidateId}, {$set: {user: user._id}}, {new: true})
-        .then(candidate => {
-          next();
-        })
-        .catch(error => {
-          console.log(`Error updating candidate with user ID: ${error.message}`);
-          next(error);
-        });
+        Candidate.findOneAndUpdate({ _id: candidateId }, { $set: { user: user._id } }, { new: true })
+          .then(candidate => {
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating candidate with user ID: ${error.message}`);
+            next(error);
+          });
       } else {
         console.log(`Error saving user profile: ${error.message}`);
         res.locals.redirect = "/signup/candidate";
@@ -432,28 +411,28 @@ module.exports = {
 }
 // this function is used for creating an array from input tags. 
 // @param tags is an array of tagsinput from bootstrap, they should be sorted from 1 to 4 not the other way around
- let sortTagInput = (tags) => {
+let sortTagInput = (tags) => {
   let tagsinput = [];
-  for(let i = 1; i <= tags.length; i++){
-    if(Array.isArray(tags[i])){
-    for(let j = 0; j < tags[i].length; j++){
-      tagsinput.push({
-        name : tags[i][j],
-        importance : i
-      });
-    } 
-  }
-  else if(typeof tags[i] === 'undefined'){
+  for (let i = 1; i <= tags.length; i++) {
+    if (Array.isArray(tags[i])) {
+      for (let j = 0; j < tags[i].length; j++) {
+        tagsinput.push({
+          name: tags[i][j],
+          importance: i
+        });
+      }
+    }
+    else if (typeof tags[i] === 'undefined') {
       //do nothing
-    }else{
+    } else {
       tagsinput.push({
-        name : tags[i],
-        importance : i
+        name: tags[i],
+        importance: i
       })
     }
   }
   return tagsinput;
- }
+}
  // delete: (req, res, next) => {
   //   let userId = req.params.id;
     // User.findByIdAndRemove(userId)

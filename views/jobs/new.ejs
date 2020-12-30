@@ -1,7 +1,7 @@
 <% if (!loggedIn) { %>
   <form action="/signup/recruiter" method="post">
   <% } else { %>
-  <form action= "<%=`/user/${user._id}/add_job`%>" method="post">
+  <form action= "<%=`/user/${user._id}/add-job`%>" method="post">
     <% } %>
   <div id="job_questions" class="carousel slide" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators">
@@ -16,7 +16,7 @@
       <li data-target="#job_questions" data-slide-to="8"></li>
       <li data-target="#job_questions" data-slide-to="9"></li>
     </ol>
-    <div class="container-fluid" id="questionaires">
+    <div class="container-fluid" id="questionnaires">
       <div class="carousel-inner">
 
         <!-- 1. What is the job title? -->
@@ -190,7 +190,7 @@
         </div>
       </div>
     </div>
-    <div class="carousel-controls questionaires-carousel">
+    <div class="carousel-controls questionnaires-carousel">
       <a class="carousel-control-prev" href="#job_questions" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
