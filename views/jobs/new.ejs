@@ -1,4 +1,8 @@
-<form action="/signup/recruiter" method="post">
+<% if (!loggedIn) { %>
+  <form action="/signup/recruiter" method="post">
+  <% } else { %>
+  <form action= "<%=`/user/${user._id}/add_job`%>" method="post">
+    <% } %>
   <div id="job_questions" class="carousel slide" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators">
       <li data-target="#job_questions" data-slide-to="0" class="active"></li>
@@ -132,7 +136,7 @@
           <section class="questions">
             <div class="sentence">What will be the detailed tasks of the employee?</div>
             <div>
-              <textarea class="form-control" name="description" placeholder="type here..."></textarea>
+              <textarea class="form-control" name="description" placeholder="...type here"></textarea>
             </div>
           </section>
         </div>

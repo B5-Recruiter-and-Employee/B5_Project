@@ -16,7 +16,7 @@ router.post("/signup/candidate/:candidateId", userController.signUpCandidate, us
 
 //sign up links recruiter
 router.get("/signup/recruiter", userController.renderNewJobOffer); // render questionnaire
-router.post("/signup/recruiter", userController.addJobOffers, userController.redirectView); // POST job offer data
+router.post("/signup/recruiter", userController.newJobOffers, userController.redirectView); // POST job offer data
 router.get("/signup/recruiter/:jobId", userController.renderRecruiterSignUp); // render signup page
 router.post("/signup/recruiter/:jobId", userController.signUpRecruiter, userController.redirectView); // POST user+job offer data
 
