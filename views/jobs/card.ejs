@@ -1,0 +1,20 @@
+<!-- The card where the job from a reqruiter is -->
+<div class="col">
+    <div class="card border-success mb-3 m-0 p-0" style="max-width: 75%">
+      <div class="card-header bg-transparent border-success"></div>
+      <div class="card-body text-success">
+        <h4 class="card-title"><%= title %></h5>
+        <h5 class="card-subtitle mb-2 text-muted"><%= company %></h6>
+        <h6 class="card-subtitle mb-2 text-muted"><%= location %></h6>
+        <h7 class="card-subtitle mb-2 text-muted"><%= salary %></h6>
+            
+        <p class="card-text"><%= description %></p>
+
+        <a href="/jobs/<%= id %>" class="btn btn-primary">View offer</a>
+        <br>
+        <a href="/jobs/<%= id %>/edit" class="btn btn">Edit offer</a> 
+        <a href="/jobs/<%= id %>/delete" class="btn btn">Delete offer</a> 
+      </div>
+      <div class="card-footer bg-transparent border-success"></div>
+    </div>
+  </div>
