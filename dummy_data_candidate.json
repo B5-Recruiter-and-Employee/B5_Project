@@ -1,0 +1,421 @@
+[
+    {
+        "preferred_position": "Software Developer Java",
+        "job_type": "Full-time",
+        "expected_salary": "25k Euro/year",
+        "current_location": "Magdeburg",
+        "preferred_location": "Berlin",
+        "work_experience": "4 years full-stack developer",
+        "hard skills": [
+            "Java",
+            "Java EE",
+            "Databases",
+            "Multithreading" 
+        ],
+        "soft_skills": "Analytical and structured way of thinking, enjoy problem solving and have an IT affinity, high-degree of quality awareness, commitment and wilingness to learn, enjoy working in a team",
+        "other_aspects": "Very good knowledge of spoken and written German.",
+        "work_culture_preferences": [
+            "Open commnication",
+            "Work-life balance",
+            "Modern workplace",
+            "Possibility for further individual education",
+            "Sport activities",
+            "Free beverages and snacks"
+        ]
+    },
+    {
+        "preferred_position": "Software Test Automation Engineer",
+        "job_type": "Full-time",
+        "expected_salary": "35000",
+        "current_location": "Berlin",
+        "preferred_location": "Cologne",
+        "work_experience": "5 years backend developer",
+        "hard skills": [
+            "C#",
+            ".Net",
+            "HP Unified Functional Testing",
+            "UML"
+        ],
+        "soft_skills": "High technical affinity, analytical and structured way of thinking",
+        "other_aspects": "Fluent in Spanish",
+        "work_culture_preferences": [
+            "Massage",
+            "Orientation phase"
+        ]
+    },
+    {
+        "preferred_position": "Full Stack Software Developer",
+        "job_type": "Full-time",
+        "expected_salary": "50000",
+        "current_location": "Hamburg",
+        "preferred_location": "Hamburg",
+        "work_experience": "6+ years of experience developing scalable software applications",
+        "hard skills": [
+            "SQL",
+            "CI/CD tools",
+            "TDD"
+        ],
+        "soft_skills": "Hard-working, team-player, excellent communicator",
+        "other_aspects": "Great communication skills in English, Master's in Computer Engineering",
+        "work_culture_preferences": [
+            "Stock options",
+            "Company breakfast",
+            "Company laptop"
+        ]
+    },
+    {
+        "preferred_position": "QA Engineer",
+        "job_type": "Internship",
+        "expected_salary": "1500 EU/month",
+        "current_location": "Berlin",
+        "preferred_location": "New York",
+        "work_experience": "2 years part-time doing QA",
+        "hard skills": [
+            "Cypress.io",
+            "JavaScript",
+            "Node.js"
+        ],
+        "soft_skills": "Structured way of working, hard-working, adapt easily",
+        "other_aspects": "BS in Computer Science",
+        "work_culture_preferences": [
+            "Dog-friendly office",
+            "Yoga courses",
+            "Public transport card"
+        ]
+    },
+    {
+        "preferred_position": "Software Developer C#",
+        "job_type": "Working Student",
+        "expected_salary": "15000 EU/year",
+        "current_location": "Ratingen",
+        "preferred_location": "Düsseldorf",
+        "work_experience": "-",
+        "hard skills": [
+            "C#",
+            "JavaScript",
+            "SQL"
+        ],
+        "soft_skills": "Team-friendly, good communication skills, problem-solver",
+        "other_aspects": "Undergraduate studying Computer Science",
+        "work_culture_preferences": [
+            "Snacks",
+            "No micromanagement",
+            "Lounge with games"
+        ]
+    },
+    {
+        "preferred_position": "Software Engineer AI",
+        "job_type": "Working Student",
+        "expected_salary": "30.000 EU/year",
+        "current_location": "Saarbrücken",
+        "preferred_location": "Saarbrücken",
+        "work_experience": "6 months as an intern with OpenAI",
+        "hard skills": [
+            "Machine learning",
+            "AI",
+            "Python",
+            "C++",
+            "C#"
+        ],
+        "soft_skills": "Friendly, Open-minded, Hard-working",
+        "other_aspects": "Undergraduate studying Computer Science",
+        "work_culture_preferences": [
+            "Flexible hours",
+            "Flat hierarchies",
+            "Steep learning curve"
+        ]
+    },
+    {
+        "preferred_position": "Junior Fullstack Software Developer",
+        "job_type": "Full-time",
+        "expected_salary": "50.000 EU/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "2 years working as a software developer with Riot",
+        "hard skills": [
+            "Node",
+            "React",
+            "Git",
+            "AWS",
+            "MongoDB"
+        ],
+        "soft_skills": "Natural problem-solver, organized way of working",
+        "other_aspects": "BS in Computer Science",
+        "work_culture_preferences": [
+            "Remote work",
+            "Flexible working hours",
+            "Company paid vacation"
+        ]
+    },
+    {
+        "preferred_position": "C++ Software Developer",
+        "job_type": "Full-time",
+        "expected_salary": "50.000 EU/year",
+        "current_location": "Lingen",
+        "preferred_location": "Lingen",
+        "work_experience": "3 years working as a software engineer at a startup",
+        "hard skills": [
+            "C++",
+            "Python"
+        ],
+        "soft_skills": "Commited to delivering good products, strong analytical skills",
+        "other_aspects": "Excellent written and spoken German and English",
+        "work_culture_preferences": [
+            "Frienldy team",
+            "Inclusive and non-discriminatory",
+            "Not boring"
+        ]
+    },
+    {
+        "preferred_position": "Web Developer",
+        "job_type": "Full-time",
+        "expected_salary": "50.000",
+        "current_location": "Ingolstadt",
+        "preferred_location": "Lingen",
+        "work_experience": "1 year of managing and expanding a web product",
+        "hard skills": [
+            "HTML5",
+            "Javascript",
+            "Typescript",
+            "CSS",
+            "Angular X",
+            "Git"
+        ],
+        "soft_skills": "Willing to learn, hard-working",
+        "other_aspects": "Excellent written and spoken English",
+        "work_culture_preferences": [
+            "Company Restaurant",
+            "Fresh fruit",
+            "Gym membership",
+            "Pension"
+        ]
+    },
+    {
+        "preferred_position": "Thesis Student",
+        "job_type": "Part-time",
+        "expected_salary": "2500/month",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "Student assistent to Prof. Gross, working on an application for students looking for accomodation",
+        "hard skills": [
+            "Java",
+            "React",
+            "AWS",
+            "GitHub"
+        ],
+        "soft_skills": "Reliable and open-minded",
+        "other_aspects": "Doctor thesis in web applications",
+        "work_culture_preferences": [
+            "Hire opportunity",
+            "Thesis Coordinator"
+        ]
+    },
+    {
+        "preferred_position": "Junior QA Engineer",
+        "job_type": "Full-time",
+        "expected_salary": "60000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "2 years experience doing QA",
+        "hard skills": [
+            "NodeJS",
+            "Ruby on Rails",
+            "SQL",
+            "GitHub",
+            "API testing",
+            "Regression testing",
+            "Integration testing"
+        ],
+        "soft_skills": "Hands on, can-do attitude",
+        "other_aspects": "BS in Media and Computer Science",
+        "work_culture_preferences": [
+            "Diverse team",
+            "Career development",
+            "Secure job"
+        ]
+    },
+    {
+        "preferred_position": "Junior Developer Intern",
+        "job_type": "Full-time",
+        "expected_salary": "2000/month",
+        "current_location": "Berlin",
+        "preferred_location": "Hamburg",
+        "work_experience": "2 years full-stack developer",
+        "hard skills": [
+            "Node.js",
+            "Typescript",
+            "Java"
+        ],
+        "soft_skills": "Well structured way of working, friendly and communicative",
+        "other_aspects": "BS in Computer Science",
+        "work_culture_preferences": [
+            "Team-work",
+            "Flat hierarchy",
+            "Inclusive"
+        ]
+    },
+    {
+        "preferred_position": "Backend Developer",
+        "job_type": "Working student",
+        "expected_salary": "15 EU/h",
+        "current_location": "Berlin",
+        "preferred_location": "-",
+        "work_experience": "Student",
+        "hard skills": [
+            "Node.js",
+            "MySQL",
+            "AWS"
+        ],
+        "soft_skills": "Reliable and detail-oriented, motivated and flexible with a high level of self-initiative",
+        "other_aspects": "Studying Computer Engineering",
+        "work_culture_preferences": [
+            "Creative freedom",
+            "Flat hierarchy",
+            "Central office"
+        ]
+    },
+    {
+        "preferred_position": "Full Stack Developer",
+        "job_type": "Full time",
+        "expected_salary": "150000 EU/year",
+        "current_location": "Dresden",
+        "preferred_location": "Dresden",
+        "work_experience": "3 years experience is in developing and implementing frontend applications",
+        "hard skills": [
+            "JavaScript",
+            "GraphQL"
+        ],
+        "soft_skills": "Reliable handling of development tools, attention to detail, open mindset",
+        "other_aspects": "Good written and spoken German and English",
+        "work_culture_preferences": [
+            "30 vacation days",
+            "Free coffee",
+            "Dynamic team"
+        ]
+    },
+    {
+        "preferred_position": "PHP Backend Developer",
+        "job_type": "Full time",
+        "expected_salary": "25000",
+        "current_location": "Darmstadt",
+        "preferred_location": "Darmstadt",
+        "work_experience": "5 years experience in developing and implementing web applications with PHP",
+        "hard skills": [
+            "PHP",
+            "Symfony",
+            "MySQL",
+            "PHPUnit",
+            "JavaScript",
+            "Vue.js"
+        ],
+        "soft_skills": "Organized and well structured, client-oriented, reliable and fast",
+        "other_aspects": "Good communication in German and English, BS in Computer Engineering",
+        "work_culture_preferences": [
+            "Flexible working hours",
+            "Free coffee and water",
+            "Parking spot for e-car"
+        ]
+    },
+    {
+        "preferred_position": "QA Tester",
+        "job_type": "Full time",
+        "expected_salary": "30k",
+        "current_location": "Berlin",
+        "preferred_location": "Paderborn",
+        "work_experience": "5 years experience working in IT on mobile applications",
+        "hard skills": [
+            "JavaScript"
+        ],
+        "soft_skills": "An eye for detail, focused and strong communicator",
+        "other_aspects": "Fluent in English and French",
+        "work_culture_preferences": [
+            "Multilingual team",
+            "Team events",
+            "Adjustable desk"
+        ]
+    },
+    {
+        "preferred_position": "C++ Developer",
+        "job_type": "Full time",
+        "expected_salary": "5000 euro per month",
+        "current_location": "München",
+        "preferred_location": "Germany",
+        "work_experience": "Year-long experience developing with C++",
+        "hard skills": [
+            "C++"
+        ],
+        "soft_skills": "Proactive and communicative",
+        "other_aspects": "Fluent in English, Master degree in Informatics",
+        "work_culture_preferences": [
+            "Latest technology",
+            "Gym pass",
+            "Female led"
+        ]
+    },
+    {
+        "preferred_position": "Junior Fullstack JS Developer",
+        "job_type": "Full time",
+        "expected_salary": "25 Euros/h",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "2.5 years experience in web development",
+        "hard skills": [
+            "NodeJS",
+            "ES6",
+            "Docker",
+            "MySQL"
+        ],
+        "soft_skills": "Clean code, independent and reliable",
+        "other_aspects": "Fluent in German and English, EU Working-Permit",
+        "work_culture_preferences": [
+            "Education is valued",
+            "Focus on workers, not on profit"
+        ]
+    },
+    {
+        "preferred_position": "Web Software Developer",
+        "job_type": "Full time",
+        "expected_salary": "40.000-52.000 per year",
+        "current_location": "München",
+        "preferred_location": "Freiburg",
+        "work_experience": "6 years",
+        "hard skills": [
+            "PHP",
+            "Javasccript",
+            "HTML",
+            "CSS",
+            "SQL",
+            "C++",
+            "Java",
+            "Python"
+        ],
+        "soft_skills": "Capable of expanding on existing structures, reliable and responsible",
+        "other_aspects": "Excellent English",
+        "work_culture_preferences": [
+            "Flexible working hours",
+            "Company car",
+            "Startup feeling"
+        ]
+    },
+    {
+        "preferred_position": "Vue.js Developer",
+        "job_type": "Full time",
+        "expected_salary": "20 000/year",
+        "current_location": "Dresden",
+        "preferred_location": "Dresden",
+        "work_experience": "2 years working at Google",
+        "hard skills": [
+            "Vue.js",
+            "Javascript",
+            "Git",
+            "PHP"
+        ],
+        "soft_skills": "Excellent team worker",
+        "other_aspects": "English and German at a C1 level",
+        "work_culture_preferences": [
+            "Education budget",
+            "Small team",
+            "Homeoffice"
+        ]
+    }
+]
