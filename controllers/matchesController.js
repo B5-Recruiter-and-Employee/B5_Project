@@ -4,6 +4,7 @@ const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 const errorController = require("./errorController");
+const { indexViewJobOffers } = require("./userController");
 
 module.exports = {
   renderAllMatches: (req, res) => {
@@ -20,38 +21,32 @@ module.exports = {
           //we have to check how it works when dummy data is created and then adapt the ejs files.
           let mappedOffers = jobs.filter(offer => {
             let userAdded = user.jobOffers.some(userOffer => {
-              // console.log("comparison: ", JSON.stringify(userOffer) === JSON.stringify(offer._id))
               return JSON.stringify(userOffer) === JSON.stringify(offer._id);
             });
             if (userAdded) return offer;
           });
-          console.log('mapped offers for recruiter: ', mappedOffers);
-
+          let hits = [];
           mappedOffers.forEach(jobOfferOfRecruiter => {
             /// handling the matches
-
             // sort the keywords by importance
             let sortedHardSkills = getSortedKeywords("hard_skills.name", jobOfferOfRecruiter.hard_skills);
             let sortedSoftSkills = getSortedKeywords("soft_skills.name", jobOfferOfRecruiter.soft_skills);
             // define elasticsearch query
-            let query = addSortedSkills('candidates', jobOfferOfRecruiter.job_title, sortedHardSkills, sortedSoftSkills);
-            let hits;
+            let searchedJobTitle = {"preferred_position" : jobOfferOfRecruiter.job_title }
+            let query = addSortedSkills('candidates', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
+            
             client.search(query, (err, result) => {
               if (err) { console.log(err) }
-              hits = result.hits.hits
-
-              // add "shortDescription" to the hits array
-              for (let i = 0; i < hits.length; i++) {
-                let words = hits[i]._source.description.split(" ");
-                if (words.length > 40) {
-                  let shortDesc = words.slice(0, 40);
-                  hits[i]._source.shortDescription = shortDesc.join(" ") + "...";
-                } else {
-                  hits[i]._source.shortDescription = hits[i]._source.description;
-                }
-
-              }
+              result.hits.hits.forEach(hit => hits.push(hit));
+              //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
+              // variable to represent a text. Each string is divided by the dot.
+               for (let i = 0; i < hits.length; i++) {
+                let experience = hits[i]._source.work_experience;
+                let resultedSentences = experience.join(". ");
+                hits[i]._source.shortDescription = resultedSentences;
+               }
               // send hits array to ejs
+              console.log(hits.length);
               res.locals.matches = hits;
               next();
             })
@@ -66,9 +61,10 @@ module.exports = {
           // sort the keywords by importance
           let sortedHardSkills = getSortedKeywords("hard_skills.name", candidate.hard_skills);
           let sortedSoftSkills = getSortedKeywords("soft_skills.name", candidate.soft_skills);
+
           // define elasticsearch query
-          let query =  addSortedSkills('job_offers', candidate.preferred_position, sortedHardSkills, sortedSoftSkills);
-          console.log(query);
+          let searchedJobTitle = {"job_title" : candidate.preferred_position }
+          let query =  addSortedSkills('job_offers', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
           let hits;
           client.search(query, (err, result) => {
             if (err) { console.log(err) }
@@ -119,9 +115,7 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
         "bool": {
           "must": [
             {
-              "match": {
-                "job_title": jobTitle
-              }
+              "match":  jobTitle
             }
           ],
           "should": []

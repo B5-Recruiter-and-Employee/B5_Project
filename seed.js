@@ -163,7 +163,7 @@ data_candidate.forEach((c) => {
 Promise.all(job_array)
 	.then((r) => {
 		console.log("++ The amount of jobs seeded: " + job_array.length);
-		mongoose.connection.close();
+		//mongoose.connection.close();
 	})
 	.catch((error) => {
 		console.log(`ERROR: ${error}`);
