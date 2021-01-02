@@ -1,15 +1,13 @@
-var data = require ('./collected_data.json');
+let data = require("./collected_data.json");
+let data_candidate = require("./dummy_data_candidate.json");
 
 const mongoose = require("mongoose"),
-    Candidate = require("./models/candidate"),
-    Job = require("./models/job_offer");
+	Candidate = require("./models/candidate"),
+	Job = require("./models/job_offer");
 
-
-
-mongoose.connect(
-    "mongodb://localhost:27017/rem_matching_test",
-    { useNewUrlParser: true }
-);
+mongoose.connect("mongodb://localhost:27017/rem_matching_test", {
+	useNewUrlParser: true,
+});
 
 mongoose.connection;
 
@@ -63,7 +61,7 @@ mongoose.connection;
 //                 } else {}
 //             });
 //          }
-//          console.log('-> All jobs deleted from MongoDB and Elasticsearch');    
+//          console.log('-> All jobs deleted from MongoDB and Elasticsearch');
 //     }
 // });
 
@@ -81,12 +79,13 @@ mongoose.connection;
 //                 } else {}
 //             });
 //          }
-//          console.log('-> All candidates deleted from MongoDB and Elasticsearch');    
+//          console.log('-> All candidates deleted from MongoDB and Elasticsearch');
 //     }
 // });
 
 // var cand_array = [];
-var job_array = [];
+let job_array = [];
+let candidate_array = [];
 
 // candidates.forEach((c) => {
 //     cand_array.push(Candidate.create({
@@ -96,23 +95,62 @@ var job_array = [];
 // });
 
 data.forEach((c) => {
-    let techstack = [];
-    for (let i = 0; i < c.hard_skills.length ; i++){
-        techstack.push({
-            name : c.hard_skills[i],
-            importance : 3
-        })
-    }
-        job_array.push( new Job({
-        hard_skills: techstack,
-        job_title: c.job_title,
-        location: c.location,
-        company_name: c.company_name,
-        description: c.description,
-        work_culture_keywords: c.work_culture_keywords
-    }).save());
+	let techstack = [];
+	for (let i = 0; i < c.hard_skills.length; i++) {
+		techstack.push({
+			name: c.hard_skills[i],
+			importance: 3,
+		});
+	}
+	job_array.push(
+		new Job({
+			hard_skills: techstack,
+			job_title: c.job_title,
+			location: c.location,
+			company_name: c.company_name,
+			description: c.description,
+			work_culture_keywords: c.work_culture_keywords,
+		}).save()
+	);
 });
 
+data_candidate.forEach((c) => {
+	let techstack = [];
+	let work_culture = [];
+	for (let i = 0; i < c.hard_skills.length; i++) {
+		techstack.push({
+			name: c.hard_skills[i],
+			importance: 3,
+		});
+	}
+	//work_culture not working for some reason
+	// for (let i = 0; i < c.work_culture_preferences.length; i++) {
+	// 	work_culture.push({
+	// 		name: c.work_culture_preferences[i],
+	// 		importance: 3,
+	// 	});
+	// }
+	c.work_culture_preferences.forEach((c) => {
+		work_culture.push({
+			name: c,
+			importance: 3,
+		});
+	});
+	candidate_array.push(
+		new Candidate({
+			preferred_position: c.preferred_position,
+			job_type: c.job_type,
+			expected_salary: c.expected_salary,
+			current_location: c.current_location,
+			preferred_location: c.preferred_location,
+			work_experience: c.work_experience,
+			hard_skills: techstack,
+			soft_skills: c.soft_skills,
+			other_aspects: c.other_aspects,
+			work_culture_preferences: work_culture,
+		}).save()
+	);
+});
 // Promise.all(cand_array)
 //     .then(r => {
 //         console.log("++ The amount of candidates seeded: " + cand_array.length)
@@ -122,11 +160,22 @@ data.forEach((c) => {
 //         console.log(`ERROR: ${error}`);
 //     });
 
- Promise.all(job_array)
-    .then(r => {
-       console.log("++ The amount of jobs seeded: " + job_array.length)
-        mongoose.connection.close();
-    })
-    .catch(error => {
-        console.log(`ERROR: ${error}`);
-    });
+Promise.all(job_array)
+	.then((r) => {
+		console.log("++ The amount of jobs seeded: " + job_array.length);
+		mongoose.connection.close();
+	})
+	.catch((error) => {
+		console.log(`ERROR: ${error}`);
+	});
+
+Promise.all(candidate_array)
+	.then((r) => {
+		console.log(
+			"++ The amount of candidates seeded: " + candidate_array.length
+		);
+		mongoose.connection.close();
+	})
+	.catch((error) => {
+		console.log(`ERROR: ${error}`);
+	});

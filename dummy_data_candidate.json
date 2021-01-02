@@ -6,7 +6,7 @@
         "current_location": "Magdeburg",
         "preferred_location": "Berlin",
         "work_experience": "4 years full-stack developer",
-        "hard skills": [
+        "hard_skills": [
             "Java",
             "Java EE",
             "Databases",
@@ -30,7 +30,7 @@
         "current_location": "Berlin",
         "preferred_location": "Cologne",
         "work_experience": "5 years backend developer",
-        "hard skills": [
+        "hard_skills": [
             "C#",
             ".Net",
             "HP Unified Functional Testing",
@@ -50,7 +50,7 @@
         "current_location": "Hamburg",
         "preferred_location": "Hamburg",
         "work_experience": "6+ years of experience developing scalable software applications",
-        "hard skills": [
+        "hard_skills": [
             "SQL",
             "CI/CD tools",
             "TDD"
@@ -70,7 +70,7 @@
         "current_location": "Berlin",
         "preferred_location": "New York",
         "work_experience": "2 years part-time doing QA",
-        "hard skills": [
+        "hard_skills": [
             "Cypress.io",
             "JavaScript",
             "Node.js"
@@ -90,7 +90,7 @@
         "current_location": "Ratingen",
         "preferred_location": "Düsseldorf",
         "work_experience": "-",
-        "hard skills": [
+        "hard_skills": [
             "C#",
             "JavaScript",
             "SQL"
@@ -110,7 +110,7 @@
         "current_location": "Saarbrücken",
         "preferred_location": "Saarbrücken",
         "work_experience": "6 months as an intern with OpenAI",
-        "hard skills": [
+        "hard_skills": [
             "Machine learning",
             "AI",
             "Python",
@@ -132,7 +132,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "2 years working as a software developer with Riot",
-        "hard skills": [
+        "hard_skills": [
             "Node",
             "React",
             "Git",
@@ -154,7 +154,7 @@
         "current_location": "Lingen",
         "preferred_location": "Lingen",
         "work_experience": "3 years working as a software engineer at a startup",
-        "hard skills": [
+        "hard_skills": [
             "C++",
             "Python"
         ],
@@ -173,7 +173,7 @@
         "current_location": "Ingolstadt",
         "preferred_location": "Lingen",
         "work_experience": "1 year of managing and expanding a web product",
-        "hard skills": [
+        "hard_skills": [
             "HTML5",
             "Javascript",
             "Typescript",
@@ -197,7 +197,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "Student assistent to Prof. Gross, working on an application for students looking for accomodation",
-        "hard skills": [
+        "hard_skills": [
             "Java",
             "React",
             "AWS",
@@ -217,7 +217,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "2 years experience doing QA",
-        "hard skills": [
+        "hard_skills": [
             "NodeJS",
             "Ruby on Rails",
             "SQL",
@@ -241,7 +241,7 @@
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
         "work_experience": "2 years full-stack developer",
-        "hard skills": [
+        "hard_skills": [
             "Node.js",
             "Typescript",
             "Java"
@@ -261,7 +261,7 @@
         "current_location": "Berlin",
         "preferred_location": "-",
         "work_experience": "Student",
-        "hard skills": [
+        "hard_skills": [
             "Node.js",
             "MySQL",
             "AWS"
@@ -281,7 +281,7 @@
         "current_location": "Dresden",
         "preferred_location": "Dresden",
         "work_experience": "3 years experience is in developing and implementing frontend applications",
-        "hard skills": [
+        "hard_skills": [
             "JavaScript",
             "GraphQL"
         ],
@@ -300,7 +300,7 @@
         "current_location": "Darmstadt",
         "preferred_location": "Darmstadt",
         "work_experience": "5 years experience in developing and implementing web applications with PHP",
-        "hard skills": [
+        "hard_skills": [
             "PHP",
             "Symfony",
             "MySQL",
@@ -323,7 +323,7 @@
         "current_location": "Berlin",
         "preferred_location": "Paderborn",
         "work_experience": "5 years experience working in IT on mobile applications",
-        "hard skills": [
+        "hard_skills": [
             "JavaScript"
         ],
         "soft_skills": "An eye for detail, focused and strong communicator",
@@ -341,7 +341,7 @@
         "current_location": "München",
         "preferred_location": "Germany",
         "work_experience": "Year-long experience developing with C++",
-        "hard skills": [
+        "hard_skills": [
             "C++"
         ],
         "soft_skills": "Proactive and communicative",
@@ -359,7 +359,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "2.5 years experience in web development",
-        "hard skills": [
+        "hard_skills": [
             "NodeJS",
             "ES6",
             "Docker",
@@ -379,7 +379,7 @@
         "current_location": "München",
         "preferred_location": "Freiburg",
         "work_experience": "6 years",
-        "hard skills": [
+        "hard_skills": [
             "PHP",
             "Javasccript",
             "HTML",
@@ -404,7 +404,7 @@
         "current_location": "Dresden",
         "preferred_location": "Dresden",
         "work_experience": "2 years working at Google",
-        "hard skills": [
+        "hard_skills": [
             "Vue.js",
             "Javascript",
             "Git",
@@ -425,7 +425,7 @@
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
         "work_experience": "7 years experience in Backend with PHP",
-        "hard skills": [
+        "hard_skills": [
             "PHP",
             "Distributed systems",
             "Go"
@@ -444,7 +444,7 @@
         "current_location": "Berlin",
         "preferred_location": "New York",
         "work_experience": "2+ years of experience developing web applications",
-        "hard skills": [
+        "hard_skills": [
             "Python",
             "Distributed backend systems",
             "SQL"
@@ -466,7 +466,7 @@
             "4 + years proven experience as a software engineer", 
             "Working knowledge of front end web technologies and programing languages"
         ],
-        "hard skills": [
+        "hard_skills": [
             "PostgreSQL",
             "MySQL",
             "PHP",
@@ -491,7 +491,7 @@
         "current_location": "Paris",
         "preferred_location": "New York",
         "work_experience": "2+ years with automation tools",
-        "hard skills": [
+        "hard_skills": [
             "Linux",
             "ApacheTomcat",
             "Clustering technologies"
@@ -511,7 +511,7 @@
         "current_location": "Oslo",
         "preferred_location": "New York",
         "work_experience": "9 years of professional experience, with 4 years in coding in a general purpose programming language (e.g. Java, C/C++, Python).",
-        "hard skills": [
+        "hard_skills": [
             "JS",
             "HTTP",
             "SQL"
@@ -530,7 +530,7 @@
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
         "work_experience": "Experience maintaining a G Suite corporate email and IdP environment.",
-        "hard skills": [
+        "hard_skills": [
             "Networking concepts",
             "MDM solutions",
             "Conference Room A/V technology support"
@@ -548,7 +548,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "4+ years hands-on IT Support experience.",
-        "hard skills": [
+        "hard_skills": [
             "PC repair",
             "LAN troubleshooting",
             "Systems administration"
@@ -566,7 +566,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "Experience in designing, implementing and supporting highly scalable data systems and services in Java and/or Scala.",
-        "hard skills": [
+        "hard_skills": [
             "Hadoop-ecosystem technologies",
             "Spark Streaming",
             "YARN/MR2"
@@ -585,7 +585,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "Expert knowledge of Linux cloud system administration at scale using Infrastructure as Code.",
-        "hard skills": [
+        "hard_skills": [
             "Hadoop-ecosystem technologies",
             "Spark Streaming",
             "YARN/MR2"
@@ -605,7 +605,7 @@
         "current_location": "Berlin",
         "preferred_location": "Berlin",
         "work_experience": "The techy geeky computer- and IT-expert, that has experience with software and hardware setup of all kinds in larger organizations and wants to grow the infrastructure of your company",
-        "hard skills": [
+        "hard_skills": [
             "Administering CRM",
             "SharePoint"
         ],
@@ -623,7 +623,7 @@
         "current_location": "Frankfurt",
         "preferred_location": "Berlin",
         "work_experience": "Completed training as IT Administrator, Network administrator or IT-related studies Ability to troubleshoot network issues (including WAN / LAN / WiFi) Competence in setting up and troubleshooting soft- and hardware Good knowledge of IT operating systems, especially Windows and MacOS.",
-        "hard skills": [
+        "hard_skills": [
             "Troubleshooting network issues",
             "IT Operating Systems"
         ],
