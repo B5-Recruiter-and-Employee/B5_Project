@@ -2,49 +2,37 @@
   <div class="row justify-content-center align-items-center"></div>
   <div class="main-body">
     <hr>
-    <h1>Edit this job offer:</h1>    
-  </div>
+    <h1 class="font-weight-light">Edit this job offer:</h1>    
  
   <div class="row justify-content-center h-100">
     <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-      <form action="">
+      <form method="POST" action="/jobs/<%=job._id%>/update">
         <div class="form-group">
-          <label for="jobTitle">Job title</label>
-          <input type="text" class="form-control is-disabled" id="jobTitle" placeholder= "..." value="<%= job.job_title %>"/>
+          <label class="font-weight-light text-left" for="job_title" >Job title</label>
+          <input type="text" value="<%= job.job_title %>" name="job_title" class="form-control is-disabled" placeholder= "..."/>
         </div>
         <div class="form-group">
-          <label for="jobLocation">Location</label>
-          <input type="text" class="form-control is-disabled" id="jobLocation" placeholder= "..." value="<%= job.location %>" />
+          <label class="font-weight-light" for="location">Location</label>
+          <input type="text" name="location" value="<%= job.location %>" class="form-control is-disabled" placeholder= "..." />
         </div>
         <div class="form-group">
-          <label for="salary">Salary</label>
-          <input type="text" class="form-control is-disabled" id="salary" placeholder= "..." value="<%= job.salary %>"/>
+          <label class="font-weight-light" for="company">Company</label>
+          <input type="text" name="company_name" value="<%= job.company_name %>" class="form-control is-disabled" placeholder= "..." />
         </div>
         <div class="form-group">
-          <label for="techstack">Tech stack</label>
-          <input type="text" class="form-control is-disabled" id="techstack" placeholder= "..." value=""/>
+          <label class="font-weight-light" for="salary">Salary</label>
+          <input type="text" name="salary" value="<%= job.salary %>" class="form-control is-disabled" placeholder= "..."/>
         </div>
         <div class="form-group">
-          <label for="workculture">Work culture</label>
-          <input type="text" class="form-control is-disabled" id="workculture" placeholder= "..." value=""/>
+          <label class="font-weight-light" for="description">Description</label>
+          <textarea name="description" class="form-control is-disabled" id="description" rows="3"><%= job.description %></textarea>
         </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control is-disabled" id="description" rows="3"> <%= job.description %> </textarea>
-        </div>
-
-        <div class="form-group">
-          <div class="container">
-            <div class="row">
-              <a href="/jobs/<%= card.jobId %>/delete" class="btn btn">Delete</a> 
-              <div class="col"><button class="col-6 btn btn-outline-primary btn-sm float-center">Delete</button></div>
-              <div class="col"><button type="submit" class="col-6 btn btn-outline-primary btn-sm float-center">Update</button></div>
-              
-            </div>
-          </div>
-        </div>
-
+        <div class="row">
+        <div class="col"><button type="submit" class="col-6 btn btn-outline-primary btn-sm float-center">Save</button></div>
       </form>
+            <div class="col"><button class="col-6 btn btn-outline-primary btn-sm float-center" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete</button></div>
+          </div>
+      </div>
     </div>
   </div>
 </div>
