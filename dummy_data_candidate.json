@@ -417,5 +417,221 @@
             "Small team",
             "Homeoffice"
         ]
+    },
+    {
+        "preferred_position": "Software Development Engineer",
+        "job_type": "Full time",
+        "expected_salary": "60 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Hamburg",
+        "work_experience": "7 years experience in Backend with PHP",
+        "hard skills": [
+            "PHP",
+            "Distributed systems",
+            "Go"
+        ],
+        "soft_skills": "Great community ambassador",
+        "other_aspects": "Startup environment",
+        "work_culture_preferences": [
+            "Homeoffice",
+            "Flexible hours"
+        ]
+    },
+    {
+        "preferred_position": "Rotational software engineer",
+        "job_type": "Full time",
+        "expected_salary": "80 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "New York",
+        "work_experience": "2+ years of experience developing web applications",
+        "hard skills": [
+            "Python",
+            "Distributed backend systems",
+            "SQL"
+        ],
+        "soft_skills": "Analytical thinking",
+        "other_aspects": ["Spacious office", "Gym"],
+        "work_culture_preferences": [
+            "Events and celebrations",
+            "Workshops"
+        ]
+    },
+    {
+        "preferred_position": "Lead Software Engineer",
+        "job_type": "Full time",
+        "expected_salary": "220 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Boston",
+        "work_experience": [
+            "4 + years proven experience as a software engineer", 
+            "Working knowledge of front end web technologies and programing languages"
+        ],
+        "hard skills": [
+            "PostgreSQL",
+            "MySQL",
+            "PHP",
+            "Python"
+        ],
+        "soft_skills": [
+            "Great planner",
+             "bring to life business aspirations"
+        ],
+        "other_aspects": [
+            "Friendly environment",
+             "Pet friendly office"],
+        "work_culture_preferences": [
+            "Regular retrospectives",
+            "Snacks"
+        ]
+    },
+    {
+        "preferred_position": "Automation Engineer",
+        "job_type": "Full time",
+        "expected_salary": "100 000/year",
+        "current_location": "Paris",
+        "preferred_location": "New York",
+        "work_experience": "2+ years with automation tools",
+        "hard skills": [
+            "Linux",
+            "ApacheTomcat",
+            "Clustering technologies"
+        ],
+        "soft_skills": ["Sociable", "Great time management skills"],
+        "other_aspects": ["Office in the suburbs of the city"],
+        "work_culture_preferences": [
+            "Coffee",
+            "Drinks",
+            "Snacks"
+        ]
+    },
+    {
+        "preferred_position": "Customer Solutions Engineer",
+        "job_type": "Full time",
+        "expected_salary": "100 000/year",
+        "current_location": "Oslo",
+        "preferred_location": "New York",
+        "work_experience": "9 years of professional experience, with 4 years in coding in a general purpose programming language (e.g. Java, C/C++, Python).",
+        "hard skills": [
+            "JS",
+            "HTTP",
+            "SQL"
+        ],
+        "soft_skills": ["Team player", "Collaboration with stakeholders"],
+        "other_aspects": ["Flexible hours"],
+        "work_culture_preferences": [
+            "Team events",
+            "Drinks"
+        ]
+    },
+    {
+        "preferred_position": "IT Specialist",
+        "job_type": "Full time",
+        "expected_salary": "80 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Hamburg",
+        "work_experience": "Experience maintaining a G Suite corporate email and IdP environment.",
+        "hard skills": [
+            "Networking concepts",
+            "MDM solutions",
+            "Conference Room A/V technology support"
+        ],
+        "soft_skills": ["Sporty", "Extroverted"],
+        "other_aspects": ["Gym in the office", "Lounge zone"],
+        "work_culture_preferences": [
+            "Team events"
+        ]
+    },
+    {
+        "preferred_position": "IT Support Engineer",
+        "job_type": "Full time",
+        "expected_salary": "80 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "4+ years hands-on IT Support experience.",
+        "hard skills": [
+            "PC repair",
+            "LAN troubleshooting",
+            "Systems administration"
+        ],
+        "soft_skills": ["Creative", "Effective communication skills"],
+        "other_aspects": ["Close to the city center"],
+        "work_culture_preferences": [
+            "Team events"
+        ]
+    },
+    {
+        "preferred_position": "Software data engineer",
+        "job_type": "Full time",
+        "expected_salary": "110 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "Experience in designing, implementing and supporting highly scalable data systems and services in Java and/or Scala.",
+        "hard skills": [
+            "Hadoop-ecosystem technologies",
+            "Spark Streaming",
+            "YARN/MR2"
+        ],
+        "soft_skills": ["Adaptability", "Flexibility"],
+        "other_aspects": ["Startup environment"],
+        "work_culture_preferences": [
+            "Flexible hours",
+            "Flat hierarchy"
+        ]
+    },
+    {
+        "preferred_position": "IT Systems Engineer",
+        "job_type": "Full time",
+        "expected_salary": "80 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "Expert knowledge of Linux cloud system administration at scale using Infrastructure as Code.",
+        "hard skills": [
+            "Hadoop-ecosystem technologies",
+            "Spark Streaming",
+            "YARN/MR2"
+        ],
+        "soft_skills": ["Adaptability", "Flexibility"],
+        "other_aspects": ["Discounted public transit pass", "German language classes", "Employee loans"],
+        "work_culture_preferences": [
+            "Fitness memberships",
+            "Childcare services",
+            "relocation package with visa support"
+        ]
+    },
+    {
+        "preferred_position": "IT Admin",
+        "job_type": "Full time",
+        "expected_salary": "50 000/year",
+        "current_location": "Berlin",
+        "preferred_location": "Berlin",
+        "work_experience": "The techy geeky computer- and IT-expert, that has experience with software and hardware setup of all kinds in larger organizations and wants to grow the infrastructure of your company",
+        "hard skills": [
+            "Administering CRM",
+            "SharePoint"
+        ],
+        "soft_skills": ["Conflict resolution", "Problem-solving"],
+        "other_aspects": ["International team", "German language classes"],
+        "work_culture_preferences": [
+            "Events and team outings",
+            "English language in the office"
+        ]
+    },
+    {
+        "preferred_position": "IT Linux Administrator",
+        "job_type": "Full time",
+        "expected_salary": "55 000/year",
+        "current_location": "Frankfurt",
+        "preferred_location": "Berlin",
+        "work_experience": "Completed training as IT Administrator, Network administrator or IT-related studies Ability to troubleshoot network issues (including WAN / LAN / WiFi) Competence in setting up and troubleshooting soft- and hardware Good knowledge of IT operating systems, especially Windows and MacOS.",
+        "hard skills": [
+            "Troubleshooting network issues",
+            "IT Operating Systems"
+        ],
+        "soft_skills": ["Adaptability", "Team player"],
+        "other_aspects": ["growing startup"],
+        "work_culture_preferences": [
+            "Events and team outings",
+            "Neighbourhood with a mix of restaurants"
+        ]
     }
 ]
