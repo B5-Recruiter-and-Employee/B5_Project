@@ -40,16 +40,19 @@ module.exports = {
 
   showView: (req, res) => {
     let userId = req.params.id;
+    //  User.findById(userId).then(user => {
+
+    //  Candidate.findById(user.candidateProfile).then(candidate => {
+    //candidate.user
     User.findById(userId).then(user => {
       if (user.candidateProfile) {
         Candidate.findById(user.candidateProfile).then(candidate => {
-          User.findById(candidate.user).then(user => {
-            res.render('user/profile', {
-              card: candidate,
-              cardOwner: {name: user.fullName, email: user.email}
-            });
-          })
+          res.render('user/profile', {
+            card: candidate,
+            cardOwner: { name: user.fullName, email: user.email }
+          });
         })
+        // })
       } else {
         res.render('user/profile');
       }
@@ -133,7 +136,7 @@ module.exports = {
     };
     //we need to use findOneAndUpdate instead of findByIdAndUpdate!
     // User.findByIdAndUpdate(userId, { $set: userParams })
-    User.findOneAndUpdate({_id: userId}, {$set: userParams}, {new: true})
+    User.findOneAndUpdate({ _id: userId }, { $set: userParams }, { new: true })
       .then(user => {
         res.locals.redirect = `/user/${userId}`;
         res.locals.user = user;
@@ -257,12 +260,13 @@ module.exports = {
     job.save().
       then((job) => {
         // User.findByIdAndUpdate(userId, {
-          User.findOneAndUpdate({_id : userId}, {
+        User.findOneAndUpdate({ _id: userId }, {
           $addToSet: {
             jobOffers: job
-          }},
-          {new : true}
-          )
+          }
+        },
+          { new: true }
+        )
           .then(user => {
             req.flash('success', `The job offer has been created successfully!`);
             res.locals.redirect = `/user/${user._id}/offers`;
