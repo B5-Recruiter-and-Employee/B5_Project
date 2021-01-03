@@ -21,8 +21,12 @@
                           <h1 class="h4">
                             <%= cardOwner.name %>
                           </h1>
-                          <p class="text-secondary mb-1">Full Stack Developer</p>
-                          <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                          <p class="text-secondary mb-1">
+                            <%= card.preferred_position %>
+                          </p>
+                          <p class="text-muted font-size-sm">
+                            <%= card.current_location %>
+                          </p>
                           <% if (!user.candidateProfile || !user.candidateProfile.equals(card._id)) { %>
                             <%- include('../partials/matches/connect.ejs') %>
                               <% } %>
@@ -50,7 +54,7 @@
                       </li>
                     </ul>
                   </div>
-                  
+
                   <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
                     <div class="profile-buttons justify-content-center">
                       <a href="<%=`/user/${user._id}/edit` %>">
@@ -72,7 +76,7 @@
                           Preferred position
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Developer
+                          <%= card.preferred_position %>
                         </div>
                         <hr>
 
@@ -80,7 +84,11 @@
                           Expected salary
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          55000 / year
+                          <% if (card.expected_salary) { %>
+                            <%= card.expected_salary %>
+                              <% } else { %>
+                                No salary specified.
+                                <% } %>
                         </div>
                         <hr>
 
@@ -88,16 +96,28 @@
                           Employment type
                         </div>
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Full-time
+                          <% if (card.job_type) { %>
+                            <%= card.job_type %>
+                              <% } else { %>
+                                No employment type specified.
+                                <% } %>
                         </div>
                         <hr>
 
                         <div class="col-sm-4 col-lg-3">
                           Preferred location
                         </div>
+
                         <div class="col-sm-8 col-lg-9 text-secondary">
-                          Bay Area, San Francisco, CA
+                          <% if (card.preferred_location.length> 0) { %>
+                            <% card.preferred_location.forEach( location=> { %>
+                              <%= location %>
+                                <% }) %>
+                                  <% } else { %>
+                                    No preferred location specified.
+                                    <% } %>
                         </div>
+
                       </div>
                     </div>
                   </div>
@@ -109,10 +129,11 @@
                           Work culture
                         </div>
                         <div class="col-sm-8 col-lg-9 card-body">
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Fruits</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Drinks</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Home office</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Animal friendly</a>
+                          <% card.work_culture_preferences.forEach( pref=> { %>
+                            <a href="#" class="badge badge-pill badge-primary mr-1 my-1">
+                              <%= pref.name %>
+                            </a>
+                            <% }) %>
                         </div>
                         <hr>
 
@@ -120,15 +141,11 @@
                           Hard skills
                         </div>
                         <div class="col-sm-8 col-lg-9 card-body">
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">HTML</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">JavaScript</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Sass</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Angular</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Vue</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">React</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">Redux</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">UI</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">UX</a>
+                          <% card.hard_skills.forEach( skill=> { %>
+                            <a href="#" class="badge badge-pill badge-primary mr-1 my-1">
+                              <%= skill.name %>
+                            </a>
+                            <% }) %>
                         </div>
                         <hr>
 
@@ -136,9 +153,11 @@
                           Soft skills
                         </div>
                         <div class="col-sm-8 col-lg-9 card-body">
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">creative</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">stress management</a>
-                          <a href="#" class="badge badge-pill badge-primary mr-1 my-1">team work</a>
+                          <% card.soft_skills.forEach( skill=> { %>
+                            <a href="#" class="badge badge-pill badge-primary mr-1 my-1">
+                              <%= skill %>
+                            </a>
+                            <% }) %>
                         </div>
                       </div>
                     </div>
@@ -159,8 +178,15 @@
                             Business Management and making organisations successful.</p>
 
                           <div class="d-flex align-items-center mb-3 h5">Work experience</div>
-                          <p>A good understanding of Linux development and automation tools (we use Ansible to manage
-                            configuration, and you are expected to deploy your own application and features).</p>
+                          <% if (card.work_experience.length> 0) { %>
+                            <% card.work_experience.forEach( exp=> { %>
+                              <p>
+                                <%= exp %>
+                              </p>
+                              <% }) %>
+                                <% } else { %>
+                                  <p> No work experience specified.</p>
+                                  <% } %>
                         </div>
                       </div>
                     </div>
