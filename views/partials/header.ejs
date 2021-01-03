@@ -20,31 +20,25 @@
         </li>
         <% if (user.role === 'candidate' && !user.candidateProfile) { %>
         <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New Candidate </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New candidate </a>
         </li>
         <% } else if (user.role === 'recruiter') { %>
-        <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/create_offers` %>"> Add job </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/offers` %>">Your Jobs </a>
-        </li>
         <% } %>
         <li class="nav-item">
           <a class="nav-link" href="<%=`/user/${user._id}` %>"> Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/logout"> Log Out </a>
+          <a class="nav-link btn btn-outline-primary my-1 my-xl-0" href="/user/logout"> Log out </a>
         </li>
       </ul>
       
       <% } else { %>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/login"> Log In </a>
+          <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/login"> Log in </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary" href="/user/signup"> Sign Up </a>
+          <a class="nav-link btn btn-primary" href="/user/signup"> Sign up </a>
         </li>
       </ul>
       <% } %>

@@ -23,16 +23,18 @@
           <label class="font-weight-light" for="salary">Salary</label>
           <input type="text" name="salary" value="<%= job.salary %>" class="form-control is-disabled" placeholder= "..."/>
         </div>
+        
         <div class="form-group">
           <label class="font-weight-light" for="description">Description</label>
           <textarea name="description" class="form-control is-disabled" id="description" rows="3"><%= job.description %></textarea>
         </div>
         <div class="row">
-        <div class="col"><button type="submit" class="col-6 btn btn-outline-primary btn-sm float-center">Save</button></div>
+        <div class="col"><button type="submit" class=" btn btn-outline-success btn-sm mr-1">Save  </button></div>
+        <div class="col"><button type="reset" class=" btn btn-outline-secondary btn-sm ">Cancel</button></div>
       </form>
-            <div class="col"><button class="col-6 btn btn-outline-primary btn-sm float-center" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete</button></div>
+            <div class="col"><button class=" btn btn-outline-danger btn-sm" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete</button></div>
           </div>
+        </div>
       </div>
     </div>
   </div>
-</div>

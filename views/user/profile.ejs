@@ -79,9 +79,17 @@
                 </div>
               </div>
               <div class="profile-buttons">
+                <% if (user.role === 'recruiter') { %>
+                  <a href="<%=`/user/${user._id}/create_offers` %>">
+                    <button class="btn btn-outline-primary mr-2">Add job</button>
+                  </a>
+                  <a href="<%=`/user/${user._id}/offers` %>">
+                    <button class="btn btn-outline-primary mr-2">Your jobs</button>
+                  </a>
+                  <% } %>
                 <a href="<%=`/user/${user._id}/edit` %>">
-                  <button class="btn btn-primary">Edit Personal Data</button>
-                </a>
+                  <button class="btn btn-outline-secondary mr-2 br-light">Edit profile</button>
+                  </a>
               </div>
             </div>
           </div>
