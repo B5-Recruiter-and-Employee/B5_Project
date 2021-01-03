@@ -45,6 +45,10 @@
             <div class="tag-container">
               <select multiple class="inputanswer" id="input_preferred_location" type="text" name="preferred_location" placeholder="...type here" data-role="tagsinput"></select>
             </div>
+            <div class="ml-4">
+              <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
+              <label for="remote" class="form-check-label">I can work remotely.</label>
+            </div>
           </section>
         </div>
 
@@ -121,9 +125,10 @@
         <!-- 9. About me section -->
         <div class="carousel-item">
           <section class="questions">
-            <div class="sentence">Please write a short description about you. Let recruiter know something catchy about you!</div>
-            <div class="tag-container">
-              <textarea class="form-control" name="description" placeholder="...type here"></textarea>
+            <div class="sentence">Write a short description about you.</div>
+            <p class="sub_sentence">You can show off your previous work experience or anything else that requires a longer text. Let recruiter know something catchy about you!</p>
+            <div>
+              <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
             </div>
           </section>
         </div>

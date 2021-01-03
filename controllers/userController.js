@@ -2,7 +2,6 @@ const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
-const { Client } = require('elasticsearch');
 const Job = require("../models/job_offer");
 
 module.exports = {
@@ -240,23 +239,35 @@ module.exports = {
     res.render("jobs/index");
   },
 
- /**
-  * Add a new job offer during signup or when recruiter is logged in.
-  * 
-  */
+  /**
+   * Add a new job offer during signup or when recruiter is logged in.
+   * 
+   */
   addJobOffers: (req, res, next) => {
+    // get the bootstrap tag inputs and convert them to fit to our DB model
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
-    let techstack = sortTagInput(techArray);
+    let techstack = convertTagsInput(techArray);
     let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
-    let softskills = sortTagInput(softskillsArray);
+    let softskills = convertTagsInput(softskillsArray);
+
+    // location + remote work question
+    let location = [req.body.location];
+    if (!req.body.location) {
+      location = [];
+    }
+    let remote = req.body.remote;
+    console.log(remote);
+    if (remote) {
+      location.push(remote);
+    }
 
     let job = new Job({
       job_title: req.body.job_title,
-      location: req.body.location,
+      location: location,
       company_name: req.body.company_name,
       salary: req.body.salary,
       description: req.body.description,
-      work_culture_keywords: req.body.work_culture_keywords, //TODO: add checkbox values too
+      work_culture_keywords: req.body.work_culture_keywords,
       job_type: req.body.job_type,
       soft_skills: softskills,
       hard_skills: techstack,
@@ -286,7 +297,8 @@ module.exports = {
         } else {
           // else: not logged in, redirect to user signup page
           res.locals.redirect = `/signup/recruiter/${job._id}`;
-          next();}
+          next();
+        }
       })
   },
 
@@ -339,14 +351,24 @@ module.exports = {
    */
   addCandidate: (req, res, next) => {
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
-    let techstack = sortTagInput(techArray);
+    let techstack = convertTagsInput(techArray);
     let workcultureArray = [req.body.workculture1, req.body.workculture2, req.body.workculture3, req.body.workculture4];
-    let work_culture_preferences = sortTagInput(workcultureArray);
+    let work_culture_preferences = convertTagsInput(workcultureArray);
 
+    // preferred location + remote work question
+    let location = req.body.preferred_location;
+    if (!location) {
+      location = [];
+    }
+    let remote = req.body.remote;
+    console.log(remote);
+    if (remote) {
+      location.push(remote);
+    }
 
     let candidate = new Candidate({
       current_location: req.body.current_location,
-      preferred_location: req.body.preferred_location,
+      preferred_location: location,
       job_type: req.body.job_type,
       expected_salary: req.body.salary,
       preferred_position: req.body.preferred_position,
@@ -366,7 +388,6 @@ module.exports = {
 
   signUpCandidate: (req, res, next) => {
     let candidateId = req.params.candidateId;
-    // console.log(req.query.firstname);
 
     let userParams = {
       name: {
@@ -409,9 +430,13 @@ module.exports = {
     })
   }
 }
-// this function is used for creating an array from input tags. 
-// @param tags is an array of tagsinput from bootstrap, they should be sorted from 1 to 4 not the other way around
-let sortTagInput = (tags) => {
+
+/**
+ * This function is used for creating an array from input tags. 
+ * @param {tags} tags array of tagsinput from bootstrap, they should be sorted from 1 to 4 not the other way around
+ * @returns array of keyword-objects with importance {name, importance}
+ */
+let convertTagsInput = (tags) => {
   let tagsinput = [];
   for (let i = 1; i <= tags.length; i++) {
     if (Array.isArray(tags[i])) {

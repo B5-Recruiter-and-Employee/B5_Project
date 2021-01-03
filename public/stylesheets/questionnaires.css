@@ -1,4 +1,7 @@
 /* questionnaires page */
+.container-fluid#questionnaires{
+  padding: 5rem 15rem;
+}
 
 #questionnaires input[type=text] {
   background-color: #fff;
@@ -7,40 +10,34 @@
   display: inline-block;
   padding: 12px 20px;
   color: black !important;
-  vertical-align: middle;
   border-radius: 4px;
-  max-width: 100%;
-  line-height: 22px;
   cursor: text;
   width: 100% !important;
-  box-sizing: border-box;
   margin-top:15px;
 
 }
 
 #questionnaires select{
-  margin: 3% 0%;
+  margin: 1.5rem 0;
   border:none;
 }
 #questionnaires section.questions {
   text-align: left;
-  font-size: 1.5em;
   padding-top: 0;
-  padding-left: 5%;
+  padding-left: 2rem;
   margin: auto;
 }
 
 #questionnaires div.sentence{
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 #questionnaires div.sub_sentence{
-  font-size: 1em;
-  margin-top: 5%;
+  margin-top: 1.5rem;
 }
 #questionnaires label.sub_sub_sentence{
   margin-top: 1rem;
-  margin-bottom: 0rem;
-  font-size: 1em;
+  margin-bottom: 0;
+  font-size: 1rem;
   color: black;
 }
 #questionnaires p.sub_sentence{
@@ -48,21 +45,16 @@
 }
 
 #questionnaires div.checkboxes{
-  margin-top: 2%;
-}
-.container-fluid#questionnaires{
-  padding: 5% 15% 5%;
+  margin-top: 1rem;
 }
 
-#questionnaires input[type=submit]#submit_candidate, input[type=submit]#submit_job {
-  margin-top: 15%;
-  font-size: 20px;
-  border-radius: 10%;
-  padding: 10px 10px;
-  background-color: #9ab3f5
+#questionnaires .form-control{
+  color: black !important;
+  margin: 1.5rem 0;
 }
-#questionnaires input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
-  background-color: #7579e7 ;
+
+#questionnaires textarea.form-control::-webkit-input-placeholder {
+  color: #a9a9a9;
 }
 
 /* Questions with tags */
@@ -85,13 +77,13 @@
 .bootstrap-tagsinput .tag{
   background-color: #f2f2ff;
   color: black;
-  padding : 5px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
   margin: 5px;
   display: inline-block;
   align-items: center;
-  cursor : default;
+  cursor: default;
 }
 
 /* Bootstrap Carousel */
@@ -114,18 +106,9 @@
   width: 40px;
   height: 40px;
   background-color: #2b2eb9 !important;
-  border-radius : 10%;
+  border-radius: 10%;
 }
 
-#questionnaires .form-control{
-  font-size: 1.5rem !important;
-  color: black !important;
-  margin: 3% 0%;
-}
-
-#questionnaires textarea.form-control::-webkit-input-placeholder {
-  color: #a9a9a9;
-}
 /* .tag-container{
   background-color: #FFF;
   border: 2px solid #ccc;

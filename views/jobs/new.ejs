@@ -46,6 +46,10 @@
             <div>
               <input type="text" name="location" placeholder="...type here">
             </div>
+            <div class="ml-4">
+              <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
+              <label for="remote" class="form-check-label">This job offers remote work.</label>
+            </div>
           </section>
         </div>
 
@@ -59,7 +63,6 @@
                 <option value="Internship(Full-time)">Internship (full-time)</option>
                 <option value="Working-Student">Working student (part-time)</option>
                 <option value="Flexible">Flexible</option>
-                <option value="Remote">Remote work</option>
               </select>
             </div>
           </section>
@@ -126,7 +129,6 @@
           <section class="questions">
             <div class="sentence">Who will fit in your team? What else is important for the company?</div>
             <div>
-              <!-- <input type="text" name="other_aspects" placeholder="...type here"> -->
               <select multiple name="other_aspects" data-role="tagsinput" placeholder="..type here"> </select>
             </div>
           </section>
@@ -137,7 +139,7 @@
           <section class="questions">
             <div class="sentence">What will be the detailed tasks of the employee?</div>
             <div>
-              <textarea class="form-control" name="description" placeholder="...type here"></textarea>
+              <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
             </div>
           </section>
         </div>
@@ -185,7 +187,7 @@
           </section>
 
           <div>
-            <input type="submit" value="Submit" id="submit_job">
+            <input type="submit" value="Submit" id="submit_job" class="btn btn-primary mt-5">
           </div>
 
         </div>

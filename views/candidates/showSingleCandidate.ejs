@@ -21,8 +21,8 @@
                           <h1 class="h4">
                             <%= cardOwner.name %>
                           </h1>
-                          <p class="text-secondary mb-1 position-title"> Full Stack Developer</p>
-                          <p class="text-muted font-size-sm curr-location">Bay Area, San Francisco, CA</p>
+                          <p class="text-secondary mb-1"> Full Stack Developer</p>
+                          <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                           <% if (!user.candidateProfile || !user.candidateProfile.equals(card._id)) { %>
                             <%- include('../partials/matches/connect.ejs') %>
                               <% } %>
