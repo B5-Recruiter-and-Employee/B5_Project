@@ -271,7 +271,6 @@ module.exports = {
       job_type: req.body.job_type,
       soft_skills: softskills,
       hard_skills: techstack,
-      other_aspects: req.body.other_aspects,
     })
     job.save().
       then((job) => {
@@ -375,7 +374,6 @@ module.exports = {
       description: req.body.description,
       hard_skills: techstack,
       soft_skills: req.body.soft_skills,
-      other_aspects: req.body.other_aspects,
       work_culture_preferences: work_culture_preferences,
     })
     candidate.save().

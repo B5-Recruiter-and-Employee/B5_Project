@@ -24,7 +24,6 @@ const mongoose = require("mongoose"),
           type : String,
           required : true
         }],
-        other_aspects: [String],
         description: String,
         work_culture_preferences: [{
           name: String,
