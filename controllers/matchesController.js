@@ -15,9 +15,9 @@ module.exports = {
     let userId = req.params.id;
 
     User.findById(userId).then(user => {
-      //// start of our function ///////
       if (user.role === "recruiter") {
         Job.find({}).then(jobs => {
+
           //we have to check how it works when dummy data is created and then adapt the ejs files.
           let mappedOffers = jobs.filter(offer => {
             let userAdded = user.jobOffers.some(userOffer => {
@@ -26,36 +26,43 @@ module.exports = {
             if (userAdded) return offer;
           });
           let hits = [];
-          mappedOffers.forEach(jobOfferOfRecruiter => {
-            /// handling the matches
-            // sort the keywords by importance
-            let sortedHardSkills = getSortedKeywords("hard_skills.name", jobOfferOfRecruiter.hard_skills);
-            let sortedSoftSkills = getSortedKeywords("soft_skills.name", jobOfferOfRecruiter.soft_skills);
-            // define elasticsearch query
-            let searchedJobTitle = {"preferred_position" : jobOfferOfRecruiter.job_title }
-            let query = addSortedSkills('candidates', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
-            
-            client.search(query, (err, result) => {
-              if (err) { console.log(err) }
-              result.hits.hits.forEach(hit => hits.push(hit));
-              //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
-              // variable to represent a text. Each string is divided by the dot.
-               for (let i = 0; i < hits.length; i++) {
-                let experience = hits[i]._source.work_experience;
-                let resultedSentences = experience.join(". ");
-                hits[i]._source.shortDescription = resultedSentences;
-               }
-              // send hits array to ejs
-              console.log(hits.length);
-              res.locals.matches = hits;
-              next();
+          console.log(mappedOffers);
+          // IF there are no jobs found for this user, then no matches can be offered.
+          // IF there are jobs saved by recruiter, then find the matches.
+          if (mappedOffers.length > 0) {
+            mappedOffers.forEach(jobOfferOfRecruiter => {
+              /// handling the matches
+              // sort the keywords by importance
+              let sortedHardSkills = getSortedKeywords("hard_skills.name", jobOfferOfRecruiter.hard_skills);
+              let sortedSoftSkills = getSortedKeywords("soft_skills.name", jobOfferOfRecruiter.soft_skills);
+              // define elasticsearch query
+              let searchedJobTitle = { "preferred_position": jobOfferOfRecruiter.job_title }
+              let query = addSortedSkills('candidates', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
+
+              client.search(query, (err, result) => {
+                if (err) { console.log(err) }
+                result.hits.hits.forEach(hit => hits.push(hit));
+                //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
+                // variable to represent a text. Each string is divided by the dot.
+                for (let i = 0; i < hits.length; i++) {
+                  let experience = hits[i]._source.work_experience;
+                  let resultedSentences = experience.join(". ");
+                  hits[i]._source.shortDescription = resultedSentences;
+                }
+                // send hits array to ejs
+                console.log(hits.length);
+                res.locals.matches = hits;
+                next();
+              })
             })
-          })
+          } else {
+            res.locals.matches = hits;
+            next();
+          }
         })
           .catch((error) => {
             next(`MATCHES: No job offer was found for user "${userId}".`);
           });
-          ////end of our function///////
       } else {
         Candidate.findById(user.candidateProfile).then(candidate => {
           // sort the keywords by importance
@@ -63,8 +70,8 @@ module.exports = {
           let sortedSoftSkills = getSortedKeywords("soft_skills.name", candidate.soft_skills);
 
           // define elasticsearch query
-          let searchedJobTitle = {"job_title" : candidate.preferred_position }
-          let query =  addSortedSkills('job_offers', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
+          let searchedJobTitle = { "job_title": candidate.preferred_position }
+          let query = addSortedSkills('job_offers', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
           let hits;
           client.search(query, (err, result) => {
             if (err) { console.log(err) }
@@ -115,7 +122,7 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
         "bool": {
           "must": [
             {
-              "match":  jobTitle
+              "match": jobTitle
             }
           ],
           "should": []
