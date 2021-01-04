@@ -25,13 +25,11 @@ module.exports = {
             });
             if (userAdded) return offer;
           });
-          let hits = [];
+          let structuredHits= [];
           // IF there are no jobs found for this user, then no matches can be offered.
           // IF there are jobs saved by recruiter, then find the matches.
           if (mappedOffers.length > 0) {
             mappedOffers.forEach(jobOfferOfRecruiter => {
-              /// handling the matches
-              // sort the keywords by importance
               let sortedHardSkills = getSortedKeywords("hard_skills.name", jobOfferOfRecruiter.hard_skills);
               let sortedSoftSkills = getSortedKeywords("soft_skills.name", jobOfferOfRecruiter.soft_skills);
               // define elasticsearch query
@@ -40,25 +38,33 @@ module.exports = {
 
               client.search(query, (err, result) => {
                 if (err) { console.log(err) }
-                result.hits.hits.forEach(hit => hits.push(hit));
+                let matches = result.hits.hits;
                 //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
                 // variable to represent a text. Each string is divided by the dot.
-                for (let i = 0; i < hits.length; i++) {
-                  let experience = hits[i]._source.work_experience;
+                for (let i = 0; i < matches.length; i++) {
+                  let experience = matches[i]._source.work_experience;
                   let resultedSentences = experience.join(". ");
-                  hits[i]._source.shortDescription = resultedSentences;
+                  matches[i]._source.shortDescription = resultedSentences;
                 }
-                // send hits array to ejs
+                structuredHits.push({jobOfferOfRecruiter : matches.sort(compare)});
                 //render the matches page only if the last element of recruiter's offer reached
-                // and only then fill the locals mathches with all the hits for all jobs.
                 if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
-                  res.locals.matches = hits;
+                  //console.log(hits);
+                var matched = [];
+                structuredHits.forEach(matchOfJob => {
+                    matched = matched.concat(Object.values(matchOfJob.jobOfferOfRecruiter));
+                });
+                // NOW we give to locals.matches just the list of all matches.
+                // IF you want the matches section for each job offer, then you can save to locals.matches an array structuredHits.
+                // The array contains objects: {job offer of recruiter : sorted matches}. Play with it the way you want, depends on your FE.
+                // The lines 56-59 should be deleted then, if a list of matches not needed. This was done just for extracting the matches from each job.
+                  res.locals.matches = matched; 
                   next();
                 }
               })
             })
           } else {
-            res.locals.matches = hits;
+            res.locals.matches = [];
             next();
           }
         })
@@ -106,6 +112,18 @@ module.exports = {
 }
 
 // *** Other functions *** //
+/**
+ * Sorts an array based on particular value.
+ * @param {Number} a The score of one element.
+ * @param {Number} b The score of the next element.
+ * @returns 0, if both equal.
+ */
+function compare(a, b) {
+  if (a._score > b._score) return 1;
+  if (b._score > a._score) return -1;
+
+  return 0;
+}
 
 /**
  *
