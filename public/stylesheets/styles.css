@@ -126,6 +126,25 @@ a {
   background-color: #7579E7 !important;
 }
 
+.btn-outline-success, .badge-primary {
+  color : rgb(121, 196, 152) !important;
+  border-color : rgb(121, 196, 152)  !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #c3ecc3 !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: #f7d8d8 !important;
+  color: #ff0404 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #dddddd !important;
+  color: #757575 !important;
+}
+
 .navbar-toggler-icon{
   width: 2em;
   height: 2em;
