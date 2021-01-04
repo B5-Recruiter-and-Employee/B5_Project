@@ -46,7 +46,9 @@ module.exports = {
                   let resultedSentences = experience.join(". ");
                   matches[i]._source.shortDescription = resultedSentences;
                 }
-                structuredHits.push({jobOfferOfRecruiter : matches.sort(compare)});
+                var sortedMatches = matches.sort(compare).reverse();
+                structuredHits.push({jobOfferOfRecruiter : sortedMatches});
+                //console.log("*************************** Sorted in desc order for each job: ************************* ", sortedMatches);
                 //render the matches page only if the last element of recruiter's offer reached
                 if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
                   //console.log(hits);
