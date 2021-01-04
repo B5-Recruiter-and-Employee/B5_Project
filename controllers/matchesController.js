@@ -26,7 +26,6 @@ module.exports = {
             if (userAdded) return offer;
           });
           let hits = [];
-          console.log(mappedOffers);
           // IF there are no jobs found for this user, then no matches can be offered.
           // IF there are jobs saved by recruiter, then find the matches.
           if (mappedOffers.length > 0) {
@@ -50,9 +49,12 @@ module.exports = {
                   hits[i]._source.shortDescription = resultedSentences;
                 }
                 // send hits array to ejs
-                console.log(hits.length);
-                res.locals.matches = hits;
-                next();
+                //render the matches page only if the last element of recruiter's offer reached
+                // and only then fill the locals mathches with all the hits for all jobs.
+                if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
+                  res.locals.matches = hits;
+                  next();
+                }
               })
             })
           } else {
