@@ -245,9 +245,9 @@ module.exports = {
    */
   addJobOffers: (req, res, next) => {
     // get the bootstrap tag inputs and convert them to fit to our DB model
-    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
+    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3];
     let techstack = convertTagsInput(techArray);
-    let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3, req.body.softskill4];
+    let softskillsArray = [req.body.softskill1, req.body.softskill2, req.body.softskill3];
     let softskills = convertTagsInput(softskillsArray);
 
     // location + remote work question
@@ -261,13 +261,33 @@ module.exports = {
       location.push(remote);
     }
 
+    //work culture checkboxes and input
+    let  workculture = [];
+    if(req.body.extras){
+      if (Array.isArray(req.body.extras)) {
+        workculture = req.body.extras;
+      }else{
+        workculture = [req.body.extras];
+      }
+    }
+    if (req.body.work_culture_keywords){
+      if (Array.isArray(req.body.work_culture_keywords)){
+        req.body.work_culture_keywords.forEach(e => {
+          workculture.push(e);
+        });
+      }else{
+      workculture.push(req.body.work_culture_keywords);
+    }
+    }
+
+    console.log(workculture);
     let job = new Job({
       job_title: req.body.job_title,
       location: location,
       company_name: req.body.company_name,
       salary: req.body.salary,
       description: req.body.description,
-      work_culture_keywords: req.body.work_culture_keywords,
+      work_culture_keywords: workculture,
       job_type: req.body.job_type,
       soft_skills: softskills,
       hard_skills: techstack,
@@ -349,16 +369,20 @@ module.exports = {
    * Add new candidate information when user first sign up
    */
   addCandidate: (req, res, next) => {
-    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3, req.body.techstack4];
+    let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3];
     let techstack = convertTagsInput(techArray);
-    let workcultureArray = [req.body.workculture1, req.body.workculture2, req.body.workculture3, req.body.workculture4];
+    let workcultureArray = [req.body.workculture1, req.body.workculture2, req.body.workculture3];
     let work_culture_preferences = convertTagsInput(workcultureArray);
 
     // preferred location + remote work question
-    let location = req.body.preferred_location;
-    if (!location) {
-      location = [];
+    let location =[]; 
+    if (Array.isArray(req.body.preferred_location)) {
+      location = req.body.preferred_location;
     }
+    else{
+      location = [req.body.preferred_location];
+    }
+   
     let remote = req.body.remote;
     console.log(remote);
     if (remote) {
