@@ -16,25 +16,21 @@
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="<%=`/matches/${user._id}` %>"> Matches </a>
+          <a class="nav-link" href="<%=`/matches/${user._id}` %>">Matches</a>
         </li>
-        <% if (user.role === 'candidate' && !user.candidateProfile) { %>
+        <% if (user.role === 'recruiter') { %>
         <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/create_candidate` %>"> New Candidate </a>
-        </li>
-        <% } else if (user.role === 'recruiter') { %>
-        <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/create_offers` %>"> Add job </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/add-job` %>">Add job</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}/offers` %>">Your Jobs </a>
+          <a class="nav-link" href="<%=`/user/${user._id}/offers` %>">Your Jobs</a>
         </li>
         <% } %>
         <li class="nav-item">
-          <a class="nav-link" href="<%=`/user/${user._id}` %>"> Profile</a>
+          <a class="nav-link" href="<%=`/user/${user._id}` %>">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/logout"> Log Out </a>
+          <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/logout">Log Out</a>
         </li>
       </ul>
       
@@ -44,7 +40,10 @@
           <a class="nav-link btn btn-primary my-1 my-xl-0" href="/user/login"> Log In </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary" href="/user/signup"> Sign Up </a>
+          <a class="nav-link btn btn-primary" href="/signup/candidate">Sign up as developer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="/signup/recruiter">Sign up as employer</a>
         </li>
       </ul>
       <% } %>
@@ -54,9 +53,3 @@
 
   </nav>
 </header>
-<!-- <div id='header'> -->
-<!-- <p class='headerItem' onclick="location.href='../candidates/new'">New candidate</p>
-  <p class='headerItem' onclick="location.href='../candidates'">All candidates</p>
-  <p class='headerItem' onclick="location.href='../jobs/new'">New Job</p>
-  <p class='headerItem' onclick="location.href='../jobs'">All Jobs</p> -->
-<!-- </div> -->

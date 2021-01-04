@@ -1,67 +1,60 @@
-/* Questionaires page */
+/* questionnaires page */
+.container-fluid#questionnaires{
+  padding: 5rem 15rem;
+}
 
-#questionaires input[type=text] {
+#questionnaires input[type=text] {
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   display: inline-block;
   padding: 12px 20px;
   color: black !important;
-  vertical-align: middle;
   border-radius: 4px;
-  max-width: 100%;
-  line-height: 22px;
   cursor: text;
   width: 100% !important;
-  box-sizing: border-box;
   margin-top:15px;
 
 }
-#questionaires select{
-  margin: 3% 0%;
+
+#questionnaires select{
+  margin: 1.5rem 0;
   border:none;
 }
-section.questions {
+#questionnaires section.questions {
   text-align: left;
-  font-size: 1.5em;
   padding-top: 0;
-  padding-left: 5%;
+  padding-left: 2rem;
   margin: auto;
 }
 
-div.sentence{
-  font-size: 1.5em;
+#questionnaires div.sentence{
+  font-size: 1.5rem;
 }
-div.sub_sentence{
-  font-size: 1em;
-  margin-top: 5%;
+#questionnaires div.sub_sentence{
+  margin-top: 1.5rem;
 }
-p.sub_sub_sentence{
+#questionnaires label.sub_sub_sentence{
   margin-top: 1rem;
-  margin-bottom: 0rem;
-  font-size: 1em;
+  margin-bottom: 0;
+  font-size: 1rem;
   color: black;
 }
-p.sub_sentence{
+#questionnaires p.sub_sentence{
   color: #818181;
 }
 
-div.checkboxes{
-  margin-top: 2%;
-}
-.container-fluid#questionaires{
-  padding: 5% 15% 5%;
+#questionnaires div.checkboxes{
+  margin-top: 1rem;
 }
 
-input[type=submit]#submit_candidate, input[type=submit]#submit_job {
-  margin-top: 15%;
-  font-size: 20px;
-  border-radius: 10%;
-  padding: 10px 10px;
-  background-color: #9ab3f5
+#questionnaires .form-control{
+  color: black !important;
+  margin: 1.5rem 0;
 }
-input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
-  background-color: #7579e7 ;
+
+#questionnaires textarea.form-control::-webkit-input-placeholder {
+  color: #a9a9a9;
 }
 
 /* Questions with tags */
@@ -84,13 +77,13 @@ input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
 .bootstrap-tagsinput .tag{
   background-color: #f2f2ff;
   color: black;
-  padding : 5px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
   margin: 5px;
   display: inline-block;
   align-items: center;
-  cursor : default;
+  cursor: default;
 }
 
 /* Bootstrap Carousel */
@@ -104,16 +97,16 @@ input[type=submit]#submit_candidate:hover, input[type=submit]#submit_job:hover {
   margin-left: 5px;
 }
 
-.questionaires-carousel .carousel-control-prev, .questionaires-carousel .carousel-control-next  {
+.questionnaires-carousel .carousel-control-prev, .questionnaires-carousel .carousel-control-next  {
   position: fixed !important;
   background-color: none !important;
 }
 
-.questionaires-carousel .carousel-control-next-icon, .questionaires-carousel .carousel-control-prev-icon {
+.questionnaires-carousel .carousel-control-next-icon, .questionnaires-carousel .carousel-control-prev-icon {
   width: 40px;
   height: 40px;
   background-color: #2b2eb9 !important;
-  border-radius : 10%;
+  border-radius: 10%;
 }
 
 /* .tag-container{
