@@ -126,7 +126,7 @@ a {
   background-color: #7579E7 !important;
 }
 
-.btn-outline-success, .badge-primary {
+.btn-outline-success {
   color : rgb(121, 196, 152) !important;
   border-color : rgb(121, 196, 152)  !important;
 }
