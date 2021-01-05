@@ -36,7 +36,6 @@ jobSchema = mongoose.Schema({
         required : true
       }
     }],
-    other_aspects: [String],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

@@ -1,0 +1,13 @@
+<div class="text-center">
+
+    <form class="form-login-signup" action="<%= `/signup/candidate/${candidateId}?firstname=${fname}&lastname=${lname}`%>" method="post">
+      <img class="mb-4" src="/images/logo7-2.png" alt="" width="100" height="100">
+        <h1 class="h3 font-weight-normal">Almost done!</h1>
+        <p class="mb-4 font-weight-light text-muted">Please sign up to see your matches.</p>
+
+        <input type="email" class="form-control top" name="email" placeholder="E-mail" required="">
+        <input type="password" class="form-control bottom" name="password" placeholder="password" required="">
+        <button class="btn btn-lg btn-primary btn-block mx-0" type="submit">Sign up</button>
+
+    </form>
+</div>
