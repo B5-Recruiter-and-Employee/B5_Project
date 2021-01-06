@@ -250,3 +250,16 @@ and query this:
 ```GET jobs/_search```
 
 The jobs are saved in MongoDB first and after that into Elasticsearch. If you use queries to edit the data in Kibana, the changes won’t be saved into MongoDB. 
+
+### Docker
+
+To start the application locally you just need to install docker and docker-compose from the docker website
+Mac: https://docs.docker.com/docker-for-mac/install/
+Windows: https://docs.docker.com/docker-for-windows/install/
+DockerCompose: https://docs.docker.com/compose/install/
+
+after installing everything you can just start the application with
+```
+docker-compose build
+docker-compose up
+```
