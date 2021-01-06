@@ -15,7 +15,8 @@ const passport = require("passport");
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
     mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/rem_matching_test", {useNewUrlParser: true, useFindAndModify: false });
+    //I changed localhost in the connection string to mongo to make it work with docker, if you want to run it locally you have to change it to localhost again
+mongoose.connect("mongodb://mongo:27017/rem_matching_test", {useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.once("open", () => {

@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
+const client = new Client({ node: 'http://elasticsearch:9200' });
 const errorController = require("./errorController");
 
 module.exports = {

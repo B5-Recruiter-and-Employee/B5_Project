@@ -4,7 +4,7 @@ const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const { Client } = require('elasticsearch');
 const Job = require("../models/job_offer");
-const client = new Client({ node: 'http://localhost:9200' });
+const client = new Client({ node: 'http://elasticsearch:9200' });
 
 module.exports = {
   login: (req, res) => {
