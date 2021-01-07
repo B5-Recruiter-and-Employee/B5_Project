@@ -40,6 +40,10 @@ header .nav-link {
   margin: 0 1rem;
 }
 
+header .nav-link:hover{
+  background-color: #9AB3F5;
+}
+
 header a.nav-link:hover:not(.btn) {
   color: #7579E7 !important;
 }
@@ -54,9 +58,6 @@ header .navbar-brand{
   background: -webkit-linear-gradient(left, #120078, #98acf8 );
   -webkit-background-clip: text; 
   -webkit-text-fill-color: transparent;
-}
-header .navbar-brand:hover{
-  color: #7579E7 !important;
 }
 
 /* smaller font-sizes for mobile screen */

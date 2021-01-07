@@ -113,36 +113,6 @@
   cursor: default;
 }
 
-/* .tag-container{
-  background-color: #FFF;
-  border: 2px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
-  display:flex;
-  color: black;
-} */
-
-/* .tag-container .tag{
-  background-color: #f2f2ff;
-  color: black;
-  padding : 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin: 5px;
-  display: inline-block;
-  align-items: center;
-  cursor : default;
-} */
-
-/* .tag i{
-  font-size: 16px;
-  margin-left: 5px;
-} */
-
-/* .tag-container input{
-  flex: 1;
-  font-size: 25px;
-  padding: 12px 20px;
-  outline: none;
-  border:0;
-} */
+#questionnaires .error-message{
+  color: red;
+}
