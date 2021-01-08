@@ -41,11 +41,13 @@ module.exports = {
                 let matches = result.hits.hits;
                 //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
                 // variable to represent a text. Each string is divided by the dot.
+                //TO DO: change to description 
                 for (let i = 0; i < matches.length; i++) {
                   let experience = matches[i]._source.work_experience;
                   let resultedSentences = experience.join(". ");
                   matches[i]._source.shortDescription = resultedSentences;
                 }
+                //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
                 structuredHits.push({jobOfferOfRecruiter : sortedMatches});
                 //console.log("*************************** Sorted in desc order for each job: ************************* ", sortedMatches);
@@ -158,7 +160,7 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
     bool.must.push(hardSkills.must[i])
   }
   // add "should" HARD SKILLS to query
-  for (let i = 0; i < hardSkills.must.length; i++) {
+  for (let i = 0; i < hardSkills.should.length; i++) {
     bool.should.push(hardSkills.should[i])
   }
 
@@ -184,7 +186,6 @@ let getSortedKeywords = function (field, keywords) {
   let importance1 = "";
   let importance2 = "";
   let importance3 = "";
-  let importance4 = [];
 
   for (let i = 0; i < keywords.length; i++) {
     let keyword = keywords[i];
@@ -197,17 +198,6 @@ let getSortedKeywords = function (field, keywords) {
         break;
       case 3:
         importance3 = importance3 + " " + keyword.name
-        break;
-      case 4:
-        importance4.push(
-          {
-            "match": {
-              [field]: {
-                "query": keyword.name,
-                "boost": 4
-              }
-            }
-          })
         break;
       default:
         break;
@@ -236,7 +226,6 @@ let getSortedKeywords = function (field, keywords) {
   }]
 
   return {
-    should: should,
-    must: importance4
+    should: should
   };
 }
