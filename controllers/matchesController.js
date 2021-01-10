@@ -17,6 +17,7 @@ module.exports = {
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
         Job.find({}).then(jobs => {
+          console.log(jobs.length);
 
           //we have to check how it works when dummy data is created and then adapt the ejs files.
           let mappedOffers = jobs.filter(offer => {
@@ -25,6 +26,7 @@ module.exports = {
             });
             if (userAdded) return offer;
           });
+          console.log(mappedOffers.length);
           let structuredHits= [];
           // IF there are no jobs found for this user, then no matches can be offered.
           // IF there are jobs saved by recruiter, then find the matches.
@@ -35,10 +37,11 @@ module.exports = {
               // define elasticsearch query
               let searchedJobTitle = { "preferred_position": jobOfferOfRecruiter.job_title }
               let query = addSortedSkills('candidates', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
-
+              
               client.search(query, (err, result) => {
                 if (err) { console.log(err) }
                 let matches = result.hits.hits;
+                console.log(matches);
                 //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
                 // variable to represent a text. Each string is divided by the dot.
                 //TO DO: change to description 
@@ -49,6 +52,7 @@ module.exports = {
                 }
                 //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
+                console.log(sortedMatches);
                 structuredHits.push({jobOfferOfRecruiter : sortedMatches});
                 //console.log("*************************** Sorted in desc order for each job: ************************* ", sortedMatches);
                 //render the matches page only if the last element of recruiter's offer reached
@@ -172,6 +176,7 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
   for (let i = 0; i < softSkills.must.length; i++) {
     bool.should.push(softSkills.should[i])
   }
+  console.log(query);
   return query;
 }
 
