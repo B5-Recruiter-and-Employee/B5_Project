@@ -160,20 +160,20 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
   };
   let bool = query.body.query.bool;
   // add "must" HARD SKILLS to query
-  for (let i = 0; i < hardSkills.must.length; i++) {
-    bool.must.push(hardSkills.must[i])
-  }
+  //for (let i = 0; i < hardSkills.must.length; i++) {
+  //  bool.must.push(hardSkills.must[i])
+  //}
   // add "should" HARD SKILLS to query
-  for (let i = 0; i < hardSkills.must.length; i++) {
+  for (let i = 0; i < hardSkills.length; i++) {
     bool.should.push(hardSkills.should[i])
   }
 
   // add "must" SOFT SKILLS to query
-  for (let i = 0; i < softSkills.must.length; i++) {
-    bool.must.push(softSkills.must[i])
-  }
+  //for (let i = 0; i < softSkills.must.length; i++) {
+  //  bool.must.push(softSkills.must[i])
+  //}
   // add "should" SOFT SKILLS to query
-  for (let i = 0; i < softSkills.must.length; i++) {
+  for (let i = 0; i < softSkills.length; i++) {
     bool.should.push(softSkills.should[i])
   }
   console.log(query);
@@ -191,7 +191,7 @@ let getSortedKeywords = function (field, keywords) {
   let importance1 = "";
   let importance2 = "";
   let importance3 = "";
-  let importance4 = [];
+  //let importance4 = [];
 
   for (let i = 0; i < keywords.length; i++) {
     let keyword = keywords[i];
@@ -205,17 +205,17 @@ let getSortedKeywords = function (field, keywords) {
       case 3:
         importance3 = importance3 + " " + keyword.name
         break;
-      case 4:
-        importance4.push(
-          {
-            "match": {
-              [field]: {
-                "query": keyword.name,
-                "boost": 4
-              }
-            }
-          })
-        break;
+      //case 4:
+      //  importance4.push(
+      //    {
+      //      "match": {
+      //        [field]: {
+      //          "query": keyword.name,
+      //          "boost": 4
+      //        }
+      //      }
+      //    })
+      //  break;
       default:
         break;
     }
@@ -244,6 +244,6 @@ let getSortedKeywords = function (field, keywords) {
 
   return {
     should: should,
-    must: importance4
+    //must: importance4
   };
 }
