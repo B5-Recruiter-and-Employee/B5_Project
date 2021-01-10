@@ -127,8 +127,7 @@ module.exports = {
         firstname: req.body.firstname,
         lastname: req.body.lastname
       },
-      email: req.body.email,
-      password: req.body.password
+      email: req.body.email
     };
     //we need to use findOneAndUpdate instead of findByIdAndUpdate!
     // User.findByIdAndUpdate(userId, { $set: userParams })
