@@ -161,12 +161,11 @@
 								</p>
 
 								<div class="d-flex align-items-center mb-3 h5">
-									Work experience
+									Description
 								</div>
-								<% if (card.description.length> 0) { %> <%
-								card.description.forEach( exp=> { %>
-								<p><%= exp %></p>
-								<% }) %> <% } else { %> - <% } %>
+								<% if (card.description && card.description !== undefined) { %>
+								<p><%= card.description %></p>
+								<% } else { %> - <% } %>
 							</div>
 						</div>
 					</div>

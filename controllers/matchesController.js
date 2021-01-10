@@ -41,23 +41,21 @@ module.exports = {
               client.search(query, (err, result) => {
                 if (err) { console.log(err) }
                 let matches = result.hits.hits;
-                console.log(matches);
                 //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
                 // variable to represent a text. Each string is divided by the dot.
                 //TO DO: change to description 
-                // for (let i = 0; i < matches.length; i++) {
-                //   let description = matches[i]._source.description;
-                //   //let resultedSentences = experience.join(". ");
-                //   matches[i]._source.shortDescription = description;
-                // }
+                for (let i = 0; i < matches.length; i++) {
+                  console.log("******************SOURCE ************ ", matches[i]._source);
+                  let description = matches[i]._source.description;
+                  console.log(description);
+                  matches[i]._source.description_text = description;
+                }
                 //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
                 console.log(sortedMatches);
                 structuredHits.push({jobOfferOfRecruiter : sortedMatches});
-                //console.log("*************************** Sorted in desc order for each job: ************************* ", sortedMatches);
                 //render the matches page only if the last element of recruiter's offer reached
                 if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
-                  //console.log(hits);
                 var matched = [];
                 structuredHits.forEach(matchOfJob => {
                     matched = matched.concat(Object.values(matchOfJob.jobOfferOfRecruiter));

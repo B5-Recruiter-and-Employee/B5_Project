@@ -143,7 +143,7 @@ data_candidate.forEach((c) => {
 			expected_salary: c.expected_salary,
 			current_location: c.current_location,
 			preferred_location: c.preferred_location,
-			work_experience: c.work_experience,
+			description: c.description,
 			hard_skills: techstack,
 			soft_skills: c.soft_skills,
 			other_aspects: c.other_aspects,

@@ -5,7 +5,7 @@
         "expected_salary": "25k Euro/year",
         "current_location": "Magdeburg",
         "preferred_location": "Berlin",
-        "work_experience": "4 years full-stack developer",
+        "description": "4 years full-stack developer",
         "hard_skills": [
             "Java",
             "Java EE",
@@ -29,7 +29,7 @@
         "expected_salary": "35000",
         "current_location": "Berlin",
         "preferred_location": "Cologne",
-        "work_experience": "5 years backend developer",
+        "description": "5 years backend developer",
         "hard_skills": [
             "C#",
             ".Net",
@@ -49,7 +49,7 @@
         "expected_salary": "50000",
         "current_location": "Hamburg",
         "preferred_location": "Hamburg",
-        "work_experience": "6+ years of experience developing scalable software applications",
+        "description": "6+ years of experience developing scalable software applications",
         "hard_skills": [
             "SQL",
             "CI/CD tools",
@@ -69,7 +69,7 @@
         "expected_salary": "1500 EU/month",
         "current_location": "Berlin",
         "preferred_location": "New York",
-        "work_experience": "2 years part-time doing QA",
+        "description": "2 years part-time doing QA",
         "hard_skills": [
             "Cypress.io",
             "JavaScript",
@@ -89,7 +89,7 @@
         "expected_salary": "15000 EU/year",
         "current_location": "Ratingen",
         "preferred_location": "Düsseldorf",
-        "work_experience": "-",
+        "description": "-",
         "hard_skills": [
             "C#",
             "JavaScript",
@@ -109,7 +109,7 @@
         "expected_salary": "30.000 EU/year",
         "current_location": "Saarbrücken",
         "preferred_location": "Saarbrücken",
-        "work_experience": "6 months as an intern with OpenAI",
+        "description": "6 months as an intern with OpenAI",
         "hard_skills": [
             "Machine learning",
             "AI",
@@ -131,7 +131,7 @@
         "expected_salary": "50.000 EU/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "2 years working as a software developer with Riot",
+        "description": "2 years working as a software developer with Riot",
         "hard_skills": [
             "Node",
             "React",
@@ -153,7 +153,7 @@
         "expected_salary": "50.000 EU/year",
         "current_location": "Lingen",
         "preferred_location": "Lingen",
-        "work_experience": "3 years working as a software engineer at a startup",
+        "description": "3 years working as a software engineer at a startup",
         "hard_skills": [
             "C++",
             "Python"
@@ -172,7 +172,7 @@
         "expected_salary": "50.000",
         "current_location": "Ingolstadt",
         "preferred_location": "Lingen",
-        "work_experience": "1 year of managing and expanding a web product",
+        "description": "1 year of managing and expanding a web product",
         "hard_skills": [
             "HTML5",
             "Javascript",
@@ -196,7 +196,7 @@
         "expected_salary": "2500/month",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "Student assistent to Prof. Gross, working on an application for students looking for accomodation",
+        "description": "Student assistent to Prof. Gross, working on an application for students looking for accomodation",
         "hard_skills": [
             "Java",
             "React",
@@ -216,7 +216,7 @@
         "expected_salary": "60000/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "2 years experience doing QA",
+        "description": "2 years experience doing QA",
         "hard_skills": [
             "NodeJS",
             "Ruby on Rails",
@@ -240,7 +240,7 @@
         "expected_salary": "2000/month",
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
-        "work_experience": "2 years full-stack developer",
+        "description": "2 years full-stack developer",
         "hard_skills": [
             "Node.js",
             "Typescript",
@@ -260,7 +260,7 @@
         "expected_salary": "15 EU/h",
         "current_location": "Berlin",
         "preferred_location": "-",
-        "work_experience": "Student",
+        "description": "Student",
         "hard_skills": [
             "Node.js",
             "MySQL",
@@ -280,7 +280,7 @@
         "expected_salary": "150000 EU/year",
         "current_location": "Dresden",
         "preferred_location": "Dresden",
-        "work_experience": "3 years experience is in developing and implementing frontend applications",
+        "description": "3 years experience is in developing and implementing frontend applications",
         "hard_skills": [
             "JavaScript",
             "GraphQL"
@@ -299,7 +299,7 @@
         "expected_salary": "25000",
         "current_location": "Darmstadt",
         "preferred_location": "Darmstadt",
-        "work_experience": "5 years experience in developing and implementing web applications with PHP",
+        "description": "5 years experience in developing and implementing web applications with PHP",
         "hard_skills": [
             "PHP",
             "Symfony",
@@ -322,7 +322,7 @@
         "expected_salary": "30k",
         "current_location": "Berlin",
         "preferred_location": "Paderborn",
-        "work_experience": "5 years experience working in IT on mobile applications",
+        "description": "5 years experience working in IT on mobile applications",
         "hard_skills": [
             "JavaScript"
         ],
@@ -340,7 +340,7 @@
         "expected_salary": "5000 euro per month",
         "current_location": "München",
         "preferred_location": "Germany",
-        "work_experience": "Year-long experience developing with C++",
+        "description": "Year-long experience developing with C++",
         "hard_skills": [
             "C++"
         ],
@@ -358,7 +358,7 @@
         "expected_salary": "25 Euros/h",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "2.5 years experience in web development",
+        "description": "2.5 years experience in web development",
         "hard_skills": [
             "NodeJS",
             "ES6",
@@ -378,7 +378,7 @@
         "expected_salary": "40.000-52.000 per year",
         "current_location": "München",
         "preferred_location": "Freiburg",
-        "work_experience": "6 years",
+        "description": "6 years",
         "hard_skills": [
             "PHP",
             "Javasccript",
@@ -403,7 +403,7 @@
         "expected_salary": "20 000/year",
         "current_location": "Dresden",
         "preferred_location": "Dresden",
-        "work_experience": "2 years working at Google",
+        "description": "2 years working at Google",
         "hard_skills": [
             "Vue.js",
             "Javascript",
@@ -424,7 +424,7 @@
         "expected_salary": "60 000/year",
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
-        "work_experience": "7 years experience in Backend with PHP",
+        "description": "7 years experience in Backend with PHP",
         "hard_skills": [
             "PHP",
             "Distributed systems",
@@ -443,7 +443,7 @@
         "expected_salary": "80 000/year",
         "current_location": "Berlin",
         "preferred_location": "New York",
-        "work_experience": "2+ years of experience developing web applications",
+        "description": "2+ years of experience developing web applications",
         "hard_skills": [
             "Python",
             "Distributed backend systems",
@@ -462,7 +462,7 @@
         "expected_salary": "220 000/year",
         "current_location": "Berlin",
         "preferred_location": "Boston",
-        "work_experience": [
+        "description": [
             "4 + years proven experience as a software engineer", 
             "Working knowledge of front end web technologies and programing languages"
         ],
@@ -490,7 +490,7 @@
         "expected_salary": "100 000/year",
         "current_location": "Paris",
         "preferred_location": "New York",
-        "work_experience": "2+ years with automation tools",
+        "description": "2+ years with automation tools",
         "hard_skills": [
             "Linux",
             "ApacheTomcat",
@@ -510,7 +510,7 @@
         "expected_salary": "100 000/year",
         "current_location": "Oslo",
         "preferred_location": "New York",
-        "work_experience": "9 years of professional experience, with 4 years in coding in a general purpose programming language (e.g. Java, C/C++, Python).",
+        "description": "9 years of professional experience, with 4 years in coding in a general purpose programming language (e.g. Java, C/C++, Python).",
         "hard_skills": [
             "JS",
             "HTTP",
@@ -529,7 +529,7 @@
         "expected_salary": "80 000/year",
         "current_location": "Berlin",
         "preferred_location": "Hamburg",
-        "work_experience": "Experience maintaining a G Suite corporate email and IdP environment.",
+        "description": "Experience maintaining a G Suite corporate email and IdP environment.",
         "hard_skills": [
             "Networking concepts",
             "MDM solutions",
@@ -547,7 +547,7 @@
         "expected_salary": "80 000/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "4+ years hands-on IT Support experience.",
+        "description": "4+ years hands-on IT Support experience.",
         "hard_skills": [
             "PC repair",
             "LAN troubleshooting",
@@ -565,7 +565,7 @@
         "expected_salary": "110 000/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "Experience in designing, implementing and supporting highly scalable data systems and services in Java and/or Scala.",
+        "description": "Experience in designing, implementing and supporting highly scalable data systems and services in Java and/or Scala.",
         "hard_skills": [
             "Hadoop-ecosystem technologies",
             "Spark Streaming",
@@ -584,7 +584,7 @@
         "expected_salary": "80 000/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "Expert knowledge of Linux cloud system administration at scale using Infrastructure as Code.",
+        "description": "Expert knowledge of Linux cloud system administration at scale using Infrastructure as Code.",
         "hard_skills": [
             "Hadoop-ecosystem technologies",
             "Spark Streaming",
@@ -604,7 +604,7 @@
         "expected_salary": "50 000/year",
         "current_location": "Berlin",
         "preferred_location": "Berlin",
-        "work_experience": "The techy geeky computer- and IT-expert, that has experience with software and hardware setup of all kinds in larger organizations and wants to grow the infrastructure of your company",
+        "description": "The techy geeky computer- and IT-expert, that has experience with software and hardware setup of all kinds in larger organizations and wants to grow the infrastructure of your company",
         "hard_skills": [
             "Administering CRM",
             "SharePoint"
@@ -622,7 +622,7 @@
         "expected_salary": "55 000/year",
         "current_location": "Frankfurt",
         "preferred_location": "Berlin",
-        "work_experience": "Completed training as IT Administrator, Network administrator or IT-related studies Ability to troubleshoot network issues (including WAN / LAN / WiFi) Competence in setting up and troubleshooting soft- and hardware Good knowledge of IT operating systems, especially Windows and MacOS.",
+        "description": "Completed training as IT Administrator, Network administrator or IT-related studies Ability to troubleshoot network issues (including WAN / LAN / WiFi) Competence in setting up and troubleshooting soft- and hardware Good knowledge of IT operating systems, especially Windows and MacOS.",
         "hard_skills": [
             "Troubleshooting network issues",
             "IT Operating Systems"
