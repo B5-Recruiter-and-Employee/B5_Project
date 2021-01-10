@@ -47,7 +47,7 @@ header a.nav-link:hover:not(.btn) {
 header .navbar-brand{
   font-weight:bolder;
   background: -webkit-linear-gradient(left, #120078, #98acf8 );
-  -webkit-background-clip: text;
+  -webkit-background-clip: text; 
   -webkit-text-fill-color: transparent;
 }
 header .navbar-brand:hover{
@@ -124,6 +124,25 @@ a {
 
 .btn-primary:hover {
   background-color: #7579E7 !important;
+}
+
+.btn-outline-success {
+  color : rgb(121, 196, 152) !important;
+  border-color : rgb(121, 196, 152)  !important;
+}
+
+.btn-outline-success:hover {
+  background-color: #c3ecc3 !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: #f7d8d8 !important;
+  color: #ff0404 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #dddddd !important;
+  color: #757575 !important;
 }
 
 .navbar-toggler-icon{

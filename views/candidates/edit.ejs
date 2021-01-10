@@ -1,5 +1,5 @@
 
-  <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
+  <!-- <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
     <h2>Edit information:</h2>
     <label>Preferred position: </label>
     <input type="text" placeholder="Job you are looking for" name="preferred_position"  value = "<%= candidate.preferred_position %>" autofocus>
@@ -10,7 +10,41 @@
     <label>Work culture preferences</label>
     <input type="text" placeholder="Values, benefits..." name="work_culture_preferences" value = "<%= candidate.work_culture_preferences %>">
     <button type="submit" >Update</button>
-  </form>
+  </form>   -->
   
-
+  <div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center"></div>
+    <div class="main-body">
+      <hr>
+      <h1 class="font-weight-light">Edit your candidate profile:</h1>    
+   
+    <div class="row justify-content-center h-100">
+      <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+        <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
+          <div class="form-group">
+            <label class="font-weight-light text-left" for="preferred_position" >Preferred position:</label>
+            <input type="text" value="<%= candidate.preferred_position %>" name="preferred_position" class="form-control is-disabled" placeholder= "the job you're looking for!"/>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-light" for="soft_skills">Soft skills:</label>
+            <input type="text" name="soft_skills" value="<%= candidate.soft_skills %>" class="form-control is-disabled" placeholder= "..." />
+          </div>
+          <div class="form-group">
+            <label class="font-weight-light" for="other_aspects">Other aspects:</label>
+            <input type="text" name="other_aspects" value="<%= candidate.other_aspects %>" class="form-control is-disabled" placeholder= "anything recruiters should know?" />
+          </div>
+          <div class="form-group">
+            <label class="font-weight-light" for="description">Work culture preferences</label>
+            <textarea name="work_culture_preferences" class="form-control is-disabled" placeholder="your values, desired benefits..." rows="3"><%= candidate.work_culture_preferences %></textarea>
+          </div>
+          <div class="row">
+          <div class="col"><button type="submit" class=" btn btn-outline-success btn-sm mr-1">Save  </button></div>
+          <div class="col"><button type="reset" class=" btn btn-outline-secondary btn-sm ">Cancel</button></div>
+        </form>
+              <div class="col"><button class=" btn btn-outline-danger btn-sm" onclick="location.href='/candidates/${candidate._id}/delete'">Delete</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
  
