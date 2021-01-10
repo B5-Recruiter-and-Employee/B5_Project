@@ -17,7 +17,7 @@ const mongoose = require("mongoose"),
           importance: {
             type: Number,
             min : 1,
-            max : 4,
+            max : 3,
             required : true
           }
         }],
@@ -31,7 +31,7 @@ const mongoose = require("mongoose"),
           importance: {
             type: Number,
             min : 1,
-            max : 4,
+            max : 3,
             required : true
           }
         }],

@@ -117,7 +117,7 @@ module.exports = {
 			soft_skills: req.body.soft_skills,
 			other_aspects: req.body.other_aspects,
 			//just for testing elasticsearch
-			hard_skills: { name: req.body.work_culture_preferences, importance: 4 },
+			hard_skills: { name: req.body.work_culture_preferences, importance: 3 },
 		};
 
 		// Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
