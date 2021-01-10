@@ -160,7 +160,7 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
     bool.must.push(hardSkills.must[i])
   }
   // add "should" HARD SKILLS to query
-  for (let i = 0; i < hardSkills.should.length; i++) {
+  for (let i = 0; i < hardSkills.must.length; i++) {
     bool.should.push(hardSkills.should[i])
   }
 
@@ -186,6 +186,7 @@ let getSortedKeywords = function (field, keywords) {
   let importance1 = "";
   let importance2 = "";
   let importance3 = "";
+  let importance4 = [];
 
   for (let i = 0; i < keywords.length; i++) {
     let keyword = keywords[i];
@@ -198,6 +199,17 @@ let getSortedKeywords = function (field, keywords) {
         break;
       case 3:
         importance3 = importance3 + " " + keyword.name
+        break;
+      case 4:
+        importance4.push(
+          {
+            "match": {
+              [field]: {
+                "query": keyword.name,
+                "boost": 4
+              }
+            }
+          })
         break;
       default:
         break;
@@ -226,6 +238,7 @@ let getSortedKeywords = function (field, keywords) {
   }]
 
   return {
-    should: should
+    should: should,
+    must: importance4
   };
 }
