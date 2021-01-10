@@ -35,18 +35,19 @@ module.exports = {
         next(error);
       });
   },
-
+/**
+ * Shows the view of single match (job offer or candidate) 
+ * or a profile page of a logged in use (recruiter or candidate). 
+ */
   showView: (req, res) => {
     let userId = req.params.id;
     User.findById(userId).then(user => {
       if (user.candidateProfile) {
         Candidate.findById(user.candidateProfile).then(candidate => {
-          User.findById(candidate.user).then(user => {
-            res.render('user/profile', {
-              card: candidate,
-              cardOwner: { name: user.fullName, email: user.email }
-            });
-          })
+          res.render('user/profile', {
+            card: candidate,
+            cardOwner: { name: user.fullName, email: user.email }
+          });
         })
       } else {
         res.render('user/profile');
@@ -196,10 +197,47 @@ module.exports = {
   },
 
   /**
+
+ * Add the candidate profile information to the user that
+ * is currently logged in. 
+ * New jobs are being saved here!
+ */
+  // addJobOffers: (req, res, next) => {
+  //   userId = req.params.id;
+  //   let job = new Job({
+  //     location: req.body.location,
+  //     company_name: req.body.company_name,
+  //     job_title: req.body.job_title,
+  //     salary: req.body.salary,
+  //     description: req.body.description
+  //   })
+  //   job.save().
+  //     then((job) => {
+  //       // User.findByIdAndUpdate(userId, {
+  //       User.findOneAndUpdate({ _id: userId }, {
+  //         $addToSet: {
+  //           jobOffers: job
+  //         }
+  //       },
+  //         { new: true }
+  //       )
+  //         .then(user => {
+  //           req.flash('success', `The job offer has been created successfully!`);
+  //           res.locals.redirect = `/user/${user._id}/offers`;
+  //           //res.locals.redirect = `/user/${user._id}`;
+  //           next();
+  //         })
+  //         .catch(error => {
+  //           console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+  //         });
+  //     })
+  // },
+  /** 
    * Shows the questionnaire page for signup.
    */
   renderNewCandidate: (req, res) => {
     res.render('candidates/new');
+
   },
 
   /**
