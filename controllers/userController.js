@@ -202,36 +202,37 @@ module.exports = {
  * is currently logged in. 
  * New jobs are being saved here!
  */
-  addJobOffers: (req, res, next) => {
-    userId = req.params.id;
-    let job = new Job({
-      location: req.body.location,
-      company_name: req.body.company_name,
-      job_title: req.body.job_title,
-      salary: req.body.salary,
-      description: req.body.description
-    })
-    job.save().
-      then((job) => {
-        // User.findByIdAndUpdate(userId, {
-        User.findOneAndUpdate({ _id: userId }, {
-          $addToSet: {
-            jobOffers: job
-          }
-        },
-          { new: true }
-        )
-          .then(user => {
-            req.flash('success', `The job offer has been created successfully!`);
-            res.locals.redirect = `/user/${user._id}/offers`;
-            //res.locals.redirect = `/user/${user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-          });
-      })
-
+  // addJobOffers: (req, res, next) => {
+  //   userId = req.params.id;
+  //   let job = new Job({
+  //     location: req.body.location,
+  //     company_name: req.body.company_name,
+  //     job_title: req.body.job_title,
+  //     salary: req.body.salary,
+  //     description: req.body.description
+  //   })
+  //   job.save().
+  //     then((job) => {
+  //       // User.findByIdAndUpdate(userId, {
+  //       User.findOneAndUpdate({ _id: userId }, {
+  //         $addToSet: {
+  //           jobOffers: job
+  //         }
+  //       },
+  //         { new: true }
+  //       )
+  //         .then(user => {
+  //           req.flash('success', `The job offer has been created successfully!`);
+  //           res.locals.redirect = `/user/${user._id}/offers`;
+  //           //res.locals.redirect = `/user/${user._id}`;
+  //           next();
+  //         })
+  //         .catch(error => {
+  //           console.log(`Error updating candidate by ID: ${error.message}`); next(error);
+  //         });
+  //     })
+  // },
+  /** 
    * Shows the questionnaire page for signup.
    */
   renderNewCandidate: (req, res) => {
@@ -280,9 +281,7 @@ module.exports = {
    * Add a new job offer during signup or when recruiter is logged in.
    * 
    */
-  
-    
-    : (req, res, next) => {
+  addJobOffers: (req, res, next) => {
     // get the bootstrap tag inputs and convert them to fit to our DB model
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3];
     let techstack = convertTagsInput(techArray);

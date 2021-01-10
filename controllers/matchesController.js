@@ -45,11 +45,11 @@ module.exports = {
                 //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
                 // variable to represent a text. Each string is divided by the dot.
                 //TO DO: change to description 
-                for (let i = 0; i < matches.length; i++) {
-                  let experience = matches[i]._source.work_experience;
-                  let resultedSentences = experience.join(". ");
-                  matches[i]._source.shortDescription = resultedSentences;
-                }
+                // for (let i = 0; i < matches.length; i++) {
+                //   let description = matches[i]._source.description;
+                //   //let resultedSentences = experience.join(". ");
+                //   matches[i]._source.shortDescription = description;
+                // }
                 //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
                 console.log(sortedMatches);
