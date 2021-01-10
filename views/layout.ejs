@@ -1,9 +1,56 @@
-<head>  
-    <link href="/stylesheets/basicStyles.css" rel="stylesheet" type="text/css">
-</head>
+<!DOCTYPE html>
 
-<body>
-    <%- include ('./partials/header') %>
-        <div id="body"> <%- body %> </div>
-    <%- include ('./partials/footer') %>
-</body>
+ <html lang="en" dir="ltr">
+
+ <head>
+   <title>ReMatch</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+
+   <%# Bootstrap style sheet %>
+   <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   <%# Font %>
+   <link href="http://fonts.cdnfonts.com/css/abang" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@500&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+
+   <%#  Abang font for header item ReMatch %>
+   <link href="http://fonts.cdnfonts.com/css/abang" rel="stylesheet">
+
+   <%# Font Awesome / Icons %>
+   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <%# our custom style sheets - link here to overwrite bootstrap %>
+   <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/matches.css" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/profile.css" rel="stylesheet" type="text/css">
+   <link rel="stylesheet" href="/stylesheets/indexPage.css">
+   <link rel="stylesheet" href="/stylesheets/bootstrap-tagsinput.css">
+   <link rel="stylesheet" href="/stylesheets/questionnaires.css">
+ </head>
+
+ <body>
+
+  <div id="wrapper">
+   <%- include ('./partials/header') %>
+   <%- include('./flash'); -%>
+   <main> <%- body %> </main>
+   <%- include ('./partials/footer') %>
+  </div>
+
+   <!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/javascripts/bootstrap.bundle.min.js"></script>
+<script src="/javascripts/questionnaires/questionnaires.js"></script>
+<script src="/javascripts/questionnaires/bootstrap-tagsinput.js"></script>
+
+<!-- <script src="/javascripts/questionnaires/candidate_question.js"></script> -->
+
+ </body>
+
+ </html>

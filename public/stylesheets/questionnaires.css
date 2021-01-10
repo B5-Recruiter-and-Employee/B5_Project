@@ -1,0 +1,144 @@
+/* questionnaires page */
+.container-fluid#questionnaires{
+  padding: 5rem 15rem;
+}
+
+#questionnaires input[type=text] {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  display: inline-block;
+  padding: 12px 20px;
+  color: black !important;
+  border-radius: 4px;
+  cursor: text;
+  width: 100% !important;
+  margin-top:15px;
+
+}
+
+#questionnaires select{
+  margin: 1.5rem 0;
+  border:none;
+}
+#questionnaires section.questions {
+  text-align: left;
+  padding-top: 0;
+  padding-left: 2rem;
+  margin: auto;
+}
+
+#questionnaires div.sentence{
+  font-size: 1.5rem;
+}
+#questionnaires div.sub_sentence{
+  margin-top: 1.5rem;
+}
+#questionnaires label.sub_sub_sentence{
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  color: black;
+}
+#questionnaires p.sub_sentence{
+  color: #818181;
+}
+
+#questionnaires div.checkboxes{
+  margin-top: 1rem;
+}
+
+#questionnaires .form-control{
+  color: black !important;
+  margin: 1.5rem 0;
+}
+
+#questionnaires textarea.form-control::-webkit-input-placeholder {
+  color: #a9a9a9;
+}
+
+/* Questions with tags */
+.bootstrap-tagsinput{
+  color: black !important;
+  width: 100% !important;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+  border:none;
+  padding:none;
+}
+.bootstrap-tagsinput input{
+  flex: 1;
+  color: black !important;
+  border:none;
+  outline:none;
+}
+
+.bootstrap-tagsinput .tag{
+  background-color: #f2f2ff;
+  color: black;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 5px;
+  display: inline-block;
+  align-items: center;
+  cursor: default;
+}
+
+/* Bootstrap Carousel */
+.carousel-indicators{
+  position: fixed;
+}
+.carousel-indicators li {
+  background-color: #2b2eb9 !important;
+  height: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.questionnaires-carousel .carousel-control-prev, .questionnaires-carousel .carousel-control-next  {
+  position: fixed !important;
+  background-color: none !important;
+}
+
+.questionnaires-carousel .carousel-control-next-icon, .questionnaires-carousel .carousel-control-prev-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #2b2eb9 !important;
+  border-radius: 10%;
+}
+
+/* .tag-container{
+  background-color: #FFF;
+  border: 2px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  display:flex;
+  color: black;
+} */
+
+/* .tag-container .tag{
+  background-color: #f2f2ff;
+  color: black;
+  padding : 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin: 5px;
+  display: inline-block;
+  align-items: center;
+  cursor : default;
+} */
+
+/* .tag i{
+  font-size: 16px;
+  margin-left: 5px;
+} */
+
+/* .tag-container input{
+  flex: 1;
+  font-size: 25px;
+  padding: 12px 20px;
+  outline: none;
+  border:0;
+} */

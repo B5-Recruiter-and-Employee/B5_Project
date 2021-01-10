@@ -1,0 +1,40 @@
+<div class="container-fluid h-100">
+  <div class="row justify-content-center align-items-center"></div>
+  <div class="main-body">
+    <hr>
+    <h1 class="font-weight-light">Edit this job offer:</h1>    
+ 
+  <div class="row justify-content-center h-100">
+    <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+      <form method="POST" action="/jobs/<%=job._id%>/update">
+        <div class="form-group">
+          <label class="font-weight-light text-left" for="job_title" >Job title</label>
+          <input type="text" value="<%= job.job_title %>" name="job_title" class="form-control is-disabled" placeholder= "..."/>
+        </div>
+        <div class="form-group">
+          <label class="font-weight-light" for="location">Location</label>
+          <input type="text" name="location" value="<%= job.location %>" class="form-control is-disabled" placeholder= "..." />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-light" for="company">Company</label>
+          <input type="text" name="company_name" value="<%= job.company_name %>" class="form-control is-disabled" placeholder= "..." />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-light" for="salary">Salary</label>
+          <input type="text" name="salary" value="<%= job.salary %>" class="form-control is-disabled" placeholder= "..."/>
+        </div>
+        
+        <div class="form-group">
+          <label class="font-weight-light" for="description">Description</label>
+          <textarea name="description" class="form-control is-disabled" id="description" rows="3"><%= job.description %></textarea>
+        </div>
+        <div class="row">
+        <div class="col"><button type="submit" class=" btn btn-outline-success btn-sm mr-1">Save  </button></div>
+        <div class="col"><button type="reset" class=" btn btn-outline-secondary btn-sm ">Reset</button></div>
+      </form>
+            <div class="col"><button class=" btn btn-outline-danger btn-sm" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,5 +1,20 @@
-<form id="form-login">
-    <label for="email">E-Mail</label>
-    <input type="email" name="email">
-    <input type="submit" value="Login">
-</form>
+<div class="text-center pt-4">
+
+  <%#form class="form-login-signup" action="/login" method="post"
+  -> no functionality implemented yet so should be changed when done %>
+  <form action="/user/login" method="post" class="form-login-signup">
+    <img class="mb-4" src="/images/logo7-2.png" alt="" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal"> Log In </h1>
+
+    <input type="email" class="form-control top" name="email" placeholder="Email" required="" autofocus="">
+    <input type="password" class="form-control bottom" name="password" placeholder="Password" required="">
+
+    <!-- <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div> -->
+    <button class="btn btn-lg btn-primary btn-block mx-0" type="submit">Log In</button>
+
+  </form>
+</div>

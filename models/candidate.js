@@ -7,21 +7,32 @@ const mongoose = require("mongoose"),
             type: String,
             required: true
         },
-        start_date: {
-            type: Date,
-            default: Date.now
-        },
+        job_type : String,
         expected_salary: String,
         current_location: String,
         preferred_location: [String],
-        willing_to_relocate: Boolean,
-        work_experience: [String],
-        hard_skills: [String],
-        soft_skills: [String],
-        other_aspects: [String],
+        hard_skills: [{
+          name: String,
+          importance: {
+            type: Number,
+            min : 1,
+            max : 3,
+            required : true
+          }
+        }],
+        soft_skills: [{
+          type : String,
+          required : true
+        }],
+        description: String,
         work_culture_preferences: [{
-            type: String,
-            required: true
+          name: String,
+          importance: {
+            type: Number,
+            min : 1,
+            max : 3,
+            required : true
+          }
         }],
         user: {
             type: mongoose.Schema.Types.ObjectId,

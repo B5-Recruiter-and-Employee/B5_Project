@@ -1,6 +1,47 @@
-<div id='header'>
-    <p class ='headerItem' onclick="location.href='../candidates/new'">New candidate</p>
-    <p class ='headerItem' onclick="location.href='../candidates'">All candidates</p>
-    <p class ='headerItem' onclick="location.href='../jobs/new'">New Job</p>
-    <p class ='headerItem' onclick="location.href='../jobs'">All Jobs</p>
-</div>
+<header>
+
+  <nav class="navbar navbar-expand-xl navbar-dark">
+    <a class="navbar-brand headerItem mx-lg-5" href="/">ReMatch</a>
+
+    <%# button to toggle menu on mobile screen %>
+    <button class="navbar-toggler ml-auto mr-lg-3" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <% if (loggedIn) { %>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<%=`/matches/${user._id}` %>">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%=`/user/${user._id}` %>">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary my-1 my-xl-0 px-3" href="/user/logout">Log out</a>
+        </li>
+      </ul>
+
+      <% } else { %>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-primary my-1 my-xl-0" href="/user/login">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="/signup/candidate">Sign up as developer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="/signup/recruiter">Sign up as employer</a>
+        </li>
+      </ul>
+      <% } %>
+
+
+    </div>
+
+  </nav>
+</header>
