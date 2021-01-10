@@ -1,33 +1,56 @@
+<form action="/search/results" id="search" method="post">
 <div class="input-group mb-3">
   <label for="job_title">Job Title</label>
-  <input id="job_title" type="text" class="form-control" placeholder="eg. Senior Android Developer"
+  <input id="job_title" name="job_title" type="text" class="form-control" placeholder="eg. Senior Android Developer"
     aria-label="Username" aria-describedby="basic-addon1">
-  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-    aria-expanded="false">Job Type</button>
-  <div class="dropdown-menu dropdown-menu-end dropdown">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
-        Default checkbox
-      </label>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="form-check">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Permanent" id="permanent">
+          <label class="form-check-label" for="permanent">
+            Full-time
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Internship" id="internship">
+          <label class="form-check-label" for="internship">
+            Internship
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Working-Student" id="working_student">
+          <label class="form-check-label" for="working_student">
+            Working student 
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Flexible" id="flexible">
+          <label class="form-check-label" for="flexible">
+            Flexible
+          </label>
+        </div>
+      </div>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-      <label class="form-check-label" for="flexCheckChecked">
-        Checked checkbox
-      </label>
-    </div>
-  </div>
 </div>
 
-<!-- <div class="input-group mb-3">
-  <input type="text" class="form-control" aria-label="Text input with dropdown button">
-  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="#">Separated link</a></li>
-  </ul>
-</div> -->
+<div class="form-check">
+  <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
+  <label class="form-check-label" for="remote">
+    Remote 
+  </label>
+</div> 
+
+<!-- Make sure the form has the autocomplete function switched off:
+<form autocomplete="off" action="/action_page.php">
+  <div class="autocomplete" style="width:300px;">
+    <input id="myInput" type="text" name="myCountry" placeholder="Country">
+  </div>
+  <input type="submit">
+</form> -->
+
+<input class="btn btn-primary" type="submit"> </input>
+
+</form>
