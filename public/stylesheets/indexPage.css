@@ -1,68 +1,69 @@
-section {
+#landing-page section {
   font-family: 'Crimson Pro', serif;
   text-align: center;
 }
 
-section h1, section h2, section h3, section h4, section h5, section h6 {
+#landing-page h1, #landing-page h2, #landing-page h3, #landing-page h4, #landing-page h5, #landing-page h6 {
   font-family: 'Crimson Pro', serif;
   margin: 20px;
 }
 
 /* Headings */
 
-.big-heading {
+#landing-page .big-heading {
   font-family: 'Crimson Pro', serif;
   font-size: 3rem;
   line-height: 1.5;
 
 }
 
-.section-heading {
+#landing-page .section-heading {
   font-size: 3rem;
   line-height: 1.5;
 }
 
 /* Containers */
 
-.container-fluid{
+#landing-page .container-fluid{
   padding:0;
 }
 
 /* Sections */
 
-.colored-section {
+#landing-page .colored-section {
   background-color: #3115A0;
   color: #fff;
 }
 
-.white-section {
+#landing-page .white-section {
   background-color: #fff;
 }
 
 /* Buttons */
 
-.download-button {
+#landing-page .download-button {
   margin: 5% 2% 5% 3%;
+  color: white !important;
 }
 
-.download-button:hover{
-  color: #3115A0;
+#landing-page .download-button:hover{
+  color: #3115A0 !important;
 }
 /* Title Section */
 
-#title {
+#landing-page #title {
   background-color: #3115A0;
   color: #fff;
   text-align: center;
 }
 
-#title .container-fluid {
+#landing-page #title .container-fluid {
   padding: 5% 12% 7%;
 }
 
 /* Title Image */
 
-.title-image {
+#landing-page .title-image {
   width: 80%;
   border-radius: 100%;
   transform: rotate(0);
@@ -71,101 +72,104 @@ section h1, section h2, section h3, section h4, section h5, section h6 {
 
 /* Features Section */
 
-#features {
+#landing-page #features {
   margin-top: 10%;
   margin-bottom:10%;
 }
 
-.feature-title {
+#landing-page .feature-title {
   font-size: 1.5rem;
 }
 
-.feature-box {
+#landing-page .feature-box {
   padding: 4.5%;
 }
 
-.icon {
+#landing-page .icon {
   color: #3115A0;
   margin-bottom: 1rem;
 }
 
-.icon:hover {
+#landing-page .icon:hover {
   color: #9AB3F5;
 }
 
 /* Testimonial Section */
 
-#testimonials {
+#landing-page #testimonials {
   background-color: #9AB3F5;
 }
-#testimonials .container-fluid{
+#landing-page #testimonials .container-fluid{
   padding: 7% 15%;
 }
-.testimonial-text {
+#landing-page .testimonial-text {
   font-size: 2rem;
   line-height: 1.5;
   margin: 20px;
 }
 
-.testimonial-image {
+#landing-page .testimonial-image {
   width: 10%;
   border-radius: 100%;
   margin: 20px;
 }
 
 
-.press-logo {
+#landing-page .press-logo {
   width: 15%;
   margin: 20px 20px 50px;
 }
 
 /* Steps */
 
-#steps {
+#landing-page #steps {
   padding: 100px;
 }
-#steps .section-heading {
+#landing-page #steps .section-heading {
   font-family: 'Patrick Hand', cursive !important;
   color: #3115A0 !important;
 }
-.card-header {
-  background-color:#9AB3F5 !important;
-  padding: 5px;
-}
 
-.card-header h3{
-  font-family: 'Patrick Hand', cursive !important;
-  color :#3115A0;
-}
-.card-body{
-  text-align: center !important;
-}
-.card-body p{
-  text-align: left !important;
-  padding-left: 20px;
-  color: #8f8f8f;
-}
-.step-text {
+#landing-page .step-text {
   font-size: 3rem;
   line-height: 1.5;
 }
 
-.step-column {
+#landing-page .step-column {
   padding: 3% 2%;
 }
 
 /* Call To Action */
-#cta{
+#landing-page #cta{
  padding :5%;
 }
 
 @media (max-width: 1028px) {
 
-  #title {
+  #landing-page #title {
     text-align: center;
   }
 
-  .title-image {
+  #landing-page .title-image {
     position: static;
   }
+}
+
+/*Card, profile page*/
+#landing-page .card-header {
+  background-color:#9AB3F5 !important;
+  padding: 5px;
+}
+
+#landing-page .card-header h3{
+  font-family: 'Patrick Hand', cursive !important;
+  color :#3115A0;
+}
+#landing-page .card-body{
+  text-align: center !important;
+}
+#landing-page .card-body p{
+  text-align: left ;
+  padding-left: 20px;
+  color: #8f8f8f;
 }

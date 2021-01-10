@@ -1,4 +1,4 @@
-<form action="<%= `/user/${user._id}/add`%>" method="post">
+<form action="/signup/candidate" method="post">
 
     <div id="candidate_questions" class="carousel slide" data-ride="carousel" data-interval="false">
       <ol class="carousel-indicators">
@@ -8,20 +8,21 @@
         <li data-target="#candidate_questions" data-slide-to="3"></li>
         <li data-target="#candidate_questions" data-slide-to="4"></li>
         <li data-target="#candidate_questions" data-slide-to="5"></li>
-        <li data-target="#candidate_questions" data-slide-to="6""></li>
+        <li data-target="#candidate_questions" data-slide-to="6"></li>
         <li data-target="#candidate_questions" data-slide-to="7"></li>
         <li data-target="#candidate_questions" data-slide-to="8"></li>
         <li data-target="#candidate_questions" data-slide-to="9"></li>
       </ol>
-      <div class="container-fluid" id= "questionaires">
+      <div class="container-fluid" id="questionnaires">
       <div class="carousel-inner">
 
         <!-- 1. What is your full name? -->
         <div class="carousel-item active">
           <section class="questions">
-            <div class = "sentence"> What is your full name? </div>
-            <div>
-              <input type="text" name="name" placeholder="...type here">
+            <div class="sentence">What is your full name?</div>
+            <div class="d-flex">
+              <input type="text" name="firstname" placeholder="First name" class="mr-2" autofocus>
+              <input type="text" name="lastname" placeholder="Last name" class="ml-2">
             </div>
           </section>
         </div>
@@ -29,19 +30,23 @@
         <!-- 2. Which city do you live in? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> Which city do you live in? </div>
+            <div class="sentence">Which city do you live in?</div>
             <div>
-              <input type="text" name="current_location" placeholder="...type here">
+              <input type="text" name="current_location" placeholder="...type here" >
             </div>
           </section>
         </div>
 
-        <!-- 3. Where do you want to work? Are you willing to relocate? -->
+        <!-- 3. Where do you want to work? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> Where do you want to work? </div>
+            <div class="sentence">In which city or cities do you want to work?</div>
             <div class="tag-container">
-              <input class="inputanswer" id="input_preferred_location" type="text" name="preferred_location" placeholder="...type here" data-role="tagsinput">
+              <select multiple class="inputanswer" id="input_preferred_location" type="text" name="preferred_location" placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+            <div class="ml-4">
+              <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
+              <label for="remote" class="form-check-label">I can work remotely.</label>
             </div>
           </section>
         </div>
@@ -49,7 +54,7 @@
         <!-- 4. What is the job position you want to apply for? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What is the job position you want to apply for? </div>
+            <div class="sentence">What is the job position you want to apply for?</div>
             <div>
               <input type="text" name="preferred_position" placeholder="...type here">
             </div>
@@ -58,14 +63,15 @@
 
         <!-- 5. What type of contract are you looking for? -->
         <div class="carousel-item">
-          <section class = "questions">
-              <div class = "sentence">What type of contract are you looking for? </div>
+          <section class="questions">
+              <div class="sentence">What type of contract are you looking for?</div>
               <div>
                   <select name="job_type">
-                      <option value="permanent">Permanent employment (full-time)</option>
-                      <option value="internship">Internship (full-time)</option>
-                      <option value="working_student">Working student (part-time)</option>
-                      <option value="flexible">Flexible</option>
+                      <option value="Permanent(Full-time)">Permanent employment (full-time)</option>
+                      <option value="Internship(Full-time)">Internship (full-time)</option>
+                      <option value="Working-Student">Working student (part-time)</option>
+                      <option value="Flexible">Flexible</option>
+                      <option value="Remote">Remote</option>
                   </select>
               </div>
           </section>
@@ -74,23 +80,20 @@
         <!-- 6. What does your tech stack look like?  -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What does your tech stack look like? </div>
-            <p class="sub_sentence"> Please input your tech stack in the order of importance  </p>
-            <p class="sub_sub_sentence"> Very Important  </p>
+            <div class="sentence">What does your tech stack look like?</div>
+            <p class="sub_sentence">Please sort your technical skills by proficiency.</p>
+           
+            <label for="techstack3" class="sub_sub_sentence">Proficient:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack4" type="text" name="hard_skills" placeholder="Your most desired tech stack" data-role="tagsinput">
+              <select multiple class="inputanswer" id="techstack3" type="text" name="techstack3" placeholder="...type here" data-role="tagsinput"></select>
             </div>
-            <p class="sub_sub_sentence"> Quite Important  </p>
+            <label for="techstack2" class="sub_sub_sentence">Intermediate:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack3" type="text" name="hard_skills" placeholder="You're very confident with these tech stack" data-role="tagsinput">
+              <select multiple class="inputanswer" id="techstack2" type="text" name="techstack2" placeholder="...type here" data-role="tagsinput"></select>
             </div>
-            <p class="sub_sub_sentence"> Somewhat Important  </p>
+            <label for="techstack1" class="sub_sub_sentence">Beginner:</label>
             <div class="tag-container">
-              <input class="inputanswer" id="techstack2" type="text" name="hard_skills" placeholder="You know and can work with these tech stack" data-role="tagsinput">
-            </div>
-            <p class="sub_sub_sentence"> Not Much Important  </p>
-            <div class="tag-container">
-              <input class="inputanswer" id="techstack1" type="text" name="hard_skills" placeholder="You know these tech but don't have much experience" data-role="tagsinput">
+              <select multiple class="inputanswer" id="techstack1" type="text" name="techstack1" placeholder="...type here" data-role="tagsinput"></select>
             </div>
           </section>
         </div>
@@ -98,43 +101,41 @@
         <!-- 7. What are your soft skills? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What are your soft skills? </div>
+            <div class="sentence">What are your soft skills?</div>
             <div class="tag-container">
-              <input class="inputanswer" id="input_softskill" type="text" name="soft_skills" placeholder="...type here" data-role="tagsinput">
+              <select multiple class="inputanswer" id="input_softskill" name="soft_skills" placeholder="...type here" data-role="tagsinput"></select>
             </div>
           </section>
         </div>
 
-        <!-- 8. What are your other strengths or your goals that you want to share with the recruiters? -->
+        <!-- 8. About me section -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What are your other strengths or your goals that you want to share with the recruiters? </div>
+            <div class="sentence">Write a short description about you.</div>
+            <p class="sub_sentence">You can show off your previous work experience or anything else that requires a longer text. Let recruiter know something catchy about you!</p>
             <div>
-              <input type="text" placeholder="...type here" name="other_aspects">
+              <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
             </div>
           </section>
         </div>
 
-        <!-- 9. What is important to you when you work in a team regarding working culture? -->
+        <!-- 9. What is important to you when you work in a team regarding work culture? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What is important to you regarding working culture? </div>
-            <p class="sub_sentence"> Please input your preferences in the order of importance  </p>
-            <p class="sub_sub_sentence"> Very Important  </p>
+            <div class="sentence">What is important to you regarding work culture and benefits?</div>
+            <p class="sub_sentence">Please sort your preferences by importance.</p>
+            
+            <label for="workculture3" class="sub_sub_sentence">Most important</label>
             <div class="tag-container">
-              <input class="inputanswer" id="workculture4" type="text" name="work_culture_preferences" placeholder="...type the aspects are the most important for you" data-role="tagsinput" >
+              <select multiple class="inputanswer" id="workculture3" type="text" name="workculture3" placeholder="...type here" data-role="tagsinput" ></select>
             </div>
-            <p class="sub_sub_sentence"> Quite Important  </p>
+            <label for="workculture2" class="sub_sub_sentence">Quite important</label>
             <div class="tag-container">
-              <input class="inputanswer" id="workculture3" type="text" name="work_culture_preferences" placeholder="...type the aspects are quite important to you" data-role="tagsinput" >
+              <select multiple class="inputanswer" id="workculture2" type="text" name="workculture2" placeholder="...type here" data-role="tagsinput" ></select>
             </div>
-            <p class="sub_sub_sentence"> Somewhat Important  </p>
+            <label for="workculture1" class="sub_sub_sentence">Somewhat important</label>
             <div class="tag-container">
-              <input class="inputanswer" id="workculture2" type="text" name="work_culture_preferences" placeholder="...type the aspects are somewhat important to you" data-role="tagsinput" >
-            </div>
-            <p class="sub_sub_sentence"> Not Much Important  </p>
-            <div class="tag-container">
-              <input class="inputanswer" id="workculture1" type="text" name="work_culture_preferences" placeholder="These aspects are a little bit important" data-role="tagsinput" >
+              <select multiple class="inputanswer" id="workculture1" type="text" name="workculture1" placeholder="...type here" data-role="tagsinput" ></select>
             </div>
 
           </section>
@@ -143,14 +144,14 @@
         <!-- 10. What is your desired monthly salary? -->
         <div class="carousel-item">
           <section class="questions">
-            <div class = "sentence"> What is your desired monthly salary? </div>
+            <div class="sentence">What is your desired monthly salary?</div>
             <div>
               <input type="text" name="salary" placeholder="...type here">
             </div>
           </section>
 
             <div>
-              <input type="submit" value="Submit" id = "submit_candidate">
+              <input type="submit" value="Submit" id="submit_candidate" class="btn btn-primary mt-5">
             </div>
 
         </div>
@@ -159,7 +160,7 @@
 
     </div>
 
-    <div class="carousel-controls questionaires-carousel">
+    <div class="carousel-controls questionnaires-carousel">
     <a class="carousel-control-prev" href="#candidate_questions" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
@@ -176,22 +177,3 @@
 
 
 
-<!--
-  <label>Preferred position: </label>
-  <input type="text" placeholder="Job you are looking for" name="preferred_position">
-  <label>Soft skills: </label>
-  <input type="text" placeholder="Soft skills" name="soft_skills">
-  <label>Other aspects: </label>
-  <input type="text" placeholder="Other aspects" name="other_aspects">
-  <label>Work culture preferences</label>
-  <input type="text" placeholder="Values, benefits..." name="work_culture_preferences">
-  <input type="submit" value="Submit">
- -->
-<!--Commented out because the function for adding candidate profile to User should be implemented.
-  <label for="firstname">First name: </label>
-  <input type="text" placeholder="First Name" name="firstname">
-  <label for="lastname" >Last name: </label>
-  <input type="text" placeholder="Last Name" name="lastname">
-  <label for="email">Email</label>
-  <input type="email" placeholder="Email" name="email">
-  <input type="submit" value="Submit"> -->

@@ -11,7 +11,6 @@ const mongoose = require("mongoose"),
         expected_salary: String,
         current_location: String,
         preferred_location: [String],
-        work_experience: [String],
         hard_skills: [{
           name: String,
           importance: {
@@ -25,7 +24,7 @@ const mongoose = require("mongoose"),
           type : String,
           required : true
         }],
-        other_aspects: [String],
+        description: String,
         work_culture_preferences: [{
           name: String,
           importance: {
