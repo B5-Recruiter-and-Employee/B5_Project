@@ -3,7 +3,7 @@
     <div class="card-header bg-transparent border-success"></div>
     <div class="card-body text-success">
       <h5 class="card-title"><%= title %></h5>
-     <div class="circle"><span class="circle__content"><%= description %></span></div>
+      <h6 class="card-subtitle mb-2 text-muted"><%= description %></h6>
       <p class="card-text"><%= description_text %></p>
       <% if (user.candidateProfile) { %>
       <a href="/jobs/<%= id %>" class="btn btn-primary">More...</a>
