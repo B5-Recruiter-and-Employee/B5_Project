@@ -1,17 +1,62 @@
-<div class="col">
-  <div class="card border-success mb-3 m-0 p-0" style="max-width: 75%">
-    <div class="card-header bg-transparent border-success"></div>
-    <div class="card-body text-success">
-      <h5 class="card-title"><%= title %></h5>
-     <div class="circle"><span class="circle__content"><%= description %></span></div>
-      <p class="card-text"><%= description_text %></p>
-      <% if (user.candidateProfile && user.candidateProfile.equals(id)) { %>
+<div class="d-flex container justify-content-center">
+  <div class="card border-success mb-5 m-0 p-0" style="max-width: 80%">
+    <div class="card-header bg-light border-success">
+      <div class="row">
+        <div class="col-sm-2"><div class="circle"><span class="circle__content"><%= description %></span></div></div>
+        <div class="col-sm-8 pt-2"><h5 class="card-title text-success"><%= title %></h5></div>
+      </div>
+    </div>
+    <div class=" p-0 card-body text-muted">
+      <div class="p-3 row gx-5">
+        <div class="col pl-3 pr-2">
+          <div class="p-3 bg-light card-text rounded">
+          <div class="row">
+            <div class="col-sm-6"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694L1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
+              <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
+            </svg> Company</div>
+            <div class="col-sm-6 text-secondary">
+              <% if (company) { %> <%= company %> <%
+              } else { %> - <% } %>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class=" col-sm-6"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 2 16 16">
+              <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+              <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
+            </svg> Salary</div>
+            <div class="col-sm-6 text-secondary">
+              <% if (salary) { %> <%= salary %> <%
+              } else { %> - <% } %>
+            </div>
+          </div>
+            <hr/>
+            <div class="row">
+              <div class=" col-sm-6"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              </svg> Location</div>
+              <div class="col-sm-6 text-secondary">
+                <% if (location) { %> <%= location %> <%
+                } else { %> - <% } %>
+              </div>
+            </div>
+        </div>
+        </div>
+        <div class="col pl-2 pr-3">
+          <div class="p-2 bg-light card-text rounded">
+            <h6 class="description-title text-success">Description: </h6>
+            <%= description_text %></div>
+        </div>
+  </div>
+  <div class="card-footer bg-transparent border-success">
+    <% if (user.candidateProfile && user.candidateProfile.equals(id)) { %>
       <a href="/jobs/<%= id %>" class="btn btn-primary">More...</a>
       <% } else { %>
       <a href="/candidates/<%= id %>" class="btn btn-primary">More...</a>
       <% } %>
-
-    </div>
-    <div class="card-footer bg-transparent border-success"></div>
   </div>
+</div>
+</div>
 </div>

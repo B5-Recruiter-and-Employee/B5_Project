@@ -1,10 +1,13 @@
-<div class="d-none d-lg-block">
+ <div class="d-none d-lg-block">
   <div class="card-container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-1 g-4">
+      <hr>
+        <h1 class="matches font-weight-light pb-4">Your matches: </h1>
       <%if(matches.length> 0) { %>
         <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-          <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)) , description_text:
-            source.shortDescription,id: matches[i]._id}); %>
+          <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)), 
+            description_text: source.shortDescription, salary: source.salary, location: source.location, 
+            company: source.company, id: matches[i]._id}); %>
             <% } %>
               <% } else { %>
                 <h1> Oops, No matches found for you yet :( </h1>
@@ -19,8 +22,9 @@
       <%if(matches.length > 0) { %>
         <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
           else{activeCard=false} let source=matches[i]._source %>
-          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , description: source.location ,
-            description_text: source.shortDescription,id: matches[i]._id}); %>
+          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)),
+            description_text: source.shortDescription, salary: source.salary, location: source.location, 
+            company: source.company, id: matches[i]._id}); %>
             <% } %>
               <% } else { %>
                 <h1> Oops, No matches found for you yet :( </h1>
