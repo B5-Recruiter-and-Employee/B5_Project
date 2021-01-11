@@ -146,7 +146,6 @@ data_candidate.forEach((c) => {
 			description: c.description,
 			hard_skills: techstack,
 			soft_skills: c.soft_skills,
-			other_aspects: c.other_aspects,
 			work_culture_preferences: work_culture,
 		}).save()
 	);
@@ -163,7 +162,6 @@ data_candidate.forEach((c) => {
 Promise.all(job_array)
 	.then((r) => {
 		console.log("++ The amount of jobs seeded: " + job_array.length);
-		//mongoose.connection.close();
 	})
 	.catch((error) => {
 		console.log(`ERROR: ${error}`);
