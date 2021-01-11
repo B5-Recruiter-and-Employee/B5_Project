@@ -146,7 +146,6 @@ data_candidate.forEach((c) => {
 			description: c.description,
 			hard_skills: techstack,
 			soft_skills: c.soft_skills,
-			other_aspects: c.other_aspects,
 			work_culture_preferences: work_culture,
 		}).save()
 	);
