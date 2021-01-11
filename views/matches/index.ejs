@@ -3,7 +3,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <%if(matches.length> 0) { %>
         <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-          <%- include('card.ejs', {title: source.job_title , description: matches[i]._score , description_text:
+          <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)) , description_text:
             source.shortDescription,id: matches[i]._id}); %>
             <% } %>
               <% } else { %>
