@@ -156,6 +156,16 @@ a {
   color :#C1CAF4 !important;
 }
 
+/* -- CONTAINERS ON MATCHES PAGE -- */
+/* carousel element */
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+ min-width: 350px;
+}
+
+.card {
+  min-width: 80% !important;
+}
+
 /* login page */
 
 .form-login-signup {
