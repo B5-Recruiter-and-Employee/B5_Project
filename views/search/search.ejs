@@ -1,11 +1,13 @@
 <form action="/search/results" id="search" method="post">
-<div class="input-group mb-3">
-  <label for="job_title">Job Title</label>
-  <input id="job_title" name="job_title" type="text" class="form-control" placeholder="eg. Senior Android Developer"
+<div class="input-group mb-3 search-section">
+  <label for="job_title" class="search-label">Job Title</label>
+
+  <input id="job_title" name="job_title" type="text" class="form-control rounded search-field" placeholder="eg. Senior Android Developer"
     aria-label="Username" aria-describedby="basic-addon1">
-    <div class="dropdown">
+
+    <div class="dropdown search-dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
+        Job type
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div class="form-check">
@@ -34,14 +36,20 @@
         </div>
       </div>
     </div>
+    <div class="btn btn-secondary search-remote">
+    <div class="form-check">
+      <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
+      <label class="form-check-label" for="remote">
+        Remote 
+      </label>
+    </div> 
+  </div>
+  <button class="input-group-text border-0 search-button" type="submit" id="search-addon">
+    <i class="fas fa-search"></i>
+  </button>
 </div>
 
-<div class="form-check">
-  <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
-  <label class="form-check-label" for="remote">
-    Remote 
-  </label>
-</div> 
+
 
 <!-- Make sure the form has the autocomplete function switched off:
 <form autocomplete="off" action="/action_page.php">
@@ -51,6 +59,6 @@
   <input type="submit">
 </form> -->
 
-<input class="btn btn-primary" type="submit"> </input>
+<!-- <input class="btn btn-primary" type="submit"></input> -->
 
 </form>

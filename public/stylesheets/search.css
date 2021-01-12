@@ -51,3 +51,29 @@
     background-color: DodgerBlue !important; 
     color: #ffffff; 
   }
+
+.search-section{
+  padding: 30px;
+  left: 10%;
+  width: 75%; 
+}
+.search-label{
+  margin: .5rem 20px .5rem 10px;
+}
+.search-field{
+  margin-right: 30px;
+}
+.search-remote{
+  margin-left: 30px;
+  color: white !important;
+}
+.search-remote:hover{
+  background-color: #5a6268;
+}
+.search-remote .form-check-input, .form-check-label{
+  cursor: pointer;
+}
+.search-button{
+  margin-left: 30px;
+  width: 40px;
+}
