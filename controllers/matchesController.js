@@ -48,7 +48,7 @@ module.exports = {
                   console.log("******************SOURCE ************ ", matches[i]._source);
                   let description = matches[i]._source.description;
                   console.log(description);
-                  matches[i]._source.description_text = description;
+                  matches[i]._source.shortDescription = description;
                 }
                 //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
