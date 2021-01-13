@@ -61,10 +61,10 @@
   margin: .5rem 20px .5rem 10px;
 }
 .search-field{
-  margin-right: 30px;
+  margin-right: 20px;
 }
 .search-remote{
-  margin-left: 30px;
+  margin-left: 20px;
   color: white !important;
 }
 .search-remote:hover{
@@ -72,8 +72,4 @@
 }
 .search-remote .form-check-input, .form-check-label{
   cursor: pointer;
-}
-.search-button{
-  margin-left: 30px;
-  width: 40px;
 }

@@ -1,4 +1,4 @@
-<form action="/search/results" id="search" method="post">
+<form action="" id="search" method="get">
 <div class="input-group mb-3 search-section">
   <label for="job_title" class="search-label">Job Title</label>
 
@@ -44,21 +44,17 @@
       </label>
     </div> 
   </div>
-  <button class="input-group-text border-0 search-button" type="submit" id="search-addon">
+  <button class="btn btn-primary ml-4" type="submit" id="search-addon">
     <i class="fas fa-search"></i>
+    <span>Search</span>
   </button>
 </div>
-
-
-
-<!-- Make sure the form has the autocomplete function switched off:
-<form autocomplete="off" action="/action_page.php">
-  <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="myCountry" placeholder="Country">
-  </div>
-  <input type="submit">
-</form> -->
-
-<!-- <input class="btn btn-primary" type="submit"></input> -->
-
 </form>
+
+<div>
+  <% if(typeof matches !== 'undefined') { %>
+    <%- include ('../matches/index.ejs', {matches: matches}) %> 
+  <% } else { %>
+    <p>Doesnt work</p>
+  <% } %>
+</div>
