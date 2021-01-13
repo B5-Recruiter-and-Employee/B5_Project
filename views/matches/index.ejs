@@ -1,46 +1,89 @@
- <div class="d-none d-lg-block">
-  <div class="card-container">
-    <div class="row row-cols-1 row-cols-md-1 g-4">
-      <hr>
-        <h1 class="matches font-weight-light pb-4">Your matches: </h1>
-      <%if(matches.length> 0) { %>
-        <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-          <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)), 
-            description_text: source.shortDescription, salary: source.salary, location: source.location, 
-            company: source.company, id: matches[i]._id}); %>
-            <% } %>
-              <% } else { %>
-                <h1> Oops, No matches found for you yet :( </h1>
-                <% } %>
+<div class="d-none d-lg-block">
+    <div class="card-container">
+        <div class="row row-cols-1 row-cols-md-1 g-4">
+            <hr>
+            <h1 class="matches font-weight-light pb-4">Your matches: </h1>
+            <% if (matches.length> 0) { %>
+                <!-- for recruiter the BE gives you [{jobOffer: job offer, matches : matches}, {jobOffer: job offer, matches : matches} ]-->
+                <!-- now we see only the matches -->
+                <% if (user.role=='recruiter' ) { %>
+                    <!-- res.locals.matches -->
+                    <!-- For matches of candidates for each job published (separated for each job) -->
+                    <% for (let i=0; i < matches.length; i++) { %>
+                        <h3>
+                            <%= matches[i].jobOffer.job_title %>
+                        </h3>
+                        <% matches[0].candidatesMatches.forEach(match=> { %>
+                            <% let source=match._source %>
+                                <%- include('card.ejs', {title: source.job_title , description:
+                                    parseFloat((match._score).toFixed(2)), description_text: source.shortDescription,
+                                    salary: source.salary, location: source.location, company: source.company, id:
+                                    match._id}); %>
+                                    <% }); %>
+                                        <% } %>
+                                            <% } else { %>
+                                                <!-- For matches of jobs for the candidate user -->
+                                                <% for (let i=0; i < matches.length; i++) { %>
+                                                    <% let source=matches[i]._source %>
+                                                        <%- include('card.ejs', {title: source.job_title , description:
+                                                            parseFloat((matches[i]._score).toFixed(2)),
+                                                            description_text: source.shortDescription, salary:
+                                                            source.salary, location: source.location, company:
+                                                            source.company, id: matches[i]._id}); %>
+                                                            <% } %>
+                                                                <% } %>
+                                                                    <% } else { %>
+                                                                        <h1> Oops, No matches found for you yet :( </h1>
+                                                                        <% } %>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="d-block d-lg-none ">
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <hr>
-    <h1 class="matches font-weight-light pb-4">Your matches: </h1>
-    <div class="carousel-inner">
-      <%if(matches.length > 0) { %>
-        <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
-          else{activeCard=false} let source=matches[i]._source %>
-          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)),
-            description_text: source.shortDescription, salary: source.salary, location: source.location, 
-            company: source.company, id: matches[i]._id}); %>
-            <% } %>
-              <% } else { %>
-                <h1> Oops, No matches found for you yet :( </h1>
-              <% } %>
-
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <hr>
+        <h1 class="matches font-weight-light pb-4">Your matches: </h1>
+        <div class="carousel-inner">
+            <% if (matches.length> 0) { %>
+                <!-- for recruiter the BE gives you [{jobOffer: job offer, matches : matches}, {jobOffer: job offer, matches : matches} ]-->
+                <!-- now we see only the matches -->
+                <% if (user.role=='recruiter' ) { %>
+                    <!-- res.locals.matches -->
+                    <!-- For matches of candidates for each job published (separated for each job) -->
+                    <% for (let i=0; i < matches.length; i++) { %>
+                        <h3>
+                            <%= matches[i].jobOffer.job_title %>
+                        </h3>
+                        <% matches[0].candidatesMatches.forEach(match=> { %>
+                            <% let source=match._source %>
+                                <%- include('card.ejs', {title: source.job_title , description:
+                                    parseFloat((match._score).toFixed(2)), description_text: source.shortDescription,
+                                    salary: source.salary, location: source.location, company: source.company, id:
+                                    match._id}); %>
+                                    <% }); %>
+                                        <% } %>
+                                            <% } else { %>
+                                                <!-- For matches of jobs for the candidate user -->
+                                                <% for (let i=0; i < matches.length; i++) { %>
+                                                    <% let source=matches[i]._source %>
+                                                        <%- include('card.ejs', {title: source.job_title , description:
+                                                            parseFloat((matches[i]._score).toFixed(2)),
+                                                            description_text: source.shortDescription, salary:
+                                                            source.salary, location: source.location, company:
+                                                            source.company, id: matches[i]._id}); %>
+                                                            <% } %>
+                                                                <% } %>
+                                                                    <% } else { %>
+                                                                        <h1> Oops, No matches found for you yet :( </h1>
+                                                                        <% } %>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
 </div>

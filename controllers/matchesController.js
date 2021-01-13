@@ -45,26 +45,20 @@ module.exports = {
                 // variable to represent a text. Each string is divided by the dot.
                 //TO DO: change to description 
                 for (let i = 0; i < matches.length; i++) {
-                  console.log("******************SOURCE ************ ", matches[i]._source);
                   let description = matches[i]._source.description;
-                  console.log(description);
                   matches[i]._source.shortDescription = description;
                 }
                 //TO DO: check without reverse and compare
                 var sortedMatches = matches.sort(compare).reverse();
-                console.log(sortedMatches);
-                structuredHits.push({jobOfferOfRecruiter : sortedMatches});
+                structuredHits.push({
+                    jobOffer : jobOfferOfRecruiter,
+                    candidatesMatches : sortedMatches
+                });
+                console.log("job offer", jobOfferOfRecruiter);
                 //render the matches page only if the last element of recruiter's offer reached
                 if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
-                var matched = [];
-                structuredHits.forEach(matchOfJob => {
-                    matched = matched.concat(Object.values(matchOfJob.jobOfferOfRecruiter));
-                });
-                // NOW we give to locals.matches just the list of all matches.
-                // IF you want the matches section for each job offer, then you can save to locals.matches an array structuredHits.
-                // The array contains objects: {job offer of recruiter : sorted matches}. Play with it the way you want, depends on your FE.
-                // The lines 56-59 should be deleted then, if a list of matches not needed. This was done just for extracting the matches from each job.
-                  res.locals.matches = matched; 
+                  res.locals.matches = structuredHits; 
+                  res.locals.user = user;
                   next();
                 }
               })
