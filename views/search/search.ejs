@@ -1,12 +1,13 @@
-<form action="" id="search" method="get">
-<div class="input-group mb-3 search-section">
-  <label for="job_title" class="search-label">Job Title</label>
+<form class="container" id="search" method="get">
+  <div class="input-group mb-3 search-section row justify-content-center">
+    <label for="job_title" class="search-label">Job Title</label>
 
-  <input id="job_title" name="job_title" type="text" class="form-control rounded search-field" placeholder="eg. Senior Android Developer"
-    aria-label="Username" aria-describedby="basic-addon1">
+    <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
+      placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1">
 
     <div class="dropdown search-dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
         Job type
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -25,7 +26,7 @@
         <div class="form-check">
           <input class="form-check-input" name="job_type" type="checkbox" value="Working-Student" id="working_student">
           <label class="form-check-label" for="working_student">
-            Working student 
+            Working student
           </label>
         </div>
         <div class="form-check">
@@ -37,18 +38,18 @@
       </div>
     </div>
     <div class="btn btn-secondary search-remote">
-    <div class="form-check">
-      <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
-      <label class="form-check-label" for="remote">
-        Remote 
-      </label>
-    </div> 
+      <div class="form-check">
+        <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
+        <label class="form-check-label" for="remote">
+          Remote
+        </label>
+      </div>
+    </div>
+    <button class="btn btn-primary ml-4" type="submit" id="search-addon">
+      <i class="fas fa-search"></i>
+      <span>Search</span>
+    </button>
   </div>
-  <button class="btn btn-primary ml-4" type="submit" id="search-addon">
-    <i class="fas fa-search"></i>
-    <span>Search</span>
-  </button>
-</div>
 </form>
 
 <div>

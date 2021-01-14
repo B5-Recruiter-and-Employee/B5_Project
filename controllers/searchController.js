@@ -80,10 +80,8 @@ module.exports = {
           hits[i]._source.shortDescription = hits[i]._source.description;
         }
       }
-      console.log(hits);
       // send hits array to ejs
       res.locals.matches = hits;
-      // res.locals.redirect = "/search";
       next();
     });
   } else{next();}
