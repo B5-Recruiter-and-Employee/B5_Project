@@ -23,7 +23,7 @@ jobSchema = mongoose.Schema({
       importance: {
         type: Number,
         min : 1,
-        max : 4,
+        max : 3,
         required : true
       }
     }],
@@ -32,7 +32,7 @@ jobSchema = mongoose.Schema({
       importance: {
         type: Number,
         min : 1,
-        max : 4,
+        max : 3,
         required : true
       }
     }],
