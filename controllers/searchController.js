@@ -9,8 +9,6 @@ const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
   renderSearch: (req, res) => {
-    console.log(" ********************** ", res.locals);
-    console.log(" ********************** ", res.locals.matches);
     res.render("search/search", {matches : res.locals.matches});
   },
 
@@ -22,7 +20,7 @@ module.exports = {
 
   getJobSearchResult: (req, res, next) => {
     
-    if (req.query.job_title || req.query.remote){
+    if (req.query.job_title || req.query.remote || req.query.job_type){
     // define elasticsearch query
     let query = {
       index: 'job_offers',
@@ -40,9 +38,29 @@ module.exports = {
       }
     }
 
-    if (req.body.remote){
+    if (req.query.remote){
       let remote = { "match": {"location": req.query.remote }};
       query.body.query.bool.must.push(remote);
+    }
+
+    if(req.query.job_type){
+      let job_type = [];
+      if(Array.isArray(req.query.job_type)){
+        job_type = req.query.job_type;
+      }else{
+        job_type = [req.query.job_type];
+      }
+      let job_type_query = {
+        "bool": {
+          "should": [],
+          "minimum_should_match": 1
+        }
+      }
+      for(let i = 0; i < job_type.length; i++){
+        let job_type_match = { "match": {"job_type": job_type[i]}};
+        job_type_query.bool.should.push(job_type_match);
+      }
+      query.body.query.bool.must.push(job_type_query);
     }
 
     let hits;

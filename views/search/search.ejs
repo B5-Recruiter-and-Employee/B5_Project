@@ -52,9 +52,9 @@
 </form>
 
 <div>
-  <% if(typeof matches !== 'undefined') { %>
+  <% if(typeof matches !== 'undefined' && matches.length > 0) { %>
     <%- include ('../matches/index.ejs', {matches: matches}) %> 
   <% } else { %>
-    <p>Doesnt work</p>
+    <p>No results</p>
   <% } %>
 </div>
