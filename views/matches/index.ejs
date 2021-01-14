@@ -1,12 +1,14 @@
-
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-      <% for (let i = 0; i < matches.length; i++) { 
-        let source = matches[i]._source %>
-      <%- include('card.ejs', {title: source.job_title , description: matches[i]._score ,
-        description_text: source.shortDescription,id: matches[i]._id}); %>
-        <% } %>
+      <%if(matches.length> 0) { %>
+        <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+          <%- include('card.ejs', {title: source.job_title , description: matches[i]._score , description_text:
+            source.shortDescription,id: matches[i]._id}); %>
+            <% } %>
+              <% } else { %>
+                <h1> Oops, No matches found for you yet :( </h1>
+                <% } %>
     </div>
   </div>
 </div>
@@ -14,14 +16,15 @@
 <div class="d-block d-lg-none ">
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-       <% for (let i = 0; i < matches.length; i++) {
-        let activeCard = true;
-        if(i == 0){activeCard = true}
-         else{activeCard = false}
-        let source = matches[i]._source %>
-      <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , description: source.location ,
-        description_text: source.shortDescription,id: matches[i]._id}); %>
-        <% } %>
+      <%if(matches.length > 0) { %>
+        <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
+          else{activeCard=false} let source=matches[i]._source %>
+          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , description: source.location ,
+            description_text: source.shortDescription,id: matches[i]._id}); %>
+            <% } %>
+              <% } else { %>
+                <h1> Oops, No matches found for you yet :( </h1>
+              <% } %>
 
     </div>
 
