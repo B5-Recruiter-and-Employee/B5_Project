@@ -41,7 +41,7 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
-  var tabs, inputField, t, i, valid = true;
+  var tabs, inputField, select, i, valid = true;
   tabs = document.getElementsByClassName("tab");
   inputField = tabs[currentTab].getElementsByTagName("input");
   textarea = tabs[currentTab].getElementsByTagName("textarea");
