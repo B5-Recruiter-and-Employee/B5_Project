@@ -41,56 +41,56 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
-  var x, y, t, i, valid = true;
-  x = document.getElementsByClassName("tab");
-  y = x[currentTab].getElementsByTagName("input");
-  z = x[currentTab].getElementsByTagName("textarea");
-  t = x[currentTab].getElementsByTagName("select");
+  var tabs, inputField, t, i, valid = true;
+  tabs = document.getElementsByClassName("tab");
+  inputField = tabs[currentTab].getElementsByTagName("input");
+  textarea = tabs[currentTab].getElementsByTagName("textarea");
+  select = tabs[currentTab].getElementsByTagName("select");
   // A loop that checks every input field in the current tab:
-  if (t.length === 0 && z.length === 0) {
-    for (i = 0; i < y.length; i++) {
+  if (select.length === 0 && textarea.length === 0) {
+    for (i = 0; i < inputField.length; i++) {
       // If a field is empty...
-      if (y[i].value == "") {
+      if (inputField[i].value == "") {
         // add an "invalid" class to the field:
-        if (!y[i].classList.contains("invalid")) {
-          y[i].className += " invalid";
+        if (!inputField[i].classList.contains("invalid")) {
+          inputField[i].className += " invalid";
         }
         // and set the current valid status to false:
         valid = false;
         // add message that field is required:
-        if (x[currentTab].getElementsByClassName("error-message").length === 0) {
-          let sentence = x[currentTab].getElementsByClassName("sentence");
+        if (tabs[currentTab].getElementsByClassName("error-message").length === 0) {
+          let sentence = tabs[currentTab].getElementsByClassName("sentence");
           sentence[0].insertAdjacentHTML("afterend", '<p class="error-message">Please fill out all fields.</p>');
         }
       }
     }
-  } else if (z.length !== 0) {
-    for (i = 0; i < z.length; i++) {
-      if (z[i].value == "") {
-        if (!z[i].classList.contains("invalid")) {
-          z[i].className += " invalid";
+  } else if (textarea.length !== 0) {
+    for (i = 0; i < textarea.length; i++) {
+      if (textarea[i].value == "") {
+        if (!textarea[i].classList.contains("invalid")) {
+          textarea[i].className += " invalid";
         }
         valid = false;
-        if (x[currentTab].getElementsByClassName("error-message").length === 0) {
-          let sentence = x[currentTab].getElementsByClassName("sentence");
+        if (tabs[currentTab].getElementsByClassName("error-message").length === 0) {
+          let sentence = tabs[currentTab].getElementsByClassName("sentence");
           sentence[0].insertAdjacentHTML("afterend", '<p class="error-message">Please fill out all fields.</p>');
         }
       }
     }
   } else {
-    for (let j = 0; j < t.length; j++) {
-      if (t[j].hasChildNodes()) {
+    for (let j = 0; j < select.length; j++) {
+      if (select[j].hasChildNodes()) {
         valid = true;
-        if (y[j] && y[j].classList.contains("invalid")) {
-          y[j].classList.remove("invalid");
+        if (inputField[j] && inputField[j].classList.contains("invalid")) {
+          inputField[j].classList.remove("invalid");
         }
         break;
       } else {
         valid = false;
-        y[j].className += " invalid";
+        inputField[j].className += " invalid";
 
-        if (x[currentTab].getElementsByClassName("error-message").length === 0) {
-          let sentence = x[currentTab].getElementsByClassName("sentence");
+        if (tabs[currentTab].getElementsByClassName("error-message").length === 0) {
+          let sentence = tabs[currentTab].getElementsByClassName("sentence");
           sentence[0].insertAdjacentHTML("afterend", '<p class="error-message">Please fill out at least one field.</p>');
         }
       }
@@ -127,33 +127,3 @@ function fixStepIndicator(n) {
 //       e.preventDefault(); //prevent submitting form
 //     }
 // };
-
-// Hide prev, next carousel control accordingly on the first/last page
-// $('.carousel').carousel({
-//     interval: false,
-// })
-
-// $(document).ready(function () {               // on document ready
-//     checkitem();
-// });
-
-// $('#candidate_questions, #job_questions').on('slid.bs.carousel', checkitem);
-
-// function checkitem()                        // check function
-// {
-//     var $this = $('#candidate_questions, #job_questions');
-//     if ($('.carousel-inner .item:first').hasClass('active')) {
-//         // Hide left arrow
-//         $this.children('.carousel-control-prev').hide();
-//         // But show right arrow
-//         $this.children('.carousel-control-next').show();
-//     } else if ($('.carousel-inner .item:last').hasClass('active')) {
-//         // Hide right arrow
-//         $this.children('.carousel-control-next').hide();
-//         // But show left arrow
-//         $this.children('.carousel-control-prev').show();
-//     } else {
-//         $this.children('.carousel-control').show();
-//     }
-// }
-
