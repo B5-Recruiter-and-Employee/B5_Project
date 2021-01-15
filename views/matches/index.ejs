@@ -10,10 +10,8 @@
                     <!-- res.locals.matches -->
                     <!-- For matches of candidates for each job published (separated for each job) -->
                     <% for (let i=0; i < matches.length; i++) { %>
-                        <h3>
-                            <%= matches[i].jobOffer.job_title %>
-                        </h3>
-                        <% matches[0].candidatesMatches.forEach(match=> { %>
+                        <!-- here i (ella) changed matches[0] to matches[i]-->
+                        <% matches[i].candidatesMatches.forEach(match=> { %>
                             <% let source=match._source %>
                                 <%- include('card.ejs', {title: source.job_title , description:
                                     parseFloat((match._score).toFixed(2)), description_text: source.shortDescription,
@@ -55,10 +53,8 @@
                     <!-- res.locals.matches -->
                     <!-- For matches of candidates for each job published (separated for each job) -->
                     <% for (let i=0; i < matches.length; i++) { %>
-                        <h3>
-                            <%= matches[i].jobOffer.job_title %>
-                        </h3>
-                        <% matches[0].candidatesMatches.forEach(match=> { %>
+                        <!-- here i (ella) changed matches[0] to matches[i] to disaply all matches -> this breaks the carousel -->
+                        <% matches[i].candidatesMatches.forEach(match=> { %>
                             <% let source=match._source %>
                                 <%- include('card.ejs', {title: source.job_title , description:
                                     parseFloat((match._score).toFixed(2)), description_text: source.shortDescription,
