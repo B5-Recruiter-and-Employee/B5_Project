@@ -10,6 +10,9 @@
                     <!-- res.locals.matches -->
                     <!-- For matches of candidates for each job published (separated for each job) -->
                     <% for (let i=0; i < matches.length; i++) { %>
+                        <h3>
+                            <%= matches[i].jobOffer.job_title %>
+                        </h3>
                         <!-- here i (ella) changed matches[0] to matches[i]-->
                         <% matches[i].candidatesMatches.forEach(match=> { %>
                             <% let source=match._source %>
@@ -53,6 +56,9 @@
                     <!-- res.locals.matches -->
                     <!-- For matches of candidates for each job published (separated for each job) -->
                     <% for (let i=0; i < matches.length; i++) { %>
+                        <h3>
+                            <%= matches[i].jobOffer.job_title %>
+                        </h3>
                         <!-- here i (ella) changed matches[0] to matches[i] to disaply all matches -> this breaks the carousel -->
                         <% matches[i].candidatesMatches.forEach(match=> { %>
                             <% let source=match._source %>
