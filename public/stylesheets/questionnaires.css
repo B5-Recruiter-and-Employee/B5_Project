@@ -1,10 +1,37 @@
-/* questionnaires page */
-.container-fluid#questionnaires{
-  padding: 5rem 15rem;
+/* Mark input boxes that gets an error on validation: */
+#questionnaires input.invalid, #questionnaires textarea.invalid {
+  background-color: #ffeeee;
 }
 
+/* Hide all steps by default: */
+#questionnaires .tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+#questionnaires .step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+#questionnaires .step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+#questionnaires .step.finish {
+  background-color: #9AB3F5;
+} 
+
+/* questionnaires page */
 #questionnaires input[type=text] {
-  background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   display: inline-block;
@@ -86,59 +113,6 @@
   cursor: default;
 }
 
-/* Bootstrap Carousel */
-.carousel-indicators{
-  position: fixed;
+#questionnaires .error-message{
+  color: red;
 }
-.carousel-indicators li {
-  background-color: #2b2eb9 !important;
-  height: 5px;
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-.questionnaires-carousel .carousel-control-prev, .questionnaires-carousel .carousel-control-next  {
-  position: fixed !important;
-  background-color: none !important;
-}
-
-.questionnaires-carousel .carousel-control-next-icon, .questionnaires-carousel .carousel-control-prev-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #2b2eb9 !important;
-  border-radius: 10%;
-}
-
-/* .tag-container{
-  background-color: #FFF;
-  border: 2px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
-  display:flex;
-  color: black;
-} */
-
-/* .tag-container .tag{
-  background-color: #f2f2ff;
-  color: black;
-  padding : 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin: 5px;
-  display: inline-block;
-  align-items: center;
-  cursor : default;
-} */
-
-/* .tag i{
-  font-size: 16px;
-  margin-left: 5px;
-} */
-
-/* .tag-container input{
-  flex: 1;
-  font-size: 25px;
-  padding: 12px 20px;
-  outline: none;
-  border:0;
-} */
