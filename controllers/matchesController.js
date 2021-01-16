@@ -3,11 +3,18 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const errorController = require("./errorController");
 const { indexViewJobOffers } = require("./userController");
 
 module.exports = {
   renderAllMatches: (req, res) => {
+    if (typeof res.locals.matches != 'undefined') {
+      res.render("matches/index");
+    } else if (typeof res.locals.jobs != 'undefined') {
+      res.render("jobs/index");
+    }
+  },
+
+  renderSingleJobMatch: (req, res) => {
     res.render("matches/index");
   },
 
@@ -17,89 +24,30 @@ module.exports = {
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
         Job.find({}).then(jobs => {
-          console.log(jobs.length);
-
-          //we have to check how it works when dummy data is created and then adapt the ejs files.
-          let mappedOffers = jobs.filter(offer => {
+          res.locals.jobs = jobs.filter(offer => {
             let userAdded = user.jobOffers.some(userOffer => {
               return JSON.stringify(userOffer) === JSON.stringify(offer._id);
             });
             if (userAdded) return offer;
           });
-          console.log(mappedOffers.length);
-          let structuredHits= [];
-          // IF there are no jobs found for this user, then no matches can be offered.
-          // IF there are jobs saved by recruiter, then find the matches.
-          if (mappedOffers.length > 0) {
-            mappedOffers.forEach(jobOfferOfRecruiter => {
-              let sortedHardSkills = getSortedKeywords("hard_skills.name", jobOfferOfRecruiter.hard_skills);
-              let sortedSoftSkills = getSortedKeywords("soft_skills.name", jobOfferOfRecruiter.soft_skills);
-              // define elasticsearch query
-              let searchedJobTitle = { "preferred_position": jobOfferOfRecruiter.job_title }
-              let query = addSortedSkills('candidates', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
-              
-              client.search(query, (err, result) => {
-                if (err) { console.log(err) }
-                let matches = result.hits.hits;
-                //adapted for work experience. The array of sentences (each sentence is of String type) joined together in one
-                // variable to represent a text. Each string is divided by the dot.
-                //TO DO: change to description 
-                for (let i = 0; i < matches.length; i++) {
-                  console.log("******************SOURCE ************ ", matches[i]._source);
-                  let description = matches[i]._source.description;
-                  console.log(description);
-                  matches[i]._source.description_text = description;
-                }
-                //TO DO: check without reverse and compare
-                var sortedMatches = matches.sort(compare).reverse();
-                console.log(sortedMatches);
-                structuredHits.push({jobOfferOfRecruiter : sortedMatches});
-                //render the matches page only if the last element of recruiter's offer reached
-                if(mappedOffers.indexOf(jobOfferOfRecruiter) == (mappedOffers.length-1)) {
-                var matched = [];
-                structuredHits.forEach(matchOfJob => {
-                    matched = matched.concat(Object.values(matchOfJob.jobOfferOfRecruiter));
-                });
-                // NOW we give to locals.matches just the list of all matches.
-                // IF you want the matches section for each job offer, then you can save to locals.matches an array structuredHits.
-                // The array contains objects: {job offer of recruiter : sorted matches}. Play with it the way you want, depends on your FE.
-                // The lines 56-59 should be deleted then, if a list of matches not needed. This was done just for extracting the matches from each job.
-                  res.locals.matches = matched; 
-                  next();
-                }
-              })
-            })
-          } else {
-            res.locals.matches = [];
-            next();
-          }
-        })
-          .catch((error) => {
-            next(`MATCHES: No job offer was found for user "${userId}".`);
-          });
+          next();
+        });
       } else {
         Candidate.findById(user.candidateProfile).then(candidate => {
           // sort the keywords by importance
           let sortedHardSkills = getSortedKeywords("hard_skills.name", candidate.hard_skills);
-          let sortedSoftSkills = getSortedKeywords("soft_skills.name", candidate.soft_skills);
+          let sortedWorkCulture = getSortedKeywords("work_culture_preferences.name", candidate.work_culture_preferences);
 
           // define elasticsearch query
           let searchedJobTitle = { "job_title": candidate.preferred_position }
-          let query = addSortedSkills('job_offers', searchedJobTitle, sortedHardSkills, sortedSoftSkills);
+          let query = getQuery('job_offers', searchedJobTitle, [sortedHardSkills, sortedWorkCulture]);
           let hits;
           client.search(query, (err, result) => {
             if (err) { console.log(err) }
             hits = result.hits.hits
-
             // add "shortDescription" to the hits array
             for (let i = 0; i < hits.length; i++) {
-              let words = hits[i]._source.description.split(" ");
-              if (words.length > 40) {
-                let shortDesc = words.slice(0, 40);
-                hits[i]._source.shortDescription = shortDesc.join(" ") + "...";
-              } else {
-                hits[i]._source.shortDescription = hits[i]._source.description;
-              }
+              hits[i]._source.shortDescription = getShortDescription(hits[i]._source.description);
             }
             // send hits array to ejs
             res.locals.matches = hits;
@@ -107,39 +55,53 @@ module.exports = {
           });
         })
           .catch((error) => {
-            next(`MATCHES: No candidate profile was found for user "${userId}".`);
+            next(error);
           });
       }
     })
       .catch((error) => {
-        next("MATCHES: User ID not found in database.");
+        next(error);
       });
+  },
+
+  getSingleJobMatch: (req, res, next) => {
+    let jobId = req.params.jobId;
+
+    Job.findById(jobId).then(job => {
+      // sort the keywords by importance
+      let sortedHardSkills = getSortedKeywords("hard_skills.name", job.hard_skills);
+      let sortedSoftSkills = getSortedKeywords("soft_skills.name", job.soft_skills);
+
+      // define elasticsearch query
+      let searchedJobTitle = { "preferred_position": job.job_title }
+      let query = getQuery('candidates', searchedJobTitle, [sortedHardSkills, sortedSoftSkills]);
+      let hits;
+      client.search(query, (err, result) => {
+        if (err) { console.log(err) }
+        hits = result.hits.hits
+        // add "shortDescription" to the hits array
+        hits.forEach(h => {
+          h._source.shortDescription = getShortDescription(h._source.description);
+        });
+        // send hits array to ejs
+        res.locals.matches = hits;
+        next();
+      });
+    });
   }
 }
 
 // *** Other functions *** //
-/**
- * Sorts an array based on particular value.
- * @param {Number} a The score of one element.
- * @param {Number} b The score of the next element.
- * @returns 0, if both equal.
- */
-function compare(a, b) {
-  if (a._score > b._score) return 1;
-  if (b._score > a._score) return -1;
-
-  return 0;
-}
 
 /**
+ * Define the elasticsearch query
  *
  * @param {String} index Defines in which collection (or index) the matches should be found.
  * @param {String} jobTitle The name of the job title to be filtered.
- * @param {Array} hardSkills Sorted array of hard skills to query.
- * @param {Array} softSkills Sorted array of soft skills to query.
+ * @param {Array} keywords Array of the match-objects for the keywords.
  * @return The completed query with soft skills and hard skills for particular index (or collection).
  */
-let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
+let getQuery = (index, jobTitle, keywords) => {
   let query = {
     index: index,
     body: {
@@ -157,25 +119,27 @@ let addSortedSkills = (index, jobTitle, hardSkills, softSkills) => {
     }
   };
   let bool = query.body.query.bool;
-  // add "must" HARD SKILLS to query
-  //for (let i = 0; i < hardSkills.must.length; i++) {
-  //  bool.must.push(hardSkills.must[i])
-  //}
-  // add "should" HARD SKILLS to query
-  for (let i = 0; i < hardSkills.length; i++) {
-    bool.should.push(hardSkills.should[i])
+
+  // add keywords
+  keywords.forEach(matchObjects => {
+    matchObjects.forEach(o => {
+      bool.should.push(o)
+    });
+  });
+  return query;
+}
+
+let getShortDescription = (description) => {
+  let shortDescription;
+  let words = description.split(" ");
+  if (words.length > 40) {
+    let shortDesc = words.slice(0, 40);
+    shortDescription = shortDesc.join(" ") + "...";
+  } else {
+    shortDescription = description;
   }
 
-  // add "must" SOFT SKILLS to query
-  //for (let i = 0; i < softSkills.must.length; i++) {
-  //  bool.must.push(softSkills.must[i])
-  //}
-  // add "should" SOFT SKILLS to query
-  for (let i = 0; i < softSkills.length; i++) {
-    bool.should.push(softSkills.should[i])
-  }
-  console.log(query);
-  return query;
+  return shortDescription;
 }
 
 
@@ -203,17 +167,6 @@ let getSortedKeywords = function (field, keywords) {
       case 3:
         importance3 = importance3 + " " + keyword.name
         break;
-      //case 4:
-      //  importance4.push(
-      //    {
-      //      "match": {
-      //        [field]: {
-      //          "query": keyword.name,
-      //          "boost": 4
-      //        }
-      //      }
-      //    })
-      //  break;
       default:
         break;
     }
@@ -240,8 +193,5 @@ let getSortedKeywords = function (field, keywords) {
     }
   }]
 
-  return {
-    should: should,
-    //must: importance4
-  };
+  return should;
 }
