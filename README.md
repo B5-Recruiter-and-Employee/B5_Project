@@ -222,6 +222,12 @@ npm i mongoosastic
 bin/elasticsearch
 bin/kibana
 ```
+Windows OS:
+Go to the downloaded forlders e.g. kibana-7.9.3-windows-x86_64 for kibana and run the kibana command:
+```
+bin\elasticsearch.bat
+bin\kibana.bat
+```
 2. Open MongoDB compass and connect with the current database ```mongodb://localhost:27017/rem_matching_test``` and open the jobs collection (optional but handy). 
 
 3. You can now save, delete and edit jobs in the app while they are saved both in MongoDB and Elasticsearch. Elasticsearch runs on ```localhost:9200```. Use this query to see the jobs in Elasticsearch: ```http://localhost:9200/jobs/_search```
@@ -232,6 +238,12 @@ node clear_db.js
 node seed.js
 ```
 5. Add a couple new jobs. Now you can go to Kibana (runs at ```http://localhost:5601```) and create a new index pattern for our jobs collection.
+
+6. In case you had seeded the data to MongoDB and ES before but need to update the dummy data for database, the collections should be dropped in MongoDB either with commands or in MongoDB Compass by clicking on the collection name and selecting "Drop Collection" from the drop-down menu. Do not forget to delete the data from Elastic Search as well by runnung in the Console - Development tools - Kibana the delete command:
+
+```DELETE job_offers```
+
+Without deleting the previously seeded data in ES, user can have dublicates of data or errors.
 
 ### Additional tip: 
 if you get an unique key error while trying to insert new candidates:
