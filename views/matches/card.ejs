@@ -149,7 +149,7 @@
         </div>
 
         <div class="card-footer bg-transparent border-success">
-            <% if (user.candidateProfile && user.candidateProfile.equals(id)) { %>
+            <% if (user.candidateProfile) { %>
                 <a href="/jobs/<%= id %>" class="btn btn-primary">More...</a>
                 <% } else { %>
                     <a href="/candidates/<%= id %>" class="btn btn-primary">More...</a>
