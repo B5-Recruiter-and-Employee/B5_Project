@@ -22,6 +22,7 @@ module.exports = {
     
     if (req.query.job_title || req.query.remote || req.query.job_type){
     // define elasticsearch query
+
     let query = {
       index: 'job_offers',
       body: {
@@ -37,7 +38,9 @@ module.exports = {
         }
       }
     }
-
+    if(req.query.results){
+      query.body.size = req.query.results;
+    }
     if (req.query.remote){
       let remote = { "match": {"location": req.query.remote }};
       query.body.query.bool.must.push(remote);
@@ -68,7 +71,7 @@ module.exports = {
       if (err) {
         console.log(err)
       }
-      hits = result.hits.hits
+      hits = result.hits.hits;
 
       // add "shortDescription" to the hits array
       for (let i = 0; i < hits.length; i++) {
