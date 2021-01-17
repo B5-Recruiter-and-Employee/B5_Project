@@ -20,7 +20,7 @@ module.exports = {
 
   getJobSearchResult: (req, res, next) => {
     
-    if (req.query.job_title || req.query.remote || req.query.job_type){
+    if (req.query.job_title || req.query.remote || req.query.job_type || req.query.results){
     // define elasticsearch query
 
     let query = {
