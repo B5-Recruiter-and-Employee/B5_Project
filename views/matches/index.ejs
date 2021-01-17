@@ -2,13 +2,25 @@
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <%if(matches.length> 0) { %>
-        <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-          <%- include('card.ejs', {title: source.job_title , description: matches[i]._score , description_text:
-            source.shortDescription,id: matches[i]._id}); %>
+         <% if (user.role=='recruiter' ) { %>
+            <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+                <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)) , description_text:
+                  source.shortDescription, salary: source.salary, location: source.location, company: source.company, 
+                  preferred_position: source.preferred_position, job_type: source.job_type,
+                  preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
             <% } %>
-              <% } else { %>
-                <h1> Oops, No matches found for you yet :( </h1>
-                <% } %>
+         <% } else { %>
+                <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+                    <%- include('card.ejs', {title: source.job_title , description: parseFloat((matches[i]._score).toFixed(2)) , description_text:
+                      source.shortDescription, salary: source.salary, location: source.location, company:
+                      source.company, preferred_position: source.preferred_position, 
+                      job_type: source.job_type, preferred_location: source.preferred_location, 
+                      softskills: source.soft_skills, id: matches[i]._id}); %>
+                      <% } %>
+         <% } %>
+        <% } else { %>
+            <h1> Oops, No matches found for you yet :( </h1>
+        <% } %>
     </div>
   </div>
 </div>

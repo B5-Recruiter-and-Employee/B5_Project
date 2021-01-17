@@ -85,6 +85,7 @@ module.exports = {
         });
         // send hits array to ejs
         res.locals.matches = hits;
+        res.locals.user = req.app.locals.user;
         next();
       });
     });
