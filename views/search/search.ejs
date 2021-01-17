@@ -3,9 +3,18 @@
     <label for="job_title" class="search-label">Job Title</label>
 
     <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
-      placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1">
-
-    <div class="dropdown search-dropdown">
+      placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1" value="">
+    
+      <div class="dropdown search-dropdown ml-4">
+        <select class="custom-select" id="inputGroupSelect01">
+          <option selected>Choose...</option>
+          <option value="1">10 results</option>
+          <option value="2">20 results</option>
+          <option value="3">30 results</option>
+          <option value="3">All results</option>
+        </select>
+      </div>
+    <div class="dropdown search-dropdown ml-4">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Job type
@@ -37,7 +46,8 @@
         </div>
       </div>
     </div>
-    <div class="btn btn-secondary search-remote">
+
+    <div class="btn btn-secondary ml-4">
       <div class="form-check">
         <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
         <label class="form-check-label" for="remote">
@@ -45,6 +55,7 @@
         </label>
       </div>
     </div>
+    
     <button class="btn btn-primary ml-4" type="submit" id="search-addon">
       <i class="fas fa-search"></i>
       <span>Search</span>
@@ -55,7 +66,13 @@
 <div>
   <% if(typeof matches !== 'undefined' && matches.length > 0) { %>
     <%- include ('../matches/index.ejs', {matches: matches}) %> 
-  <% } else { %>
-    <p>No results</p>
+  <% } else if (typeof matches !== 'undefined' && matches.length === 0){ %>
+    <div class="alert alert-secondary" role="alert">
+      No results yet. Please try something else!
+    </div>
+  <% } else{ %>
+    <div class="alert alert-info" role="alert">
+      Here you can search for other jobs
+    </div>
   <% } %>
 </div>

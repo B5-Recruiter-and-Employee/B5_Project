@@ -58,13 +58,6 @@
 .search-label{
   margin: .5rem 20px .5rem 10px;
 }
-.search-field{
-  margin-right: 20px;
-}
-.search-remote{
-  margin-left: 20px;
-  color: white !important;
-}
 .search-remote:hover{
   background-color: #5a6268;
 }
