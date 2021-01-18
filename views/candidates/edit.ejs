@@ -1,50 +1,196 @@
-
-  <!-- <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
-    <h2>Edit information:</h2>
-    <label>Preferred position: </label>
-    <input type="text" placeholder="Job you are looking for" name="preferred_position"  value = "<%= candidate.preferred_position %>" autofocus>
-    <label>Soft skills: </label>
-    <input type="text" placeholder="Soft skills" name="soft_skills" value = "<%= candidate.soft_skills %>">
-    <label>Other aspects: </label>
-    <input type="text" placeholder="Other aspects" name="other_aspects" value = "<%= candidate.other_aspects %>">
-    <label>Work culture preferences</label>
-    <input type="text" placeholder="Values, benefits..." name="work_culture_preferences" value = "<%= candidate.work_culture_preferences %>">
-    <button type="submit" >Update</button>
-  </form>   -->
+<div class="container pb-5">
+  <hr>
+  <h1 class="personal-info">Edit preferences</h1>
   
-  <div class="container-fluid h-100">
-    <div class="row justify-content-center align-items-center"></div>
-    <div class="main-body">
-      <hr>
-      <h1 class="font-weight-light">Edit your candidate profile:</h1>    
-   
-    <div class="row justify-content-center h-100">
-      <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-        <form  action = "<%=`/candidates/${candidate._id}/update?_method=PUT`%>" method = "post" >
-          <div class="form-group">
-            <label class="font-weight-light text-left" for="preferred_position" >Preferred position:</label>
-            <input type="text" value="<%= candidate.preferred_position %>" name="preferred_position" class="form-control is-disabled" placeholder= "the job you're looking for!"/>
+  <form method="POST" action="/candidates/<%=candidate._id%>/update">
+    <div class="row justify-content-center">
+      <!-- Navigation -->
+      <div class="col-auto text-right">
+        <div class="nav flex-column nav-pills" id="nav-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="nav-details-tab" data-toggle="tab" href="#nav-details" role="tab" aria-controls="nav-details" aria-selected="true">General</a>
+          <a class="nav-link" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="false">About me</a>
+          <a class="nav-link" id="nav-techstack-tab" data-toggle="tab" href="#nav-techstack" role="tab" aria-controls="nav-techstack" aria-selected="false">Tech stack</a>
+          <a class="nav-link" id="nav-softskills-tab" data-toggle="tab" href="#nav-softskills" role="tab" aria-controls="nav-softskills" aria-selected="false">Soft skills</a>
+          <a class="nav-link" id="nav-workculture-tab" data-toggle="tab" href="#nav-workculture" role="tab" aria-controls="nav-workculture" aria-selected="false">Work culture & benefits</a>
+        </div>
+      </div>
+
+      <!-- Edit fields -->
+      <div class="col px-lg-5">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-details">
+            <!-- Current location -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="current_location">Current location</label>
+              <div class="col-sm-9">
+                <input type="text" value="<%= candidate.current_location %>" name="current_location" class="form-control" />
+              </div>
+            </div>
+            <!-- Preferred location -->
+            <% let remote = candidate.preferred_location.includes('remote');
+            let cities = candidate.preferred_location.filter(l => l !== 'remote'); %>
+            <div class="form-group row mb-4">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="preferred_location">Preferred location</label>
+              <div class="col-sm-9 tag-container">
+                <select multiple id="preferred_location" type="text" name="preferred_location" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% cities.forEach(city => { %>
+                    <option value="<%= city %>">
+                      <%= city %>
+                    </option>
+                    <% }); %>
+                </select>
+                <div class="ml-4 text-left">
+                  <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote" <% if (remote) { %>checked<% } %>>
+                  <label for="remote" class="form-check-label">I can work remotely.</label>
+                </div>
+              </div>
+            </div>
+            <!-- Preferred position -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="preferred_position">Preferred position</label>
+              <div class="col-sm-9">
+                <input type="text" name="preferred_position" value="<%= candidate.preferred_position %>" class="form-control" />
+              </div>
+            </div>
+            <!-- Job type -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="job_type">Contract type</label>
+              <div class="col-sm-9 mb-2">
+                <select class="form-control" name="job_type">
+                <% let selected = (option)=> { if (option === candidate.job_type) return true } %>
+                  <option value="Permanent" <% if (selected("Permanent")) { %>selected<% } %>>Permanent employment
+                      (full-time)</option>
+                  <option value="Internship" <% if (selected("Internship")) { %>selected<% } %>>Internship</option>
+                  <option value="Working-Student" <% if (selected("Working-Student")) { %>selected<% } %>>Working student
+                  </option>
+                  <option value="Flexible" <% if (selected("Flexible")) { %>selected<% } %>>Flexible</option>
+                </select>
+              </div>
+            </div>
+            <!-- Salary -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="salary">Desired salary</label>
+              <div class="col-sm-9">
+                <input type="text" name="salary" value="<%= candidate.expected_salary %>" class="form-control" />
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="font-weight-light" for="soft_skills">Soft skills:</label>
-            <input type="text" name="soft_skills" value="<%= candidate.soft_skills %>" class="form-control is-disabled" placeholder= "..." />
+
+          <div class="tab-pane fade" id="nav-description">
+            <!-- Description -->
+            <div class="form-group">
+              <textarea name="description" class="form-control" id="description" rows="8"><%= candidate.description %></textarea>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="font-weight-light" for="other_aspects">Other aspects:</label>
-            <input type="text" name="other_aspects" value="<%= candidate.other_aspects %>" class="form-control is-disabled" placeholder= "anything recruiters should know?" />
+
+          <div class="tab-pane fade" id="nav-techstack">
+            <!-- Tech stack -->
+            <% let techstack1 = candidate.hard_skills.map(skill=> { if (skill.importance === 1) return skill.name });
+              let techstack2 = candidate.hard_skills.map(skill => { if (skill.importance === 2) return skill.name });
+              let techstack3 = candidate.hard_skills.map(skill => { if (skill.importance === 3) return skill.name }); %>
+            <div class="form-group">
+              <label for="techstack3" class="font-weight-light h5">Proficient:</label>
+              <div class="tag-container">
+                <select multiple id="techstack3" type="text" name="techstack3" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack3.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <label for="techstack2" class="font-weight-light h5 mt-4">Intermediate:</label>
+              <div class="tag-container">
+                <select multiple id="techstack2" type="text" name="techstack2" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack2.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="techstack1" class="font-weight-light h5 mt-4">Beginner:</label>
+              <div class="tag-container">
+                <select multiple id="techstack1" type="text" name="techstack1" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack1.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="font-weight-light" for="description">Work culture preferences</label>
-            <textarea name="work_culture_preferences" class="form-control is-disabled" placeholder="your values, desired benefits..." rows="3"><%= candidate.work_culture_preferences %></textarea>
+
+          <div class="tab-pane fade" id="nav-softskills">
+            <!-- Soft skills -->
+            <div class="form-group">
+              <div class="tag-container">
+                <select multiple type="text" name="soft_skills" placeholder="add more..." data-role="tagsinput">
+                  <% candidate.soft_skills.forEach(skill => { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+            </div>
           </div>
-          <div class="row">
-          <div class="col"><button type="submit" class=" btn btn-outline-success btn-sm mr-1">Save  </button></div>
-          <div class="col"><button type="reset" class=" btn btn-outline-secondary btn-sm ">Cancel</button></div>
-        </form>
-              <div class="col"><button class=" btn btn-outline-danger btn-sm" onclick="location.href='/candidates/${candidate._id}/delete'">Delete</button></div>
+
+          <div class="tab-pane fade" id="nav-workculture">
+            <!-- Work culture -->
+            <% let workculture1 = candidate.work_culture_preferences.map(skill=> { if (skill.importance === 1) return skill.name });
+              let workculture2 = candidate.work_culture_preferences.map(skill => { if (skill.importance === 2) return skill.name });
+              let workculture3 = candidate.work_culture_preferences.map(skill => { if (skill.importance === 3) return skill.name }); %>
+            <div class="form-group">
+              <label for="workculture3" class="font-weight-light h5">Most important:</label>
+              <div class="tag-container">
+                <select multiple id="workculture3" type="text" name="workculture3" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% workculture3.forEach(skill => { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="workculture2" class="font-weight-light h5 mt-4">Quiet important:</label>
+              <div class="tag-container">
+                <select multiple id="workculture2" type="text" name="workculture2" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% workculture2.forEach(skill => { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="workculture1" class="font-weight-light h5 mt-4">Somewhat important:</label>
+              <div class="tag-container">
+                <select multiple id="workculture1" type="text" name="workculture1" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% workculture1.forEach(skill => { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
             </div>
           </div>
         </div>
+        
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between pt-4">
+          <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">« Back to profile</button>
+          <button type="submit" class="btn btn-outline-success px-5">Save</button>
+        </div>
       </div>
     </div>
- 
+  </form>
+  
+</div>

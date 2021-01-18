@@ -5,9 +5,9 @@
   <hr>
   <div class="row" id="edit-container">
     <div class="col-md-9">
-      <h3 class="personal-info">Edit personal info</h3>
+      <h1 class="personal-info">Edit personal info</h3>
 
-      <form class="edit-form" action="<%=`/user/${user._id}/update?_method=PUT`%>" method="post">
+      <form action="<%=`/user/${user._id}/update?_method=PUT`%>" method="post">
         <div class="form-group row">
           <label for="inputEmail" class="col-sm-2 col-form-label edit-container">First name</label>
           <div class="col-sm-10">
@@ -26,15 +26,13 @@
             <input type="email" class="form-control" name="email" value="<%= user.email %>">
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-sm-4 offset-sm-2">
-            <input type="submit" class="btn btn-outline-success mr-1" value="Save changes">
-            <input type="reset" class="btn btn-outline-primary color-cancel mr-1" value="Reset">
-
+        <div class="form-group row mb-5">
+          <div class="col offset-sm-2 d-flex justify-content-between">
             <a href="<%=`/user/${user._id}` %>">
-              <input class="btn btn-outline-primary color-info px-3"
-                value="« Back to profile"></button>
+              <button class="btn btn-outline-primary">« Back to profile</button>
             </a>
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <button type="submit" class="btn btn-outline-success">Save changes</button>
           </div>
         </div>
     </div>
