@@ -262,3 +262,25 @@ and query this:
 ```GET jobs/_search```
 
 The jobs are saved in MongoDB first and after that into Elasticsearch. If you use queries to edit the data in Kibana, the changes won’t be saved into MongoDB. 
+
+
+### Heroku & its installation for the project
+
+1. Install heroku
+``` npm install -g heroku ```
+- For Windows OS users run the command in the powershell (recommended as admin) 
+``` Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted ```
+- Check the heroku version by typing heroku version. If this does not work, then set the path to heroku in the project folder:
+``` C:\Users\your_folder> SET PATH = C:\Program Files\heroku\bin ```
+
+2. Create Procfile at the app's root.
+3. Add to the created file the line 
+```
+web: node main.js
+
+```
+4. Before running the create command, heroku may ask for login. Login to heroku as it demands in console.
+5. After login is successfully done, run ``` heroku create ```. The URL is generated.
+6. To publish the code from our git repository to heroku, run the command: ``` git push heroku master ```.
+
+If our application depends on the database, then the DB for production should be set up. 
