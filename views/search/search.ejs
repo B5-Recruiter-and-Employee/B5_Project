@@ -18,10 +18,10 @@
           <option value="30">30 results</option>
           <option value="10000">All results</option>
           <% } else {
-          var options = [ "10", "20", "30", "10000" ];
+          var options = [ "10", "20", "30", "All" ];
           for ( var i = 0; i < options.length; i++ )
           {
-              var selected = (size == options[i]) ? "selected" : "";
+              var selected = (size == options[i] || options[i] === "All") ? "selected" : "";
               %>
            
             <option value="<%=options[i] %>" <%=selected %>><%=options[i] %> results</option>
