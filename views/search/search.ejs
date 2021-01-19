@@ -36,30 +36,52 @@
         Job type
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <% if(job_type === undefined ){ %>
         <div class="form-check">
-          <input class="form-check-input" name="job_type" type="checkbox" value="Permanent" id="permanent">
-          <label class="form-check-label" for="permanent">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Permanent">
+          <label class="form-check-label">
             Full-time
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" name="job_type" type="checkbox" value="Internship" id="internship">
-          <label class="form-check-label" for="internship">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Internship">
+          <label class="form-check-label">
             Internship
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" name="job_type" type="checkbox" value="Working-Student" id="working_student">
-          <label class="form-check-label" for="working_student">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Working-Student">
+          <label class="form-check-label">
             Working student
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" name="job_type" type="checkbox" value="Flexible" id="flexible">
-          <label class="form-check-label" for="flexible">
+          <input class="form-check-input" name="job_type" type="checkbox" value="Flexible">
+          <label class="form-check-label">
             Flexible
           </label>
         </div>
+        <% } else {
+          let types = ["Permanent", "Internship", "Working-Student", "Flexible"];
+          for(let i = 0; i < types.length; i++){
+            let option = "" + types[i];
+            if(job_type.includes.option){%>
+              <div class="form-check">
+                <input class="form-check-input" name="job_type" type="checkbox" value="<%=types[i] %>" checked>
+                <label class="form-check-label">
+                  <%=types[i] %>
+                </label>
+              </div>
+            <% } else {%>
+              <div class="form-check">
+                <input class="form-check-input" name="job_type" type="checkbox" value="<%=types[i] %>">
+                <label class="form-check-label">
+                  <%=types[i] %>
+                </label>
+              </div>
+            <%}%>
+          <%}%>
+        <%}%>
       </div>
     </div>
 

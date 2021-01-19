@@ -11,8 +11,9 @@ module.exports = {
   renderSearch: (req, res) => {
     res.render("search/search", {matches: res.locals.matches, 
                                 job_title: res.locals.job_title, 
-                                size: res.locals.size});
-     console.log(res.locals.size);
+                                size: res.locals.size,
+                                job_type: res.locals.job_type});
+     console.log(res.locals.job_type);
   },
 
   redirectView: (req, res, next) => {
@@ -69,6 +70,7 @@ module.exports = {
         job_type_query.bool.should.push(job_type_match);
       }
       query.body.query.bool.must.push(job_type_query);
+      res.locals.job_type = req.query.job_type;
     }
 
     let hits;
