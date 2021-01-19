@@ -9,7 +9,10 @@ const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
   renderSearch: (req, res) => {
-    res.render("search/search", {matches : res.locals.matches});
+    res.render("search/search", {matches: res.locals.matches, 
+                                job_title: res.locals.job_title, 
+                                size: res.locals.size});
+     console.log(res.locals.size);
   },
 
   redirectView: (req, res, next) => {
@@ -22,7 +25,7 @@ module.exports = {
     
     if (req.query.job_title || req.query.remote || req.query.job_type || req.query.results){
     // define elasticsearch query
-
+    res.locals.job_title = req.query.job_title;
     let query = {
       index: 'job_offers',
       body: {
@@ -38,8 +41,10 @@ module.exports = {
         }
       }
     }
+  
     if(req.query.results){
       query.body.size = req.query.results;
+      res.locals.size = req.query.results;
     }
     if (req.query.remote){
       let remote = { "match": {"location": req.query.remote }};

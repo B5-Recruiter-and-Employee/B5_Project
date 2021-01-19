@@ -2,17 +2,34 @@
   <div class="input-group mb-3 search-section row justify-content-center">
     <label for="job_title" class="search-label">Job Title</label>
 
+    <% if(typeof job_title === undefined ){ %>
     <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
       placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1" value="">
-    
+    <% }else { %>
+      <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
+      placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1" value="<%=job_title %>">
+    <% } %>
+      
       <div class="dropdown search-dropdown ml-4">
         <select class="custom-select" id="inputGroupSelect01" name="results">
+          <% if (size == undefined) { %>
           <option selected value="10">10 results</option>
           <option value="20">20 results</option>
           <option value="30">30 results</option>
           <option value="10000">All results</option>
+          <% } else {
+          var options = [ "10", "20", "30", "10000" ];
+          for ( var i = 0; i < options.length; i++ )
+          {
+              var selected = (size == options[i]) ? "selected" : "";
+              %>
+           
+            <option value="<%=options[i] %>" <%=selected %>><%=options[i] %> results</option>
+            
+          <% }} %>
         </select>
       </div>
+      
     <div class="dropdown search-dropdown ml-4">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
