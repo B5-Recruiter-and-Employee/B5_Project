@@ -11,8 +11,10 @@ module.exports = {
   renderSearch: (req, res) => {
     res.render("search/search", {matches: res.locals.matches, 
                                 job_title: res.locals.job_title, 
-                                size: res.locals.size});
-     console.log(res.locals.size);
+                                size: res.locals.size,
+                                job_type: res.locals.job_type,
+                                remote: res.locals.remote,
+                                missingJobTitle: req.query.job_title});
   },
 
   redirectView: (req, res, next) => {
@@ -23,9 +25,10 @@ module.exports = {
 
   getJobSearchResult: (req, res, next) => {
     
-    if (req.query.job_title || req.query.remote || req.query.job_type || req.query.results){
+    if (req.query.job_title){
     // define elasticsearch query
     res.locals.job_title = req.query.job_title;
+    
     let query = {
       index: 'job_offers',
       body: {
@@ -49,6 +52,7 @@ module.exports = {
     if (req.query.remote){
       let remote = { "match": {"location": req.query.remote }};
       query.body.query.bool.must.push(remote);
+      res.locals.remote = req.query.remote;
     }
 
     if(req.query.job_type){
@@ -69,6 +73,7 @@ module.exports = {
         job_type_query.bool.should.push(job_type_match);
       }
       query.body.query.bool.must.push(job_type_query);
+      res.locals.job_type = req.query.job_type;
     }
 
     let hits;
@@ -92,6 +97,8 @@ module.exports = {
       res.locals.matches = hits;
       next();
     });
-  } else{next();}
+  } else{
+    next();
+  }
   }
 }

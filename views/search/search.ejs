@@ -65,7 +65,8 @@
 
     <div class="btn btn-secondary ml-4">
       <div class="form-check">
-        <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote">
+        <% var checked = (remote !== undefined) ? "checked" : "" %>
+        <input class="form-check-input" name="remote" type="checkbox" value="remote" id="remote" <%=checked %>>
         <label class="form-check-label" for="remote">
           Remote
         </label>
@@ -86,7 +87,11 @@
     <div class="alert alert-secondary" role="alert">
       No results yet. Please try something else!
     </div>
-  <% } else{ %>
+  <% } else if (missingJobTitle == "") { %>
+    <div class="alert alert-warning" role="alert">
+      Job title field is missing! Tell us which job do you want to look for? 
+    </div>
+  <% } else { %>
     <div class="alert alert-info" role="alert">
       Here you can search for other jobs
     </div>
