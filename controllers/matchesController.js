@@ -79,6 +79,7 @@ module.exports = {
       client.search(query, (err, result) => {
         if (err) { console.log(err) }
         hits = result.hits.hits
+        console.log("** these are the hits: ", hits)
         // add "shortDescription" to the hits array
         hits.forEach(h => {
           h._source.shortDescription = getShortDescription(h._source.description);
@@ -139,7 +140,6 @@ let getShortDescription = (description) => {
   } else {
     shortDescription = description;
   }
-
   return shortDescription;
 }
 

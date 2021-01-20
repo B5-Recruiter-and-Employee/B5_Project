@@ -203,5 +203,10 @@ a {
    }
    
 .card {
-    min-width: 80% !important;
+    min-width: 90% !important;
+}
+
+.card-container{
+  margin-left: 100px !important;
+  margin-right: 100px !important;
 }
