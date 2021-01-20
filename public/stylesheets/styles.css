@@ -82,6 +82,7 @@ footer{
   text-align: center;
 }
 footer p {
+  font-family: 'Crimson Pro', serif;
   color: white !important;
   font-size: 1.2rem !important;
   font-weight: 300;
