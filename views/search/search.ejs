@@ -13,22 +13,15 @@
     <!-- Number of results -->
     <div class="dropdown search-dropdown ml-4">
       <select class="custom-select" id="inputGroupSelect01" name="results">
-        <% 
-        var options = [ "10", "20", "30", "10000" ];
-        var result_labels = [ "10", "20", "30", "All" ];
-        if (size == undefined) { 
+        <%  var options = [ "10", "20", "30", "10000" ];
+            var result_labels = [ "10", "20", "30", "All" ];
           for ( var i = 0; i < options.length; i++ ){
-          %>
+            if (size == undefined) { %>
           <option value="<%=options[i] %>"><%=result_labels[i] %> results</option>
-        <% }} else {
-        var options = [ "10", "20", "30", "10000" ];
-        var result_labels = [ "10", "20", "30", "All" ];
-        for ( var i = 0; i < options.length; i++ )
-        {
-            var selected = (size == options[i]) ? "selected" : "";
-            %>
+          <% } else {
+            var selected = (size == options[i]) ? "selected" : "";%>
           <option value="<%=options[i] %>" <%=selected %>><%=result_labels[i] %> results</option>
-        <% }} %>
+          <% }} %>
       </select>
     </div>
       
@@ -38,20 +31,18 @@
         aria-haspopup="true" aria-expanded="false">
         Job type
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <% 
-        var types = ["Full-time", "Internship", "Working Student", "Flexible"];
-        var ids = ["full-time", "internship", "working-student", "flexible"];
-        if(job_type == undefined ){ 
-          for(let i = 0; i < types.length; i++){ %>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+        <%  var types = ["Full-time", "Internship", "Working Student", "Flexible"];
+            var ids = ["full-time", "internship", "working-student", "flexible"];
+          for(let i = 0; i < types.length; i++){ 
+            if(job_type == undefined ){ %>
             <div class="form-check">
               <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=types[i] %>" >
               <label class="form-check-label" for="<%=ids[i] %>">
                 <%=types[i] %>
               </label>
             </div>
-        <% }} else {
-          for(let i = 0; i < types.length; i++){
+        <% } else {
             var checked = (job_type.includes(types[i])) ? "checked" : "";%>
             <div class="form-check">
               <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=types[i] %>" <%=checked %> >
