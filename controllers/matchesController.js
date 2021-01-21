@@ -3,7 +3,7 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const { indexJobOffers } = require("./userController");
+const { indexJobOffers } = require("./jobController");
 
 module.exports = {
   renderAllMatches: (req, res) => {

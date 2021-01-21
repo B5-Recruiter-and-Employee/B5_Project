@@ -3,7 +3,6 @@ const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
-const { off } = require('../models/job_offer');
 
 module.exports = {
   renderLogin: (req, res) => {
@@ -16,24 +15,6 @@ module.exports = {
     else next();
   },
 
-  // show: (req, res, next) => {
-  //   let userId = req.params.id;
-  //   User.findById(userId).then(user => {
-  //     console.log(user);
-  //     res.locals.user = user;
-  //     res.locals.loggedIn = user;
-  //     console.log('show: ', res.locals.loggedIn);
-  //     Candidate.findById(user.candidateProfile).then(candidate => {
-  //       res.locals.candidate = candidate;
-  //       next();
-  //     })
-
-  //   })
-  //     .catch(error => {
-  //       console.log(`Error fetching user by ID: ${error.message}`);
-  //       next(error);
-  //     });
-  // },
 /**
  * Renders the profile page of a logged in user (recruiter or candidate). 
  */
@@ -68,38 +49,6 @@ module.exports = {
     req.flash('success', 'You have been logged out!');
     res.locals.redirect = "/";
     next();
-  },
-
-  createAccount: (req, res, next) => {
-    let userParams = {
-      name: {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname
-      },
-      email: req.body.email,
-      role: req.body.role,
-      password: req.body.password
-    };
-
-    if (req.skip) next();
-    let newUSer = new User(userParams);
-    User.register(newUSer, req.body.password, (error, user) => {
-      console.log('bitte', user);
-      if (user) {
-        req.flash('success', `The user ${user.fullName} was created successfully!`);
-        res.locals.redirect = `/thanks`;
-        res.locals.user = user;
-        next();
-      } else {
-        console.log(`Error saving user profile: ${error.message}`);
-        res.locals.redirect = "/user/signup";
-        req.flash(
-          "error",
-          `Failed to create user account because: ${error.message}.`
-        );
-        next();
-      }
-    })
   },
 
   renderThanks: (req, res) => {
@@ -210,28 +159,6 @@ module.exports = {
    */
   renderNewJobOffer: (req, res) => {
     res.render('jobs/new');
-  },
-
-  /**
-   * Shows only those job offers that are added
-   * by a particular logged in recruiter.
-   */
-  indexJobOffers: (req, res, next) => {
-    let currentUser = res.locals.user;
-    Job.find({_id: {$in: currentUser.jobOffers}}).then(offers => {
-      // just an extra check if userID in the job offer matches the current user's ID
-      let mappedOffers = offers.map(offer => {
-          if (JSON.stringify(offer.user) === JSON.stringify(currentUser._id)) {
-            return offer;
-          }
-      });
-      res.locals.jobs = mappedOffers;
-      next();
-    });
-  },
-
-  renderJobOffers: (req, res) => {
-    res.render("jobs/index");
   },
 
   getJobParams: (req, res) => {

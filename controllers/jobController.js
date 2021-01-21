@@ -4,6 +4,28 @@ const userController = require("./userController");
 
 module.exports = {
 
+    /**
+     * Shows only those job offers that are added
+     * by a particular logged in recruiter.
+     */
+    indexJobOffers: (req, res, next) => {
+      let currentUser = res.locals.user;
+      Job.find({_id: {$in: currentUser.jobOffers}}).then(offers => {
+        // just an extra check if userID in the job offer matches the current user's ID
+        let mappedOffers = offers.map(offer => {
+            if (JSON.stringify(offer.user) === JSON.stringify(currentUser._id)) {
+              return offer;
+            }
+        });
+        res.locals.jobs = mappedOffers;
+        next();
+      });
+    },
+  
+    renderJobOffers: (req, res) => {
+      res.render("jobs/index");
+    },
+
     renderSingleJobEdit: (req, res) => {
         let jobId = req.params.jobId;
 

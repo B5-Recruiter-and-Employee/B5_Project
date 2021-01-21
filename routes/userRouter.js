@@ -28,7 +28,6 @@ router.post("/user/:id/update", userController.update, userController.redirectVi
 
 //for recruiter user.
 router.get("/user/:id/add-job", userController.renderNewJobOffer);
-router.get("/user/:id/offers", userController.indexJobOffers, userController.renderJobOffers);
 router.post("/user/:id/add-job", userController.addJobOffers, userController.redirectView);
 
 module.exports = router;
