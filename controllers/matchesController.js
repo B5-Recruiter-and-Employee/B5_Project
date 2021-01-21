@@ -3,7 +3,7 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const { indexViewJobOffers } = require("./userController");
+const { indexJobOffers } = require("./userController");
 
 module.exports = {
   renderAllMatches: (req, res) => {
@@ -23,15 +23,7 @@ module.exports = {
 
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
-        Job.find({}).then(jobs => {
-          res.locals.jobs = jobs.filter(offer => {
-            let userAdded = user.jobOffers.some(userOffer => {
-              return JSON.stringify(userOffer) === JSON.stringify(offer._id);
-            });
-            if (userAdded) return offer;
-          });
-          next();
-        });
+        indexJobOffers(req, res, next);
       } else {
         Candidate.findById(user.candidateProfile).then(candidate => {
           // sort the keywords by importance
