@@ -37,7 +37,7 @@ module.exports = {
       if (job.user) {
         User.findById(job.user).then(recruiter => {
           recipient = recruiter.name.firstname;
-          
+
         }).catch((error) => console.error(error)).then(job => {
           let senderName = user.fullName;
           let recipientEmail = "rematch.htw@gmail.com";
@@ -46,20 +46,22 @@ module.exports = {
             body: {
               greeting: 'Hello',
               name: recipient,
-              intro: [`${senderName} is interested in your job offer ${job_title}!`,`<b>Their message:</b>`, `<i>${req.body.message}<i>`],
+              intro: [`${senderName} is interested in your job offer <b>${job_title}</b>!`,
+                `Here's their message:`,
+                `<blockquote style="text-align:center;"><i>${req.body.message}<i></blockquote>`],
               action: {
-                instructions: 'To see their profile, click here:',
+                instructions: '<div style="text-align:center; margin-top:30px;">To see their profile, click here:</div>',
                 button: {
                   color: '#9AB3F5',
                   text: `${senderName}'s Profile`,
                   link: `http://localhost:3000/candidates/${user.candidateProfile}`
                 }
               },
-              outro: `You can start contacting via ${user.email}`,
+              outro: `You can start contacting them via ${user.email}.`,
               signature: 'Sincerely'
             }
           };
-          
+
 
           let mail = MailGenerator.generate(email);
 

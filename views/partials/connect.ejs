@@ -1,26 +1,36 @@
 <div class="message-btn">
-	<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+	<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#connectModal">
 		I'm interested
 	</button>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="connectModal" tabindex="-1" aria-labelledby="connectModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Your Message</h5>
+				<h5 class="modal-title" id="connectModalLabel">Your message</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<form action="/apply/<%= id %>" method="post">
 				<div class="modal-body">
-					<textarea name="message"></textarea>
+					<% let defaultText = "";
+					if (user.role === 'candidate') {
+						defaultText = "Your offer is amazing! I want to get in touch with you to know more about it.";
+					} else if (user.role === 'recruiter') {
+						defaultText = "I may have the perfect job for you! Please contact me for more information."; %>
+					<!-- select class="form-control mb-3">
+						<option selected disabled>Choose your job offer...</option>
+					</select -->
+					<% } %>
+					<textarea name="message" class="form-control"><%= defaultText %></textarea>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">
 						Close
 					</button>
-					<button type="submit" class="btn btn-primary">Send Email</button>
+					<button type="submit" class="btn btn-primary">Send message</button>
 				</div>
 			</form>
 		</div>
