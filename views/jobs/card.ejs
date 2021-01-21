@@ -20,8 +20,10 @@
               <% } %>
            </p>
 
-        <a href="/jobs/<%= id %>" class="btn btn-outline-primary">Show more</a>
-        <br>
+        <div class="d-flex justify-content-between">
+          <a href="/jobs/<%= id %>" class="btn btn-outline-primary">View offer</a>
+          <a href="/matches/jobs/<%= id %>" class="btn btn-outline-primary">View matches</a>
+        </div>
 
     </div>
       <div class="card-footer py-2 bg-transparent border-muted">

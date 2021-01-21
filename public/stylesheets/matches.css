@@ -77,3 +77,24 @@ body{
     color: #9AB3F5 !important;
     border-color: #9AB3F5 !important;
 }
+
+.circle {
+    display: inline-table;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:#bdcdf800;
+    border: 7px solid;
+    border-color: #9ab3f573;
+    color: #9ab3f5;
+}
+
+  .circle__content {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 16px;
+} 

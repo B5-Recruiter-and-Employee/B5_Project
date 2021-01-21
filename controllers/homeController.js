@@ -1,3 +1,4 @@
+const passport = require("passport");
 //create route to home page and log requests body
 exports.logRequestPaths = (req,res) => {
     console.log(req.body);
@@ -5,9 +6,17 @@ exports.logRequestPaths = (req,res) => {
     res.send("POST Succesful!! ")
 };
 
-//render the index.ejs file (index page)
+/**
+ * Render the index.ejs file (index page) for not logged in user.
+ * If the user is already logged in, redirect to profile page.
+*/
 exports.getIndex = (req, res) => {
-    res.render("index");
+    //console.log ("USER", req.user);
+    if (!req.isAuthenticated()) {
+        res.render("index");
+    } else {
+        res.redirect('/user/' + req.user._id);
+    }
 };
 
 //render the name.ejs file with the route parameter as the name variable

@@ -40,8 +40,9 @@ header .nav-link {
   margin: 0 1rem;
 }
 
-header .nav-link:hover{
+.btn-primary:hover, .btn-outline-primary:hover{
   background-color: #9AB3F5;
+  color: #120078 !important;
 }
 
 header a.nav-link:hover:not(.btn) {
@@ -120,7 +121,7 @@ a {
 /* overwrite bootstrap classes */
 
 .btn-primary, .badge-primary {
-   color : white !important;
+   color: white !important;
    background-color: #9AB3F5 !important;
    border-color: #9AB3F5 !important;
 }
@@ -129,9 +130,19 @@ a {
   background-color: #7579E7 !important;
 }
 
+.btn-success {
+  background-color: rgb(85, 165, 118)  !important;
+  border-color: rgb(85, 165, 118)  !important;
+}
+
+.btn-success:hover {
+  background-color: rgb(121, 196, 152)  !important;
+  border-color: rgb(121, 196, 152)  !important;
+}
+
 .btn-outline-success {
-  color : rgb(121, 196, 152) !important;
-  border-color : rgb(121, 196, 152)  !important;
+  color: rgb(121, 196, 152) !important;
+  border-color: rgb(121, 196, 152)  !important;
 }
 
 .btn-outline-success:hover {
@@ -155,8 +166,17 @@ a {
   border-radius: 10%;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: white !important;
+  background-color: #9AB3F5 !important;
+}
+
 .text-primary {
   color :#C1CAF4 !important;
+}
+
+.text-success {
+  color: rgb(121, 196, 152) !important;
 }
 
 /* login page */
@@ -194,4 +214,19 @@ a {
   margin-bottom: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* -- CONTAINERS ON MATCHES PAGE -- */
+/* carousel element */
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    min-width: 350px;
+   }
+   
+.card {
+    min-width: 90% !important;
+}
+
+.card-container{
+  margin-left: 100px !important;
+  margin-right: 100px !important;
 }
