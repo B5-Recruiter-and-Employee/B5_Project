@@ -46,7 +46,6 @@ module.exports = {
             } else {
                 req.flash('success', `The job offer "${job.job_title}" has been successfully updated!`);
                 res.redirect(`/user/${res.locals.user._id}/offers`);
-                console.log('job updated in MongoDB and Elasticsearch')
             }
         });
      },
