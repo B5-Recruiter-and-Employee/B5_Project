@@ -1,89 +1,18 @@
 const Candidate = require("../models/candidate");
 const User = require("../models/user");
-const app = require("express")();
+const userController = require("./userController");
 
 module.exports = {
-	// index: (req, res, next) => {
-	//   Candidate.find({})
-	//     .exec()
-	//     .then((candidates) => {
-	//       res.locals.candidates = candidates;
-	//       next();
-	//     })
-	//     .catch((error) => {
-	//       console.log(`Error fetching candidates: ${error.message}`);
-	//       return [];
-	//     })
-	//     .then(() => {
-	//       console.log("promise complete");
-	//     });
-	// },
 
-	// indexView: (req, res) => {
-	//   res.render("candidates/index");
-	// },
-
-	// new: (req, res) => {
-	//   res.render("candidates/new");
-	// },
-
-	// create: (req, res, next) => {
-	//   let candidateParams = {
-	//     preferred_position: req.body.preferred_position,
-	//     soft_skills: req.body.soft_skills,
-	//     other_aspects: req.body.other_aspects,
-	//     work_culture_preferences: req.body.work_culture_preferences,
-	//   }
-	//   Candidate.create(candidateParams)
-	//     .then(candidate => {
-	//       req.flash('success', `${candidate.preferred_position} candidate created successfully!`);
-	//       res.locals.redirect = '/candidates';
-	//       res.locals.candidate = candidate;
-	//       next();
-	//     })
-	//     .catch(error => {
-	//       console.log(`Error saving candidate profile: ${error.message}`);
-	//       res.locals.redirect = "/candidates/new";
-	//       req.flash(
-	//         "error",
-	//         `Failed to create user account because: ${error.message}.`
-	//       );
-	//       next();
-	//     });
-	// },
-
-	redirectView: (req, res, next) => {
-		let redirectPath = res.locals.redirect;
-		if (redirectPath) res.redirect(redirectPath);
-		else next();
-	},
-
-	// show: (req, res, next) => {
-	//   let candidateId = req.params.id;
-	//   Candidate.findById(candidateId).then(candidate => {
-	//     res.locals.candidate = candidate;
-	//     next();
-	//   })
-	//     .catch(error => {
-	//       console.log(`Error fetching candidate by ID: ${error.message}`);
-	//       next(error);
-	//     });
-	// },
-
-	// showView: (req, res) => {
-	//   res.render('candidates/show');
-	// },
-
-	showSingleCandidate: (req, res) => {
-		let cardId = req.params.cardId;
-		// let userId = req.app.locals.user._id;
+	renderSingleCandidate: (req, res) => {
+		let cardId = req.params.candidateId;
 
 		Candidate.findById(cardId)
 			.then((candidate) => {
-				User.find({ candidateProfile: candidate._id }).then((card) => {
+				User.find({ candidateProfile: candidate._id }).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
-						cardOwner: { name: card.fullName, email: card.email },
+						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
 						// current logged in user
 						user: res.locals.user,
 					});
@@ -111,21 +40,13 @@ module.exports = {
 
 	update: (req, res, next) => {
 		let candidateId = req.params.id;
+		let candidateParams = userController.getCandidateParams(req, res);
 
-		let candidateParams = {
-			preferred_position: req.body.preferred_position,
-			soft_skills: req.body.soft_skills,
-			other_aspects: req.body.other_aspects,
-			//just for testing elasticsearch
-			hard_skills: { name: req.body.work_culture_preferences, importance: 3 },
-		};
-
-		// Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
 		Candidate.findOneAndUpdate(
 			{ _id: candidateId },
 			{ $set: candidateParams },
 			{ new: true },
-			(err, job) => {
+			(err, candidate) => {
 				if (err) {
 					req.flash(
 						"error",
@@ -134,9 +55,8 @@ module.exports = {
 					console.log(`Error updating candidate by ID: ${error.message}`);
 					next(error);
 				} else {
-					//let user = res.locals.user;
 					req.flash("success", `The candidate has been successfully updated!`);
-					res.locals.redirect = `/user/${req.app.locals.user._id}`;
+					res.redirect(`/user/${req.app.locals.user._id}`);
 					console.log("candidate updated in MongoDB and Elasticsearch");
 					next();
 				}
