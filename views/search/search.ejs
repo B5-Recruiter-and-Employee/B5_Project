@@ -2,13 +2,8 @@
   <div class="input-group mb-3 search-section row justify-content-center">
     <label for="job_title" class="search-label">Job Title</label>
     <!-- Job title -->
-    <% if(job_title == undefined ){ %>
-    <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
-      placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1" value="">
-    <% }else { %>
       <input id="job_title" name="job_title" type="text" class="form-control rounded search-field"
       placeholder="e.g. Senior Android Developer" aria-label="Username" aria-describedby="basic-addon1" value="<%=job_title %>">
-    <% } %>
 
     <!-- Number of results -->
     <div class="dropdown search-dropdown ml-4">
@@ -16,12 +11,10 @@
         <%  var options = [ "10", "20", "30", "10000" ];
             var result_labels = [ "10", "20", "30", "All" ];
           for ( var i = 0; i < options.length; i++ ){
-            if (size == undefined) { %>
-          <option value="<%=options[i] %>"><%=result_labels[i] %> results</option>
-          <% } else {
-            var selected = (size == options[i]) ? "selected" : "";%>
+            if (size !== undefined) { 
+              var selected = (size == options[i]) ? "selected" : ""; }%>
           <option value="<%=options[i] %>" <%=selected %>><%=result_labels[i] %> results</option>
-          <% }} %>
+          <% } %>
       </select>
     </div>
       
@@ -35,22 +28,14 @@
         <%  var types = ["Full-time", "Internship", "Working Student", "Flexible"];
             var ids = ["full-time", "internship", "working-student", "flexible"];
           for(let i = 0; i < types.length; i++){ 
-            if(job_type == undefined ){ %>
-            <div class="form-check">
-              <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=types[i] %>" >
-              <label class="form-check-label" for="<%=ids[i] %>">
-                <%=types[i] %>
-              </label>
-            </div>
-        <% } else {
-            var checked = (job_type.includes(types[i])) ? "checked" : "";%>
+            if(job_type !== undefined ){ 
+              var checked = (job_type.includes(types[i])) ? "checked" : ""; } %>
             <div class="form-check">
               <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=types[i] %>" <%=checked %> >
               <label class="form-check-label" for="<%=ids[i] %>">
                 <%=types[i] %>
               </label>
             </div>
-            <%}%>
           <%}%>
       </div>
     </div>
