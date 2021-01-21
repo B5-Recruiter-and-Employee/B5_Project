@@ -33,10 +33,7 @@ const mongoose = require("mongoose"),
         required: true
       }
     }],
-    max_score: {
-      type: Number,
-      required: true
-    },
+    max_score: Number,
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
