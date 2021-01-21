@@ -1,6 +1,4 @@
 const User = require("../models/user");
-const { roles } = require('../roles');
-const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 
 const nodemailer = require("nodemailer");
@@ -20,7 +18,7 @@ let transporter = nodemailer.createTransport({
 });
 
 let MailGenerator = new Mailgen({
-  theme: "salted",
+  theme: "default",
   product: {
     name: "ReMatch",
     link: MAIN_URL,
@@ -32,54 +30,57 @@ module.exports = {
     let user = res.locals.user;
     let jobId = req.params.id;
     let job_title;
-    let recipient;
+    var recipient;
 
     Job.findById(jobId).then(job => {
       job_title = job.job_title;
       if (job.user) {
         User.findById(job.user).then(recruiter => {
-          recipient = recruiter.fullName;
-        })
-      }
-    });
+          recipient = recruiter.name.firstname;
+          
+        }).catch((error) => console.error(error)).then(job => {
+          let senderName = user.fullName;
+          let recipientEmail = "rematch.htw@gmail.com";
 
-    let senderName = user.fullName;
-    let recipientEmail = "ly_yeah@rocketmail.com";
-
-    // TODO: put this into Job.findById()
-    // connect form with this
-    let email = {
-      body: {
-          name: recipient,
-          intro: `${senderName} is interested in your job offer ${job_title}!`,
-          action: {
-              instructions: 'To see their profile, click here:',
-              button: {
+          let email = {
+            body: {
+              greeting: 'Hello',
+              name: recipient,
+              intro: [`${senderName} is interested in your job offer ${job_title}!`,`<b>Their message:</b>`, `<i>${req.body.message}<i>`],
+              action: {
+                instructions: 'To see their profile, click here:',
+                button: {
                   color: '#9AB3F5',
                   text: `${senderName}'s Profile`,
                   link: `http://localhost:3000/candidates/${user.candidateProfile}`
-              }
-          },
-          signature: 'Sincerely,\nReMatch'
+                }
+              },
+              outro: `You can start contacting via ${user.email}`,
+              signature: 'Sincerely'
+            }
+          };
+          
+
+          let mail = MailGenerator.generate(email);
+
+          let message = {
+            from: EMAIL,
+            to: recipientEmail,
+            subject: "Someone is interested in your job offer!",
+            html: mail,
+          };
+
+          transporter
+            .sendMail(message)
+            .then(() => {
+              req.flash("success", "Email sent!");
+              res.redirect(`/jobs/${jobId}`);
+            })
+            .catch((error) => console.error(error));
+        });
       }
-  };
-
-    let mail = MailGenerator.generate(email);
-
-    let message = {
-      from: EMAIL,
-      to: recipientEmail,
-      subject: "Someone is interested in you!",
-      html: mail,
-    };
-
-    transporter
-      .sendMail(message)
-      .then(() => {
-        req.flash("success", "Email sent!");
-        res.redirect("/");
-      })
-      .catch((error) => console.error(error));
+    }).catch((error) => {
+      console.log(error.message);
+    })
   }
-
 }
