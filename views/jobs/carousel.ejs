@@ -15,7 +15,7 @@
           <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
         </svg> <%= location %></h6>
         <h6 class="card-subtitle mb-2 text-muted"><%= salary %></h6>
-        <p class="card-text">
+        <p class="card-text text-muted">
           <% let words = description.split(" ")%>
             <% if (words.length > 40){ %>
               <% let shortDesc = words.slice(0,40).join(" ") + "..."%>
@@ -24,8 +24,8 @@
             <%= description %> 
             <% } %>
          </p>
-
-        <a href="/jobs/<%= id %>" class="btn btn-outline-primary">View offer</a>
+        <a href="/jobs/<%= id %>" class="btn btn-outline-primary float-left">View offer</a>
+        <a href="/matches/jobs/<%= id %>" class="btn btn-outline-primary float-right">View matches</a>
         <br>
       </div>
       <div class="card-footer bg-transparent border-muted">

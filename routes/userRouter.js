@@ -1,10 +1,10 @@
 const candidatesController = require('../controllers/candidatesController');
 const userController = require('../controllers/userController');
 var router = require('express').Router();
-
+const passport = require('passport');
 //login and authentification
 router.get("/user/login", userController.login);
-router.post("/user/login", userController.authenticate);
+router.post("/user/login",  passport.authenticate('local'), userController.authPassport);
 router.get("/user/logout", userController.logout, userController.redirectView);
 router.get("/thanks", userController.showThank)
 

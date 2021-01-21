@@ -195,3 +195,18 @@ a {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/* -- CONTAINERS ON MATCHES PAGE -- */
+/* carousel element */
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    min-width: 350px;
+   }
+   
+.card {
+    min-width: 90% !important;
+}
+
+.card-container{
+  margin-left: 100px !important;
+  margin-right: 100px !important;
+}
