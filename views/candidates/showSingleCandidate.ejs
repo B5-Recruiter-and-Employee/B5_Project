@@ -3,8 +3,6 @@
 		<% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
 		<hr />
 		<h1 class="personal-info">Personal profile</h1>
-		<% } else { %>
-			<%- include('../partials/matches/nav.ejs') %>
 		<% } %>
 
 		<div class="row gutters-sm">
@@ -153,20 +151,6 @@
 						<div class="card h-100">
 							<div class="card-body">
 								<div class="d-flex align-items-center mb-3 h5">About me</div>
-
-								<p>
-									I have a clear, logical mind with a practical approach to
-									problem-solving and a drive to see things through to
-									completion. I have more than 2 years of experience in managing
-									and leading teams across multiple sectors. I am eager to
-									learn, I enjoy overcoming challenges, and I have a genuine
-									interest in Business Management and making organisations
-									successful.
-								</p>
-
-								<div class="d-flex align-items-center mb-3 h5">
-									Description
-								</div>
 								<% if (card.description && card.description !==undefined) { %>
 									<p>
 										<%= card.description %>

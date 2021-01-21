@@ -1,16 +1,9 @@
 <div class="container">
   <div class="main-body">
-
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/matches">Matches</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Job offer info</li>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
-
+    <% if (user.role === 'recruiter') { %>
+		<hr />
+		<h1 class="personal-info">Job offer</h1>
+	<% } %>
     <div class="row gutters-sm">
       <!-- Left column -->
       <div class="col-md-4 mb-3">
