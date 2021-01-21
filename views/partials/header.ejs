@@ -15,9 +15,11 @@
       <% if (loggedIn) { %>
 
       <ul class="navbar-nav ml-auto">
+        <% if(user.role==='candidate' && user.candidateProfile){ %>
         <li class="nav-item">
           <a class="nav-link" href="/search">Search </a>
         </li>
+        <% }%>
         <li class="nav-item">
           <a class="nav-link" href="<%=`/matches/${user._id}` %>">Matches</a>
         </li>

@@ -53,12 +53,15 @@ module.exports = {
     })
   },
 
-  authenticate: passport.authenticate("local", {
-    failureRedirect: "/user/login",
-    failureFlash: "Failed to login.",
-    successRedirect: "/",
-    successFlash: "Logged in!"
-  }),
+  authPassport: (req, res) => {
+    // `req.user` contains the authenticated user.
+    if(req.user) {
+        req.flash('success', 'You have been successfully logged in!');
+        res.redirect('/user/' + req.user._id);
+    } else {
+        req.flash("error", `Failed to login.`);
+    }
+  },
 
   logout: (req, res, next) => {
     req.logout();
