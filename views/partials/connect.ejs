@@ -19,12 +19,15 @@
 					if (user.role === 'candidate') {
 						defaultText = "Your offer is amazing! I want to get in touch with you to know more about it.";
 					} else if (user.role === 'recruiter') {
-						defaultText = "I may have the perfect job for you! Please contact me for more information."; %>
-					<label for="offers">Choose your job offer...</label>
-					<select class="form-control mb-3" id="offers">
-						<option></option>
-					</select>
-					<% } %>
+						defaultText = "I may have the perfect job for you! Please contact me for more information."; 
+						if (typeof jobs !== 'undefined') { %>
+							<select class="form-control mb-3" id="offers" name="job">
+								<option disabled>Choose your job offer...</option>
+							<% jobs.forEach(job => { %>
+								<option value="<%= job._id %>"><%= job.job_title %></option>
+						<% }); %>
+							</select>
+					<% }} %>
 					<textarea name="message" class="form-control"><%= defaultText %></textarea>
 				</div>
 				<div class="modal-footer justify-content-between">

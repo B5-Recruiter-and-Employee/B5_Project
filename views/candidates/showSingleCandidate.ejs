@@ -24,7 +24,7 @@
 									<%= card.current_location %>
 								</p>
 								<% if (!user.candidateProfile || !user.candidateProfile.equals(card._id)) { %> <%-
-								include('../partials/connect.ejs', {id: card._id }) %> <% } %>
+								include('../partials/connect.ejs', {id: card._id, jobs: jobs }) %> <% } %>
 							</div>
 						</div>
 					</div>

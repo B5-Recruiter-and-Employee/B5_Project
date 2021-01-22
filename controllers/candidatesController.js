@@ -1,6 +1,7 @@
 const Candidate = require("../models/candidate");
 const User = require("../models/user");
 const app = require("express")();
+const Job = require("../models/job_offer");
 
 module.exports = {
 	// index: (req, res, next) => {
@@ -77,15 +78,14 @@ module.exports = {
 	showSingleCandidate: async (req, res) => {
 		let cardId = req.params.cardId;
 		let user = req.app.locals.user;
-		let offers;
+		let jobs;
 		if (user.role === 'recruiter') {
-			offers = await Job.find({ _id: { $in: currentUser.jobOffers } });
-			let mappedOffers = offers.map(offer => {
-				if (JSON.stringify(offer.user) === JSON.stringify(currentUser._id)) {
+			let offers = await Job.find({ _id: { $in: user.jobOffers } });
+			jobs = offers.map(offer => {
+				if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
 					return offer;
 				}
 			});
-			res.locals.jobs = mappedOffers;
 		}
 
 		Candidate.findById(cardId)
@@ -95,7 +95,8 @@ module.exports = {
 						card: candidate,
 						cardOwner: { name: card.fullName, email: card.email },
 						// current logged in user
-						user: res.locals.user,
+						user: user,
+						jobs: jobs
 					});
 				});
 			})
