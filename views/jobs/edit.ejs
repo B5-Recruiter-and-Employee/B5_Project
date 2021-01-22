@@ -1,40 +1,195 @@
-<div class="container-fluid h-100">
-  <div class="row justify-content-center align-items-center"></div>
-  <div class="main-body">
-    <hr>
-    <h1 class="font-weight-light">Edit this job offer:</h1>    
- 
-  <div class="row justify-content-center h-100">
-    <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
-      <form method="POST" action="/jobs/<%=job._id%>/update">
-        <div class="form-group">
-          <label class="font-weight-light text-left" for="job_title" >Job title</label>
-          <input type="text" value="<%= job.job_title %>" name="job_title" class="form-control is-disabled" placeholder= "..."/>
+<div class="container pb-5">
+  <hr>
+  <h1 class="personal-info">Edit "<%= job.job_title %>"</h1>
+  
+  <form method="POST" action="/jobs/<%=job._id%>/update">
+    <div class="row justify-content-center">
+      <!-- Navigation -->
+      <div class="col-auto text-right">
+        <div class="nav flex-column nav-pills" id="nav-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="nav-details-tab" data-toggle="tab" href="#nav-details" role="tab" aria-controls="nav-details" aria-selected="true">Job details</a>
+          <a class="nav-link" id="nav-description-tab" data-toggle="tab" href="#nav-description" role="tab" aria-controls="nav-description" aria-selected="false">Job description</a>
+          <a class="nav-link" id="nav-workculture-tab" data-toggle="tab" href="#nav-workculture" role="tab" aria-controls="nav-workculture" aria-selected="false">Work culture & benefits</a>
+          <a class="nav-link" id="nav-techstack-tab" data-toggle="tab" href="#nav-techstack" role="tab" aria-controls="nav-techstack" aria-selected="false">Expected tech stack</a>
+          <a class="nav-link" id="nav-softskills-tab" data-toggle="tab" href="#nav-softskills" role="tab" aria-controls="nav-softskills" aria-selected="false">Expected soft skills</a>
         </div>
-        <div class="form-group">
-          <label class="font-weight-light" for="location">Location</label>
-          <input type="text" name="location" value="<%= job.location %>" class="form-control is-disabled" placeholder= "..." />
-        </div>
-        <div class="form-group">
-          <label class="font-weight-light" for="company">Company</label>
-          <input type="text" name="company_name" value="<%= job.company_name %>" class="form-control is-disabled" placeholder= "..." />
-        </div>
-        <div class="form-group">
-          <label class="font-weight-light" for="salary">Salary</label>
-          <input type="text" name="salary" value="<%= job.salary %>" class="form-control is-disabled" placeholder= "..."/>
+      </div>
+
+      <!-- Edit fields -->
+      <div class="col px-lg-5">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-details">
+            <!-- Job title -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="job_title">Job title</label>
+              <div class="col-sm-9">
+                <input type="text" value="<%= job.job_title %>" name="job_title" class="form-control" />
+              </div>
+            </div>
+            <!-- Company name -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="company">Company</label>
+              <div class="col-sm-9">
+                <input type="text" name="company_name" value="<%= job.company_name %>" class="form-control" />
+              </div>
+            </div>
+            <!-- Location -->
+            <% let city = "", remote = "";
+            job.location.forEach(l => {
+              if (l === 'remote') { remote = l; }
+              else { city = l; }
+            }); %>
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="location">Location</label>
+              <div class="col-sm-9">
+                <input type="text" name="location" value="<%= city %>" class="form-control" />
+                <div class="ml-4 text-left">
+                  <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote" <% if (remote.length > 0) { %>checked<% } %>>
+                  <label for="remote" class="form-check-label">This job offers remote work.</label>
+                </div>
+              </div>
+            </div>
+            <!-- Job type -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="job_type">Contract type</label>
+              <div class="col-sm-9 mb-2">
+                <select class="form-control" name="job_type">
+                <% let selected=(option)=> { if (option === job.job_type) return true } %>
+                  <option value="Permanent" <% if (selected("Permanent")) { %>selected<% } %>>Permanent employment
+                      (full-time)</option>
+                  <option value="Internship" <% if (selected("Internship")) { %>selected<% } %>>Internship</option>
+                  <option value="Working-Student" <% if (selected("Working-Student")) { %>selected<% } %>>Working student
+                  </option>
+                  <option value="Flexible" <% if (selected("Flexible")) { %>selected<% } %>>Flexible</option>
+                </select>
+              </div>
+            </div>
+            <!-- Salary -->
+            <div class="form-group row">
+              <label class="font-weight-light h5 col-sm-3 col-form-label" for="salary">Salary</label>
+              <div class="col-sm-9">
+                <input type="text" name="salary" value="<%= job.salary %>" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-description">
+            <!-- Description -->
+            <div class="form-group">
+              <textarea name="description" class="form-control" id="description" rows="8"><%= job.description %></textarea>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-workculture">
+            <!-- Work culture -->
+            <div class="form-group">
+              <div class="tag-container">
+                <select multiple id="techstack3" type="text" name="work_culture_keywords" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% job.work_culture_keywords.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-techstack">
+            <!-- Tech stack -->
+            <% let techstack1 = job.hard_skills.map(skill=> { if (skill.importance === 1) return skill.name });
+              let techstack2 = job.hard_skills.map(skill => { if (skill.importance === 2) return skill.name });
+              let techstack3 = job.hard_skills.map(skill => { if (skill.importance === 3) return skill.name }); %>
+            <div class="form-group">
+              <label for="techstack3" class="font-weight-light h5">Proficient knowledge:</label>
+              <div class="tag-container">
+                <select multiple id="techstack3" type="text" name="techstack3" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack3.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="techstack2" class="font-weight-light h5 mt-4">Intermediate:</label>
+              <div class="tag-container">
+                <select multiple id="techstack2" type="text" name="techstack2" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack2.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="techstack1" class="font-weight-light h5 mt-4">Beginner (not mandatory but good to know):</label>
+              <div class="tag-container">
+                <select multiple id="techstack1" type="text" name="techstack1" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% techstack1.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-softskills">
+            <!-- Soft skills -->
+            <% let softskill1 = job.soft_skills.map(skill=> { if (skill.importance === 1) return skill.name });
+              let softskill2 = job.soft_skills.map(skill => { if (skill.importance === 2) return skill.name });
+              let softskill3 = job.soft_skills.map(skill => { if (skill.importance === 3) return skill.name }); %>
+            <div class="form-group">
+              <label for="softskill3" class="font-weight-light h5">Most important:</label>
+              <div class="tag-container">
+                <select multiple id="softskill3" type="text" name="softskill3" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% softskill3.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="softskill2" class="font-weight-light h5 mt-4">Quite important:</label>
+              <div class="tag-container">
+                <select multiple id="softskill2" type="text" name="softskill2" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% softskill2.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+              <label for="softskill1" class="font-weight-light h5 mt-4">Somewhat important:</label>
+              <div class="tag-container">
+                <select multiple id="softskill1" type="text" name="softskill1" placeholder="add more..."
+                  data-role="tagsinput">
+                  <% softskill1.forEach(skill=> { %>
+                    <option value="<%= skill %>">
+                      <%= skill %>
+                    </option>"
+                    <% }); %>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label class="font-weight-light" for="description">Description</label>
-          <textarea name="description" class="form-control is-disabled" id="description" rows="3"><%= job.description %></textarea>
-        </div>
-        <div class="row">
-        <div class="col"><button type="submit" class=" btn btn-outline-success btn-sm mr-1">Save  </button></div>
-        <div class="col"><button type="reset" class=" btn btn-outline-secondary btn-sm ">Reset</button></div>
-      </form>
-            <div class="col"><button class=" btn btn-outline-danger btn-sm" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete</button></div>
-          </div>
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between pt-4">
+          <button class="btn btn-outline-danger" onclick="location.href='/jobs/<%= job.id %>/delete'">Delete this offer</button>
+          <!-- <button type="reset" class="btn btn-outline-secondary">Reset</button> -->
+          <button type="button" class="btn btn-outline-secondary" onclick="window.history.back();">« Back to your jobs</button>
+          <button type="submit" class="btn btn-success px-5">Save</button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
+  
+</div>

@@ -222,6 +222,12 @@ npm i mongoosastic
 bin/elasticsearch
 bin/kibana
 ```
+Windows OS:
+Go to the downloaded forlders e.g. kibana-7.9.3-windows-x86_64 for kibana and run the kibana command:
+```
+bin\elasticsearch.bat
+bin\kibana.bat
+```
 2. Open MongoDB compass and connect with the current database ```mongodb://localhost:27017/rem_matching_test``` and open the jobs collection (optional but handy). 
 
 3. You can now save, delete and edit jobs in the app while they are saved both in MongoDB and Elasticsearch. Elasticsearch runs on ```localhost:9200```. Use this query to see the jobs in Elasticsearch: ```http://localhost:9200/jobs/_search```
@@ -232,6 +238,12 @@ node clear_db.js
 node seed.js
 ```
 5. Add a couple new jobs. Now you can go to Kibana (runs at ```http://localhost:5601```) and create a new index pattern for our jobs collection.
+
+6. In case you had seeded the data to MongoDB and ES before but need to update the dummy data for database, the collections should be dropped in MongoDB either with commands or in MongoDB Compass by clicking on the collection name and selecting "Drop Collection" from the drop-down menu. Do not forget to delete the data from Elastic Search as well by runnung in the Console - Development tools - Kibana the delete command:
+
+```DELETE job_offers```
+
+Without deleting the previously seeded data in ES, user can have dublicates of data or errors.
 
 ### Additional tip: 
 if you get an unique key error while trying to insert new candidates:
@@ -250,3 +262,25 @@ and query this:
 ```GET jobs/_search```
 
 The jobs are saved in MongoDB first and after that into Elasticsearch. If you use queries to edit the data in Kibana, the changes won’t be saved into MongoDB. 
+
+
+### Heroku & its installation for the project
+
+1. Install heroku
+``` npm install -g heroku ```
+- For Windows OS users run the command in the powershell (recommended as admin) 
+``` Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted ```
+- Check the heroku version by typing heroku version. If this does not work, then set the path to heroku in the project folder:
+``` C:\Users\your_folder> SET PATH = C:\Program Files\heroku\bin ```
+
+2. Create Procfile at the app's root.
+3. Add to the created file the line 
+```
+web: node main.js
+
+```
+4. Before running the create command, heroku may ask for login. Login to heroku as it demands in console.
+5. After login is successfully done, run ``` heroku create ```. The URL is generated.
+6. To publish the code from our git repository to heroku, run the command: ``` git push heroku master ```.
+
+If our application depends on the database, then the DB for production should be set up. 

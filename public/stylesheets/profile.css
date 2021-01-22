@@ -27,30 +27,21 @@
     margin-top: 40px;
 }
 
-.edit-form {
-    margin-left: 20px;
-}
-
 #edit-container {
     text-align: left !important;
     justify-content: center !important;
 }
 
 .personal-info {
-    margin-bottom: 30px;
-    text-align: center;
-    background-color:  #9AB3F5 !important;
-    padding: 10px 0px;
-    border-radius: 20px;
-    color: #f8f9fa !important;
+    margin-bottom: 2.5rem;
+    color: #7579E7 !important;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 2rem;
 }
 
 .tag {
     background-color: #9ab3f5 !important;
     padding: 7px !important;
-}
-
-.color-cancel {
-    background-color: #f8f9fa !important;
-    color: #9AB3F5 !important;
 }
