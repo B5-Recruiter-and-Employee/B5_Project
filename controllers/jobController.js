@@ -26,7 +26,10 @@ module.exports = {
 		Job.findById(jobId)
 			.then((card) => {
 				User.find({ _id: card.user }).then((user) => {
-					let recruiterEmail = user[0].email;
+					let recruiterEmail;
+					if (user[0]) {
+						recruiterEmail = user[0].email;
+					}
 					res.render("jobs/showSingleJob", {
 						card: card,
 						email: recruiterEmail,
