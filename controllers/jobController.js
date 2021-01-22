@@ -12,11 +12,7 @@ module.exports = {
       let currentUser = res.locals.user;
       Job.find({_id: {$in: currentUser.jobOffers}}).then(offers => {
         // just an extra check if userID in the job offer matches the current user's ID
-        let mappedOffers = offers.map(offer => {
-            if (JSON.stringify(offer.user) === JSON.stringify(currentUser._id)) {
-              return offer;
-            }
-        });
+        let mappedOffers = offers.filter(offer => { return JSON.stringify(offer.user) === JSON.stringify(currentUser._id) });
         res.locals.jobs = mappedOffers;
         next();
       });

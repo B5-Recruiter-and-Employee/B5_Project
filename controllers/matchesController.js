@@ -142,26 +142,34 @@ module.exports = {
       }
     }
 
-    let should = [{
-      "match": {
-        [field]: {
-          "query": importance3,
-          "boost": 3
+    let should = [];
+    if (importance3.length > 0) {
+      should.push({
+        "match": {
+          [field]: {
+            "query": importance3,
+            "boost": 3
+          }
         }
-      }
-    }, {
-      "match": {
-        [field]: {
-          "query": importance2,
-          "boost": 2
+      });
+    }
+    if (importance2.length > 0) {
+      should.push({
+        "match": {
+          [field]: {
+            "query": importance2,
+            "boost": 2
+          }
         }
-      }
-    },
-    {
-      "match": {
-        [field]: importance1
-      }
-    }]
+      });
+    }
+    if (importance1.length > 0) {
+      should.push({
+        "match": {
+          [field]: importance1
+        }
+      });
+    }
 
     return should;
   },
