@@ -212,65 +212,31 @@ module.exports = {
     }
   },
 
-  /**
-   * Add a new job offer during signup or when recruiter is logged in.
-   * 
-   */
-  addJobOffers: (req, res, next) => {
-    let jobParams = module.exports.getJobParams(req, res);
-    // if recruiter is logged in (= on route with userId)
-    let userId = req.params.id;
-    if (userId) {
-      jobParams.user = userId;
+  getMaxScore: async (role, match) => {
+    // get fake candidate/job + ES query for the "perfect match"
+    let matchUtils, index;
+    if (role === 'recruiter') {
+      matchUtils = module.exports.getJobPerfectMatchUtils(match);
+      index = "candidates";
+    } else if (role === 'candidate') {
+      matchUtils = module.exports.getCandidatePerfectMatchUtils(match);
+      index = "job_offers";
     }
+    await client.index(matchUtils.fake);
 
-    // create new job
-    let newJob = new Job(jobParams);
-    newJob.save()
-      .then(job => {
-        // get fake candidate + ES query for the "perfect match"
-        let perfectMatch = module.exports.getJobPerfectMatchUtils(job);
-        client.index(perfectMatch.fake, (err, resp) => {
-          if (err) { console.log(err); }
-          // refresh the index, otherwise we cannot search for the fake candidate
-          client.indices.refresh({ index: "candidates" })
-            .then(r => {
-              client.search(perfectMatch.query, (err, result) => {
-                if (err) { console.log(err); }
-                console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits), "\n");
-                console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
-                // update job with the max_score
-                Job.findOneAndUpdate({ _id: job._id }, 
-                  { $set: { max_score: result.hits.max_score } })
-                  .then(updatedJob => {
-                    // delete fake candidate again
-                    client.delete({ index: "candidates", id: result.hits.hits[0]._id }, (err, resp) => {
-                      if (err) { console.log(err); return err; }
-                      // if logged in, add jobId to user
-                      if (userId) {
-                        User.findOneAndUpdate({ _id: userId },
-                          { $addToSet: { jobOffers: updatedJob } },
-                          { new: true })
-                          .then(user => {
-                            req.flash('success', `The job offer has been created successfully!`);
-                            res.locals.redirect = `/user/${user._id}/offers`;
-                            next();
-                          })
-                          .catch(error => {
-                            console.log(`ADD JOB: Error updating user. ${error.message}`);
-                            next(error);
-                          });
-                      } else {
-                        // else: not logged in, redirect to user signup page to create user
-                        res.locals.redirect = `/signup/recruiter/${job._id}`;
-                        next();
-                      }
-                    });
-                  });
-              });
-            });
-        });
-      });
+    // refresh the index, otherwise we cannot search for the fake match
+    await client.indices.refresh({ index: index });
+
+    // now query for the perfect match and get max_score
+    let result = await client.search(matchUtils.query);
+    console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits[0]._source), "\n");
+    console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
+    let max_score = result.hits.max_score;
+
+    // delete fake match again
+    await client.delete({ index: index, id: result.hits.hits[0]._id });
+
+    return max_score;
   },
 
   getJobPerfectMatchUtils: (job) => {
@@ -294,6 +260,47 @@ module.exports = {
     query.body.size = 1;
 
     return { query: query, fake: fakeCandidate };
+  },
+
+  /**
+   * Add a new job offer during signup or when recruiter is logged in.
+   * 
+   */
+  addJobOffers: async (req, res, next) => {
+    let jobParams = module.exports.getJobParams(req, res);
+
+    // if recruiter is logged in, add their ID to jobParams
+    let currentUser = req.user;
+    if (currentUser) {
+      jobParams.user = currentUser._id;
+    }
+
+    try {
+      // get max_score
+      jobParams.max_score = await module.exports.getMaxScore('recruiter', jobParams);
+
+      // create new job
+      let newJob = new Job(jobParams);
+      let job = await newJob.save();
+
+      // if logged in, add jobId to user
+      if (currentUser) {
+        let user = await User.findOneAndUpdate({ _id: currentUser._id },
+          { $addToSet: { jobOffers: job } },
+          { new: true });
+        req.flash('success', `The job offer has been created successfully!`);
+        res.locals.redirect = `/user/${user._id}/offers`;
+        next();
+      } else {
+        // else: not logged in, redirect to user signup page to create user
+        res.locals.redirect = `/signup/recruiter/${job._id}`;
+        next();
+      }
+    } catch (error) {
+      console.log("Error while saving new job offer:\n", error);
+      res.locals.redirect = "/"; // REPLACE WITH INTERNAL ERROR PAGE
+      next();
+    }
   },
 
   signUpRecruiter: (req, res, next) => {
@@ -381,42 +388,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Add new candidate information when user first sign up
-   */
-  addCandidate: (req, res, next) => {
-    let candidateParams = module.exports.getCandidateParams(req, res);
-    let candidate = new Candidate(candidateParams)
-    candidate.save().
-      then((candidate) => {
-        // get fake job + ES query for the "perfect match"
-        let perfectMatch = module.exports.getCandidatePerfectMatchUtils(candidate);
-        client.index(perfectMatch.fake, (err, resp) => {
-          if (err) { console.log(err); }
-          // refresh the index, otherwise we cannot search for the fake candidate
-          client.indices.refresh({ index: "job_offers" })
-            .then(r => {
-              client.search(perfectMatch.query, (err, result) => {
-                if (err) { console.log(err); }
-                console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits), "\n");
-                console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
-                // update candidate with the max_score
-                Candidate.findOneAndUpdate({ _id: candidate._id }, { $set: { max_score: result.hits.max_score } })
-                  .then(updatedCandidate => {
-                    // delete fake job again
-                    client.delete({ index: "job_offers", id: result.hits.hits[0]._id }, (err, resp) => {
-                      if (err) { console.log(err); return err; }
-                      // redirect to signup page to create user
-                      res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
-                      next();
-                    });
-                  });
-              });
-            });
-        });
-      });
-  },
-
   getCandidatePerfectMatchUtils: (candidate) => {
     // create fake perfect match
     let fakeJob = {
@@ -438,6 +409,28 @@ module.exports = {
     query.body.size = 1;
 
     return { query: query, fake: fakeJob };
+  },
+
+  /**
+   * Add new candidate information when user first sign up
+   */
+  addCandidate: async (req, res, next) => {
+    let candidateParams = module.exports.getCandidateParams(req, res);
+
+    try {
+      // get max_score
+      candidateParams.max_score = await module.exports.getMaxScore('candidate', candidateParams);
+      // save candidate
+      let newCandidate = new Candidate(candidateParams)
+      let candidate = await newCandidate.save();
+      // redirect to signup page to create user
+      res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
+      next();
+    } catch (error) {
+      console.log("Error while trying to save candidate\n", error);
+      res.locals.redirect = `/signup/candidate`; // REPLACE WITH INTERNAL ERROR PAGE
+      next();
+    }
   },
 
   signUpCandidate: (req, res, next) => {
