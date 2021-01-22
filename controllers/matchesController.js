@@ -53,7 +53,7 @@ module.exports = {
     Job.findById(jobId).then(job => {
       // sort the keywords by importance
       let sortedHardSkills = module.exports.getSortedKeywords("hard_skills.name", job.hard_skills);
-      let sortedSoftSkills = module.exports.getSortedKeywords("soft_skills.name", job.soft_skills);
+      let sortedSoftSkills = module.exports.getSortedKeywords("soft_skills", job.soft_skills);
 
       // define elasticsearch query
       let searchedJobTitle = { "preferred_position": job.job_title }
