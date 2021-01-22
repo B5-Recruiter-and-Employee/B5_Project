@@ -225,8 +225,8 @@ module.exports = {
     }
 
     // create new job
-    let job = new Job(jobParams);
-    job.save()
+    let newJob = new Job(jobParams);
+    newJob.save()
       .then(job => {
         // get fake candidate + ES query for the "perfect match"
         let perfectMatch = module.exports.getJobPerfectMatchUtils(job);
@@ -240,9 +240,9 @@ module.exports = {
                 console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits), "\n");
                 console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
                 // update job with the max_score
-                Job.findOneAndUpdate({ _id: job._id }, { $set: { max_score: result.hits.max_score } })
+                Job.findOneAndUpdate({ _id: job._id }, 
+                  { $set: { max_score: result.hits.max_score } })
                   .then(updatedJob => {
-                    console.log("+++++ UPDATED JOB WITH\n", updatedJob.max_score, "\n");
                     // delete fake candidate again
                     client.delete({ index: "candidates", id: result.hits.hits[0]._id }, (err, resp) => {
                       if (err) { console.log(err); return err; }
@@ -320,7 +320,7 @@ module.exports = {
         res.locals.user = user;
 
         // assign userId to the created job
-        Job.findOneAndUpdate({ _id: job._id },
+        Job.findOneAndUpdate({ _id: jobId },
           { $set: { user: user._id } },
           { new: true })
           .then(job => {
@@ -398,10 +398,12 @@ module.exports = {
             .then(r => {
               client.search(perfectMatch.query, (err, result) => {
                 if (err) { console.log(err); }
-                // update job with the max_score
+                console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits), "\n");
+                console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
+                // update candidate with the max_score
                 Candidate.findOneAndUpdate({ _id: candidate._id }, { $set: { max_score: result.hits.max_score } })
                   .then(updatedCandidate => {
-                    // delete fake candidate again
+                    // delete fake job again
                     client.delete({ index: "job_offers", id: result.hits.hits[0]._id }, (err, resp) => {
                       if (err) { console.log(err); return err; }
                       // redirect to signup page to create user
