@@ -6,7 +6,7 @@ const userController = require("./userController");
 module.exports = {
 
 	renderSingleCandidate: async (req, res) => {
-		let cardId = req.params.cardId;
+		let candidateId = req.params.candidateId;
 		let user = req.app.locals.user;
 		let jobs;
 		if (user.role === 'recruiter') {
@@ -18,7 +18,7 @@ module.exports = {
 			});
 		}
 
-		Candidate.findById(cardId)
+		Candidate.findById(candidateId)
 			.then((candidate) => {
 				User.find({ candidateProfile: candidate._id }).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
