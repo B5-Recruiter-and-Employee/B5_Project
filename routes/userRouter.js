@@ -10,7 +10,6 @@ router.get("/thanks", userController.renderThanks)
 //sign up links candidate
 router.get("/signup/candidate", userController.renderNewCandidate);
 router.post("/signup/candidate", userController.addCandidate, userController.redirectView);
-router.get("/score/:candidateId", userController.addCandidateMaxScore, userController.redirectView);
 router.get("/signup/candidate/:candidateId", userController.renderCandidateSignUp);
 router.post("/signup/candidate/:candidateId", userController.signUpCandidate, userController.redirectView);
 
@@ -29,6 +28,5 @@ router.post("/user/:id/update", userController.update, userController.redirectVi
 //for recruiter user.
 router.get("/user/:id/add-job", userController.renderNewJobOffer);
 router.post("/user/:id/add-job", userController.addJobOffers, userController.redirectView);
-router.get("/score/:jobId", userController.addJobMaxScore, userController.redirectView);
 
 module.exports = router;

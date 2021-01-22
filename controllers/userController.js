@@ -227,76 +227,73 @@ module.exports = {
     // create new job
     let job = new Job(jobParams);
     job.save()
-      .then((job) => {
-        // if logged in, add jobId to user
-        if (userId) {
-          User.findOneAndUpdate({ _id: userId }, {
-            $addToSet: { jobOffers: job }
-          },
-            { new: true }
-          )
-            .then(user => {
-              res.locals.redirect = `/score/${job._id}`;
-              next();
-            })
-            .catch(error => {
-              console.log(`ADD JOB: Error updating user. ${error.message}`);
-              next(error);
+      .then(job => {
+        // get fake candidate + ES query for the "perfect match"
+        let perfectMatch = module.exports.getJobPerfectMatchUtils(job);
+        client.index(perfectMatch.fake, (err, resp) => {
+          if (err) { console.log(err); }
+          // refresh the index, otherwise we cannot search for the fake candidate
+          client.indices.refresh({ index: "candidates" })
+            .then(r => {
+              client.search(perfectMatch.query, (err, result) => {
+                if (err) { console.log(err); }
+                console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits), "\n");
+                console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
+                // update job with the max_score
+                Job.findOneAndUpdate({ _id: job._id }, { $set: { max_score: result.hits.max_score } })
+                  .then(updatedJob => {
+                    console.log("+++++ UPDATED JOB WITH\n", updatedJob.max_score, "\n");
+                    // delete fake candidate again
+                    client.delete({ index: "candidates", id: result.hits.hits[0]._id }, (err, resp) => {
+                      if (err) { console.log(err); return err; }
+                      // if logged in, add jobId to user
+                      if (userId) {
+                        User.findOneAndUpdate({ _id: userId },
+                          { $addToSet: { jobOffers: updatedJob } },
+                          { new: true })
+                          .then(user => {
+                            req.flash('success', `The job offer has been created successfully!`);
+                            res.locals.redirect = `/user/${user._id}/offers`;
+                            next();
+                          })
+                          .catch(error => {
+                            console.log(`ADD JOB: Error updating user. ${error.message}`);
+                            next(error);
+                          });
+                      } else {
+                        // else: not logged in, redirect to user signup page to create user
+                        res.locals.redirect = `/signup/recruiter/${job._id}`;
+                        next();
+                      }
+                    });
+                  });
+              });
             });
-        } else {
-          // else: not logged in, redirect to user signup page
-          res.locals.addedJob = job;
-          res.locals.redirect = `/signup/recruiter/${job._id}`;
-          next();
-        }
+        });
       });
   },
 
-  getJobQuery: (job) => {
-    // prepare values to create an ES query
-    let techstack = job.hard_skills.map(t => {
-      if (t.importance !== 3) {
-        t.importance = 3;
+  getJobPerfectMatchUtils: (job) => {
+    // create fake perfect match
+    let fakeCandidate = {
+      index: "candidates",
+      body: {
+        preferred_position: job.job_title,
+        hard_skills: job.hard_skills,
+        soft_skills: job.soft_skills.map(j => { return j.name })
       }
-      return t;
-    });
-    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", techstack);
-    let work_culture_keywords = [{
-      "match": {
-        "work_culture_keywords": {
-          "query": job.work_culture_keywords.join(" "),
-          "boost": 3
-        }
-      }
-    }];
-    let job_title = { "job_title": job.job_title };
+    }
 
-    // create ES query
-    let query = matchesController.getQuery("job_offers", job_title, [hard_skills, work_culture_keywords]);
+    // prepare values for es query
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", job.hard_skills);
+    let soft_skills = matchesController.getSortedKeywords("soft_skills", job.soft_skills);
+    let job_title = { "preferred_position": job.job_title };
+
+    // create query - we only need 1 result
+    let query = matchesController.getQuery("candidates", job_title, [hard_skills, soft_skills]);
     query.body.size = 1;
-    return query;
-  },
 
-  addJobMaxScore: (req, res, next) => {
-    let jobId = req.params.jobId;
-    Job.findById(jobId).then(job => {
-      let query = module.exports.getJobQuery(job);
-      console.log(JSON.stringify(query));
-      client.search(query, (err, result) => {
-        console.log("##### ADD QUERY", JSON.stringify(query));
-        if (err) { console.log(err) }
-        console.log("##### ADD MAXSCORE", result.hits.max_score);
-        console.log("##### RESULT", result.hits.hits[0]);
-        Job.findOneAndUpdate({ _id: job._id },
-          { $set: { max_score: result.hits.max_score } },
-          { new: true })
-          .then(job => {
-            req.flash('success', `The job offer has been created successfully!`);
-            res.locals.redirect = `/user/${job.user}/offers`;
-            next();
-          });
-      });
-    });
+    return { query: query, fake: fakeCandidate };
   },
 
   signUpRecruiter: (req, res, next) => {
@@ -322,22 +319,12 @@ module.exports = {
         res.locals.redirect = `/thanks`;
         res.locals.user = user;
 
-        // assign userId and max score to the created job
-        Job.findById(jobId)
+        // assign userId to the created job
+        Job.findOneAndUpdate({ _id: job._id },
+          { $set: { user: user._id } },
+          { new: true })
           .then(job => {
-            let query = module.exports.getJobQuery(job);
-            console.log("##### ADD QUERY", JSON.stringify(query));
-            client.search(query, (err, result) => {
-              if (err) { console.log(err) }
-              console.log("##### ADD MAXSCORE", result.hits.max_score);
-              console.log("##### RESULT", result.hits.hits[0]);
-              Job.findOneAndUpdate({ _id: job._id },
-                { $set: { user: user._id, max_score: result.hits.max_score } },
-                { new: true })
-                .then(job => {
-                  next();
-                });
-            });
+            next();
           })
           .catch(error => {
             console.log(`Error updating job with user ID: ${error.message}`);
@@ -348,7 +335,7 @@ module.exports = {
         res.locals.redirect = "/signup/recruiter";
         req.flash(
           "error",
-          `Failed to create user account because: ${error.message}.`
+          `Failed to create user account. Please try again.`
         );
         next();
       }
@@ -402,59 +389,53 @@ module.exports = {
     let candidate = new Candidate(candidateParams)
     candidate.save().
       then((candidate) => {
-        res.locals.redirect = `/score/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
-        next();
-      })
+        // get fake job + ES query for the "perfect match"
+        let perfectMatch = module.exports.getCandidatePerfectMatchUtils(candidate);
+        client.index(perfectMatch.fake, (err, resp) => {
+          if (err) { console.log(err); }
+          // refresh the index, otherwise we cannot search for the fake candidate
+          client.indices.refresh({ index: "job_offers" })
+            .then(r => {
+              client.search(perfectMatch.query, (err, result) => {
+                if (err) { console.log(err); }
+                // update job with the max_score
+                Candidate.findOneAndUpdate({ _id: candidate._id }, { $set: { max_score: result.hits.max_score } })
+                  .then(updatedCandidate => {
+                    // delete fake candidate again
+                    client.delete({ index: "job_offers", id: result.hits.hits[0]._id }, (err, resp) => {
+                      if (err) { console.log(err); return err; }
+                      // redirect to signup page to create user
+                      res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
+                      next();
+                    });
+                  });
+              });
+            });
+        });
+      });
   },
 
-  getCandidateQuery: (candidate) => {
+  getCandidatePerfectMatchUtils: (candidate) => {
+    // create fake perfect match
+    let fakeJob = {
+      index: "job_offers",
+      body: {
+        job_title: candidate.preferred_position,
+        hard_skills: candidate.hard_skills,
+        work_culture_keywords: candidate.work_culture_preferences.map(j => { return j.name })
+      }
+    }
+
     // prepare values to create an ES query
-    let techstack = candidate.hard_skills.map(t => {
-      if (t.importance !== 3) {
-        t.importance = 3;
-      }
-      return t;
-    });
-    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", techstack);
-    let soft_skills = [{
-      "match": {
-        "soft_skills": {
-          "query": candidate.soft_skills.join(" "),
-          "boost": 3
-        }
-      }
-    }];
-    let job_title = { "preferred_position": candidate.preferred_position };
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", candidate.hard_skills);
+    let work_culture = matchesController.getSortedKeywords("work_culture_keywords", candidate.work_culture_preferences)
+    let job_title = { "job_title": candidate.preferred_position };
 
     // create ES query
-    let query = matchesController.getQuery("candidates", job_title, [hard_skills, soft_skills]);
+    let query = matchesController.getQuery("job_offers", job_title, [hard_skills, work_culture]);
     query.body.size = 1;
-    return query;
-  },
 
-  addCandidateMaxScore: (req, res, next) => {
-    let id = req.params.candidateId;
-    let firstname = req.query.firstname;
-    let lastname = req.query.lastname;
-
-    Candidate.findById(id).then(candidate => {
-      let query = module.exports.getCandidateQuery(candidate);
-      console.log("##### ADD QUERY", JSON.stringify(query));
-
-      client.search(query, (err, result) => {
-        if (err) { console.log(err) }
-        console.log("##### ADD MAXSCORE", result.hits.max_score);
-        console.log("##### RESULT", result.hits.hits[0]);
-        // update candidate to set max_score
-        Candidate.findOneAndUpdate({ _id: candidate._id },
-          { $set: { max_score: result.hits.max_score } },
-          { new: true })
-          .then(candidate => {
-            res.locals.redirect = `/signup/candidate/${candidateId}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
-            next();
-          });
-      });
-    });
+    return { query: query, fake: fakeJob };
   },
 
   signUpCandidate: (req, res, next) => {
