@@ -74,9 +74,19 @@ module.exports = {
 	//   res.render('candidates/show');
 	// },
 
-	showSingleCandidate: (req, res) => {
+	showSingleCandidate: async (req, res) => {
 		let cardId = req.params.cardId;
-		// let userId = req.app.locals.user._id;
+		let user = req.app.locals.user;
+		let offers;
+		if (user.role === 'recruiter') {
+			offers = await Job.find({ _id: { $in: currentUser.jobOffers } });
+			let mappedOffers = offers.map(offer => {
+				if (JSON.stringify(offer.user) === JSON.stringify(currentUser._id)) {
+					return offer;
+				}
+			});
+			res.locals.jobs = mappedOffers;
+		}
 
 		Candidate.findById(cardId)
 			.then((candidate) => {

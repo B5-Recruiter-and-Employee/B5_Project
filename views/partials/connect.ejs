@@ -20,9 +20,10 @@
 						defaultText = "Your offer is amazing! I want to get in touch with you to know more about it.";
 					} else if (user.role === 'recruiter') {
 						defaultText = "I may have the perfect job for you! Please contact me for more information."; %>
-					<!-- select class="form-control mb-3">
-						<option selected disabled>Choose your job offer...</option>
-					</select -->
+					<label for="offers">Choose your job offer...</label>
+					<select class="form-control mb-3" id="offers">
+						<option></option>
+					</select>
 					<% } %>
 					<textarea name="message" class="form-control"><%= defaultText %></textarea>
 				</div>
