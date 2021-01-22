@@ -3,6 +3,9 @@ const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
+const { Client } = require('elasticsearch');
+const client = new Client({ node: 'http://localhost:9200' });
+const matchesController = require("./matchesController");
 
 module.exports = {
   renderLogin: (req, res) => {
@@ -15,9 +18,9 @@ module.exports = {
     else next();
   },
 
-/**
- * Renders the profile page of a logged in user (recruiter or candidate). 
- */
+  /**
+   * Renders the profile page of a logged in user (recruiter or candidate). 
+   */
   renderView: (req, res) => {
     let userId = req.params.id;
     User.findById(userId).then(user => {
@@ -36,11 +39,11 @@ module.exports = {
 
   authPassport: (req, res) => {
     // `req.user` contains the authenticated user.
-    if(req.user) {
-        req.flash('success', 'You have been successfully logged in!');
-        res.redirect('/user/' + req.user._id);
+    if (req.user) {
+      req.flash('success', 'You have been successfully logged in!');
+      res.redirect('/user/' + req.user._id);
     } else {
-        req.flash("error", `Failed to login.`);
+      req.flash("error", `Failed to login.`);
     }
   },
 
@@ -178,16 +181,16 @@ module.exports = {
     }
 
     //work culture checkboxes and input
-    let  workculture = [];
-    if(req.body.extras){
+    let workculture = [];
+    if (req.body.extras) {
       if (Array.isArray(req.body.extras)) {
         workculture = req.body.extras;
       } else {
         workculture = [req.body.extras];
       }
     }
-    if (req.body.work_culture_keywords){
-      if (Array.isArray(req.body.work_culture_keywords)){
+    if (req.body.work_culture_keywords) {
+      if (Array.isArray(req.body.work_culture_keywords)) {
         req.body.work_culture_keywords.forEach(e => {
           workculture.push(e);
         });
@@ -215,22 +218,25 @@ module.exports = {
    */
   addJobOffers: (req, res, next) => {
     let jobParams = module.exports.getJobParams(req, res);
+    // if recruiter is logged in (= on route with userId)
+    let userId = req.params.id;
+    if (userId) {
+      jobParams.user = userId;
+    }
+
+    // create new job
     let job = new Job(jobParams);
-    job.save().
-      then((job) => {
-        let userId = req.params.id;
-        // if recruiter is logged in (= on route with userId)
+    job.save()
+      .then((job) => {
+        // if logged in, add jobId to user
         if (userId) {
           User.findOneAndUpdate({ _id: userId }, {
-            $addToSet: {
-              jobOffers: job
-            }
+            $addToSet: { jobOffers: job }
           },
             { new: true }
           )
             .then(user => {
-              req.flash('success', `The job offer has been created successfully!`);
-              res.locals.redirect = `/user/${user._id}/offers`;
+              res.locals.redirect = `/score/${job._id}`;
               next();
             })
             .catch(error => {
@@ -239,10 +245,58 @@ module.exports = {
             });
         } else {
           // else: not logged in, redirect to user signup page
+          res.locals.addedJob = job;
           res.locals.redirect = `/signup/recruiter/${job._id}`;
           next();
         }
-      })
+      });
+  },
+
+  getJobQuery: (job) => {
+    // prepare values to create an ES query
+    let techstack = job.hard_skills.map(t => {
+      if (t.importance !== 3) {
+        t.importance = 3;
+      }
+      return t;
+    });
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", techstack);
+    let work_culture_keywords = [{
+      "match": {
+        "work_culture_keywords": {
+          "query": job.work_culture_keywords.join(" "),
+          "boost": 3
+        }
+      }
+    }];
+    let job_title = { "job_title": job.job_title };
+
+    // create ES query
+    let query = matchesController.getQuery("job_offers", job_title, [hard_skills, work_culture_keywords]);
+    query.body.size = 1;
+    return query;
+  },
+
+  addJobMaxScore: (req, res, next) => {
+    let jobId = req.params.jobId;
+    Job.findById(jobId).then(job => {
+      let query = module.exports.getJobQuery(job);
+      console.log(JSON.stringify(query));
+      client.search(query, (err, result) => {
+        console.log("##### ADD QUERY", JSON.stringify(query));
+        if (err) { console.log(err) }
+        console.log("##### ADD MAXSCORE", result.hits.max_score);
+        console.log("##### RESULT", result.hits.hits[0]);
+        Job.findOneAndUpdate({ _id: job._id },
+          { $set: { max_score: result.hits.max_score } },
+          { new: true })
+          .then(job => {
+            req.flash('success', `The job offer has been created successfully!`);
+            res.locals.redirect = `/user/${job.user}/offers`;
+            next();
+          });
+      });
+    });
   },
 
   signUpRecruiter: (req, res, next) => {
@@ -268,10 +322,22 @@ module.exports = {
         res.locals.redirect = `/thanks`;
         res.locals.user = user;
 
-        // assign userId to the created job
-        Job.findOneAndUpdate({ _id: jobId }, { $set: { user: user._id } }, { new: true })
+        // assign userId and max score to the created job
+        Job.findById(jobId)
           .then(job => {
-            next();
+            let query = module.exports.getJobQuery(job);
+            console.log("##### ADD QUERY", JSON.stringify(query));
+            client.search(query, (err, result) => {
+              if (err) { console.log(err) }
+              console.log("##### ADD MAXSCORE", result.hits.max_score);
+              console.log("##### RESULT", result.hits.hits[0]);
+              Job.findOneAndUpdate({ _id: job._id },
+                { $set: { user: user._id, max_score: result.hits.max_score } },
+                { new: true })
+                .then(job => {
+                  next();
+                });
+            });
           })
           .catch(error => {
             console.log(`Error updating job with user ID: ${error.message}`);
@@ -296,7 +362,7 @@ module.exports = {
     let work_culture_preferences = convertTagsInput(workcultureArray);
 
     // preferred location + remote work question
-    let location = []; 
+    let location = [];
     if (Array.isArray(req.body.preferred_location)) {
       location = req.body.preferred_location;
     }
@@ -336,9 +402,59 @@ module.exports = {
     let candidate = new Candidate(candidateParams)
     candidate.save().
       then((candidate) => {
-        res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
+        res.locals.redirect = `/score/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
         next();
       })
+  },
+
+  getCandidateQuery: (candidate) => {
+    // prepare values to create an ES query
+    let techstack = candidate.hard_skills.map(t => {
+      if (t.importance !== 3) {
+        t.importance = 3;
+      }
+      return t;
+    });
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", techstack);
+    let soft_skills = [{
+      "match": {
+        "soft_skills": {
+          "query": candidate.soft_skills.join(" "),
+          "boost": 3
+        }
+      }
+    }];
+    let job_title = { "preferred_position": candidate.preferred_position };
+
+    // create ES query
+    let query = matchesController.getQuery("candidates", job_title, [hard_skills, soft_skills]);
+    query.body.size = 1;
+    return query;
+  },
+
+  addCandidateMaxScore: (req, res, next) => {
+    let id = req.params.candidateId;
+    let firstname = req.query.firstname;
+    let lastname = req.query.lastname;
+
+    Candidate.findById(id).then(candidate => {
+      let query = module.exports.getCandidateQuery(candidate);
+      console.log("##### ADD QUERY", JSON.stringify(query));
+
+      client.search(query, (err, result) => {
+        if (err) { console.log(err) }
+        console.log("##### ADD MAXSCORE", result.hits.max_score);
+        console.log("##### RESULT", result.hits.hits[0]);
+        // update candidate to set max_score
+        Candidate.findOneAndUpdate({ _id: candidate._id },
+          { $set: { max_score: result.hits.max_score } },
+          { new: true })
+          .then(candidate => {
+            res.locals.redirect = `/signup/candidate/${candidateId}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
+            next();
+          });
+      });
+    });
   },
 
   signUpCandidate: (req, res, next) => {
@@ -400,14 +516,14 @@ let convertTagsInput = (tags) => {
         if (tag.length > 0) {
           tagsinput.push({
             name: tag,
-            importance: i+1
+            importance: i + 1
           });
         }
       })
     } else if (typeof tags[i] === 'string' && tags[i].length > 0) {
       tagsinput.push({
         name: tags[i],
-        importance: i+1
+        importance: i + 1
       });
     }
   }
