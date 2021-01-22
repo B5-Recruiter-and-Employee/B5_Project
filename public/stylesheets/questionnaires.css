@@ -41,7 +41,7 @@
   cursor: text;
   width: 100% !important;
   margin-top:15px;
-
+  height: 45px;
 }
 
 #questionnaires select{
@@ -94,11 +94,13 @@
   border:none;
   padding: 0;
 }
+
 #questionnaires .bootstrap-tagsinput input{
   flex: 1;
   color: black !important;
-  border:none;
-  outline:none;
+  border: 1px solid #ccc;
+  outline: none;
+  height: 45px;
 }
 
 .bootstrap-tagsinput .tag{
