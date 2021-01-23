@@ -22,6 +22,10 @@
     }
 }
 
+.fixed-width {
+    width: 240px;
+}
+
 
 .message-btn {
     margin-top: 40px;
