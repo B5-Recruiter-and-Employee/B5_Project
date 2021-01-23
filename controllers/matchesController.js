@@ -40,7 +40,7 @@ module.exports = {
           let query = module.exports.getQuery('job_offers', searchedJobTitle, [sortedHardSkills, sortedWorkCulture]);
 
           // send results as "matches" array to ejs
-          module.exports.respondWithMatches(req, res, next, query);
+          module.exports.respondWithMatches(req, res, next, query, candidate);
         })
           .catch((error) => {
             next(error);
@@ -65,17 +65,40 @@ module.exports = {
       let query = module.exports.getQuery('candidates', searchedJobTitle, [sortedHardSkills, sortedSoftSkills]);
 
       // send results as "matches" array to ejs
-      module.exports.respondWithMatches(req, res, next, query);
+      module.exports.respondWithMatches(req, res, next, query, job);
     });
   },
 
-  respondWithMatches: (req, res, next, query) => {
+  calculateScore: (max_score, score) => {
+    if (max_score < 0) { max_score = 1; }
+    let percentage = score / max_score * 100;
+    console.log("PERCENTAGE: ", percentage);
+    let compatibility;
+    switch (true) {
+      case (percentage >= 60.0):
+        compatibility = "Excellent";
+        break;
+      case (percentage < 60.0 && percentage >= 30.0):
+        compatibility = "Great";
+        break;
+      case (percentage < 30.0 && percentage >= 10.0):
+        compatibility = "Good";
+        break;
+      default:
+        compatibility = "Bad";
+        break;
+    }
+    return compatibility + " " + score;
+  },
+
+  respondWithMatches: (req, res, next, query, searcher) => {
     client.search(query, (err, result) => {
       if (err) { console.log(err) }
       let hits = result.hits.hits;
       // add "shortDescription" to the hits array
       hits.forEach(h => {
         h._source.shortDescription = (typeof h._source.description !== 'undefined') ? module.exports.getShortDescription(h._source.description) : "";
+        h._source.compatibility = module.exports.calculateScore(searcher.max_score, h._score);
       });
       res.locals.matches = hits;
       next();

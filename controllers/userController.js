@@ -231,8 +231,8 @@ module.exports = {
 
       // now query for the perfect match and get max_score
       const result = await client.search(matchUtils.query);
-      // console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits[0]._source), "\n");
-      // console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
+       console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits[0]._source), "\n");
+       console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
       const max_score = result.hits.max_score;
 
       try {
