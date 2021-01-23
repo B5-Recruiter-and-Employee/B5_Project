@@ -222,21 +222,31 @@ module.exports = {
       matchUtils = module.exports.getCandidatePerfectMatchUtils(match);
       index = "job_offers";
     }
-    await client.index(matchUtils.fake);
 
-    // refresh the index, otherwise we cannot search for the fake match
-    await client.indices.refresh({ index: index });
+    try {
+      await client.index(matchUtils.fake);
 
-    // now query for the perfect match and get max_score
-    let result = await client.search(matchUtils.query);
-    console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits[0]._source), "\n");
-    console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
-    let max_score = result.hits.max_score;
+      // refresh the index, otherwise we cannot search for the fake match
+      await client.indices.refresh({ index: index });
 
-    // delete fake match again
-    await client.delete({ index: index, id: result.hits.hits[0]._id });
+      // now query for the perfect match and get max_score
+      const result = await client.search(matchUtils.query);
+      // console.log("+++++ RESULT\n", JSON.stringify(result.hits.hits[0]._source), "\n");
+      // console.log("+++++ MAX SCORE", result.hits.max_score, "\n");
+      const max_score = result.hits.max_score;
 
-    return max_score;
+      try {
+        // delete fake match again
+        await client.delete({ index: index, id: result.hits.hits[0]._id });
+      } catch (error) {
+        console.log("WARNING: An error occurred during deleting.\n", error);
+      }
+
+      return max_score;
+    } catch (error) {
+      console.log("Error while getting max_score:\n", error);
+      return 0.0;
+    }
   },
 
   getJobPerfectMatchUtils: (job) => {
