@@ -102,8 +102,10 @@
                 Work culture
               </div>
               <div class="col-sm-8 col-lg-9 card-body">
-                <% for (let i = 0; i < card.work_culture_keywords.length; i++) { %>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.work_culture_keywords[i] %></a>
+                <% for (let i = 0; i < card.work_culture_keywords.length; i++) {
+                  let str = card.work_culture_keywords[i];
+                  str = str.replace("_", " ") ;%>
+                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= str %></a>
                 <% } %>
               </div>
               <hr>
