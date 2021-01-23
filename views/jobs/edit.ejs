@@ -86,7 +86,8 @@
               <div class="tag-container">
                 <select multiple id="techstack3" type="text" name="work_culture_keywords" placeholder="add more..."
                   data-role="tagsinput">
-                  <% job.work_culture_keywords.forEach(skill=> { %>
+                  <% job.work_culture_keywords.forEach(skill=> { 
+                     skill = skill.replace("_", " ") ;%>
                     <option value="<%= skill %>">
                       <%= skill %>
                     </option>
