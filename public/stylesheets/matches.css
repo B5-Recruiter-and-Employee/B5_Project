@@ -4,12 +4,6 @@
     margin-right: 150px;
 }
 
-body{
-    margin-top:20px;
-    color: #1a202c;
-    text-align: left;
-   /* background-color: #e2e8f0;    */
-}
 .main-body {
     padding: 15px;
 }
@@ -59,12 +53,6 @@ body{
     box-shadow: none!important;
 }
 
-#questionnaire {
-    width: 100% !important;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
 #empty p{
     text-align: center !important;
 }
@@ -77,27 +65,6 @@ body{
     color: #9AB3F5 !important;
     border-color: #9AB3F5 !important;
 }
-
-/* .circle {
-    display: inline-table;
-    vertical-align: middle;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color:#bdcdf800;
-    border: 7px solid;
-    border-color: #9ab3f573;
-    color: #9ab3f5;
-}
-
-  .circle__content {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 16px;
-}  */
 
 /*SCORE CIRCLE*/
 
@@ -147,6 +114,6 @@ body{
   .circle-border.Good {
     background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(290deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
   }
-  .circle-border.Great .circle-text {
+  .circle-border.Good .circle-text {
       color: rgb(203, 223, 17);
   }
