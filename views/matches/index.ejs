@@ -1,17 +1,20 @@
+<hr class="container">
+<h1 class="personal-info mb-3">Matches</h1>
+<p class="font-weight-light">If you want to see more results, you can use our <a href="/search">search!</a></p>
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-1 g-4">
       <%if(matches.length> 0) { %>
          <% if (user.role=='recruiter' ) { %>
             <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-                <%- include('card.ejs', {title: source.job_title , score: source.compatibility, description_text:
+                <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
                   source.shortDescription, salary: source.salary, location: source.location, company: source.company, 
                   preferred_position: source.preferred_position, job_type: source.job_type,
                   preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
             <% } %>
          <% } else { %>
                 <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-                    <%- include('card.ejs', {title: source.job_title , score: source.compatibility, description_text:
+                    <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
                       source.shortDescription, salary: source.salary, location: source.location, company:
                       source.company, preferred_position: source.preferred_position, 
                       job_type: source.job_type, preferred_location: source.preferred_location, 

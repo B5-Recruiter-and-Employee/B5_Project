@@ -70,9 +70,10 @@ module.exports = {
   },
 
   calculateScore: (max_score, score) => {
-    if (max_score < 0) { max_score = 1; }
+    if (typeof max_score === 'undefined' || max_score === 0) {
+      max_score = -1;
+    }
     let percentage = score / max_score * 100;
-    console.log("PERCENTAGE: ", percentage);
     let compatibility;
     switch (true) {
       case (percentage >= 60.0):
@@ -84,23 +85,30 @@ module.exports = {
       case (percentage < 30.0 && percentage >= 10.0):
         compatibility = "Good";
         break;
-      default:
+      case (percentage < 10.0 && percentage >= 0):
         compatibility = "Bad";
         break;
+      default:
+        compatibility = "N/A";
+        break;
     }
-    return compatibility + " " + score;
+    return compatibility;
   },
 
   respondWithMatches: (req, res, next, query, searcher) => {
     client.search(query, (err, result) => {
       if (err) { console.log(err) }
       let hits = result.hits.hits;
-      // add "shortDescription" to the hits array
-      hits.forEach(h => {
-        h._source.shortDescription = (typeof h._source.description !== 'undefined') ? module.exports.getShortDescription(h._source.description) : "";
+      // add "shortDescription" and "compatibility" and filter bad ones
+      let results = hits.reduce((matches, h) => {
         h._source.compatibility = module.exports.calculateScore(searcher.max_score, h._score);
-      });
-      res.locals.matches = hits;
+        if (h._source.compatibility !== 'Bad') {
+          h._source.shortDescription = (typeof h._source.description !== 'undefined') ? module.exports.getShortDescription(h._source.description) : "";
+          matches.push(h);
+        }
+        return matches;
+      }, []);
+      res.locals.matches = results;
       next();
     });
   },

@@ -111,26 +111,42 @@ body{
     border-radius: 100%;
     background-color: #ffffff;
   }
+
+.circle-text {
+    position: absolute;
+    top: calc(50% - 4px);
+    left: 50%;
+    margin: auto;
+    transform: translate(-50%, -50%);
+}
   
   .circle-border {
     position: relative;
     text-align: center;
     width: 110px;
     height: 110px;
-    margin-left: 30%;
+    margin: auto;
     border-radius: 100%;
-    background-color: #E53B3B;
-    background: linear-gradient(270deg, black 50%, transparent 50%), linear-gradient(0deg, black 50%, lightgray 50%)
+    background-color: lightgray;
   }
 
   .circle-border.Excellent {
-    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(70deg, rgb(17, 223, 69) 50%, lightgray 50%);
+    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(70deg, rgb(17, 223, 69) 50%, #f8f9fa 50%);
+  }
+  .circle-border.Excellent .circle-text {
+      color: rgb(17, 223, 69);
   }
 
   .circle-border.Great {
-    background: linear-gradient(270deg, rgb(72, 197, 103) 50%, transparent 50%), linear-gradient(0deg, rgb(72, 197, 103) 50%, lightgray 50%);
+    background: linear-gradient(270deg, rgb(151, 223, 17) 50%, transparent 50%), linear-gradient(20deg, rgb(151, 223, 17) 50%, #f8f9fa 50%);
+  }
+  .circle-border.Great .circle-text {
+      color: rgb(151, 223, 17);
   }
 
   .circle-border.Good {
-    background: linear-gradient(270deg, rgb(91, 184, 114) 50%, transparent 50%), linear-gradient(270deg, rgb(91, 184, 114) 50%, lightgray 50%);
+    background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(290deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
+  }
+  .circle-border.Great .circle-text {
+      color: rgb(203, 223, 17);
   }
