@@ -47,7 +47,6 @@ function validateForm() {
   textarea = tabs[currentTab].getElementsByTagName("textarea");
   select = tabs[currentTab].getElementsByTagName("select");
   
-
   // A loop that checks every input field in the current tab:
   if (select.length === 0 && textarea.length === 0) {
     for (i = 0; i < inputField.length; i++) {
@@ -106,7 +105,6 @@ function validateForm() {
             break;
          }
       }
-      
     }
   }
 
@@ -128,15 +126,3 @@ function fixStepIndicator(n) {
   //... and adds the "active" class to the current step:
   x[n].className += " active";
 }
-
-
-// const input = document.querySelector('input');
-
-// prevent enter button from submitting form
-// input.onkeypress = function(e) {
-//     if (!e) e = window.event;
-//     var keyCode = e.code || e.key;
-//     if (keyCode == 'Enter') {
-//       e.preventDefault(); //prevent submitting form
-//     }
-// };
