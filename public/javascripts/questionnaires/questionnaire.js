@@ -19,10 +19,10 @@ function showTab(n) {
   // ... and run a function that displays the correct step indicator:
   fixStepIndicator(n)
 }
-
+var x;
 function nextPrev(n) {
   // This function will figure out which tab to display
-  var x = document.getElementsByClassName("tab");
+  x = document.getElementsByClassName("tab");
   // Exit the function if any field in the current tab is invalid:
   if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
@@ -46,6 +46,8 @@ function validateForm() {
   inputField = tabs[currentTab].getElementsByTagName("input");
   textarea = tabs[currentTab].getElementsByTagName("textarea");
   select = tabs[currentTab].getElementsByTagName("select");
+  
+
   // A loop that checks every input field in the current tab:
   if (select.length === 0 && textarea.length === 0) {
     for (i = 0; i < inputField.length; i++) {
@@ -94,6 +96,17 @@ function validateForm() {
           sentence[0].insertAdjacentHTML("afterend", '<p class="error-message">Please fill out at least one field.</p>');
         }
       }
+    }
+    if(currentTab == x.length-1){ //check the last tab of recruiter questionnaire
+      extras = document.getElementsByName("extras");
+      for(i = 0; i< extras.length;i++){
+        //if the checkboxes are checked, then validate the input field
+         if(extras[i].checked){
+            valid = true;
+            break;
+         }
+      }
+      
     }
   }
 
