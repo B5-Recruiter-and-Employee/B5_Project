@@ -64,7 +64,6 @@ module.exports = {
         buttonText = `${senderName}'s Job Offer`;
         link = `http://localhost:3000/jobs/${jobId}`;
       }
-      console.log("+++++ EMAIL CONTROLLER\n", intro, "\n", buttonText, "\n", link);
 
       let email = {
         body: {
@@ -93,7 +92,6 @@ module.exports = {
       } else if (user.role === 'recruiter') {
         subject = `You might be the perfect match for this offer!`;
       }
-      console.log("+++++ EMAIL CONTROLLER\n", subject, "\n", redirect);
 
       let message = {
         from: EMAIL,

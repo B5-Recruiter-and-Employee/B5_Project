@@ -5,16 +5,17 @@ const userController = require("./userController");
 
 module.exports = {
 
-	renderSingleCandidate: async (req, res) => {
+	renderSingleCandidate: (req, res) => {
 		let candidateId = req.params.candidateId;
 		let user = req.app.locals.user;
 		let jobs;
 		if (user.role === 'recruiter') {
-			let offers = await Job.find({ _id: { $in: user.jobOffers } });
-			jobs = offers.map(offer => {
-				if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
-					return offer;
-				}
+			Job.find({ _id: { $in: user.jobOffers } }).then(offers => {
+				jobs = offers.map(offer => {
+					if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
+						return offer;
+					}
+				});
 			});
 		}
 
