@@ -14,7 +14,7 @@ module.exports = {
   },
 
   renderSingleJobMatch: (req, res) => {
-    res.render("matches/index");
+    res.render("matches/index", { jobId: req.params.jobId });
   },
 
   getMatches: (req, res, next) => {

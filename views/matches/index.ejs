@@ -1,6 +1,12 @@
 <hr class="container">
 <h1 class="personal-info mb-3">Matches</h1>
-<p class="font-weight-light">If you want to see more results, you can use our <a href="/search">search!</a></p>
+<p class="font-weight-light">
+  <% if (user.role === 'candidate') { %>
+    If you want to see more offers, you can use our <a href="/search">search!</a>
+  <% } else if (user.role === 'recruiter' && typeof jobId !== 'undefined') { %>
+    If you want to see different matches, come back later or <a href="/jobs/<%= jobId %>/edit">edit your preferences</a>!
+  <% } %>
+</p>
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-1 g-4">
