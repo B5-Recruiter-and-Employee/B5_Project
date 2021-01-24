@@ -1,0 +1,43 @@
+<div class="message-btn">
+	<button type="button" class="btn btn-outline-primary mb-3" data-toggle="modal" data-target="#connectModal">
+		I'm interested
+	</button>
+</div>
+
+<div class="modal fade" id="connectModal" tabindex="-1" aria-labelledby="connectModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="connectModalLabel">Your message</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="/apply/<%= id %>" method="post">
+				<div class="modal-body">
+					<% let defaultText = "";
+					if (user.role === 'candidate') {
+						defaultText = "Your offer is amazing! I want to get in touch with you to know more about it.";
+					} else if (user.role === 'recruiter') {
+						defaultText = "I may have the perfect job for you! Please contact me for more information."; 
+						if (typeof jobs !== 'undefined') { %>
+							<select class="form-control mb-3" id="offers" name="job">
+								<option disabled>Choose your job offer...</option>
+							<% jobs.forEach(job => { %>
+								<option value="<%= job._id %>"><%= job.job_title %></option>
+						<% }); %>
+							</select>
+					<% }} %>
+					<textarea name="message" class="form-control mb-2"><%= defaultText %></textarea>
+					<p class="font-weight-light small text-left mb-0 px-1">By continuing I agree to share my full name and e-mail address with the recipient.</p>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+					<button type="submit" class="btn btn-primary">Send message</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
