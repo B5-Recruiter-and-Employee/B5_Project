@@ -1,6 +1,5 @@
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const { getShortDescription } = require('./matchesController');
 const { respondWithMatches } = require('./matchesController');
 
 module.exports = {

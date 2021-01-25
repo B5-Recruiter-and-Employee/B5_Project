@@ -237,7 +237,7 @@ module.exports = {
         // delete fake match again
         await client.delete({ index: index, id: result.hits.hits[0]._id });
       } catch (error) {
-        console.log("WARNING: An error occurred during deleting.\n", error);
+        console.log("WARNING: An error occurred during deletion of the fake match.\n", error);
       }
 
       return max_score;

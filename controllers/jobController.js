@@ -83,13 +83,11 @@ module.exports = {
 
         Job.findOneAndRemove({ _id: jobId })
             .then((job) => {
-                console.log('user to update:', user);
                 // delete job from user's jobs array (both in MongoDB and ES)
                 User.findOneAndUpdate({ _id: user._id },
                     { $pull: { jobOffers: job._id } },
                     { new: true }
                 ).then((user) => {
-                    console.log('job deleted from the jobOffers Array')
                     req.flash('success', `The job offer has been deleted successfully!`);
                     res.redirect(`/user/${user._id}/offers`);
                 })
