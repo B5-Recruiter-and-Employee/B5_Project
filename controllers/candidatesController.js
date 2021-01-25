@@ -64,7 +64,6 @@ module.exports = {
 				{ new: true });
 			req.flash("success", `The candidate has been successfully updated!`);
 			res.redirect(`/user/${req.app.locals.user._id}`);
-			console.log("candidate updated in MongoDB and Elasticsearch");
 			next();
 		} catch (error) {
 			req.flash(
