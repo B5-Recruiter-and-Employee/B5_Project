@@ -21,7 +21,7 @@ module.exports = {
 
 		Candidate.findById(candidateId)
 			.then((candidate) => {
-				User.find({ candidateProfile: candidate._id }).then((cardOwner) => {
+				User.findById(candidate.user).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
 						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
