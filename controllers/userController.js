@@ -1,13 +1,11 @@
-const passport = require('passport');
 const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
-const { off } = require('../models/job_offer');
 
 module.exports = {
   renderLogin: (req, res) => {
-    res.render("user/login");
+    res.render("user/login", { redirect: req.query.redirect });
   },
 
   redirectView: (req, res, next) => {
@@ -55,11 +53,20 @@ module.exports = {
 
   authPassport: (req, res) => {
     // `req.user` contains the authenticated user.
-    if(req.user) {
-        req.flash('success', 'You have been successfully logged in!');
+    if (req.user) {
+      req.flash('success', 'You have been successfully logged in!');
+      if (typeof req.query.redirect === 'undefined') {
         res.redirect('/user/' + req.user._id);
+      } else {
+        try {
+          res.redirect(decodeURI(req.query.redirect));
+        } catch (error) {
+          res.redirect('/user/' + req.user._id);
+        }
+      }
     } else {
-        req.flash("error", `Failed to login.`);
+      req.flash("error", `Failed to login.`);
+      res.redirect('/user/login');
     }
   },
 

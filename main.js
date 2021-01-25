@@ -3,19 +3,16 @@ const port = 3000,
     app = express(),
     layouts = require("express-ejs-layouts"),
     path = require("path"),
-    methodOverride = require("method-override"),
-
-    router = express.Router();
-const User = require("./models/user");
-const expressSession = require("express-session"),
+    User = require("./models/user"),
+    expressSession = require("express-session"),
     cookieParser = require("cookie-parser"),
-    flash = require("connect-flash");
-const passport = require("passport");
+    flash = require("connect-flash"),
+    passport = require("passport");
 
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
-    mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/rem_matching_test", {useNewUrlParser: true, useFindAndModify: false });
+mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/rem_matching_test", { useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -67,7 +64,6 @@ app.use((req, res, next) => {
 
 
 //all the routers:
-app.use(require('./routes/errorRouter')); 
 app.use(require('./routes/homeRouter'));
 app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
@@ -75,9 +71,10 @@ app.use(require('./routes/userRouter'));
 app.use(require('./routes/matchesRouter'));
 app.use(require('./routes/searchRouter'));
 app.use(require('./routes/emailRouter'));
+app.use(require('./routes/errorRouter'));
 
 //connect to the port
 app.listen(port, () => {
-    console.log(`Server running on port: http://localhost:${ app.get("port")}`);
+    console.log(`Server running on port: http://localhost:${app.get("port")}`);
 });
 
