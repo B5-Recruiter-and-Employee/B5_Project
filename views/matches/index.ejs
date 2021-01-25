@@ -1,35 +1,36 @@
 <hr class="container">
 <h1 class="personal-info mb-3">Matches</h1>
 <p class="font-weight-light">
-  <% if (user.role === 'candidate') { %>
+  <% if (user.role==='candidate' ) { %>
     If you want to see more offers, you can use our <a href="/search">search!</a>
-  <% } else if (user.role === 'recruiter' && typeof jobId !== 'undefined') { %>
-    If you want to see different matches, come back later or <a href="/jobs/<%= jobId %>/edit">edit your preferences</a>!
-  <% } %>
+    <% } else if (user.role==='recruiter' && typeof jobId !=='undefined' ) { %>
+      If you want to see different matches, come back later or <a href="/jobs/<%= jobId %>/edit">edit your
+        preferences</a>!
+      <% } %>
 </p>
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-1 g-4">
       <%if(matches.length> 0) { %>
-         <% if (user.role=='recruiter' ) { %>
-            <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-                <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
-                  source.shortDescription, salary: source.salary, location: source.location, company: source.company, 
-                  preferred_position: source.preferred_position, job_type: source.job_type,
-                  preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
-            <% } %>
-         <% } else { %>
-                <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+        <% if (user.role=='recruiter' ) { %>
+          <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+            <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
+              source.shortDescription, salary: source.salary, location: source.location, company: source.company,
+              preferred_position: source.preferred_position, job_type: source.job_type, preferred_location:
+              source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
+              <% } %>
+                <% } else { %>
+                  <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
                     <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
                       source.shortDescription, salary: source.salary, location: source.location, company:
-                      source.company, preferred_position: source.preferred_position, 
-                      job_type: source.job_type, preferred_location: source.preferred_location, 
-                      softskills: source.soft_skills, id: matches[i]._id}); %>
+                      source.company, preferred_position: source.preferred_position, job_type: source.job_type,
+                      preferred_location: source.preferred_location, softskills: source.soft_skills, id:
+                      matches[i]._id}); %>
                       <% } %>
-         <% } %>
-        <% } else { %>
-            <h1> Oops, No matches found for you yet :( </h1>
-        <% } %>
+                        <% } %>
+                          <% } else { %>
+                            <h1> Oops, No matches found for you yet :( </h1>
+                            <% } %>
     </div>
   </div>
 </div>
@@ -37,17 +38,17 @@
 <div class="d-block d-lg-none ">
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-      <%if(matches.length > 0) { %>
+      <%if(matches.length> 0) { %>
         <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
           else{activeCard=false} let source=matches[i]._source %>
           <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: source.compatibility,
-            description_text: source.shortDescription, salary: source.salary, location: source.location, 
-            company: source.company, preferred_position: source.preferred_position, job_type: source.job_type,
+            description_text: source.shortDescription, salary: source.salary, location: source.location, company:
+            source.company, preferred_position: source.preferred_position, job_type: source.job_type,
             preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
             <% } %>
               <% } else { %>
                 <h1> Oops, No matches found for you yet :( </h1>
-              <% } %>
+                <% } %>
 
     </div>
 
