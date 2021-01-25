@@ -6,7 +6,7 @@
     <% } else if (user.role==='recruiter' && typeof jobId !=='undefined' ) { %>
       If you want to see different matches, come back later or <a href="/jobs/<%= jobId %>/edit">edit your
         preferences</a>!
-      <% } %>
+    <% } %>
 </p>
 <div class="d-none d-lg-block">
   <div class="card-container">
@@ -15,22 +15,22 @@
         <% if (user.role=='recruiter' ) { %>
           <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
             <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
-              source.shortDescription, salary: source.salary, location: source.location, company: source.company,
+              source.shortDescription, salary: source.salary, location: source.location, company: source.company_name,
               preferred_position: source.preferred_position, job_type: source.job_type, preferred_location:
               source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
+            <% } %>
+          <% } else { %>
+            <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
+              <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
+                source.shortDescription, salary: source.salary, location: source.location, company:
+                source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
+                preferred_location: source.preferred_location, softskills: source.soft_skills, id:
+                matches[i]._id}); %>
               <% } %>
-                <% } else { %>
-                  <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-                    <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
-                      source.shortDescription, salary: source.salary, location: source.location, company:
-                      source.company, preferred_position: source.preferred_position, job_type: source.job_type,
-                      preferred_location: source.preferred_location, softskills: source.soft_skills, id:
-                      matches[i]._id}); %>
-                      <% } %>
-                        <% } %>
-                          <% } else { %>
-                            <h1> Oops, No matches found for you yet :( </h1>
-                            <% } %>
+            <% } %>
+          <% } else { %>
+            <p class="h3 font-weight-light">No matches found for you yet :(</p>
+          <% } %>
     </div>
   </div>
 </div>
@@ -43,12 +43,12 @@
           else{activeCard=false} let source=matches[i]._source %>
           <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: source.compatibility,
             description_text: source.shortDescription, salary: source.salary, location: source.location, company:
-            source.company, preferred_position: source.preferred_position, job_type: source.job_type,
+            source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
             preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
-            <% } %>
-              <% } else { %>
-                <h1> Oops, No matches found for you yet :( </h1>
-                <% } %>
+        <% } %>
+      <% } else { %>
+        <p class="h3 font-weight-light">No matches found for you yet :(</p>
+      <% } %>
 
     </div>
 

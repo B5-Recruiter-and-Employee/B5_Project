@@ -8,9 +8,9 @@
         </svg>
         <% if (user.candidateProfile) { %>
           <%= title %>
-            <% } else { %>
-              <%= preferred_position %>
-                <% } %>
+        <% } else { %>
+          <%= preferred_position %>
+        <% } %>
       </h5>
     </div>
     <div class=" p-0 card-body text-muted">
@@ -38,22 +38,22 @@
                     <path
                       d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
                   </svg> Company</div>
-                <div class="col-sm-5 text-secondary">
+                <div class="col-sm-7 text-secondary">
                   <% if (company) { %>
                     <%= company %>
-                      <% } else { %> - <% } %>
+                  <% } else { %> - <% } %>
                 </div>
                 <% } else { %>
-                  <div class=" col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  <div class="col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                       fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                       <path
                         d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                       <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg> Preferred location</div>
-                  <div class="col-sm-5 text-secondary">
+                  <div class="col-sm-7 text-secondary">
                     <% if (preferred_location) { %>
                       <%= preferred_location %>
-                        <% } else { %> - <% } %>
+                    <% } else { %> - <% } %>
                   </div>
                   <% } %>
             </div>
@@ -68,10 +68,10 @@
                     <path
                       d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z" />
                   </svg> Salary</div>
-                <div class="col-sm-5 text-secondary">
+                <div class="col-sm-7 text-secondary">
                   <% if (salary) { %>
                     <%= salary %>
-                      <% } else { %> - <% } %>
+                  <% } else { %> - <% } %>
                 </div>
                 <% } else { %>
                   <div class=" col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -80,10 +80,10 @@
                       <path
                         d="M5.667 16C4.747 16 4 15.254 4 14.333v-1.86A5.985 5.985 0 0 1 2 8c0-1.777.772-3.374 2-4.472V1.667C4 .747 4.746 0 5.667 0h4.666C11.253 0 12 .746 12 1.667v1.86a5.99 5.99 0 0 1 1.918 3.48.502.502 0 0 1 .582.493v1a.5.5 0 0 1-.582.493A5.99 5.99 0 0 1 12 12.473v1.86c0 .92-.746 1.667-1.667 1.667H5.667zM13 8A5 5 0 1 0 3 8a5 5 0 0 0 10 0z" />
                     </svg> Employment type</div>
-                  <div class="col-sm-5 text-secondary">
+                  <div class="col-sm-7 text-secondary">
                     <% if (job_type) { %>
                       <%= job_type %>
-                        <% } else { %> - <% } %>
+                    <% } else { %> - <% } %>
                   </div>
                   <% } %>
             </div>
@@ -92,31 +92,31 @@
             <!-- Third row of card information -->
             <div class="row">
               <% if (user.candidateProfile) { %>
-                <div class=" col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                <div class="col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                     fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                     <path
                       d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                   </svg> Location</div>
-                <div class="col-sm-5 text-secondary">
+                <div class="col-sm-7 text-secondary">
                   <% if (location) { %>
                     <%= location %>
-                      <% } else { %> - <% } %>
+                  <% } else { %> - <% } %>
                 </div>
                 <% } else { %>
                   <div class="col-sm-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                       fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
-                      <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                       <path
-                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
-                    </svg> Work experience </div>
-                  <div class="col-sm-5 text-secondary">
+                        d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+
+                    </svg> Soft skills </div>
+                  <div class="col-sm-7 text-secondary">
                     <!-- TODO: maybe limit the amount of words here -->
-                    <% if (description_text){ %>
-                      <%= description_text %>
-                        <% } else { %> - <% } %>
+                    <% if (softskills){ %>
+                      <%= softskills %>
+                    <% } else { %> - <% } %>
                   </div>
-                  <% } %>
+                <% } %>
             </div>
           </div>
         </div>
@@ -131,12 +131,13 @@
           <% } else { %>
             <h6 class="description-title text-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                 <path
-                  d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
-              </svg> Soft skills: </h6>
-            <% if (softskills){ %>
-              <%= softskills %>
-                <% } else { %> - <% } %>
+                  d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z" />
+              </svg> About me: </h6>
+            <% if (description_text){ %>
+              <%= description_text %>
+            <% } else { %> - <% } %>
         </div>
         <% } %>
 

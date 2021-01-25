@@ -1,17 +1,10 @@
 <div class="container">
   <div class="main-body">
-
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/matches">Matches</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Job offer info</li>
-      </ol>
-    </nav>
-    <!-- /Breadcrumb -->
-
-    <div class="row gutters-sm">
+    <% if (user.role==='recruiter' ) { %>
+      <hr />
+      <h1 class="personal-info">Job offer</h1>
+      <% } %>
+        <div class="row gutters-sm">
       <!-- Left column -->
       <div class="col-md-4 mb-3">
         <div class="card">
@@ -24,128 +17,129 @@
                 <% if (user.role === 'candidate' || !user.jobOffers.includes(card._id)) { %>
                   <%- include('../partials/connect.ejs', { id: card._id }) %>
                 <% } %>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="card mt-3">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-              <div class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="feather feather-globe mr-2 icon-inline">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                  </path>
-                </svg>Email</div>
-              <span class="text-secondary">https://bootdey.com</span>
-            </li>
-          </ul>
-        </div>
-        <br>
-        <% if (user.role != 'candidate') { %>
-        <a href="/jobs/<%= card.id %>/edit" class="btn btn-outline-primary mr-2 br-light"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-        </svg>  Edit this offer</a>
-        <% } %>
-      </div>
-
-      <!-- Right column -->
-      <div class="col-md-8">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-4 col-lg-3">
-                Job title
-              </div>
-              <div class="col-sm-8 col-lg-9 text-secondary">
-                <%= card.job_title %>
-              </div>
-              <hr>
-
-              <% if (typeof card.job_type !== 'undefined'){ %>
-              <div class="col-sm-4 col-lg-3">
-                Employment type
-              </div>
-              <div class="col-sm-8 col-lg-9 text-secondary">
-                <%= card.job_type %>
-              </div>
-              <hr>
-              <% } %>
-
-              <% if (typeof card.salary !== 'undefined'){ %>
-              <div class="col-sm-4 col-lg-3">
-                Salary
-              </div>
-              <div class="col-sm-8 col-lg-9 text-secondary">
-                <%= card.salary %>
-              </div>
-              <hr>
-              <% } %>
-
-              <div class="col-sm-4 col-lg-3">
-                Location
-              </div>
-              <div class="col-sm-8 col-lg-9 text-secondary">
-                <%= card.location %>
-              </div>
+            <div class="card mt-3">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <div class="mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-globe mr-2 icon-inline">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                      </path>
+                    </svg>Email
+                  </div>
+                  <span class="text-secondary">
+                    <%= email %>
+                  </span>
+                </li>
+              </ul>
             </div>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-4 col-lg-3 my-auto">
-                Work culture
-              </div>
-              <div class="col-sm-8 col-lg-9 card-body">
-                <% for (let i = 0; i < card.work_culture_keywords.length; i++) { %>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.work_culture_keywords[i] %></a>
-                <% } %>
-              </div>
-              <hr>
-
-              <div class="col-sm-4 col-lg-3 my-auto">
-                Tech stack
-              </div>
-              <div class="col-sm-8 col-lg-9 card-body">
-                <% for (let i = 0; i < card.hard_skills.length; i++) { %>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.hard_skills[i].name %></a>
-                <% } %>
-              </div>
-
-              <% if ((typeof card.soft_skills !== 'undefined') && (card.soft_skills.length !== 0)){ %>
-              <hr>
-              <div class="col-sm-4 col-lg-3 my-auto">
-                Soft skills
-              </div>
-              <div class="col-sm-8 col-lg-9 card-body">
-                <% for (let i = 0; i < card.soft_skills.length; i++) { %>
-                <a href="#" class="badge badge-pill badge-primary mr-1 my-1"><%= card.soft_skills[i].name %></a>
-                <% } %>
-              </div>
+            <br />
+            <% if (user.role !='candidate' ) { %>
+              <a href="/jobs/<%= card.id %>/edit" class="btn btn-outline-primary mr-2 br-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                </svg>
+                Edit this offer</a>
               <% } %>
-            </div>
           </div>
-        </div>
 
-        <% if (typeof card.description !== 'undefined'){ %>
-        <div class="row gutters-sm">
-          <div id="questionnaire">
-            <div class="card h-100">
+          <!-- Right column -->
+          <div class="col-md-8">
+            <div class="card mb-3">
               <div class="card-body">
-                <div class="d-flex align-items-center mb-3">About the job</div>
-                <p><%= card.description %></p>
+                <div class="row">
+                  <div class="col-sm-4 col-lg-3">Job title</div>
+                  <div class="col-sm-8 col-lg-9 text-secondary">
+                    <%= card.job_title %>
+                  </div>
+                  <hr />
+
+                  <% if (typeof card.job_type !=='undefined' ){ %>
+                    <div class="col-sm-4 col-lg-3">Employment type</div>
+                    <div class="col-sm-8 col-lg-9 text-secondary">
+                      <%= card.job_type %>
+                    </div>
+                    <hr />
+                    <% } %>
+                      <% if (typeof card.salary !=='undefined' ){ %>
+                        <div class="col-sm-4 col-lg-3">Salary</div>
+                        <div class="col-sm-8 col-lg-9 text-secondary">
+                          <%= card.salary %>
+                        </div>
+                        <hr />
+                        <% } %>
+                          <div class="col-sm-4 col-lg-3">Location</div>
+                          <div class="col-sm-8 col-lg-9 text-secondary">
+                            <%= card.location %>
+                          </div>
+                </div>
               </div>
             </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4 col-lg-3 my-auto">Work culture</div>
+                  <div class="col-sm-8 col-lg-9 card-body">
+                    <% for (let i=0; i < card.work_culture_keywords.length; i++) { %>
+                      <a href="#" class="badge badge-pill text-wrap badge-primary mr-1 my-1">
+                        <%= card.work_culture_keywords[i] %>
+                      </a>
+                      <% } %>
+                  </div>
+                  <hr />
+
+                  <div class="col-sm-4 col-lg-3 my-auto">Tech stack</div>
+                  <div class="col-sm-8 col-lg-9 card-body">
+                    <% for (let i=0; i < card.hard_skills.length; i++) { %>
+                      <a href="#" class="badge badge-pill text-wrap badge-primary mr-1 my-1">
+                        <%= card.hard_skills[i].name %>
+                      </a>
+                      <% } %>
+                  </div>
+
+                  <% if ((typeof card.soft_skills !=='undefined' ) && (card.soft_skills.length !==0)){ %>
+                    <hr />
+                    <div class="col-sm-4 col-lg-3 my-auto">Soft skills</div>
+                    <div class="col-sm-8 col-lg-9 card-body">
+                      <% for (let i=0; i < card.soft_skills.length; i++) { %>
+                        <a href="#" class="badge badge-pill text-wrap badge-primary mr-1 my-1">
+                          <%= card.soft_skills[i].name %>
+                        </a>
+                        <% } %>
+                    </div>
+                    <% } %>
+                </div>
+              </div>
+            </div>
+
+            <% if (typeof card.description !=='undefined' ){ %>
+              <div class="row gutters-sm">
+                <div id="questionnaire">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center mb-3">About the job</div>
+                      <p>
+                        <%= card.description %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
           </div>
+          <!-- End right column -->
         </div>
-        <%}%> 
-      </div>
-      <!-- End right column -->
-    </div>
   </div>
 </div>
