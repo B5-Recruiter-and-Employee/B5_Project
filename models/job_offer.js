@@ -1,52 +1,53 @@
 const mongoose = require("mongoose"),
-mongoosastic = require("mongoosastic"),
+  mongoosastic = require("mongoosastic"),
 
-jobSchema = mongoose.Schema({
+  jobSchema = mongoose.Schema({
     job_title: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     location: [String],
     company_name: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     salary: String,
     description: String,
     job_type: String,
     work_culture_keywords: [{
-        type: String,
-        required: true
+      type: String,
+      required: true
     }],
     soft_skills: [{
       name: String,
       importance: {
         type: Number,
-        min : 1,
-        max : 3,
-        required : true
+        min: 1,
+        max: 3,
+        required: true
       }
     }],
     hard_skills: [{
       name: String,
       importance: {
         type: Number,
-        min : 1,
-        max : 3,
-        required : true
+        min: 1,
+        max: 3,
+        required: true
       }
     }],
+    max_score: Number,
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     }
-});
+  });
 
 
 //connect to elasticsearch using mongoosastic plugin
 jobSchema.plugin(mongoosastic, {
-    "host": "localhost",
-    "port": 9200
+  "host": "localhost",
+  "port": 9200
 });
 
 //created a model for mapping
@@ -54,7 +55,7 @@ var Job = mongoose.model('Job_offer', jobSchema);
 
 //create a mapping
 Job.createMapping((err, mapping) => {
-    console.log('** elasticsearch mapping created for Jobs');
+  console.log('** elasticsearch mapping created for Jobs');
 });
 
 

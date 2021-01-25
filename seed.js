@@ -3,7 +3,8 @@ let data_candidate = require("./dummy_data_candidate.json");
 
 const mongoose = require("mongoose"),
 	Candidate = require("./models/candidate"),
-	Job = require("./models/job_offer");
+	Job = require("./models/job_offer"),
+	{ getMaxScore } = require("./controllers/userController");
 
 mongoose.connect("mongodb://localhost:27017/rem_matching_test", {
 	useNewUrlParser: true,
@@ -11,133 +12,76 @@ mongoose.connect("mongodb://localhost:27017/rem_matching_test", {
 
 mongoose.connection;
 
-// var candidates = [
-//     {
-//         preferred_position: 'Hamburger eater',
-//         work_culture_preferences: 'Everyone is nice to each other'
-//     },
-//     {
-//         preferred_position: 'Dog sitter',
-//         work_culture_preferences: 'Dogs must be able to stand on their hands'
-//     },
-//     {
-//         preferred_position: 'Software engineer',
-//         work_culture_preferences: 'I want to beep boop'
-//     }
-// ];
+const soft_skills = [
+	{ name: "Emotional Intelligence", importance: 3 },
+	{ name: "Leadership", importance: 3 },
+	{ name: "Analytical Skills", importance: 3 },
+	{ name: "Learning Desire", importance: 3 },
+	{ name: "Big Picture Thinking", importance: 3 },
+	{ name: "Communication and Interpersonal Skills", importance: 3 },
+	{ name: "Positive Attitude", importance: 3 },
+	{ name: "Strong Work Ethic", importance: 3 },
+	{ name: "Problem-Solving Skills", importance: 3 },
+	{ name: "Teamwork", importance: 3 },
+	{ name: "Perform Under Pressure", importance: 3 },
+	{ name: "Creativity", importance: 3 }
+];
 
-// var job_offers = [
-//     {
-//         job_title: 'Carpenter',
-//         location: 'LA',
-//         company_name: 'Carpenter Inc.',
-//         description: 'Small carpenter store in Los Angeles',
-//     },
-//     {
-//         job_title: 'Carpenter',
-//         location: 'LA',
-//         company_name: 'Carpenter Inc.',
-//         description: 'Small carpenter store in Los Angeles',
-//     },
-//     {
-//         job_title: 'Film Maker',
-//         location: 'NY',
-//         company_name: 'Movie Inc.',
-//         description: 'Small movie studio in New York',
-//     }
-// ]
-
-//DELETE all jobs
-//find all jobs, create an array of jobs
-// Job.find({}, function(err, jobs_array) {
-//     if (err){
-//         console.log(err);
-//     } else {
-//         //Loop through jobs_array and delete all
-//          for (i = 0; i < jobs_array.length; i++){
-//              jobs_array[i].remove(function (err){
-//                 if(err) {
-//                     console.log(err)
-//                 } else {}
-//             });
-//          }
-//          console.log('-> All jobs deleted from MongoDB and Elasticsearch');
-//     }
-// });
-
-//DELETE all candidates
-//find all candidates, create an array of candidates
-// Candidate.find({}, function(err, cand_array) {
-//     if (err){
-//         console.log(err);
-//     } else {
-//          //Loop through candidates_array and delete all
-//          for (i = 0; i < cand_array.length; i++){
-//             cand_array[i].remove(function (err){
-//                 if(err) {
-//                     console.log(err)
-//                 } else {}
-//             });
-//          }
-//          console.log('-> All candidates deleted from MongoDB and Elasticsearch');
-//     }
-// });
-
-// var cand_array = [];
-let job_array = [];
-let candidate_array = [];
-
-// candidates.forEach((c) => {
-//     cand_array.push(Candidate.create({
-//         preferred_position: c.preferred_position,
-//         work_culture_preferences: c.work_culture_preferences
-//     }));
-// });
-
-data.forEach((c) => {
-	let techstack = [];
-	for (let i = 0; i < c.hard_skills.length; i++) {
-		techstack.push({
-			name: c.hard_skills[i],
-			importance: 3,
-		});
+let randomSoftskills = (size) => {
+	let a = soft_skills;
+	for (let i = a.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[a[i], a[j]] = [a[j], a[i]];
 	}
-	job_array.push(
-		new Job({
+	return a.slice(0, size - 1);
+}
+
+let insertJobs = async (array) => {
+	const jobLoop = array.map(async (c) => {
+		let techstack = [];
+		for (let i = 0; i < c.hard_skills.length; i++) {
+			techstack.push({
+				name: c.hard_skills[i],
+				importance: 3,
+			});
+		}
+		let jobParams = {
 			hard_skills: techstack,
 			job_title: c.job_title,
 			location: c.location,
 			company_name: c.company_name,
 			description: c.description,
+			soft_skills: randomSoftskills(Math.floor(Math.random() * 4) + 1),
 			work_culture_keywords: c.work_culture_keywords,
-		}).save()
-	);
-});
-
-data_candidate.forEach((c) => {
-	let techstack = [];
-	let work_culture = [];
-	for (let i = 0; i < c.hard_skills.length; i++) {
-		techstack.push({
-			name: c.hard_skills[i],
-			importance: 3,
-		});
-	}
-	//work_culture not working for some reason
-	// for (let i = 0; i < c.work_culture_preferences.length; i++) {
-	// 	work_culture.push({
-	// 		name: c.work_culture_preferences[i],
-	// 		importance: 3,
-	// 	});
-	// }
-	c.work_culture_preferences.forEach((c) => {
-		work_culture.push({
-			name: c,
-			importance: 3,
-		});
+		};
+		jobParams.max_score = await getMaxScore("recruiter", jobParams);
+		await new Job(jobParams).save();
 	});
-	candidate_array.push(
-		new Candidate({
+	await Promise.all(jobLoop);
+	console.log("++ The amount of jobs seeded: " + jobLoop.length);
+}
+
+let insertCandidates = async (array) => {
+	const candidateLoop = array.map(async (c) => {
+		let techstack = [];
+		let work_culture = [];
+		for (let i = 0; i < c.hard_skills.length; i++) {
+			techstack.push({
+				name: c.hard_skills[i],
+				importance: 3,
+			});
+		}
+		c.work_culture_preferences.forEach((c) => {
+			work_culture.push({
+				name: c,
+				importance: 3,
+			});
+		});
+
+		// because dummy data has soft skills as strings
+		let softskills = (Array.isArray(c.soft_skills)) ? c.soft_skills : c.soft_skills.split(",");
+
+		let candidateParams = {
 			preferred_position: c.preferred_position,
 			job_type: c.job_type,
 			expected_salary: c.expected_salary,
@@ -145,35 +89,15 @@ data_candidate.forEach((c) => {
 			preferred_location: c.preferred_location,
 			description: c.description,
 			hard_skills: techstack,
-			soft_skills: c.soft_skills,
+			soft_skills: softskills,
 			work_culture_preferences: work_culture,
-		}).save()
-	);
-});
-// Promise.all(cand_array)
-//     .then(r => {
-//         console.log("++ The amount of candidates seeded: " + cand_array.length)
-//         mongoose.connection.close();
-//     })
-//     .catch(error => {
-//         console.log(`ERROR: ${error}`);
-//     });
-
-Promise.all(job_array)
-	.then((r) => {
-		console.log("++ The amount of jobs seeded: " + job_array.length);
-	})
-	.catch((error) => {
-		console.log(`ERROR: ${error}`);
+		}
+		candidateParams.max_score = await getMaxScore("candidate", candidateParams);
+		await new Candidate(candidateParams).save();
 	});
+	await Promise.all(candidateLoop);
+	console.log("++ The amount of candidates seeded: " + candidateLoop.length);
+}
 
-Promise.all(candidate_array)
-	.then((r) => {
-		console.log(
-			"++ The amount of candidates seeded: " + candidate_array.length
-		);
-		mongoose.connection.close();
-	})
-	.catch((error) => {
-		console.log(`ERROR: ${error}`);
-	});
+insertJobs(data);
+insertCandidates(data_candidate).then(() => mongoose.connection.close());

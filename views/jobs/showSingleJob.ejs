@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div class="main-body">
     <% if (user.role==='recruiter' ) { %>
       <hr />
@@ -125,19 +125,15 @@
             </div>
 
             <% if (typeof card.description !=='undefined' ){ %>
-              <div class="row gutters-sm">
-                <div id="questionnaire">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <div class="d-flex align-items-center mb-3">About the job</div>
-                      <p>
-                        <%= card.description %>
-                      </p>
-                    </div>
-                  </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">About the job</div>
+                  <p>
+                    <%= card.description %>
+                  </p>
                 </div>
               </div>
-              <% } %>
+            <% } %>
           </div>
           <!-- End right column -->
         </div>

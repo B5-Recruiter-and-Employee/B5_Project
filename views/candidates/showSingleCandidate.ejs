@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div class="main-body">
     <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
       <hr />
@@ -143,18 +143,14 @@
                           </div>
                         </div>
                   </div>
-                  <div class="row gutters-sm">
-                    <div id="questionnaire">
-                      <div class="card h-100">
-                        <div class="card-body">
-                          <div class="d-flex align-items-center mb-3 h5">About me</div>
-                          <% if (card.description && card.description !==undefined) { %>
-                            <p>
-                              <%= card.description %>
-                            </p>
-                            <% } else { %> - <% } %>
-                        </div>
-                      </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center mb-3 h5">About me</div>
+                      <% if (card.description && card.description !==undefined) { %>
+                        <p>
+                          <%= card.description %>
+                        </p>
+                        <% } else { %> - <% } %>
                     </div>
                   </div>
                 </div>
