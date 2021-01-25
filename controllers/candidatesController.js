@@ -1,20 +1,33 @@
 const Candidate = require("../models/candidate");
 const User = require("../models/user");
+const Job = require("../models/job_offer");
 const userController = require("./userController");
 
 module.exports = {
 
 	renderSingleCandidate: (req, res) => {
-		let cardId = req.params.candidateId;
+		let candidateId = req.params.candidateId;
+		let user = req.app.locals.user;
+		let jobs;
+		if (user.role === 'recruiter') {
+			Job.find({ _id: { $in: user.jobOffers } }).then(offers => {
+				jobs = offers.map(offer => {
+					if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
+						return offer;
+					}
+				});
+			});
+		}
 
-		Candidate.findById(cardId)
+		Candidate.findById(candidateId)
 			.then((candidate) => {
 				User.find({ candidateProfile: candidate._id }).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
 						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
 						// current logged in user
-						user: res.locals.user,
+						user: user,
+						jobs: jobs
 					});
 				});
 			})
