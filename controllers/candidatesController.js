@@ -21,7 +21,7 @@ module.exports = {
 
 		Candidate.findById(candidateId)
 			.then((candidate) => {
-				User.find({ candidateProfile: candidate._id }).then((cardOwner) => {
+				User.findById(candidate.user).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
 						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
@@ -51,30 +51,28 @@ module.exports = {
 			});
 	},
 
-	update: (req, res, next) => {
+	update: async (req, res, next) => {
 		let candidateId = req.params.id;
 		let candidateParams = userController.getCandidateParams(req, res);
 
-		Candidate.findOneAndUpdate(
-			{ _id: candidateId },
-			{ $set: candidateParams },
-			{ new: true },
-			(err, candidate) => {
-				if (err) {
-					req.flash(
-						"error",
-						`There has been an error while updating the candidate data: ${error.message}`
-					);
-					console.log(`Error updating candidate by ID: ${error.message}`);
-					next(error);
-				} else {
-					req.flash("success", `The candidate has been successfully updated!`);
-					res.redirect(`/user/${req.app.locals.user._id}`);
-					console.log("candidate updated in MongoDB and Elasticsearch");
-					next();
-				}
-			}
-		);
+		try {
+			candidateParams.max_score = await userController.getMaxScore("candidate", candidateParams);
+
+			await Candidate.findOneAndUpdate(
+				{ _id: candidateId },
+				{ $set: candidateParams },
+				{ new: true });
+			req.flash("success", `The candidate has been successfully updated!`);
+			res.redirect(`/user/${req.app.locals.user._id}`);
+			next();
+		} catch (error) {
+			req.flash(
+				"error",
+				`There has been an error while updating the candidate data: ${error.message}`
+			);
+			console.log(`Error updating candidate by ID: ${error.message}`);
+			next(error);
+		}
 	},
 
 	//candidate doesn't have the possibility to delete their profile yet

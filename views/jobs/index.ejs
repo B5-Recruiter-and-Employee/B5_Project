@@ -1,7 +1,10 @@
-<div class="container main-body">
+<div class="container main-body mb-5">
   <hr>
   <h1 class="personal-info mb-3">Your job offers</h1>
   <div class="matches font-weight-light mb-3">Click the "view matches" button to see matches for each job!</div>
+  <a href="<%=`/user/${user._id}/add-job` %>" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="1 1 16 16">
+    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+  </svg> Add job</a>
   <div class="d-none d-lg-block">
     <% if(jobs.length > 0) { %>
     <div class="card-container">
@@ -13,10 +16,7 @@
       </div>
     </div>
     <% } else { %>
-    <p class="h4 mb-4">You haven't added any jobs yet!</p>
-    <a href="<%=`/user/${user._id}/add-job` %>" class="btn btn-outline-primary mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="1 1 16 16">
-      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-    </svg> Add job</a>
+    <p class="h4 mt-4">You haven't added any jobs yet!</p>
     <%} %>
   </div>
   <div class="d-block d-lg-none">
