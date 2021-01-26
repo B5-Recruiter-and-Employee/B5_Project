@@ -8,14 +8,14 @@ exports.respondNotFound = (req, res) => {
 };
 
 //catch requests where internal errors occurred
-exports.respondInternalError = (req, res, next) => {
+exports.respondInternalError = (req, res) => {
     let errorCode = httpStatus.StatusCodes.INTERNAL_SERVER_ERROR;
     res.status(errorCode);
     res.send(`${errorCode} | Sorry, our application is experiencing a problem!`);
 };
 
 // access denied function here
-exports.respondAccessDenied = (req, res, next) => {
+exports.respondAccessDenied = (req, res) => {
     let errorCode = httpStatus.StatusCodes.UNAUTHORIZED;
     res.status(errorCode);
     res.render("error/access-denied");
@@ -23,7 +23,7 @@ exports.respondAccessDenied = (req, res, next) => {
 
 // redirect to login when user is not logged in.
 // @param redirect: String of the relative path you want to redirect the after login.
-exports.respondNotLoggedin = (req, res, next, redirect) => {
+exports.respondNotLoggedin = (req, res, redirect) => {
     let errorCode = httpStatus.StatusCodes.NETWORK_AUTHENTICATION_REQUIRED;
     res.status(errorCode);
     req.flash("error", "You must be logged in to access the requested page.");

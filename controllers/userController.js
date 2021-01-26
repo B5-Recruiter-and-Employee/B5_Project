@@ -5,6 +5,7 @@ const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 const matchesController = require("./matchesController");
+const errorController = require("./errorController");
 
 module.exports = {
   renderLogin: (req, res) => {
@@ -29,11 +30,14 @@ module.exports = {
             card: candidate,
             cardOwner: { name: user.fullName, email: user.email }
           });
-        })
+        });
       } else {
         res.render('user/profile');
       }
-    })
+    }).catch(error => {
+      console.error(`Error while trying to find the user with id ${userId}`, error);
+      errorController.respondInternalError(req, res);
+    });
   },
 
   authPassport: (req, res) => {
@@ -63,11 +67,21 @@ module.exports = {
   },
 
   renderThanks: (req, res) => {
-    res.render("thanks")
+    res.render("thanks");
   },
 
   renderEdit: (req, res, next) => {
     let userId = req.params.id;
+
+    if (typeof req.app.locals.user === 'undefined') {
+      let redirect = `/user/${userId}/edit`;
+      errorController.respondNotLoggedin(req, res, redirect);
+    }
+
+    if (req.app.locals.user._id != userId) {
+      errorController.respondAccessDenied(req, res);
+    }
+
     User.findById(userId).then(user => {
       res.locals.user = user;
       res.locals.loggedIn = user;
@@ -77,13 +91,23 @@ module.exports = {
         });
     })
       .catch(error => {
-        console.log(`Error fetching user by ID: ${error.message}`);
-        next(error);
+        console.error(`Error fetching user by ID: ${error.message}`);
+        errorController.respondInternalError(req, res);
       });
   },
 
   update: (req, res, next) => {
     let userId = req.params.id;
+
+    if (typeof req.app.locals.user === 'undefined') {
+      let redirect = `/user/${userId}/edit`;
+      errorController.respondNotLoggedin(req, res, redirect);
+    }
+
+    if (req.app.locals.user._id != userId) {
+      errorController.respondAccessDenied(req, res);
+    }
+
     let userParams = {
       name: {
         firstname: req.body.firstname,
@@ -100,8 +124,8 @@ module.exports = {
         next();
       })
       .catch(error => {
-        console.log(`Error updating user by ID: ${error.message}`);
-        next(error);
+        console.error(`Error updating user by ID: ${error.message}`);
+        errorController.respondInternalError(req, res);
       });
 
   },
@@ -119,50 +143,12 @@ module.exports = {
       lname: req.query.lastname
     });
   },
-  /**
-   * Restricts access: allow user with certain roles to access the route.
-   * @param action what action the user can perform. Value such as readAny, deleteAny etc.
-   * @param resource what resource the defined action has permission to operate on e.g. profile.
-   */
-  grantAccess: (action, resource) => {
-    return async (req, res, next) => {
-      try {
-        // determines if user's role has sufficient permission
-        // to perform the specified action of the provided resource.
-        const permission = roles.can(req.user.role)[action](resource);
-        if (!permission.granted) {
-          return res.status(401).json({
-            error: "You don't have a permission to perform this action"
-          });
-        }
-        next()
-      } catch (error) {
-        next(error)
-      }
-    }
-  },
-
-  allowIfLoggedin: async (req, res, next) => {
-    try {
-      const user = res.locals.loggedIn;
-      console.log('allow ', user);
-      if (!user)
-        return res.status(401).json({
-          error: "You need to be logged in to access this route"
-        });
-      req.user = user;
-      next();
-    } catch (error) {
-      next(error);
-    }
-  },
 
   /** 
    * Shows the questionnaire page for signup.
    */
   renderNewCandidate: (req, res) => {
     res.render('candidates/new');
-
   },
 
   /**
@@ -245,12 +231,12 @@ module.exports = {
         // delete fake match again
         await client.delete({ index: index, id: result.hits.hits[0]._id });
       } catch (error) {
-        console.log("WARNING: An error occurred during deletion of the fake match.\n", error);
+        console.warn("WARNING: An error occurred during deletion of the fake match.\n", error);
       }
 
       return max_score;
     } catch (error) {
-      console.log("Error while getting max_score:\n", error);
+      console.error("Error while getting max_score:\n", error);
       return 0.0;
     }
   },
@@ -313,9 +299,8 @@ module.exports = {
         next();
       }
     } catch (error) {
-      console.log("Error while saving new job offer:\n", error);
-      res.locals.redirect = "/"; // REPLACE WITH INTERNAL ERROR PAGE
-      next();
+      console.error("Error while saving new job offer:\n", error);
+      errorController.respondInternalError(req, res);
     }
   },
 
@@ -337,32 +322,31 @@ module.exports = {
 
     let newUser = new User(userParams);
     User.register(newUser, req.body.password, (error, user) => {
-      if (user) {
-        req.flash('success', `The user ${user.fullName} was created successfully!`);
-        res.locals.redirect = `/thanks`;
-        res.locals.user = user;
-
-        // assign userId to the created job
-        Job.findOneAndUpdate({ _id: jobId },
-          { $set: { user: user._id } },
-          { new: true })
-          .then(job => {
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating job with user ID: ${error.message}`);
-            next(error);
-          });
-      } else {
-        console.log(`Error saving user profile: ${error.message}`);
+      if (error) {
+        console.error(`Error saving user profile: ${error.message}`);
         res.locals.redirect = "/signup/recruiter";
         req.flash(
           "error",
           `Failed to create user account. Please try again.`
         );
         next();
+      } else {
+        // assign userId to the created job
+        Job.findOneAndUpdate({ _id: jobId },
+          { $set: { user: user._id } },
+          { new: true })
+          .then(job => {
+            req.flash('success', `The user ${user.fullName} was created successfully!`);
+            res.locals.redirect = `/thanks`;
+            res.locals.user = user;
+            next();
+          })
+          .catch(error => {
+            console.error(`Error updating job with user ID: ${error.message}`);
+            errorController.respondInternalError(req, res);
+          });
       }
-    })
+    });
   },
 
   getCandidateParams: (req, res) => {
@@ -443,7 +427,7 @@ module.exports = {
       res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
       next();
     } catch (error) {
-      console.log("Error while trying to save candidate\n", error);
+      console.error("Error while trying to save candidate\n", error);
       res.locals.redirect = `/signup/candidate`; // REPLACE WITH INTERNAL ERROR PAGE
       next();
     }
@@ -525,6 +509,45 @@ let convertTagsInput = (tags) => {
 let filterDuplicates = (value, index, self) => {
   return self.indexOf(value) === index;
 }
+
+  /**
+   * Restricts access: allow user with certain roles to access the route.
+   * @param action what action the user can perform. Value such as readAny, deleteAny etc.
+   * @param resource what resource the defined action has permission to operate on e.g. profile.
+   */
+  // grantAccess: (action, resource) => {
+  //   return async (req, res, next) => {
+  //     try {
+  //       // determines if user's role has sufficient permission
+  //       // to perform the specified action of the provided resource.
+  //       const permission = roles.can(req.user.role)[action](resource);
+  //       if (!permission.granted) {
+  //         return res.status(401).json({
+  //           error: "You don't have a permission to perform this action"
+  //         });
+  //       }
+  //       next()
+  //     } catch (error) {
+  //       next(error)
+  //     }
+  //   }
+  // },
+
+  // allowIfLoggedin: async (req, res, next) => {
+  //   try {
+  //     const user = res.locals.loggedIn;
+  //     console.log('allow ', user);
+  //     if (!user)
+  //       return res.status(401).json({
+  //         error: "You need to be logged in to access this route"
+  //       });
+  //     req.user = user;
+  //     next();
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
+
  // delete: (req, res, next) => {
   //   let userId = req.params.id;
     // User.findByIdAndRemove(userId)
