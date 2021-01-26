@@ -1,0 +1,12 @@
+.search-section{
+  padding: 30px;
+}
+.search-label{
+  margin: .5rem 20px .5rem 10px;
+}
+.search-remote:hover{
+  background-color: #5a6268;
+}
+.search-remote .form-check-input, .form-check-label{
+  cursor: pointer;
+}

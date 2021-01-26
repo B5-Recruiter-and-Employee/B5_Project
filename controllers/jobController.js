@@ -1,135 +1,112 @@
-const { db } = require("../models/job_offer");
 const Job = require("../models/job_offer");
+const user = require("../models/user");
 const User = require("../models/user");
+const userController = require("./userController");
+const { Client } = require('elasticsearch');
+const client = new Client({ node: 'http://localhost:9200' });
 
 module.exports = {
 
-    renderSingleJobEdit: (req, res) => {
-        let jobId = req.params.jobId;
+  /**
+   * Shows only those job offers that are added
+   * by a particular logged in recruiter.
+   */
+  indexJobOffers: (req, res, next) => {
+    let currentUser = res.locals.user;
+    Job.find({ _id: { $in: currentUser.jobOffers } }).then(offers => {
+      let mappedOffers = offers.filter(offer => { return JSON.stringify(offer.user) === JSON.stringify(currentUser._id) });
+      res.locals.jobs = mappedOffers;
+      next();
+    });
+  },
 
-        Job.findOne({ '_id': jobId })
-            .exec()
-            .then((job) => {
-                res.render("jobs/edit", {
-                    job: job
-                });
-            })
-            .catch((error) => {
-                console.log(error.message);
-                return [];
-            })
-            .then(() => {
-                console.log("promise complete");
-            });
-    },
+  renderJobOffers: (req, res) => {
+    res.render("jobs/index");
+  },
 
-    renderSingleJob: (req, res, next) => {
-        let jobId = req.params.jobId
-
-        Job.findById(jobId).then(card => {
-            res.render("jobs/showSingleJob", {
-                card: card
-            });
-            next()
-        })
-            .catch((error) => {
-                console.log(error.message);
-                return [];
-            })
-    },
-
-    updateJob: (req, res) => {
-        let jobId = req.params.jobId;
-        let user = req.user; //new
-
-        jobParams = {
-            job_title: req.body.job_title,
-            location: req.body.location,
-            salary: req.body.salary,
-            company_name: req.body.company_name,
-            description: req.body.description,
-        };
-    //  Job.findByIdAndUpdate(jobId, { $set: jobParams})
-        Job.findOneAndUpdate({_id: jobId}, {$set: jobParams}, {new: true}, (err, job) => {
-            if(err) {
-                req.flash('error', `There has been an error while updating the job offer: ${error.message}`);
-                console.log(`Error updating job by ID: ${error.message}`);
-            } else {
-                //let user = res.locals.user;
-                req.flash('success', `The job has been successfully updated!`);
-                res.redirect(`/user/${user._id}/offers`);
-                console.log('job updated in MongoDB and Elasticsearch')
-            }
+  renderSingleJobEdit: (req, res) => {
+    let jobId = req.params.jobId;
+    Job.findOne({ _id: jobId })
+      .exec()
+      .then((job) => {
+        res.render("jobs/edit", {
+          job: job,
         });
-     },
-     
-    /**
-     * Delete the job offer from the whole jobs collection &
-     * from the collection of job offers (jobOffers array in User) create by particular user.
-     */
-    deleteJob: (req, res) => {
-        let jobId = req.params.jobId;
-        let user = req.user;
+      })
+      .catch((error) => {
+        console.log(error.message);
+        return [];
+      });
+  },
 
-        Job.findOneAndRemove({_id: jobId})
-            .then((job) =>{    
-                console.log('user to update:', user);
-                // delete job from user's jobs array (both in MongoDB and ES)
-                User.findOneAndUpdate({_id : user._id}, 
-                {$pull: {jobOffers: job._id}},
-                {new : true}   
-                    ).then((user) => {
-                    console.log('job deleted from the jobOffers Array')
-                    req.flash('success', `The job offer has been deleted successfully!`);
-                    res.redirect(`/user/${user._id}/offers`);
-                })
-                .catch(error => {
-                    req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
-                     console.log(`Error deleting job by ID: ${error.message}`);
-                     next(error);
-                })
-            })
-    },
-}
+  /**
+   * Renders the view of one single job.
+   */
+  renderSingleJob: (req, res, next) => {
+    let jobId = req.params.jobId;
 
-        // getAllJobs: (req, res) => {
-    //     Job.find({})
-    //         .exec()
-    //         .then((jobs) => {
-    //             res.render("jobs/index", {
-    //                 jobs: jobs
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error.message);
-    //             return [];
-    //         })
-    //         .then(() => {
-    //             console.log("promise complete");
-    //         });
-    // },
-  
-    // saveJob: (req, res) => {
-    //     let newJob = new Job({
-    //         job_title: req.body.job_title,
-    //         location: req.body.location,
-    //         salary: req.body.salary,
-    //         company_name: req.body.company_name,
-    //         description: req.body.description,
-    //     });
-    //     newJob.save()
-    //         .then(() => {
-    //             res.render('thanks', {
-    //                 flashMessages: { success: "The job has been created!"}
-    //             })
-    //             // req.flash('success', `The job offer has been created successfully!`);
-    //             // res.redirect(`thanks`);
-    //         })
-    //         .catch(error => {
-    //             res.send(error);
-    //         });
-    // },
+    Job.findById(jobId)
+      .then((card) => {
+        User.find({ _id: card.user }).then((user) => {
+          let recruiterEmail;
+          if (user[0]) {
+            recruiterEmail = user[0].email;
+          }
+          res.render("jobs/showSingleJob", {
+            card: card,
+            email: recruiterEmail,
+          });
+          next();
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+        return [];
+      });
+  },
 
-    // createJobs: (req, res) => {
-    //     res.render("jobs/new");
-    // },
+  updateJob: async (req, res) => {
+    let jobId = req.params.jobId;
+    let jobParams = userController.getJobParams(req, res);
+
+    try {
+      // update max_score
+      jobParams.max_score = await userController.getMaxScore("recruiter", jobParams);
+
+      let job = await Job.findOneAndUpdate({ _id: jobId }, { $set: jobParams }, { new: true });
+      req.flash('success', `The job offer "${job.job_title}" has been successfully updated!`);
+    } catch (error) {
+      req.flash('error', `There has been an error while updating the job offer`);
+      console.log(`Error updating job by ID: ${error.message}`);
+    }
+
+    // in any case, redirect
+    res.redirect(`/user/${res.locals.user._id}/offers`);
+  },
+
+  /**
+   * Delete the job offer from the whole jobs collection &
+   * from the collection of job offers (jobOffers array in User) create by particular user.
+   */
+  deleteJob: (req, res) => {
+    let jobId = req.params.jobId;
+    let user = req.user;
+
+    Job.findOneAndRemove({ _id: jobId })
+      .then((job) => {
+        // delete job from user's jobs array (both in MongoDB and ES)
+        User.findOneAndUpdate({ _id: user._id },
+          { $pull: { jobOffers: job._id } },
+          { new: true }
+        ).then((user) => {
+          req.flash('success', `The job offer has been deleted successfully!`);
+          res.redirect(`/user/${user._id}/offers`);
+        })
+          .catch(error => {
+            req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
+            console.log(`Error deleting job by ID: ${error.message}`);
+            next(error);
+          })
+      })
+  },
+};

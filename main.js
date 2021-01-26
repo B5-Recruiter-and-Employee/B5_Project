@@ -73,6 +73,8 @@ app.use(require('./routes/candidatesRouter'));
 app.use(require('./routes/jobRouter'));
 app.use(require('./routes/userRouter'));
 app.use(require('./routes/matchesRouter'));
+app.use(require('./routes/searchRouter'));
+app.use(require('./routes/emailRouter'));
 
 //connect to the port
 app.listen(port, () => {

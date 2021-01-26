@@ -40,8 +40,18 @@ header .nav-link {
   margin: 0 1rem;
 }
 
+.btn-primary:hover, .btn-outline-primary:hover{
+  background-color: #9AB3F5;
+  color: #120078 !important;
+}
+
 header a.nav-link:hover:not(.btn) {
   color: #7579E7 !important;
+}
+
+header .nav-link.btn {
+  font-weight: bold;
+  padding: 0.3rem 1rem 0.5rem !important;
 }
 
 header .navbar-brand{
@@ -49,9 +59,6 @@ header .navbar-brand{
   background: -webkit-linear-gradient(left, #120078, #98acf8 );
   -webkit-background-clip: text; 
   -webkit-text-fill-color: transparent;
-}
-header .navbar-brand:hover{
-  color: #7579E7 !important;
 }
 
 /* smaller font-sizes for mobile screen */
@@ -114,21 +121,28 @@ a {
 /* overwrite bootstrap classes */
 
 .btn-primary, .badge-primary {
-   color : white !important;
-   font-weight: bold !important;
+   color: white !important;
    background-color: #9AB3F5 !important;
-   border: 0;
-   margin: 0 0.5rem;
-   padding: 0.3rem 1rem 0.5rem !important;
+   border-color: #9AB3F5 !important;
 }
 
 .btn-primary:hover {
   background-color: #7579E7 !important;
 }
 
+.btn-success {
+  background-color: rgb(85, 165, 118)  !important;
+  border-color: rgb(85, 165, 118)  !important;
+}
+
+.btn-success:hover {
+  background-color: rgb(121, 196, 152)  !important;
+  border-color: rgb(121, 196, 152)  !important;
+}
+
 .btn-outline-success {
-  color : rgb(121, 196, 152) !important;
-  border-color : rgb(121, 196, 152)  !important;
+  color: rgb(121, 196, 152) !important;
+  border-color: rgb(121, 196, 152)  !important;
 }
 
 .btn-outline-success:hover {
@@ -152,8 +166,17 @@ a {
   border-radius: 10%;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: white !important;
+  background-color: #9AB3F5 !important;
+}
+
 .text-primary {
   color :#C1CAF4 !important;
+}
+
+.text-success {
+  color: rgb(121, 196, 152) !important;
 }
 
 /* login page */
@@ -191,4 +214,19 @@ a {
   margin-bottom: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* -- CONTAINERS ON MATCHES PAGE -- */
+/* carousel element */
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    min-width: 350px;
+   }
+   
+.card {
+    min-width: 90% !important;
+}
+
+.card-container{
+  margin-left: 100px !important;
+  margin-right: 100px !important;
 }

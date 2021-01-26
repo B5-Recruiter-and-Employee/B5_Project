@@ -3,43 +3,25 @@ const User = require("../models/user");
 const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
+const { Client } = require('elasticsearch');
+const client = new Client({ node: 'http://localhost:9200' });
+const matchesController = require("./matchesController");
 
 module.exports = {
-  login: (req, res) => {
+  renderLogin: (req, res) => {
     res.render("user/login");
-
   },
 
   redirectView: (req, res, next) => {
     let redirectPath = res.locals.redirect;
-    console.log(res.locals.loggedIn);
     if (redirectPath) res.redirect(redirectPath);
     else next();
   },
 
-  show: (req, res, next) => {
-    let userId = req.params.id;
-    User.findById(userId).then(user => {
-      console.log(user);
-      res.locals.user = user;
-      res.locals.loggedIn = user;
-      console.log('show: ', res.locals.loggedIn);
-      Candidate.findById(user.candidateProfile).then(candidate => {
-        res.locals.candidate = candidate;
-        next();
-      })
-
-    })
-      .catch(error => {
-        console.log(`Error fetching user by ID: ${error.message}`);
-        next(error);
-      });
-  },
-/**
- * Shows the view of single match (job offer or candidate) 
- * or a profile page of a logged in use (recruiter or candidate). 
- */
-  showView: (req, res) => {
+  /**
+   * Renders the profile page of a logged in user (recruiter or candidate). 
+   */
+  renderView: (req, res) => {
     let userId = req.params.id;
     User.findById(userId).then(user => {
       if (user.candidateProfile) {
@@ -55,12 +37,15 @@ module.exports = {
     })
   },
 
-  authenticate: passport.authenticate("local", {
-    failureRedirect: "/user/login",
-    failureFlash: "Failed to login.",
-    successRedirect: "/",
-    successFlash: "Logged in!"
-  }),
+  authPassport: (req, res) => {
+    // `req.user` contains the authenticated user.
+    if (req.user) {
+      req.flash('success', 'You have been successfully logged in!');
+      res.redirect('/user/' + req.user._id);
+    } else {
+      req.flash("error", `Failed to login.`);
+    }
+  },
 
   logout: (req, res, next) => {
     req.logout();
@@ -69,43 +54,11 @@ module.exports = {
     next();
   },
 
-  createAccount: (req, res, next) => {
-    let userParams = {
-      name: {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname
-      },
-      email: req.body.email,
-      role: req.body.role,
-      password: req.body.password
-    };
-
-    if (req.skip) next();
-    let newUSer = new User(userParams);
-    User.register(newUSer, req.body.password, (error, user) => {
-      console.log('bitte', user);
-      if (user) {
-        req.flash('success', `The user ${user.fullName} was created successfully!`);
-        res.locals.redirect = `/thanks`;
-        res.locals.user = user;
-        next();
-      } else {
-        console.log(`Error saving user profile: ${error.message}`);
-        res.locals.redirect = "/user/signup";
-        req.flash(
-          "error",
-          `Failed to create user account because: ${error.message}.`
-        );
-        next();
-      }
-    })
-  },
-
-  showThank: (req, res) => {
+  renderThanks: (req, res) => {
     res.render("thanks")
   },
 
-  edit: (req, res, next) => {
+  renderEdit: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId).then(user => {
       res.locals.user = user;
@@ -120,6 +73,7 @@ module.exports = {
         next(error);
       });
   },
+
   update: (req, res, next) => {
     let userId = req.params.id;
     let userParams = {
@@ -127,8 +81,7 @@ module.exports = {
         firstname: req.body.firstname,
         lastname: req.body.lastname
       },
-      email: req.body.email,
-      password: req.body.password
+      email: req.body.email
     };
     //we need to use findOneAndUpdate instead of findByIdAndUpdate!
     // User.findByIdAndUpdate(userId, { $set: userParams })
@@ -196,42 +149,6 @@ module.exports = {
     }
   },
 
-  /**
-
- * Add the candidate profile information to the user that
- * is currently logged in. 
- * New jobs are being saved here!
- */
-  // addJobOffers: (req, res, next) => {
-  //   userId = req.params.id;
-  //   let job = new Job({
-  //     location: req.body.location,
-  //     company_name: req.body.company_name,
-  //     job_title: req.body.job_title,
-  //     salary: req.body.salary,
-  //     description: req.body.description
-  //   })
-  //   job.save().
-  //     then((job) => {
-  //       // User.findByIdAndUpdate(userId, {
-  //       User.findOneAndUpdate({ _id: userId }, {
-  //         $addToSet: {
-  //           jobOffers: job
-  //         }
-  //       },
-  //         { new: true }
-  //       )
-  //         .then(user => {
-  //           req.flash('success', `The job offer has been created successfully!`);
-  //           res.locals.redirect = `/user/${user._id}/offers`;
-  //           //res.locals.redirect = `/user/${user._id}`;
-  //           next();
-  //         })
-  //         .catch(error => {
-  //           console.log(`Error updating candidate by ID: ${error.message}`); next(error);
-  //         });
-  //     })
-  // },
   /** 
    * Shows the questionnaire page for signup.
    */
@@ -247,41 +164,7 @@ module.exports = {
     res.render('jobs/new');
   },
 
-  /**
-   * Shows only those job offers that are added
-   * by a particular logged in recruiter.
-   */
-  indexJobOffers: (req, res, next) => {
-    // let userId = req.params.id;
-    let currentUser = res.locals.user;
-    Job.find({}).then(jobs => {
-      res.locals.jobs = jobs;
-      let mappedOffers = jobs.filter(offer => {
-        let userAdded = currentUser.jobOffers.some(userOffer => {
-          console.log("comparison: ", JSON.stringify(userOffer) === JSON.stringify(offer._id))
-          return JSON.stringify(userOffer) === JSON.stringify(offer._id);
-        });
-        if (userAdded) return offer;
-
-      });
-      res.locals.jobs = mappedOffers;
-      next();
-    })
-      .catch((error) => {
-        console.log(`Error fetching candidates: ${error.message}`);
-        return [];
-      })
-  },
-
-  indexViewJobOffers: (req, res) => {
-    res.render("jobs/index");
-  },
-
-  /**
-   * Add a new job offer during signup or when recruiter is logged in.
-   * 
-   */
-  addJobOffers: (req, res, next) => {
+  getJobParams: (req, res) => {
     // get the bootstrap tag inputs and convert them to fit to our DB model
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3];
     let techstack = convertTagsInput(techArray);
@@ -289,74 +172,143 @@ module.exports = {
     let softskills = convertTagsInput(softskillsArray);
 
     // location + remote work question
-    let location = [req.body.location];
-    if (!req.body.location) {
-      location = [];
+    let location = [];
+    if (req.body.location) {
+      location.push(req.body.location);
     }
-    let remote = req.body.remote;
-    console.log(remote);
-    if (remote) {
-      location.push(remote);
+    if (req.body.remote) {
+      location.push(req.body.remote);
     }
 
     //work culture checkboxes and input
-    let  workculture = [];
-    if(req.body.extras){
+    let workculture = [];
+    if (req.body.extras) {
       if (Array.isArray(req.body.extras)) {
         workculture = req.body.extras;
-      }else{
+      } else {
         workculture = [req.body.extras];
       }
     }
-    if (req.body.work_culture_keywords){
-      if (Array.isArray(req.body.work_culture_keywords)){
+    if (req.body.work_culture_keywords) {
+      if (Array.isArray(req.body.work_culture_keywords)) {
         req.body.work_culture_keywords.forEach(e => {
           workculture.push(e);
         });
-      }else{
-      workculture.push(req.body.work_culture_keywords);
-    }
+      } else {
+        workculture.push(req.body.work_culture_keywords);
+      }
     }
 
-    console.log(workculture);
-    let job = new Job({
+    return {
       job_title: req.body.job_title,
       location: location,
       company_name: req.body.company_name,
       salary: req.body.salary,
       description: req.body.description,
-      work_culture_keywords: workculture,
+      work_culture_keywords: workculture.filter(Boolean).filter(filterDuplicates),
       job_type: req.body.job_type,
       soft_skills: softskills,
       hard_skills: techstack,
-    })
-    job.save().
-      then((job) => {
-        let userId = req.params.id;
-        // if recruiter is logged in (= on route with userId)
-        if (userId) {
-          User.findOneAndUpdate({ _id: userId }, {
-            $addToSet: {
-              jobOffers: job
-            }
-          },
-            { new: true }
-          )
-            .then(user => {
-              req.flash('success', `The job offer has been created successfully!`);
-              res.locals.redirect = `/user/${user._id}/offers`;
-              next();
-            })
-            .catch(error => {
-              console.log(`ADD JOB: Error updating user. ${error.message}`);
-              next(error);
-            });
-        } else {
-          // else: not logged in, redirect to user signup page
-          res.locals.redirect = `/signup/recruiter/${job._id}`;
-          next();
-        }
-      })
+    }
+  },
+
+  getMaxScore: async (role, match) => {
+    // get fake candidate/job + ES query for the "perfect match"
+    let matchUtils, index;
+    if (role === 'recruiter') {
+      matchUtils = module.exports.getJobPerfectMatchUtils(match);
+      index = "candidates";
+    } else if (role === 'candidate') {
+      matchUtils = module.exports.getCandidatePerfectMatchUtils(match);
+      index = "job_offers";
+    }
+
+    try {
+      await client.index(matchUtils.fake);
+
+      // refresh the index, otherwise we cannot search for the fake match
+      await client.indices.refresh({ index: index });
+
+      // now query for the perfect match and get max_score
+      const result = await client.search(matchUtils.query);
+      const max_score = result.hits.max_score;
+
+      try {
+        // delete fake match again
+        await client.delete({ index: index, id: result.hits.hits[0]._id });
+      } catch (error) {
+        console.log("WARNING: An error occurred during deletion of the fake match.\n", error);
+      }
+
+      return max_score;
+    } catch (error) {
+      console.log("Error while getting max_score:\n", error);
+      return 0.0;
+    }
+  },
+
+  getJobPerfectMatchUtils: (job) => {
+    // create fake perfect match
+    let fakeCandidate = {
+      index: "candidates",
+      body: {
+        preferred_position: job.job_title,
+        hard_skills: job.hard_skills,
+        soft_skills: job.soft_skills.map(j => { return j.name })
+      }
+    }
+
+    // prepare values for es query
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", job.hard_skills);
+    let soft_skills = matchesController.getSortedKeywords("soft_skills", job.soft_skills);
+    let job_title = { "preferred_position": job.job_title };
+
+    // create query - we only need 1 result
+    let query = matchesController.getQuery("candidates", job_title, [hard_skills, soft_skills]);
+    query.body.size = 1;
+
+    return { query: query, fake: fakeCandidate };
+  },
+
+  /**
+   * Add a new job offer during signup or when recruiter is logged in.
+   * 
+   */
+  addJobOffers: async (req, res, next) => {
+    let jobParams = module.exports.getJobParams(req, res);
+
+    // if recruiter is logged in, add their ID to jobParams
+    let currentUser = req.user;
+    if (currentUser) {
+      jobParams.user = currentUser._id;
+    }
+
+    try {
+      // get max_score
+      jobParams.max_score = await module.exports.getMaxScore('recruiter', jobParams);
+
+      // create new job
+      let newJob = new Job(jobParams);
+      let job = await newJob.save();
+
+      // if logged in, add jobId to user
+      if (currentUser) {
+        let user = await User.findOneAndUpdate({ _id: currentUser._id },
+          { $addToSet: { jobOffers: job } },
+          { new: true });
+        req.flash('success', `The job offer has been created successfully!`);
+        res.locals.redirect = `/user/${user._id}/offers`;
+        next();
+      } else {
+        // else: not logged in, redirect to user signup page to create user
+        res.locals.redirect = `/signup/recruiter/${job._id}`;
+        next();
+      }
+    } catch (error) {
+      console.log("Error while saving new job offer:\n", error);
+      res.locals.redirect = "/"; // REPLACE WITH INTERNAL ERROR PAGE
+      next();
+    }
   },
 
   signUpRecruiter: (req, res, next) => {
@@ -383,7 +335,9 @@ module.exports = {
         res.locals.user = user;
 
         // assign userId to the created job
-        Job.findOneAndUpdate({ _id: jobId }, { $set: { user: user._id } }, { new: true })
+        Job.findOneAndUpdate({ _id: jobId },
+          { $set: { user: user._id } },
+          { new: true })
           .then(job => {
             next();
           })
@@ -396,38 +350,40 @@ module.exports = {
         res.locals.redirect = "/signup/recruiter";
         req.flash(
           "error",
-          `Failed to create user account because: ${error.message}.`
+          `Failed to create user account. Please try again.`
         );
         next();
       }
     })
   },
 
-  /**
-   * Add new candidate information when user first sign up
-   */
-  addCandidate: (req, res, next) => {
+  getCandidateParams: (req, res) => {
     let techArray = [req.body.techstack1, req.body.techstack2, req.body.techstack3];
     let techstack = convertTagsInput(techArray);
     let workcultureArray = [req.body.workculture1, req.body.workculture2, req.body.workculture3];
     let work_culture_preferences = convertTagsInput(workcultureArray);
 
     // preferred location + remote work question
-    let location =[]; 
+    let location = [];
     if (Array.isArray(req.body.preferred_location)) {
       location = req.body.preferred_location;
     }
-    else{
+    else {
       location = [req.body.preferred_location];
     }
-   
-    let remote = req.body.remote;
-    console.log(remote);
-    if (remote) {
-      location.push(remote);
+    if (req.body.remote) {
+      location.push(req.body.remote);
     }
 
-    let candidate = new Candidate({
+    // soft skills
+    let softskills = [];
+    if (Array.isArray(req.body.soft_skills)) {
+      softskills = req.body.soft_skills;
+    } else {
+      softskills = [req.body.soft_skills];
+    }
+
+    return {
       current_location: req.body.current_location,
       preferred_location: location,
       job_type: req.body.job_type,
@@ -435,15 +391,54 @@ module.exports = {
       preferred_position: req.body.preferred_position,
       description: req.body.description,
       hard_skills: techstack,
-      soft_skills: req.body.soft_skills,
+      soft_skills: softskills.filter(Boolean).filter(filterDuplicates),
       work_culture_preferences: work_culture_preferences,
-    })
-    candidate.save().
-      then((candidate) => {
-        //res.locals.signUpName = {firstname: 'Test', lastname: 'User'};
-        res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
-        next();
-      })
+    }
+  },
+
+  getCandidatePerfectMatchUtils: (candidate) => {
+    // create fake perfect match
+    let fakeJob = {
+      index: "job_offers",
+      body: {
+        job_title: candidate.preferred_position,
+        hard_skills: candidate.hard_skills,
+        work_culture_keywords: candidate.work_culture_preferences.map(j => { return j.name })
+      }
+    }
+
+    // prepare values to create an ES query
+    let hard_skills = matchesController.getSortedKeywords("hard_skills.name", candidate.hard_skills);
+    let work_culture = matchesController.getSortedKeywords("work_culture_keywords", candidate.work_culture_preferences)
+    let job_title = { "job_title": candidate.preferred_position };
+
+    // create ES query
+    let query = matchesController.getQuery("job_offers", job_title, [hard_skills, work_culture]);
+    query.body.size = 1;
+
+    return { query: query, fake: fakeJob };
+  },
+
+  /**
+   * Add new candidate information when user first sign up
+   */
+  addCandidate: async (req, res, next) => {
+    let candidateParams = module.exports.getCandidateParams(req, res);
+
+    try {
+      // get max_score
+      candidateParams.max_score = await module.exports.getMaxScore('candidate', candidateParams);
+      // save candidate
+      let newCandidate = new Candidate(candidateParams)
+      let candidate = await newCandidate.save();
+      // redirect to signup page to create user
+      res.locals.redirect = `/signup/candidate/${candidate._id}?firstname=${req.body.firstname}&lastname=${req.body.lastname}`;
+      next();
+    } catch (error) {
+      console.log("Error while trying to save candidate\n", error);
+      res.locals.redirect = `/signup/candidate`; // REPLACE WITH INTERNAL ERROR PAGE
+      next();
+    }
   },
 
   signUpCandidate: (req, res, next) => {
@@ -493,30 +488,34 @@ module.exports = {
 
 /**
  * This function is used for creating an array from input tags. 
- * @param {tags} tags array of tagsinput from bootstrap, they should be sorted from 1 to 4 not the other way around
+ * @param {tags} tags array of tagsinput from bootstrap, they should be sorted from 1 to 3 not the other way around
  * @returns array of keyword-objects with importance {name, importance}
  */
 let convertTagsInput = (tags) => {
   let tagsinput = [];
-  for (let i = 1; i <= tags.length; i++) {
+  for (let i = 0; i <= tags.length; i++) {
     if (Array.isArray(tags[i])) {
-      for (let j = 0; j < tags[i].length; j++) {
-        tagsinput.push({
-          name: tags[i][j],
-          importance: i
-        });
-      }
-    }
-    else if (typeof tags[i] === 'undefined') {
-      //do nothing
-    } else {
+      // filter all empty strings and duplicates
+      tags[i].filter(Boolean).filter(filterDuplicates).forEach(tag => {
+        if (tag.length > 0) {
+          tagsinput.push({
+            name: tag,
+            importance: i + 1
+          });
+        }
+      })
+    } else if (typeof tags[i] === 'string' && tags[i].length > 0) {
       tagsinput.push({
         name: tags[i],
-        importance: i
-      })
+        importance: i + 1
+      });
     }
   }
   return tagsinput;
+}
+
+let filterDuplicates = (value, index, self) => {
+  return self.indexOf(value) === index;
 }
  // delete: (req, res, next) => {
   //   let userId = req.params.id;

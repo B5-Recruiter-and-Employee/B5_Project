@@ -1,91 +1,33 @@
 const Candidate = require("../models/candidate");
 const User = require("../models/user");
-const app = require("express")();
+const Job = require("../models/job_offer");
+const userController = require("./userController");
 
 module.exports = {
-	// index: (req, res, next) => {
-	//   Candidate.find({})
-	//     .exec()
-	//     .then((candidates) => {
-	//       res.locals.candidates = candidates;
-	//       next();
-	//     })
-	//     .catch((error) => {
-	//       console.log(`Error fetching candidates: ${error.message}`);
-	//       return [];
-	//     })
-	//     .then(() => {
-	//       console.log("promise complete");
-	//     });
-	// },
 
-	// indexView: (req, res) => {
-	//   res.render("candidates/index");
-	// },
+	renderSingleCandidate: (req, res) => {
+		let candidateId = req.params.candidateId;
+		let user = req.app.locals.user;
+		let jobs;
+		if (user.role === 'recruiter') {
+			Job.find({ _id: { $in: user.jobOffers } }).then(offers => {
+				jobs = offers.map(offer => {
+					if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
+						return offer;
+					}
+				});
+			});
+		}
 
-	// new: (req, res) => {
-	//   res.render("candidates/new");
-	// },
-
-	// create: (req, res, next) => {
-	//   let candidateParams = {
-	//     preferred_position: req.body.preferred_position,
-	//     soft_skills: req.body.soft_skills,
-	//     other_aspects: req.body.other_aspects,
-	//     work_culture_preferences: req.body.work_culture_preferences,
-	//   }
-	//   Candidate.create(candidateParams)
-	//     .then(candidate => {
-	//       req.flash('success', `${candidate.preferred_position} candidate created successfully!`);
-	//       res.locals.redirect = '/candidates';
-	//       res.locals.candidate = candidate;
-	//       next();
-	//     })
-	//     .catch(error => {
-	//       console.log(`Error saving candidate profile: ${error.message}`);
-	//       res.locals.redirect = "/candidates/new";
-	//       req.flash(
-	//         "error",
-	//         `Failed to create user account because: ${error.message}.`
-	//       );
-	//       next();
-	//     });
-	// },
-
-	redirectView: (req, res, next) => {
-		let redirectPath = res.locals.redirect;
-		if (redirectPath) res.redirect(redirectPath);
-		else next();
-	},
-
-	// show: (req, res, next) => {
-	//   let candidateId = req.params.id;
-	//   Candidate.findById(candidateId).then(candidate => {
-	//     res.locals.candidate = candidate;
-	//     next();
-	//   })
-	//     .catch(error => {
-	//       console.log(`Error fetching candidate by ID: ${error.message}`);
-	//       next(error);
-	//     });
-	// },
-
-	// showView: (req, res) => {
-	//   res.render('candidates/show');
-	// },
-
-	showSingleCandidate: (req, res) => {
-		let cardId = req.params.cardId;
-		// let userId = req.app.locals.user._id;
-
-		Candidate.findById(cardId)
+		Candidate.findById(candidateId)
 			.then((candidate) => {
-				User.find({ candidateProfile: candidate._id }).then((card) => {
+				User.findById(candidate.user).then((cardOwner) => {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
-						cardOwner: { name: card.fullName, email: card.email },
+						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
 						// current logged in user
-						user: res.locals.user,
+						user: user,
+						jobs: jobs
 					});
 				});
 			})
@@ -109,39 +51,28 @@ module.exports = {
 			});
 	},
 
-	update: (req, res, next) => {
+	update: async (req, res, next) => {
 		let candidateId = req.params.id;
+		let candidateParams = userController.getCandidateParams(req, res);
 
-		let candidateParams = {
-			preferred_position: req.body.preferred_position,
-			soft_skills: req.body.soft_skills,
-			other_aspects: req.body.other_aspects,
-			//just for testing elasticsearch
-			hard_skills: { name: req.body.work_culture_preferences, importance: 3 },
-		};
+		try {
+			candidateParams.max_score = await userController.getMaxScore("candidate", candidateParams);
 
-		// Candidate.findByIdAndUpdate(candidateId, { $set: candidateParams })
-		Candidate.findOneAndUpdate(
-			{ _id: candidateId },
-			{ $set: candidateParams },
-			{ new: true },
-			(err, job) => {
-				if (err) {
-					req.flash(
-						"error",
-						`There has been an error while updating the candidate data: ${error.message}`
-					);
-					console.log(`Error updating candidate by ID: ${error.message}`);
-					next(error);
-				} else {
-					//let user = res.locals.user;
-					req.flash("success", `The candidate has been successfully updated!`);
-					res.locals.redirect = `/user/${req.app.locals.user._id}`;
-					console.log("candidate updated in MongoDB and Elasticsearch");
-					next();
-				}
-			}
-		);
+			await Candidate.findOneAndUpdate(
+				{ _id: candidateId },
+				{ $set: candidateParams },
+				{ new: true });
+			req.flash("success", `The candidate has been successfully updated!`);
+			res.redirect(`/user/${req.app.locals.user._id}`);
+			next();
+		} catch (error) {
+			req.flash(
+				"error",
+				`There has been an error while updating the candidate data: ${error.message}`
+			);
+			console.log(`Error updating candidate by ID: ${error.message}`);
+			next(error);
+		}
 	},
 
 	//candidate doesn't have the possibility to delete their profile yet
