@@ -3,6 +3,7 @@ const client = new Client({ node: 'http://localhost:9200' });
 const { respondWithMatches } = require('./matchesController');
 const errorController = require('./errorController');
 const Candidate = require('../models/candidate');
+const matchesController = require('./matchesController');
 
 module.exports = {
   renderSearch: (req, res) => {
@@ -25,12 +26,12 @@ module.exports = {
   getJobSearchResult: (req, res, next) => {
 
     if (typeof req.app.locals.user === "undefined") {
-        let redirect = `/search`;
-        errorController.respondNotLoggedin(req, res, redirect);
+      let redirect = `/search`;
+      errorController.respondNotLoggedin(req, res, redirect);
     }
 
     if (req.app.locals.user.role !== 'candidate') {
-        errorController.respondAccessDenied(req, res);
+      errorController.respondAccessDenied(req, res);
     }
 
     if (req.query.job_title) {
@@ -71,7 +72,7 @@ module.exports = {
         } else {
           job_type = [req.query.job_type];
         }
-        
+
         let job_type_query = {
           "bool": {
             "should": [],
@@ -87,14 +88,29 @@ module.exports = {
         res.locals.job_type = req.query.job_type;
       }
 
-      Candidate.findById(res.locals.user.candidateProfile).then(candidate =>{
+      Candidate.findById(res.locals.user.candidateProfile).then(candidate => {
         // send results as "matches" array to ejs
-        respondWithMatches(req, res, next, query, candidate);
+        client.search(query, (err, result) => {
+          if (err) {
+            console.error(`Error when trying to find matches for profile: ${candidate._id}\n`, err);
+            errorController.respondInternalError(req, res);
+          }
+          let hits = result.hits.hits;
+          // add "shortDescription" and "compatibility" and filter bad ones
+          let results = hits.reduce((matches, h) => {
+            h._source.compatibility = matchesController.calculateScore(candidate.max_score, h._score);
+            matches.push(h);
+            return matches;
+          }, []);
+          res.locals.matches = results;
+          res.locals.onSearch = true;
+          next();
+        });
       })
         .catch((error) => {
           errorController.respondInternalError(req, res); //TO DO: print error
         });
-        
+
     } else {
       next();
     }
