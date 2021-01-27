@@ -12,8 +12,7 @@ exports.respondNotFound = (req, res) => {
 exports.respondInternalError = (req, res) => {
     let errorCode = httpStatus.StatusCodes.INTERNAL_SERVER_ERROR;
     res.status(errorCode);
-    res.send(`${errorCode} | Sorry, our application is experiencing a problem!`);
-    res.sendFile(path.join(__dirname + './views/error/internal-error.html', {root: __dirname}));
+    res.sendFile(`./public/internal-error.html`, {root: "./"});
 };
 
 // access denied function here
