@@ -2,6 +2,7 @@ const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 const { respondWithMatches } = require('./matchesController');
 const errorController = require('./errorController');
+const Candidate = require('../models/candidate');
 
 module.exports = {
   renderSearch: (req, res) => {
@@ -86,8 +87,14 @@ module.exports = {
         res.locals.job_type = req.query.job_type;
       }
 
-      // send results as "matches" array to ejs
-      respondWithMatches(req, res, next, query);
+      Candidate.findById(res.locals.user.candidateProfile).then(candidate =>{
+        // send results as "matches" array to ejs
+        respondWithMatches(req, res, next, query, candidate);
+      })
+        .catch((error) => {
+          errorController.respondInternalError(req, res); //TO DO: print error
+        });
+        
     } else {
       next();
     }
