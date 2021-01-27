@@ -462,10 +462,7 @@
         "expected_salary": "220 000/year",
         "current_location": "Berlin",
         "preferred_location": "Boston",
-        "description": [
-            "4 + years proven experience as a software engineer", 
-            "Working knowledge of front end web technologies and programing languages"
-        ],
+        "description": "4 + years proven experience as a software engineer. Working knowledge of front end web technologies and programing languages",
         "hard_skills": [
             "PostgreSQL",
             "MySQL",
