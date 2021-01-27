@@ -23,6 +23,14 @@ module.exports = {
 	 */
 	renderView: (req, res) => {
 		let userId = req.params.id;
+		if (typeof req.app.locals.user === "undefined") {
+			let redirect = `/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+		}
+
+		if (req.app.locals.user._id != userId) {
+			errorController.respondAccessDenied(req, res);
+		}
 		User.findById(userId)
 			.then((user) => {
 				if (user.candidateProfile) {
