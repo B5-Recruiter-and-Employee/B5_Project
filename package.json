@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
+    "html": "^1.0.0",
     "http-status-codes": "^2.1.4",
     "icons": "^1.0.0",
     "mailgen": "^2.0.14",

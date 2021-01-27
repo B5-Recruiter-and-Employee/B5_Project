@@ -2,6 +2,7 @@ const Candidate = require("../models/candidate");
 const User = require("../models/user");
 const Job = require("../models/job_offer");
 const userController = require("./userController");
+const errorController = require("./errorController");
 
 module.exports = {
 
@@ -31,29 +32,48 @@ module.exports = {
 					});
 				});
 			})
-			.catch((error) => {
-				console.log(error.message);
-				return [];
+			.catch((error) => { //new error handling
+				console.error(`Error while trying to find the user with id ${candidateId}`, error);
+				errorController.respondInternalError(req, res);
 			});
 	},
 
 	edit: (req, res, next) => {
 		let candidateId = req.params.id;
-		Candidate.findById(candidateId)
-			.then((candidate) => {
+
+		if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/user/${candidateId}/edit`;
+			errorController.respondNotLoggedin(req, res, redirect);
+		  }
+
+		  if (req.app.locals.user.candidateProfile != candidateId) {
+			errorController.respondAccessDenied(req, res);
+		  }
+
+		Candidate.findById(candidateId).then((candidate) => {
+			console.log("you are in the edit candidate page")
 				res.render("candidates/edit", {
 					candidate: candidate,
 				});
 			})
 			.catch((error) => {
-				console.log(`Error fetching user by ID: ${error.message}`);
-				next(error);
+				console.error(`Error fetching user by ID: ${candidateId}`, error);
+				errorController.respondInternalError(req, res);
 			});
 	},
 
 	update: async (req, res, next) => {
 		let candidateId = req.params.id;
 		let candidateParams = userController.getCandidateParams(req, res);
+
+		if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/user/${candidateId}/edit`;
+			errorController.respondNotLoggedin(req, res, redirect);
+		  }
+
+		if (req.app.locals.user.candidateProfile != candidateId) {
+			errorController.respondAccessDenied(req, res);
+		}
 
 		try {
 			candidateParams.max_score = await userController.getMaxScore("candidate", candidateParams);
@@ -62,7 +82,7 @@ module.exports = {
 				{ _id: candidateId },
 				{ $set: candidateParams },
 				{ new: true });
-			req.flash("success", `The candidate has been successfully updated!`);
+			req.flash("success", `Your preferences have been successfully updated!`);
 			res.redirect(`/user/${req.app.locals.user._id}`);
 			next();
 		} catch (error) {
@@ -70,8 +90,8 @@ module.exports = {
 				"error",
 				`There has been an error while updating the candidate data: ${error.message}`
 			);
-			console.log(`Error updating candidate by ID: ${error.message}`);
-			next(error);
+			console.error(`Error updating user by ID: ${candidateId}`, error);
+			errorController.respondInternalError(req, res);
 		}
 	},
 

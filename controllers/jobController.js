@@ -4,6 +4,7 @@ const User = require("../models/user");
 const userController = require("./userController");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
+const errorController = require("./errorController");
 
 module.exports = {
 
@@ -26,6 +27,17 @@ module.exports = {
 
   renderSingleJobEdit: (req, res) => {
     let jobId = req.params.jobId;
+
+    if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/user/${candidateId}/edit`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+    //if role not recruiter or job isn't in the job offers
+    if (!(req.user.role = "recruiter" && req.user.jobOffers.includes(jobId))) {
+        errorController.respondAccessDenied(req, res);
+      }
+
     Job.findOne({ _id: jobId })
       .exec()
       .then((job) => {
@@ -34,8 +46,8 @@ module.exports = {
         });
       })
       .catch((error) => {
-        console.log(error.message);
-        return [];
+				console.error(`Error while trying to find the job with id ${jobId}`, error);
+				errorController.respondInternalError(req, res);
       });
   },
 
@@ -60,15 +72,25 @@ module.exports = {
         });
       })
       .catch((error) => {
-        console.log(error.message);
-        return [];
+				console.error(`Error while trying to find the job with id ${jobId}`, error);
+				errorController.respondInternalError(req, res);
       });
   },
 
   updateJob: async (req, res) => {
     let jobId = req.params.jobId;
     let jobParams = userController.getJobParams(req, res);
+    let currentUser = req.user;
 
+    if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/user/${candidateId}/edit`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+    if (req.user != currentUser) {
+        errorController.respondAccessDenied(req, res);
+      }
+      
     try {
       // update max_score
       jobParams.max_score = await userController.getMaxScore("recruiter", jobParams);

@@ -1,4 +1,5 @@
 const httpStatus = require("http-status-codes");
+const path = require('path');
 
 //catch requests made with no matching routes
 exports.respondNotFound = (req, res) => {
@@ -12,6 +13,7 @@ exports.respondInternalError = (req, res) => {
     let errorCode = httpStatus.StatusCodes.INTERNAL_SERVER_ERROR;
     res.status(errorCode);
     res.send(`${errorCode} | Sorry, our application is experiencing a problem!`);
+    res.sendFile(path.join(__dirname + './views/error/internal-error.html', {root: __dirname}));
 };
 
 // access denied function here

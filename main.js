@@ -19,6 +19,9 @@ db.once("open", () => {
     console.log("Successfully connected to MongoDB using Mongoose!");
 });
 
+//set static directories to render a static html error page
+app.use(express.static(path.join(__dirname, 'views')));
+
 //set the viewing engine to use ejs and the port
 app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
