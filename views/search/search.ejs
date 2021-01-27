@@ -26,12 +26,12 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
         <%  var types = ["Full-time", "Internship", "Working Student", "Flexible"];
-            var ids = ["full-time", "internship", "working-student", "flexible"];
+            var ids = ["Permanent", "Internship", "Working-Student", "Flexible"];
           for(let i = 0; i < types.length; i++){ 
             if(job_type !== undefined ){ 
-              var checked = (job_type.includes(types[i])) ? "checked" : ""; } %>
+              var checked = (job_type.includes(ids[i])) ? "checked" : ""; } %>
             <div class="form-check">
-              <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=types[i] %>" <%=checked %> >
+              <input class="form-check-input" name="job_type" type="checkbox" id="<%=ids[i] %>" value="<%=ids[i] %>" <%=checked %> >
               <label class="form-check-label" for="<%=ids[i] %>">
                 <%=types[i] %>
               </label>
