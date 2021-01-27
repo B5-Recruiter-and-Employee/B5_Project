@@ -1,3 +1,4 @@
+<% if (typeof onSearch === 'undefined' || onSearch === false) { %>
 <hr class="container">
 <h1 class="personal-info mb-3">Matches</h1>
 <p class="font-weight-light">
@@ -8,6 +9,7 @@
         preferences</a>!
     <% } %>
 </p>
+<% } %>
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-1 g-4">

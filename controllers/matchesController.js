@@ -99,7 +99,7 @@ module.exports = {
   respondWithMatches: (req, res, next, query, searcher) => {
     client.search(query, (err, result) => {
       if (err) { 
-        console.error(`Error when trying to find matches for user: ${searcher}`, err);
+        console.error(`Error when trying to find matches for profile: ${searcher._id}\n`, err);
 				errorController.respondInternalError(req, res);
       }
       let hits = result.hits.hits;
