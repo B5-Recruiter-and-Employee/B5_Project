@@ -3,6 +3,7 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
+//errorcontroller require
 
 module.exports = {
   renderAllMatches: (req, res) => {
@@ -14,11 +15,11 @@ module.exports = {
   },
 
   renderSingleJobMatch: (req, res) => {
-    res.render("matches/index", { jobId: req.params.jobId });
+    res.render("matches/index", { jobId: req.params.jobId }); 
   },
 
   getMatches: (req, res, next) => {
-    let userId = req.params.id;
+    let userId = req.params.id; //TO DO: check if logged in
 
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
@@ -43,12 +44,12 @@ module.exports = {
           module.exports.respondWithMatches(req, res, next, query, candidate);
         })
           .catch((error) => {
-            next(error);
+            errorController.respondInternalError(req, res); //TO DO: print error
           });
       }
     })
       .catch((error) => {
-        next(error);
+        errorController.respondInternalError(req, res); //TO DO: print error
       });
   },
 
@@ -97,7 +98,10 @@ module.exports = {
 
   respondWithMatches: (req, res, next, query, searcher) => {
     client.search(query, (err, result) => {
-      if (err) { console.log(err) }
+      if (err) { 
+        console.error(`Error when trying to find matches for user: ${searcher}`, err);
+				errorController.respondInternalError(req, res);
+      }
       let hits = result.hits.hits;
       // add "shortDescription" and "compatibility" and filter bad ones
       let results = hits.reduce((matches, h) => {
