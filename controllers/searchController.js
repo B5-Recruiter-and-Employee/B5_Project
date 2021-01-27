@@ -1,6 +1,7 @@
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 const { respondWithMatches } = require('./matchesController');
+const errorController = require('./errorController');
 
 module.exports = {
   renderSearch: (req, res) => {
@@ -21,6 +22,15 @@ module.exports = {
   },
 
   getJobSearchResult: (req, res, next) => {
+
+    if (typeof req.app.locals.user === "undefined") {
+        let redirect = `/search`;
+        errorController.respondNotLoggedin(req, res, redirect);
+    }
+
+    if (req.app.locals.user.role !== 'candidate') {
+        errorController.respondAccessDenied(req, res);
+    }
 
     if (req.query.job_title) {
       // define elasticsearch query
