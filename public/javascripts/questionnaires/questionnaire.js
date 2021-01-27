@@ -5,6 +5,13 @@ function showTab(n) {
   // This function will display the specified tab of the form ...
   var x = document.getElementsByClassName("tab");
   x[n].style.display = "block";
+  // delete error message
+  let errorMessage = x[n].getElementsByClassName("error-message");
+  if (typeof errorMessage !== 'undefined') {
+    for (let i = 0; i < errorMessage.length; i++) {
+      errorMessage[i].parentNode.removeChild(errorMessage[i]);
+    }
+  } 
   // ... and fix the Previous/Next buttons:
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
@@ -16,13 +23,21 @@ function showTab(n) {
   } else {
     document.getElementById("nextBtn").innerHTML = "Next »";
   }
+  // autofocus on textfields:
+  let input = x[n].getElementsByTagName("input");
+  for (let i = 0; i < input.length; i++) {
+    if (input[i].type === "text") {
+      input[i].focus();
+      break;
+    }
+  }
   // ... and run a function that displays the correct step indicator:
   fixStepIndicator(n)
 }
-
+var x;
 function nextPrev(n) {
   // This function will figure out which tab to display
-  var x = document.getElementsByClassName("tab");
+  x = document.getElementsByClassName("tab");
   // Exit the function if any field in the current tab is invalid:
   if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
@@ -46,6 +61,7 @@ function validateForm() {
   inputField = tabs[currentTab].getElementsByTagName("input");
   textarea = tabs[currentTab].getElementsByTagName("textarea");
   select = tabs[currentTab].getElementsByTagName("select");
+  
   // A loop that checks every input field in the current tab:
   if (select.length === 0 && textarea.length === 0) {
     for (i = 0; i < inputField.length; i++) {
@@ -95,6 +111,16 @@ function validateForm() {
         }
       }
     }
+    if(currentTab == x.length-1){ //check the last tab of recruiter questionnaire
+      extras = document.getElementsByName("extras");
+      for(i = 0; i< extras.length;i++){
+        //if the checkboxes are checked, then validate the input field
+         if(extras[i].checked){
+            valid = true;
+            break;
+         }
+      }
+    }
   }
 
   // If the valid status is true, mark the step as finished and valid:
@@ -116,14 +142,12 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-
-// const input = document.querySelector('input');
-
-// prevent enter button from submitting form
-// input.onkeypress = function(e) {
-//     if (!e) e = window.event;
-//     var keyCode = e.code || e.key;
-//     if (keyCode == 'Enter') {
-//       e.preventDefault(); //prevent submitting form
-//     }
-// };
+let questionnaire = document.getElementById("questionnaires");
+let inputs = questionnaire.getElementsByTagName("input");
+for (let i = 0; i < inputs.length; i++) {
+  inputs[i].addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      document.getElementById("nextBtn").click();
+    }
+  });
+}
