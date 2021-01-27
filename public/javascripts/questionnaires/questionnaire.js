@@ -5,6 +5,13 @@ function showTab(n) {
   // This function will display the specified tab of the form ...
   var x = document.getElementsByClassName("tab");
   x[n].style.display = "block";
+  // delete error message
+  let errorMessage = x[n].getElementsByClassName("error-message");
+  if (typeof errorMessage !== 'undefined') {
+    for (let i = 0; i < errorMessage.length; i++) {
+      errorMessage[i].parentNode.removeChild(errorMessage[i]);
+    }
+  } 
   // ... and fix the Previous/Next buttons:
   if (n == 0) {
     document.getElementById("prevBtn").style.display = "none";
@@ -15,6 +22,14 @@ function showTab(n) {
     document.getElementById("nextBtn").innerHTML = "Submit";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next »";
+  }
+  // autofocus on textfields:
+  let input = x[n].getElementsByTagName("input");
+  for (let i = 0; i < input.length; i++) {
+    if (input[i].type === "text") {
+      input[i].focus();
+      break;
+    }
   }
   // ... and run a function that displays the correct step indicator:
   fixStepIndicator(n)
@@ -125,4 +140,14 @@ function fixStepIndicator(n) {
   }
   //... and adds the "active" class to the current step:
   x[n].className += " active";
+}
+
+let questionnaire = document.getElementById("questionnaires");
+let inputs = questionnaire.getElementsByTagName("input");
+for (let i = 0; i < inputs.length; i++) {
+  inputs[i].addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      document.getElementById("nextBtn").click();
+    }
+  });
 }
