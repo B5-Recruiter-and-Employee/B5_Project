@@ -5,7 +5,7 @@ const path = require('path');
 exports.respondNotFound = (req, res) => {
     let errorCode = httpStatus.StatusCodes.NOT_FOUND;
     res.status(errorCode);
-    res.send(`${errorCode} | The page doesn't exist! `);
+    res.sendFile(`./public/not-found.html`, {root: "./"});
 };
 
 //catch requests where internal errors occurred
@@ -17,7 +17,7 @@ exports.respondInternalError = (req, res) => {
 
 // access denied function here
 exports.respondAccessDenied = (req, res) => {
-    let errorCode = httpStatus.StatusCodes.UNAUTHORIZED;
+    let errorCode = httpStatus.StatusCodes.FORBIDDEN;
     res.status(errorCode);
     res.render("error/access-denied");
 }
@@ -25,7 +25,7 @@ exports.respondAccessDenied = (req, res) => {
 // redirect to login when user is not logged in.
 // @param redirect: String of the relative path you want to redirect the after login.
 exports.respondNotLoggedin = (req, res, redirect) => {
-    let errorCode = httpStatus.StatusCodes.NETWORK_AUTHENTICATION_REQUIRED;
+    let errorCode = httpStatus.StatusCodes.UNAUTHORIZED;
     res.status(errorCode);
     req.flash("error", "You must be logged in to access the requested page.");
     let path = "/user/login";
