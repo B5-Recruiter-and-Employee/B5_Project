@@ -20,7 +20,7 @@
 								<p class="text-muted font-size-sm">
 									<%= card.current_location %>
 								</p>
-								<% if (!user.candidateProfile || !user.candidateProfile.equals(card._id)) { %> <%-
+								<% if ((!user.candidateProfile || !user.candidateProfile.equals(card._id)) && (jobs.length > 0 && user.role == "recruiter")) { %> <%-
 								include('../partials/connect.ejs', {id: card._id, jobs: jobs }) %> <% } %>
 							</div>
 						</div>

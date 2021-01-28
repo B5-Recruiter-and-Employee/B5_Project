@@ -14,10 +14,23 @@ module.exports = {
    */
   indexJobOffers: (req, res, next) => {
     let currentUser = res.locals.user;
+
+    if (typeof currentUser === 'undefined') {
+			let redirect = `/user/${currentUser._id}/offers`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+    if (req.params.id != currentUser._id) {
+      errorController.respondAccessDenied(req, res);
+    }
+
     Job.find({ _id: { $in: currentUser.jobOffers } }).then(offers => {
       let mappedOffers = offers.filter(offer => { return JSON.stringify(offer.user) === JSON.stringify(currentUser._id) });
       res.locals.jobs = mappedOffers;
       next();
+    }).catch(error => {
+      console.error(`error while indexing job offers`, error);
+      errorController.respondInternalError(req, res);
     });
   },
 
@@ -29,14 +42,14 @@ module.exports = {
     let jobId = req.params.jobId;
 
     if (typeof req.app.locals.user === 'undefined') {
-			let redirect = `/user/${candidateId}/edit`;
+			let redirect = `/jobs/${jobId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
 
     //if role not recruiter or job isn't in the job offers
     if (!(req.user.role = "recruiter" && req.user.jobOffers.includes(jobId))) {
-        errorController.respondAccessDenied(req, res);
-      }
+      errorController.respondAccessDenied(req, res);
+    }
 
     Job.findOne({ _id: jobId })
       .exec()
@@ -47,7 +60,7 @@ module.exports = {
       })
       .catch((error) => {
 				console.error(`Error while trying to find the job with id ${jobId}`, error);
-				errorController.respondInternalError(req, res);
+				errorController.respondNotFound(req, res);
       });
   },
 
@@ -56,6 +69,11 @@ module.exports = {
    */
   renderSingleJob: (req, res, next) => {
     let jobId = req.params.jobId;
+
+    if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/jobs/${jobId}/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
 
     Job.findById(jobId)
       .then((card) => {
@@ -73,22 +91,17 @@ module.exports = {
       })
       .catch((error) => {
 				console.error(`Error while trying to find the job with id ${jobId}`, error);
-				errorController.respondInternalError(req, res);
+				errorController.respondNotFound(req, res);
       });
   },
 
   updateJob: async (req, res) => {
     let jobId = req.params.jobId;
     let jobParams = userController.getJobParams(req, res);
-    let currentUser = req.user;
 
     if (typeof req.app.locals.user === 'undefined') {
-			let redirect = `/user/${candidateId}/edit`;
+			let redirect = `/jobs/${jobId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
-      }
-
-    if (req.user != currentUser) {
-        errorController.respondAccessDenied(req, res);
       }
       
     try {
@@ -99,7 +112,7 @@ module.exports = {
       req.flash('success', `The job offer "${job.job_title}" has been successfully updated!`);
     } catch (error) {
       req.flash('error', `There has been an error while updating the job offer`);
-      console.log(`Error updating job by ID: ${error.message}`);
+      console.error(`Error updating job by ID: ${error.message}`);
     }
 
     // in any case, redirect
@@ -114,6 +127,11 @@ module.exports = {
     let jobId = req.params.jobId;
     let user = req.user;
 
+    if (typeof user === 'undefined') {
+			let redirect = `/user/${user._id}/offers/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
     Job.findOneAndRemove({ _id: jobId })
       .then((job) => {
         // delete job from user's jobs array (both in MongoDB and ES)
@@ -124,11 +142,10 @@ module.exports = {
           req.flash('success', `The job offer has been deleted successfully!`);
           res.redirect(`/user/${user._id}/offers`);
         })
-          .catch(error => {
-            req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
-            console.log(`Error deleting job by ID: ${error.message}`);
-            next(error);
-          })
+      }).catch(error => {
+        req.flash('error', `There has been an error while deleting the job offer: ${error.message}`);
+        console.error(`Error deleting job by ID: ${error.message}`);
+        next();
       })
   },
 };

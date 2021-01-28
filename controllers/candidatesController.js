@@ -9,6 +9,12 @@ module.exports = {
 	renderSingleCandidate: (req, res) => {
 		let candidateId = req.params.candidateId;
 		let user = req.app.locals.user;
+
+		if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/candidate/${candidateId}/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+		}
+
 		let jobs;
 		if (user.role === 'recruiter') {
 			Job.find({ _id: { $in: user.jobOffers } }).then(offers => {
@@ -17,24 +23,37 @@ module.exports = {
 						return offer;
 					}
 				});
+			}).catch(error => {
+				console.error(`Error while trying to get recruiter's jobs`, error);
+				errorController.respondInternalError(req, res);
 			});
 		}
 
 		Candidate.findById(candidateId)
 			.then((candidate) => {
-				User.findById(candidate.user).then((cardOwner) => {
+				if (typeof candidate.user == "undefined") {
 					res.render("candidates/showSingleCandidate", {
 						card: candidate,
-						cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
+						cardOwner: { name: " ", email: " " },
 						// current logged in user
 						user: user,
 						jobs: jobs
 					});
-				});
+				} else {
+					User.findById(candidate.user).then((cardOwner) => {
+						res.render("candidates/showSingleCandidate", {
+							card: candidate,
+							cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
+							// current logged in user
+							user: user,
+							jobs: jobs
+						});
+					});
+				}
 			})
-			.catch((error) => { //new error handling
+			.catch((error) => {
 				console.error(`Error while trying to find the user with id ${candidateId}`, error);
-				errorController.respondInternalError(req, res);
+				errorController.respondNotFound(req, res);
 			});
 	},
 
@@ -42,23 +61,22 @@ module.exports = {
 		let candidateId = req.params.id;
 
 		if (typeof req.app.locals.user === 'undefined') {
-			let redirect = `/user/${candidateId}/edit`;
+			let redirect = `/candidates/${candidateId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
-		  }
+		}
 
-		  if (req.app.locals.user.candidateProfile != candidateId) {
+		if (req.app.locals.user.candidateProfile != candidateId) {
 			errorController.respondAccessDenied(req, res);
-		  }
+		}
 
 		Candidate.findById(candidateId).then((candidate) => {
-			console.log("you are in the edit candidate page")
-				res.render("candidates/edit", {
-					candidate: candidate,
-				});
-			})
+			res.render("candidates/edit", {
+				candidate: candidate,
+			});
+		})
 			.catch((error) => {
 				console.error(`Error fetching user by ID: ${candidateId}`, error);
-				errorController.respondInternalError(req, res);
+				errorController.respondNotFound(req, res);
 			});
 	},
 
@@ -67,9 +85,9 @@ module.exports = {
 		let candidateParams = userController.getCandidateParams(req, res);
 
 		if (typeof req.app.locals.user === 'undefined') {
-			let redirect = `/user/${candidateId}/edit`;
+			let redirect = `/candidates/${candidateId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
-		  }
+		}
 
 		if (req.app.locals.user.candidateProfile != candidateId) {
 			errorController.respondAccessDenied(req, res);
@@ -86,10 +104,6 @@ module.exports = {
 			res.redirect(`/user/${req.app.locals.user._id}`);
 			next();
 		} catch (error) {
-			req.flash(
-				"error",
-				`There has been an error while updating the candidate data: ${error.message}`
-			);
 			console.error(`Error updating user by ID: ${candidateId}`, error);
 			errorController.respondInternalError(req, res);
 		}

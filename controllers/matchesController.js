@@ -3,7 +3,7 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-//errorcontroller require
+const errorController = require("./errorController");
 
 module.exports = {
   renderAllMatches: (req, res) => {
@@ -19,7 +19,16 @@ module.exports = {
   },
 
   getMatches: (req, res, next) => {
-    let userId = req.params.id; //TO DO: check if logged in
+    let userId = req.params.id; 
+
+    if (typeof req.user === 'undefined') {
+			let redirect = `/matches/${userId}/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+      if (req.user._id != userId) {
+        errorController.respondAccessDenied(req, res);
+      }
 
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
@@ -29,6 +38,9 @@ module.exports = {
           let mappedOffers = offers.filter(offer => { return JSON.stringify(offer.user) === JSON.stringify(currentUser._id) });
           res.locals.jobs = mappedOffers;
           next();
+        }).catch(error => {
+          console.error(`Error while indexing jobs for recruiter`, error)
+          errorController.respondInternalError(req, res);
         });
       } else {
         Candidate.findById(user.candidateProfile).then(candidate => {
@@ -44,17 +56,29 @@ module.exports = {
           module.exports.respondWithMatches(req, res, next, query, candidate);
         })
           .catch((error) => {
-            errorController.respondInternalError(req, res); //TO DO: print error
+            console.error(`Error while getting matches for candidate`, error)
+            errorController.respondInternalError(req, res); 
           });
       }
     })
       .catch((error) => {
-        errorController.respondInternalError(req, res); //TO DO: print error
+        console.error(`Error while trying to fetch matches`, error);
+        errorController.respondInternalError(req, res); 
       });
   },
 
   getSingleJobMatch: (req, res, next) => {
     let jobId = req.params.jobId;
+
+    if (typeof req.app.locals.user === 'undefined') {
+			let redirect = `/matches/jobs/${jobId}/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+    //if role not recruiter or job isn't in the job offers
+    if (!(req.user.role = "recruiter" && req.user.jobOffers.includes(jobId))) {
+      errorController.respondAccessDenied(req, res);
+    }
 
     Job.findById(jobId).then(job => {
       // sort the keywords by importance
@@ -67,6 +91,9 @@ module.exports = {
 
       // send results as "matches" array to ejs
       module.exports.respondWithMatches(req, res, next, query, job);
+    }).catch((error) => {
+      console.error(`Error while trying to fetch matches`, error);
+      errorController.respondNotFound(req, res); 
     });
   },
 
