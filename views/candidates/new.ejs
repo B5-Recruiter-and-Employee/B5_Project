@@ -67,7 +67,17 @@
         </section>
       </div>
 
-      <!-- 6. What does your tech stack look like?  -->
+      <!-- 6. What is your desired monthly salary? -->
+      <div class="tab">
+        <section class="questions">
+          <div class="sentence">What is your desired salary?</div>
+          <div>
+            <input type="text" name="salary" placeholder="...type here">
+          </div>
+        </section>
+      </div>
+
+      <!-- 7. What does your tech stack look like?  -->
       <div class="tab">
         <section class="questions">
           <div class="sentence">What does your tech stack look like?</div>
@@ -91,25 +101,49 @@
         </section>
       </div>
 
-      <!-- 7. What are your soft skills? -->
+      <!-- 8. What are your soft skills? -->
       <div class="tab">
         <section class="questions">
           <div class="sentence">What are your soft skills?</div>
-          <div class="tag-container">
-            <select multiple class="inputanswer" id="input_softskill" name="soft_skills" placeholder="...type here"
-              data-role="tagsinput"></select>
-          </div>
-        </section>
-      </div>
 
-      <!-- 8. About me section -->
-      <div class="tab">
-        <section class="questions">
-          <div class="sentence">Write a short description about you. (optional)</div>
-          <p class="sub_sentence">You can show off your previous work experience and let recruiters know something
-            catchy about you!</p>
-          <div>
-            <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
+          <div class="checkboxes">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="empathy" id="empathy" name="softskill_options">
+              <label class="form-check-label" for="empathy">Empathy</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="teamwork" id="teamwork" name="softskill_options">
+              <label class="form-check-label" for="teamwork">Teamwork</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="stress management skills" id="stress" name="softskill_options">
+              <label class="form-check-label" for="stress">Stress management skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="problem solving skills" id="leadership"
+                name="softskill_options">
+              <label class="form-check-label" for="leadership">Problem solving skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="communication and interpersonal skills" id="communication"
+                name="softskill_options">
+              <label class="form-check-label" for="communication">Communication and interpersonal skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="leadership" id="leadership"
+                name="softskill_options">
+              <label class="form-check-label" for="leadership">Leadership</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="learning desire" id="learning"
+                name="softskill_options">
+              <label class="form-check-label" for="learning">Learning desire</label>
+            </div>
+          </div>
+
+          <div class="tag-container">
+            <select multiple class="inputanswer" id="input_softskill" name="soft_skills" placeholder="Add more..."
+              data-role="tagsinput"></select>
           </div>
         </section>
       </div>
@@ -138,12 +172,14 @@
         </section>
       </div>
 
-      <!-- 10. What is your desired monthly salary? -->
+      <!-- 10. About me section -->
       <div class="tab">
         <section class="questions">
-          <div class="sentence">What is your desired salary?</div>
+          <div class="sentence">Write a short description about yourself. (optional)</div>
+          <p class="sub_sentence">You can show off your previous work experience and let recruiters know something
+            catchy about you!</p>
           <div>
-            <input type="text" name="salary" placeholder="...type here">
+            <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
           </div>
         </section>
       </div>

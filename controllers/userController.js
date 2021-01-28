@@ -419,10 +419,21 @@ module.exports = {
 
 		// soft skills
 		let softskills = [];
-		if (Array.isArray(req.body.soft_skills)) {
-			softskills = req.body.soft_skills;
-		} else {
-			softskills = [req.body.soft_skills];
+		if (req.body.softskill_options) {
+			if (Array.isArray(req.body.softskill_options)) {
+				softskills = req.body.softskill_options;
+			} else {
+				softskills = [req.body.softskill_options];
+			}
+		}
+		if (req.body.soft_skills) {
+			if (Array.isArray(req.body.soft_skills)) {
+				req.body.soft_skills.forEach((e) => {
+					softskills.push(e);
+				});
+			} else {
+				softskills.push(req.body.soft_skills);
+			}
 		}
 
 		return {

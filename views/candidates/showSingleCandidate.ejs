@@ -1,160 +1,161 @@
 <div class="container mb-5">
   <div class="main-body">
     <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
-      <hr />
-      <h1 class="personal-info">Personal profile</h1>
-      <% } %>
-		<div class="row gutters-sm">
-			<!-- Left column -->
-			<div class="col-md-4 mb-3">
-				<div class="card">
-					<div class="card-body">
-						<div class="d-flex flex-column align-items-center text-center">
-							<div class="mt-3">
-								<h1 class="h4">
-									<%= cardOwner.name %>
-								</h1>
-								<p class="text-secondary mb-1">
-									<%= card.preferred_position %>
-								</p>
-								<p class="text-muted font-size-sm">
-									<%= card.current_location %>
-								</p>
-								<% if ((!user.candidateProfile || !user.candidateProfile.equals(card._id)) && (jobs.length > 0 && user.role == "recruiter")) { %> <%-
-								include('../partials/connect.ejs', {id: card._id, jobs: jobs }) %> <% } %>
-							</div>
-						</div>
-					</div>
-				</div>
-            <div class="card mt-3">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <div class="mb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="feather feather-globe mr-2 icon-inline">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="2" y1="12" x2="22" y2="12"></line>
+    <hr />
+    <h1 class="personal-info mb-3">Personal profile</h1>
+    <% } %>
+    <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
+    <div class="profile-buttons justify-content-center">
+      <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>" class="btn btn-outline-primary br-light mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+          viewBox="0 0 16 16">
+          <path
+            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+        </svg> Edit job search preferences</a>
+    </div>
+    <% } %>
+    <div class="row gutters-sm">
+      <!-- Left column -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div class="mt-3">
+                <h1 class="h4">
+                  <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
+                  <div style="width: 36px; display: inline-block" class="mr-2"></div>
+                  <% } %>
+                  <%= cardOwner.name %>
+                  <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
+                  <a href="<%=`/user/${user._id}/edit` %>" class="btn btn-sm btn-outline-primary br-light ml-2 rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-pencil" viewBox="0 0 16 16">
                       <path
-                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                      </path>
-                    </svg>Email
-                  </div>
-                  <span class="text-secondary">
-                    <%= cardOwner.email %>
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <% if (user.candidateProfile && user.candidateProfile.equals(card._id)) { %>
-              <div class="profile-buttons justify-content-center">
-                <a href="<%=`/user/${user._id}/edit` %>" class="btn btn-outline-primary br-light fixed-width"> <svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
-                    viewBox="0 0 16 16">
-                    <path
-                      d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                  </svg> Edit account settings</a>
-              </div>
-
-              <div class="profile-buttons justify-content-center">
-                <a href="<%=`/candidates/${user.candidateProfile._id}/edit` %>"
-                  class="btn btn-outline-primary br-light mb-4 fixed-width"> <svg xmlns="http://www.w3.org/2000/svg"
-                    width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                    <path
-                      d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                  </svg> Edit job search preferences</a>
-              </div>
-              <% } %>
-          </div>
-
-          <!-- Right column -->
-          <div class="col-md-8">
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-4 col-lg-3">Preferred position</div>
-                  <div class="col-sm-8 col-lg-9 text-secondary">
-                    <% if (card.preferred_position) { %>
-                      <%= card.preferred_position %>
-                        <% } else { %> - <% } %>
-                  </div>
-                  <hr />
-
-                  <div class="col-sm-4 col-lg-3">Expected salary</div>
-                  <div class="col-sm-8 col-lg-9 text-secondary">
-                    <% if (card.expected_salary) { %>
-                      <%= card.expected_salary %>
-                        <% } else { %> - <% } %>
-                  </div>
-                  <hr />
-
-                  <div class="col-sm-4 col-lg-3">Employment type</div>
-                  <div class="col-sm-8 col-lg-9 text-secondary">
-                    <% if (card.job_type) { %>
-                      <%= card.job_type %>
-                        <% } else { %> -
-                          <% } %>
-                  </div>
-                  <hr />
-
-                  <div class="col-sm-4 col-lg-3">Preferred location</div>
-
-                  <div class="col-sm-8 col-lg-9 text-secondary">
-                    <% if (card.preferred_location.length> 0) { %>
-                      <%= card.preferred_location.join(", ") %>
-								<% } else { %> - <% } %>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class=" card mb-3">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-sm-4 col-lg-3 my-auto">Work culture</div>
-                            <div class="col-sm-8 col-lg-9 card-body">
-                              <% card.work_culture_preferences.forEach( pref=> { %>
-                                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
-                                  <%= pref.name %>
-                                </a>
-                                <% }) %>
-                            </div>
-                            <hr />
-
-                            <div class="col-sm-4 col-lg-3 my-auto">Hard skills</div>
-                            <div class="col-sm-8 col-lg-9 card-body">
-                              <% card.hard_skills.forEach( skill=> { %>
-                                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
-                                  <%= skill.name %>
-                                </a>
-                                <% }) %>
-                            </div>
-                            <hr />
-
-                            <div class="col-sm-4 col-lg-3 my-auto">Soft skills</div>
-                            <div class="col-sm-8 col-lg-9 card-body">
-                              <% card.soft_skills.forEach( skill=> { %>
-                                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
-                                  <%= skill %>
-                                </a>
-                                <% }) %>
-                            </div>
-                          </div>
-                        </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="d-flex align-items-center mb-3 h5">About me</div>
-                      <% if (card.description && card.description !==undefined) { %>
-                        <p>
-                          <%= card.description %>
-                        </p>
-                        <% } else { %> - <% } %>
-                    </div>
-                  </div>
-                </div>
-                <!-- End right column -->
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg></a>
+                  <% } %>
+                </h1>
+                <p class="text-secondary mb-1">
+                  <%= card.preferred_position %>
+                </p>
+                <p class="text-muted font-size-sm">
+                  <%= card.current_location %>
+                </p>
+                <% if ((!user.candidateProfile || !user.candidateProfile.equals(card._id)) && (jobs.length > 0 && user.role == "recruiter")) { %> <%-
+								include('../partials/connect.ejs', {id: card._id, jobs: jobs }) %> <% } %>
               </div>
             </div>
           </div>
+        </div>
+        <div class="card mt-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <div class="mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-globe mr-2 icon-inline">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                  </path>
+                </svg>Email
+              </div>
+              <span class="text-secondary">
+                <%= cardOwner.email %>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right column -->
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4 col-lg-3">Preferred position</div>
+              <div class="col-sm-8 col-lg-9 text-secondary">
+                <% if (card.preferred_position) { %>
+                <%= card.preferred_position %>
+                <% } else { %> - <% } %>
+              </div>
+              <hr />
+
+              <div class="col-sm-4 col-lg-3">Expected salary</div>
+              <div class="col-sm-8 col-lg-9 text-secondary">
+                <% if (card.expected_salary) { %>
+                <%= card.expected_salary %>
+                <% } else { %> - <% } %>
+              </div>
+              <hr />
+
+              <div class="col-sm-4 col-lg-3">Employment type</div>
+              <div class="col-sm-8 col-lg-9 text-secondary">
+                <% if (card.job_type) { %>
+                <%= card.job_type %>
+                <% } else { %> -
+                <% } %>
+              </div>
+              <hr />
+
+              <div class="col-sm-4 col-lg-3">Preferred location</div>
+
+              <div class="col-sm-8 col-lg-9 text-secondary">
+                <% if (card.preferred_location.length> 0) { %>
+                <%= card.preferred_location.join(", ") %>
+                <% } else { %> - <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=" card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4 col-lg-3 my-auto">Work culture</div>
+              <div class="col-sm-8 col-lg-9 card-body">
+                <% card.work_culture_preferences.forEach( pref=> { %>
+                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
+                  <%= pref.name %>
+                </a>
+                <% }) %>
+              </div>
+              <hr />
+
+              <div class="col-sm-4 col-lg-3 my-auto">Hard skills</div>
+              <div class="col-sm-8 col-lg-9 card-body">
+                <% card.hard_skills.forEach( skill=> { %>
+                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
+                  <%= skill.name %>
+                </a>
+                <% }) %>
+              </div>
+              <hr />
+
+              <div class="col-sm-4 col-lg-3 my-auto">Soft skills</div>
+              <div class="col-sm-8 col-lg-9 card-body">
+                <% card.soft_skills.forEach( skill=> { %>
+                <a href="#" class="badge text-wrap badge-pill badge-primary mr-1 my-1">
+                  <%= skill %>
+                </a>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3 h5">About me</div>
+            <% if (card.description && card.description !==undefined) { %>
+            <p>
+              <%= card.description %>
+            </p>
+            <% } else { %> - <% } %>
+          </div>
+        </div>
+      </div>
+      <!-- End right column -->
+    </div>
+  </div>
+</div>

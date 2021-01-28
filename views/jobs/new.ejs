@@ -16,7 +16,7 @@
         <!-- 2. What is the company name? -->
         <div class="tab">
           <section class="questions">
-            <div class="sentence">What is the company name?</div>
+            <div class="sentence">What is the company called?</div>
             <div>
               <input type="text" name="company_name" placeholder="...type here">
             </div>
@@ -110,17 +110,6 @@
           </section>
         </div>
 
-        <!-- 8. What will be the detailed tasks of the employee? -->
-        <div class="tab">
-          <section class="questions">
-            <div class="sentence">What will be the detailed tasks of the employee? (optional)</div>
-            <p class="sub_sentence">You can also add the job description later.</p>
-            <div>
-              <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
-            </div>
-          </section>
-        </div>
-
         <!-- 9. Do you offer any of these options? -->
         <div class="tab">
           <section class="questions">
@@ -129,15 +118,30 @@
             <div class="checkboxes">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="annual bonus" id="annual_bonus" name="extras">
-                <label class="form-check-label" for="annual_bonus">Annual bonus potential</label>
+                <label class="form-check-label" for="annual_bonus">Annual bonus</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="work life balance" id="worklife"
+                  name="extras">
+                <label class="form-check-label" for="worklife">Work life balance</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="social events" id="social_events" name="extras">
                 <label class="form-check-label" for="social_events">Social events</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="pto" id="pto" name="extras">
-                <label class="form-check-label" for="pto">Training programs/Workshops</label>
+                <input class="form-check-input" type="checkbox" value="regular feedback" id="feedback"
+                  name="extras">
+                <label class="form-check-label" for="feedback">Regular feedback</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="training programs / workshops" id="pto" name="extras">
+                <label class="form-check-label" for="pto">Training programs / workshops</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="disability inclusion" id="disability_inclusion"
+                  name="extras">
+                <label class="form-check-label" for="disability_inclusion">Disability inclusion</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="flexible schedule" id="flexible_schedule"
@@ -145,22 +149,26 @@
                 <label class="form-check-label" for="flexible_schedule">Flexible schedule</label>
               </div>
               <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="diversity" id="diversity"
+                  name="extras">
+                <label class="form-check-label" for="diversity">Diversity</label>
+              </div>
+              <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="free food and drinks" id="free_food/drink"
                   name="extras">
-                <label class="form-check-label" for="free_food/drink">Free Food/Drinks</label>
+                <label class="form-check-label" for="free_food/drink">Free snacks and beverages</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="fitness and wellness" id="fitness_wellness"
+                <input class="form-check-input" type="checkbox" value="LGBTQ+ friendly" id="lgbtq"
                   name="extras">
-                <label class="form-check-label" for="fitness_wellness">Onsite Fitness and Wellness Centers</label>
+                <label class="form-check-label" for="lgbtq">LGBTQ+ friendly</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="special discounts" id="special_pricing"
+                <input class="form-check-input" type="checkbox" value="employee discounts" id="employee_discounts"
                   name="extras">
-                <label class="form-check-label" for="special_pricing">Special pricing on company’s products</label>
+                <label class="form-check-label" for="employee_discounts">Employee discounts</label>
               </div>
             </div>
-
             <div>
               <select multiple class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords"
                 placeholder="Add more..." data-role="tagsinput" value=""></select>
@@ -168,6 +176,17 @@
 
           </section>
         </div>
+
+          <!-- 8. What will be the detailed tasks of the employee? -->
+          <div class="tab">
+            <section class="questions">
+              <div class="sentence">What will be the detailed tasks of the employee? (optional)</div>
+              <p class="sub_sentence">You can also add the job description later.</p>
+              <div>
+                <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
+              </div>
+            </section>
+          </div>
 
         <div class="buttons">
           <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-outline-primary">«
