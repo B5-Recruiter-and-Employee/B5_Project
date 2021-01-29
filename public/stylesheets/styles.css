@@ -40,7 +40,7 @@ header .nav-link {
   margin: 0 1rem;
 }
 
-.btn-primary:hover, .btn-outline-primary:hover{
+.btn-primary:hover{
   background-color: #9AB3F5;
   color: #120078 !important;
 }
@@ -50,8 +50,25 @@ header a.nav-link:hover:not(.btn) {
 }
 
 header .nav-link.btn {
-  font-weight: bold;
+  font-weight: 400;
   padding: 0.3rem 1rem 0.5rem !important;
+}
+
+header .nav-link.btn-primary{
+  background-color: #9AB3F5 !important;
+  color: white !important;
+}
+
+header .nav-link.btn-primary:hover{
+  background-color: #7579E7 !important;
+}
+
+header .nav-link.btn-outline-primary{
+  color: #9AB3F5 !important;
+}
+
+header .nav-link.btn-outline-primary:hover{
+  color: white !important;
 }
 
 header .navbar-brand{
@@ -128,6 +145,15 @@ a {
 
 .btn-primary:hover {
   background-color: #7579E7 !important;
+}
+
+.btn-outline-primary {
+  color: #9AB3F5 !important;
+}
+
+.btn-outline-primary:hover{
+  background-color: #9AB3F5 !important;
+  color: white !important;
 }
 
 .btn-success {

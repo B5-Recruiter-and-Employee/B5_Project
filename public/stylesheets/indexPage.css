@@ -1,20 +1,18 @@
-#landing-page section {
-  font-family: 'Crimson Pro', serif;
+#landing-page {
+  font-family: 'Roboto Mono', monospace;
   text-align: center;
 }
 
 #landing-page h1, #landing-page h2, #landing-page h3, #landing-page h4, #landing-page h5, #landing-page h6 {
-  font-family: 'Crimson Pro', serif;
   margin: 20px;
 }
 
 /* Headings */
 
 #landing-page .big-heading {
-  font-family: 'Crimson Pro', serif;
   font-size: 3rem;
   line-height: 1.5;
-
+  margin-top: 3rem;
 }
 
 #landing-page .section-heading {
@@ -90,46 +88,14 @@
   margin-bottom: 1rem;
 }
 
-#landing-page .icon:hover {
-  color: #9AB3F5;
-}
-
-/* Testimonial Section */
-/* 
-#landing-page #testimonials {
-  background-color: #9AB3F5;
-}
-#landing-page #testimonials .container-fluid{
-  padding: 7% 15%;
-}
-#landing-page .testimonial-text {
-  font-size: 2rem;
-  line-height: 1.5;
-  margin: 20px;
-}
-
-#landing-page .testimonial-image {
-  width: 10%;
-  border-radius: 100%;
-  margin: 20px;
-}
-
-
-#landing-page .press-logo {
-  width: 15%;
-  margin: 20px 20px 50px;
-} */
-
 /* Steps */
 
 #landing-page #steps {
   padding: 0px 0px 100px 0px;
 }
 #landing-page #steps .section-heading {
-  font-family: 'Patrick Hand', cursive !important;
   color: #3115A0 !important;
   margin: 16px 0px 30px 0px;
-  background-color: #9AB3F5 !important;
   height: 80px;
   padding-top: 4px;
 }
@@ -139,7 +105,7 @@
 }
 
 #landing-page .step-text {
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1.5;
 }
 
@@ -164,20 +130,31 @@
 }
 
 /*Card, profile page*/
+#landing-page .card{
+  height: 300px;
+}
+
 #landing-page .card-header {
-  background-color:#9AB3F5 !important;
+  background-color:#e2e8f0 !important;
   padding: 5px;
 }
 
 #landing-page .card-header h3{
-  font-family: 'Patrick Hand', cursive !important;
   color :#3115A0;
 }
 #landing-page .card-body{
+  padding: 40px;
   text-align: center !important;
 }
 #landing-page .card-body p{
   text-align: left ;
-  padding-left: 20px;
-  color: #8f8f8f;
+}
+
+#landing-page .big-text{
+  font-size: 1.5rem;
+}
+
+#landing-page .divider{
+  margin: 0 10rem 10rem;
+  border-top: 3px solid #9AB3F5;
 }
