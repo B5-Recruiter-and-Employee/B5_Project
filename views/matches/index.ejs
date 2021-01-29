@@ -27,7 +27,7 @@
                 source.shortDescription, salary: source.salary, location: source.location, company:
                 source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
                 preferred_location: source.preferred_location, softskills: source.soft_skills, id:
-                matches[i]._id}); %>
+                matches[i]._id, work_culture: source.work_culture_keywords}); %>
               <% } %>
             <% } %>
           <% } else { %>
@@ -46,7 +46,8 @@
           <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: source.compatibility,
             description_text: source.shortDescription, salary: source.salary, location: source.location, company:
             source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
-            preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
+            preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id, 
+            work_culture: source.work_culture_keywords}); %>
         <% } %>
       <% } else { %>
         <p class="h3 font-weight-light">No matches found for you yet :(</p>
