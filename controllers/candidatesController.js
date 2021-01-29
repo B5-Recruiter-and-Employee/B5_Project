@@ -6,7 +6,7 @@ const errorController = require("./errorController");
 
 module.exports = {
 
-	renderSingleCandidate: (req, res) => {
+	renderSingleCandidate: async (req, res) => {
 		let candidateId = req.params.candidateId;
 		let user = req.app.locals.user;
 
@@ -15,46 +15,45 @@ module.exports = {
 			errorController.respondNotLoggedin(req, res, redirect);
 		}
 
-		let jobs;
+		let jobs = [];
 		if (user.role === 'recruiter') {
-			Job.find({ _id: { $in: user.jobOffers } }).then(offers => {
+			try {
+				let offers = await Job.find({ _id: { $in: user.jobOffers } });
 				jobs = offers.map(offer => {
 					if (JSON.stringify(offer.user) === JSON.stringify(user._id)) {
 						return offer;
 					}
 				});
-			}).catch(error => {
+			} catch (error) {
 				console.error(`Error while trying to get recruiter's jobs`, error);
 				errorController.respondInternalError(req, res);
-			});
+			}
 		}
 
-		Candidate.findById(candidateId)
-			.then((candidate) => {
-				if (typeof candidate.user == "undefined") {
-					res.render("candidates/showSingleCandidate", {
-						card: candidate,
-						cardOwner: { name: " ", email: " " },
-						// current logged in user
-						user: user,
-						jobs: jobs
-					});
-				} else {
-					User.findById(candidate.user).then((cardOwner) => {
-						res.render("candidates/showSingleCandidate", {
-							card: candidate,
-							cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
-							// current logged in user
-							user: user,
-							jobs: jobs
-						});
-					});
-				}
-			})
-			.catch((error) => {
-				console.error(`Error while trying to find the user with id ${candidateId}`, error);
-				errorController.respondNotFound(req, res);
-			});
+		try {
+			let candidate = await Candidate.findById(candidateId);
+			if (typeof candidate.user == "undefined") {
+				res.render("candidates/showSingleCandidate", {
+					card: candidate,
+					cardOwner: { name: " ", email: " " },
+					// current logged in user
+					user: user,
+					jobs: jobs
+				});
+			} else {
+				let cardOwner = await User.findById(candidate.user);
+				res.render("candidates/showSingleCandidate", {
+					card: candidate,
+					cardOwner: { name: cardOwner.fullName, email: cardOwner.email },
+					// current logged in user
+					user: user,
+					jobs: jobs
+				});
+			};
+		} catch (error) {
+			console.error(`Error while trying to find the user with id ${candidateId}`, error);
+			errorController.respondNotFound(req, res);
+		};
 	},
 
 	edit: (req, res, next) => {
