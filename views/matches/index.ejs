@@ -14,17 +14,54 @@ if (onSearch === false) { %>
 <div class="d-none d-lg-block">
   <div class="card-container">
     <div class="row row-cols-1 row-cols-md-1 g-4">
-      <%if(matches.length> 0) { %>
+      <%let defineCompatibility = (percentage) => {
+        switch (true) {
+        case (percentage >= 90.0):
+          return {label: "Great", level: "3"};
+          break;
+        case (percentage >= 80.0):
+          return {label: "Great", level: "2"};  
+          break;   
+        case (percentage >= 70.0):
+          return {label: "Great", level: "1"};  
+          break; 
+        case (percentage >= 60.0):
+          return {label: "Good", level: "3"};  
+          break;    
+        case (percentage >= 50.0):
+          return {label: "Good", level: "2"};  
+          break; 
+        case (percentage >= 40.0):
+          return {label: "Good", level: "1"};  
+          break; 
+          case (percentage >= 30.0):
+          return {label: "Fair", level: "3"};  
+          break; 
+        case (percentage >= 20.0):
+          return {label: "Fair", level: "2"};  
+          break; 
+        case (percentage >= 10.0):
+          return {label: "Fair", level: "1"};  
+          break;
+        case (percentage >= 0):
+          compatibility = "Bad";
+          break;
+        default:
+          compatibility = "N/A";
+          break;
+      }
+    }
+      if(matches.length> 0) { %>
         <% if (user.role=='recruiter' ) { %>
           <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-            <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
+            <%- include('card.ejs', {title: source.job_title, score: defineCompatibility(source.compatibility), description_text:
               source.shortDescription, salary: source.salary, location: source.location, company: source.company_name,
               preferred_position: source.preferred_position, job_type: source.job_type, preferred_location:
               source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
             <% } %>
           <% } else { %>
             <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-              <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
+              <%- include('card.ejs', {title: source.job_title, score: defineCompatibility(source.compatibility), description_text:
                 source.shortDescription, salary: source.salary, location: source.location, company:
                 source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
                 preferred_location: source.preferred_location, softskills: source.soft_skills, id:
@@ -44,7 +81,7 @@ if (onSearch === false) { %>
       <%if(matches.length> 0) { %>
         <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
           else{activeCard=false} let source=matches[i]._source %>
-          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: source.compatibility,
+          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: defineCompatibility(source.compatibility),
             description_text: source.shortDescription, salary: source.salary, location: source.location, company:
             source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
             preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id, 

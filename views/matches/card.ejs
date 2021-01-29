@@ -17,10 +17,10 @@
       <div class="p-3 row gx-5">
         <% if (typeof onSearch === 'undefined' || onSearch === false) { %>
         <div class="col-sm-2 py-3">
-          <div class="circle-border <%=score %>">
+          <div class="circle-border <%=score.label+""+score.level; %>">
             <div class="circle">
               <div class="circle-text">
-                <%=score %>
+                <%=score.label %>
               </div>
             </div>
           </div>
