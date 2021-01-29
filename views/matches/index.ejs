@@ -1,4 +1,5 @@
-<% if (typeof onSearch === 'undefined' || onSearch === false) { %>
+<% if (typeof onSearch === 'undefined') { onSearch = false; }
+if (onSearch === false) { %>
 <hr class="container">
 <h1 class="personal-info mb-3">Matches</h1>
 <p class="font-weight-light">
@@ -27,7 +28,7 @@
                 source.shortDescription, salary: source.salary, location: source.location, company:
                 source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
                 preferred_location: source.preferred_location, softskills: source.soft_skills, id:
-                matches[i]._id, work_culture: source.work_culture_keywords}); %>
+                matches[i]._id, work_culture: source.work_culture_keywords, onSearch: onSearch}); %>
               <% } %>
             <% } %>
           <% } else { %>
