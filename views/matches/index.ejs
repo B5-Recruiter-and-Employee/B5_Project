@@ -1,5 +1,7 @@
+<% if (typeof onSearch === 'undefined') { onSearch = false; }
+if (onSearch === false) { %>
 <hr class="container">
-<h1 class="personal-info mb-3">Matches</h1>
+<h1 class="personal-info mb-3">Matches for <%= user.name.firstname %></h1>
 <p class="font-weight-light">
   <% if (user.role==='candidate' ) { %>
     If you want to see more offers, you can use our <a href="/search">search!</a>
@@ -8,57 +10,54 @@
         preferences</a>!
     <% } %>
 </p>
-<div class="d-none d-lg-block">
-  <div class="card-container">
-    <div class="row row-cols-1 row-cols-md-1 g-4">
-      <%if(matches.length> 0) { %>
-        <% if (user.role=='recruiter' ) { %>
-          <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-            <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
-              source.shortDescription, salary: source.salary, location: source.location, company: source.company_name,
-              preferred_position: source.preferred_position, job_type: source.job_type, preferred_location:
-              source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
-            <% } %>
-          <% } else { %>
-            <% for (let i=0; i < matches.length; i++) { let source=matches[i]._source %>
-              <%- include('card.ejs', {title: source.job_title, score: source.compatibility, description_text:
-                source.shortDescription, salary: source.salary, location: source.location, company:
-                source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
-                preferred_location: source.preferred_location, softskills: source.soft_skills, id:
-                matches[i]._id}); %>
-              <% } %>
-            <% } %>
-          <% } else { %>
-            <p class="h3 font-weight-light">No matches found for you yet :(</p>
-          <% } %>
-    </div>
-  </div>
-</div>
+<% } %>
 
-<div class="d-block d-lg-none ">
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <%if(matches.length> 0) { %>
-        <% for (let i=0; i < matches.length; i++) { let activeCard=true; if(i==0){activeCard=true}
-          else{activeCard=false} let source=matches[i]._source %>
-          <%- include('carousel.ejs', {active:activeCard ,title: source.job_title , score: source.compatibility,
-            description_text: source.shortDescription, salary: source.salary, location: source.location, company:
-            source.company_name, preferred_position: source.preferred_position, job_type: source.job_type,
-            preferred_location: source.preferred_location, softskills: source.soft_skills,id: matches[i]._id}); %>
-        <% } %>
-      <% } else { %>
-        <p class="h3 font-weight-light">No matches found for you yet :(</p>
+<div class="card-container">
+  <div class="row justify-content-center">
+    <%let defineCompatibility = (percentage) => {
+      switch (true) {
+      case (percentage >= 90.0):
+        return {label: "Great", level: "3"};
+        break;
+      case (percentage >= 80.0):
+        return {label: "Great", level: "2"};  
+        break;   
+      case (percentage >= 70.0):
+        return {label: "Great", level: "1"};  
+        break; 
+      case (percentage >= 60.0):
+        return {label: "Good", level: "3"};  
+        break;    
+      case (percentage >= 50.0):
+        return {label: "Good", level: "2"};  
+        break; 
+      case (percentage >= 40.0):
+        return {label: "Good", level: "1"};  
+        break; 
+        case (percentage >= 30.0):
+        return {label: "Fair", level: "3"};  
+        break; 
+      case (percentage >= 20.0):
+        return {label: "Fair", level: "2"};  
+        break; 
+      case (percentage >= 10.0):
+        return {label: "Fair", level: "1"};  
+        break;
+      case (percentage >= 0):
+        compatibility = "Bad";
+        break;
+      default:
+        compatibility = "N/A";
+        break;
+    }
+  }
+  if(matches.length> 0) { %>
+      <% for (let i=0; i < matches.length; i++) { 
+        let source=matches[i]._source %>
+        <%- include('card.ejs', { source: source, score: defineCompatibility(source.compatibility), id: matches[i]._id, onSearch: onSearch }); %>
       <% } %>
-
-    </div>
-
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    <% } else { %>
+      <p class="h3 font-weight-light">No matches found for you yet :(</p>
+  <% } %>
   </div>
 </div>

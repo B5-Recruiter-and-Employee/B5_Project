@@ -14,7 +14,6 @@
 .bootstrap-tagsinput input {
   background-color: transparent;
   margin: 0;
-  width: auto;
   max-width: inherit;
 }
 .bootstrap-tagsinput.form-control input::-moz-placeholder {
@@ -27,13 +26,11 @@
 .bootstrap-tagsinput.form-control input::-webkit-input-placeholder {
   color: #777;
 }
-.bootstrap-tagsinput input:focus {
-  border: none;
-  box-shadow: none;
-}
+
 .bootstrap-tagsinput .tag {
   margin-right: 2px;
   color: white;
+  white-space: normal;
 }
 .bootstrap-tagsinput .tag [data-role="remove"] {
   margin-left: 8px;

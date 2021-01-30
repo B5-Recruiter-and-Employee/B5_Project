@@ -411,14 +411,14 @@
 
         switch (event.which) {
           // BACKSPACE
-          case 8:
-            if (doGetCaretPosition($input[0]) === 0) {
-              var prev = $inputWrapper.prev();
-              if (prev.length) {
-                self.remove(prev.data('item'));
-              }
-            }
-            break;
+          // case 8:
+          //   if (doGetCaretPosition($input[0]) === 0) {
+          //     var prev = $inputWrapper.prev();
+          //     if (prev.length) {
+          //       self.remove(prev.data('item'));
+          //     }
+          //   }
+          //   break;
 
           // DELETE
           case 46:

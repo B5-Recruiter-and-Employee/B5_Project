@@ -1,14 +1,18 @@
 <div class="row justify-content-center">
-  <div class="col-lg-8 col-12">
-    <form action="/signup/candidate" method="post" id="questionnaires" class="p-lg-4">
+  <div class="col-lg-8 col-xl-6 col-12">
+    <form action="/signup/candidate" method="post" id="questionnaires" class="p-4">
 
       <!-- 1. What is your full name? -->
       <div class="tab">
         <section class="questions">
           <div class="sentence">What is your full name?</div>
-          <div class="d-flex">
-            <input type="text" name="firstname" placeholder="First name" class="mr-2" autofocus>
-            <input type="text" name="lastname" placeholder="Last name" class="ml-2">
+          <div class="row m-0">
+            <div class="col-lg-6 px-0 pr-lg-2">
+              <input type="text" name="firstname" placeholder="First name" autofocus>
+            </div>
+            <div class="col-lg-6 px-0 pl-lg-2">
+              <input type="text" name="lastname" placeholder="Last name">
+            </div>
           </div>
         </section>
       </div>
@@ -29,7 +33,7 @@
           <div class="sentence">In which city or cities do you want to work?</div>
           <div class="tag-container">
             <select multiple class="inputanswer" id="input_preferred_location" type="text" name="preferred_location"
-              placeholder="...type here" data-role="tagsinput" ></select>
+              placeholder="...type here" data-role="tagsinput"></select>
           </div>
           <div class="ml-4 mt-4">
             <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
@@ -63,11 +67,21 @@
         </section>
       </div>
 
-      <!-- 6. What does your tech stack look like?  -->
+      <!-- 6. What is your desired monthly salary? -->
+      <div class="tab">
+        <section class="questions">
+          <div class="sentence">What is your desired salary?</div>
+          <div>
+            <input type="text" name="salary" placeholder="...type here">
+          </div>
+        </section>
+      </div>
+
+      <!-- 7. What does your tech stack look like?  -->
       <div class="tab">
         <section class="questions">
           <div class="sentence">What does your tech stack look like?</div>
-          <p class="sub_sentence">Please sort your technical skills by proficiency.</p>
+          <p class="sub_sentence">Please sort your technical skills by proficiency and separated by comma.</p>
 
           <label for="techstack3" class="sub_sub_sentence">Proficient:</label>
           <div class="tag-container">
@@ -87,24 +101,49 @@
         </section>
       </div>
 
-      <!-- 7. What are your soft skills? -->
+      <!-- 8. What are your soft skills? -->
       <div class="tab">
         <section class="questions">
           <div class="sentence">What are your soft skills?</div>
-          <div class="tag-container">
-            <select multiple class="inputanswer" id="input_softskill" name="soft_skills" placeholder="...type here"
-              data-role="tagsinput"></select>
-          </div>
-        </section>
-      </div>
 
-      <!-- 8. About me section -->
-      <div class="tab">
-        <section class="questions">
-          <div class="sentence">Write a short description about you.</div>
-          <p class="sub_sentence">You can show off your previous work experience and let recruiter know something catchy about you!</p>
-          <div>
-            <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
+          <div class="checkboxes">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="empathy" id="empathy" name="softskill_options">
+              <label class="form-check-label" for="empathy">Empathy</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="teamwork" id="teamwork" name="softskill_options">
+              <label class="form-check-label" for="teamwork">Teamwork</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="stress management skills" id="stress" name="softskill_options">
+              <label class="form-check-label" for="stress">Stress management skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="problem solving skills" id="leadership"
+                name="softskill_options">
+              <label class="form-check-label" for="leadership">Problem solving skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="communication and interpersonal skills" id="communication"
+                name="softskill_options">
+              <label class="form-check-label" for="communication">Communication and interpersonal skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="leadership skills" id="leadership"
+                name="softskill_options">
+              <label class="form-check-label" for="leadership">Leadership skills</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="learning desire" id="learning"
+                name="softskill_options">
+              <label class="form-check-label" for="learning">Learning desire</label>
+            </div>
+          </div>
+
+          <div class="tag-container">
+            <select multiple class="inputanswer" id="input_softskill" name="soft_skills" placeholder="Add more..."
+              data-role="tagsinput"></select>
           </div>
         </section>
       </div>
@@ -113,7 +152,8 @@
       <div class="tab">
         <section class="questions">
           <div class="sentence">What is important to you regarding work culture and benefits?</div>
-          <p class="sub_sentence">Please sort your preferences by importance.</p>
+          <p class="sub_sentence">Please sort your preferences by importance and separated by comma.</p>
+          <p class="sub_sentence">E.g. work life balance / regular feedback / diversity / free snacks / flexible schedule...</p>
 
           <label for="workculture3" class="sub_sub_sentence">Most important</label>
           <div class="tag-container">
@@ -133,35 +173,35 @@
         </section>
       </div>
 
-      <!-- 10. What is your desired monthly salary? -->
+      <!-- 10. About me section -->
       <div class="tab">
         <section class="questions">
-          <div class="sentence">What is your desired salary?</div>
+          <div class="sentence">Write a short description about yourself. (optional)</div>
+          <p class="sub_sentence">You can show off your previous work experience and let recruiters know something
+            catchy about you!</p>
           <div>
-            <input type="text" name="salary" placeholder="...type here">
+            <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
           </div>
         </section>
       </div>
 
-      <div>
-        <div class="float-right">
-          <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-outline-primary">« Previous</button>
-          <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next »</button>
-        </div>
+      <div class="buttons">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-outline-primary">« Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next »</button>
       </div>
 
       <!-- Circles which indicates the steps of the form: -->
-      <div style="text-align:center;margin-top:40px;">
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
+      <div>
+        <a onclick="nextPrev(0-currentTab)" class="step"></a>
+        <a onclick="nextPrev(1-currentTab)" class="step"></a>
+        <a onclick="nextPrev(2-currentTab)" class="step"></a>
+        <a onclick="nextPrev(3-currentTab)" class="step"></a>
+        <a onclick="nextPrev(4-currentTab)" class="step"></a>
+        <a onclick="nextPrev(5-currentTab)" class="step"></a>
+        <a onclick="nextPrev(6-currentTab)" class="step"></a>
+        <a onclick="nextPrev(7-currentTab)" class="step"></a>
+        <a onclick="nextPrev(8-currentTab)" class="step"></a>
+        <a onclick="nextPrev(9-currentTab)" class="step"></a>
       </div>
     </form>
   </div>
