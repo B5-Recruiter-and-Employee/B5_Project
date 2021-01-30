@@ -98,7 +98,7 @@ module.exports = {
           let hits = result.hits.hits;
           // add "shortDescription" and "compatibility" and filter bad ones
           let results = hits.reduce((matches, h) => {
-            h._source.shortDescription = (typeof h._source.description !== 'undefined') ? matchesController.getShortDescription(h._source.description) : "";
+            h._source.shortDescription = (typeof h._source.description !== "undefined") ? matchesController.getShortDescription(h._source.description) : "";
             matches.push(h);
             return matches;
           }, []);

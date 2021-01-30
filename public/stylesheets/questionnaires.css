@@ -113,3 +113,7 @@
 #questionnaires .error-message{
   color: red;
 }
+
+#questionnaires .form-control:focus{
+  outline: -webkit-focus-ring-color auto 1px;
+}

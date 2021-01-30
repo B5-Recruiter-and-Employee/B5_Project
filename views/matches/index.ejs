@@ -1,7 +1,7 @@
 <% if (typeof onSearch === 'undefined') { onSearch = false; }
 if (onSearch === false) { %>
 <hr class="container">
-<h1 class="personal-info mb-3">Matches</h1>
+<h1 class="personal-info mb-3">Matches for <%= user.name.firstname %></h1>
 <p class="font-weight-light">
   <% if (user.role==='candidate' ) { %>
     If you want to see more offers, you can use our <a href="/search">search!</a>

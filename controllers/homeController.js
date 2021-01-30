@@ -7,6 +7,6 @@ exports.getIndex = (req, res) => {
     if (!req.isAuthenticated()) {
         res.render("index");
     } else {
-        res.redirect('/user/' + req.user._id);
+        res.redirect('/matches/' + req.user._id);
     }
 };

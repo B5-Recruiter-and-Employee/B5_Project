@@ -7,9 +7,9 @@ const errorController = require("./errorController");
 
 module.exports = {
   renderAllMatches: (req, res) => {
-    if (typeof res.locals.matches != 'undefined') {
+    if (typeof res.locals.matches != "undefined") {
       res.render("matches/index");
-    } else if (typeof res.locals.jobs != 'undefined') {
+    } else if (typeof res.locals.jobs != "undefined") {
       res.render("jobs/index");
     }
   },
@@ -21,7 +21,7 @@ module.exports = {
   getMatches: (req, res, next) => {
     let userId = req.params.id; 
 
-    if (typeof req.user === 'undefined') {
+    if (typeof req.user === "undefined") {
 			let redirect = `/matches/${userId}/`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -70,7 +70,7 @@ module.exports = {
   getSingleJobMatch: (req, res, next) => {
     let jobId = req.params.jobId;
 
-    if (typeof req.app.locals.user === 'undefined') {
+    if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/matches/jobs/${jobId}/`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -98,7 +98,7 @@ module.exports = {
   },
 
   calculateScore: (max_score, score) => {
-    if (typeof max_score === 'undefined' || max_score === 0) {
+    if (typeof max_score === "undefined" || max_score === 0) {
       max_score = -1;
     }
     let percentage = score / max_score * 100;
@@ -116,7 +116,7 @@ module.exports = {
       let results = hits.reduce((matches, h) => {
         h._source.compatibility = module.exports.calculateScore(searcher.max_score, h._score);
         if (h._source.compatibility >= 10.0) {
-          h._source.shortDescription = (typeof h._source.description !== 'undefined') ? module.exports.getShortDescription(h._source.description) : "";
+          h._source.shortDescription = (typeof h._source.description !== "undefined") ? module.exports.getShortDescription(h._source.description) : "";
           matches.push(h);
         }
         return matches;

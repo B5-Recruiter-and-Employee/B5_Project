@@ -58,12 +58,12 @@ module.exports = {
 		if (req.user) {
 			req.flash("success", "You have been successfully logged in!");
 			if (typeof req.query.redirect === "undefined") {
-				res.redirect("/user/" + req.user._id);
+				res.redirect("/matches/" + req.user._id);
 			} else {
 				try {
 					res.redirect(decodeURI(req.query.redirect));
 				} catch (error) {
-					res.redirect("/user/" + req.user._id);
+					res.redirect("/matches/" + req.user._id);
 				}
 			}
 		} else {

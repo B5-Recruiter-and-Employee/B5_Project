@@ -139,7 +139,7 @@
                 <%= source.shortDescription %>
               <% } %>
             <% } else { %>
-              <h3 class="description-title text-success h6">Requried skills:</h3>
+              <h3 class="description-title text-success h6">Required skills:</h3>
               <% let techstack = source.hard_skills.map(skills => { return skills.name }) %>
               <%= techstack.join(", "); %>
             <% }%>

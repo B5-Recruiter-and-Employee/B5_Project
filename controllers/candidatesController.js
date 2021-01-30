@@ -10,7 +10,7 @@ module.exports = {
 		let candidateId = req.params.candidateId;
 		let user = req.app.locals.user;
 
-		if (typeof req.app.locals.user === 'undefined') {
+		if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/candidate/${candidateId}/`;
 			errorController.respondNotLoggedin(req, res, redirect);
 		}
@@ -59,7 +59,7 @@ module.exports = {
 	edit: (req, res, next) => {
 		let candidateId = req.params.id;
 
-		if (typeof req.app.locals.user === 'undefined') {
+		if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/candidates/${candidateId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
 		}
@@ -83,7 +83,7 @@ module.exports = {
 		let candidateId = req.params.id;
 		let candidateParams = userController.getCandidateParams(req, res);
 
-		if (typeof req.app.locals.user === 'undefined') {
+		if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/candidates/${candidateId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
 		}

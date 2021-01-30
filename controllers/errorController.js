@@ -29,6 +29,6 @@ exports.respondNotLoggedin = (req, res, redirect) => {
     res.status(errorCode);
     req.flash("error", "You must be logged in to access the requested page.");
     let path = "/user/login";
-    if (typeof redirect !== 'undefined') path += "?redirect=" + encodeURI(redirect);
+    if (typeof redirect !== "undefined") path += "?redirect=" + encodeURI(redirect);
     res.redirect(path);
 }

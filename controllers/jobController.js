@@ -15,7 +15,7 @@ module.exports = {
   indexJobOffers: (req, res, next) => {
     let currentUser = res.locals.user;
 
-    if (typeof currentUser === 'undefined') {
+    if (typeof currentUser === "undefined") {
 			let redirect = `/user/${currentUser._id}/offers`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -41,7 +41,7 @@ module.exports = {
   renderSingleJobEdit: (req, res) => {
     let jobId = req.params.jobId;
 
-    if (typeof req.app.locals.user === 'undefined') {
+    if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/jobs/${jobId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -70,7 +70,7 @@ module.exports = {
   renderSingleJob: (req, res, next) => {
     let jobId = req.params.jobId;
 
-    if (typeof req.app.locals.user === 'undefined') {
+    if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/jobs/${jobId}/`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -99,7 +99,7 @@ module.exports = {
     let jobId = req.params.jobId;
     let jobParams = userController.getJobParams(req, res);
 
-    if (typeof req.app.locals.user === 'undefined') {
+    if (typeof req.app.locals.user === "undefined") {
 			let redirect = `/jobs/${jobId}/edit`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
@@ -127,7 +127,7 @@ module.exports = {
     let jobId = req.params.jobId;
     let user = req.user;
 
-    if (typeof user === 'undefined') {
+    if (typeof user === "undefined") {
 			let redirect = `/user/${user._id}/offers/`;
 			errorController.respondNotLoggedin(req, res, redirect);
       }
