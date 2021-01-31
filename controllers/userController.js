@@ -24,7 +24,7 @@ module.exports = {
 	renderView: (req, res) => {
 		let userId = req.params.id;
 		if (typeof req.app.locals.user === "undefined") {
-			let redirect = `/`;
+			let redirect = `/user/${userId}`;
 			errorController.respondNotLoggedin(req, res, redirect);
 		}
 
