@@ -22,13 +22,13 @@ module.exports = {
     let userId = req.params.id; 
 
     if (typeof req.user === "undefined") {
-			let redirect = `/matches/${userId}/`;
-			errorController.respondNotLoggedin(req, res, redirect);
-      }
+      let redirect = `/matches/${userId}/`;
+      errorController.respondNotLoggedin(req, res, redirect);
+    }
 
-      if (req.user._id != userId) {
-        errorController.respondAccessDenied(req, res);
-      }
+    if (req.user._id != userId) {
+      errorController.respondAccessDenied(req, res);
+    }
 
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
@@ -106,21 +106,41 @@ module.exports = {
   },
 
   respondWithMatches: (req, res, next, query, searcher) => {
-    client.search(query, (err, result) => {
+    client.search(query, async (err, result) => {
       if (err) { 
         console.error(`Error when trying to find matches for profile: ${searcher._id}\n`, err);
 				errorController.respondInternalError(req, res);
       }
       let hits = result.hits.hits;
-      // add "shortDescription" and "compatibility" and filter bad ones
-      let results = hits.reduce((matches, h) => {
-        h._source.compatibility = module.exports.calculateScore(searcher.max_score, h._score);
-        if (h._source.compatibility >= 10.0) {
-          h._source.shortDescription = (typeof h._source.description !== "undefined") ? module.exports.getShortDescription(h._source.description) : "";
-          matches.push(h);
+      let results = [];
+      let promise = hits.map(async (hit) => {
+        let mongoDoc;
+        // check if searcher is job or candidate
+        if (typeof searcher.job_title === 'undefined') {
+          try {
+            mongoDoc = await Job.findById(hit._id);
+          } catch (error) {
+            mongoDoc = null;
+          }
+        } else {
+          try {
+            mongoDoc = await Candidate.findById(hit._id);
+          } catch (error) {
+            mongoDoc = null;
+          }
         }
-        return matches;
-      }, []);
+
+        // only show this hit if it's also a document in MongoDB
+        if (mongoDoc !== null) {
+          mongoDoc.compatibility = module.exports.calculateScore(searcher.max_score, hit._score);
+          // add "shortDescription" and "compatibility" and filter bad ones
+          if (mongoDoc.compatibility >= 10.0) {
+            mongoDoc.shortDescription = (typeof mongoDoc.description !== "undefined") ? module.exports.getShortDescription(mongoDoc.description) : "";
+            results.push(mongoDoc);
+          }
+        }
+      });
+      await Promise.all(promise);
       res.locals.matches = results;
       next();
     });

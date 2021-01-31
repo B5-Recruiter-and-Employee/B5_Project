@@ -1,8 +1,8 @@
 const { Client } = require('elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
-const { respondWithMatches } = require('./matchesController');
 const errorController = require('./errorController');
 const Candidate = require('../models/candidate');
+const Job = require('../models/job_offer');
 const matchesController = require('./matchesController');
 
 module.exports = {
@@ -90,18 +90,28 @@ module.exports = {
 
       Candidate.findById(res.locals.user.candidateProfile).then(candidate => {
         // send results as "matches" array to ejs
-        client.search(query, (err, result) => {
+        client.search(query, async (err, result) => {
           if (err) {
             console.error(`Error when trying to find matches for profile: ${candidate._id}\n`, err);
             errorController.respondInternalError(req, res);
           }
           let hits = result.hits.hits;
-          // add "shortDescription" and "compatibility" and filter bad ones
-          let results = hits.reduce((matches, h) => {
-            h._source.shortDescription = (typeof h._source.description !== "undefined") ? matchesController.getShortDescription(h._source.description) : "";
-            matches.push(h);
-            return matches;
-          }, []);
+          let results = [];
+          let promise = hits.map(async (hit) => {
+            let mongoDoc;
+            try {
+              mongoDoc = await Job.findById(hit._id);
+            } catch (error) {
+              mongoDoc = null;
+            }
+
+            // only show this hit if it's also a document in MongoDB
+            if (mongoDoc !== null) {
+              mongoDoc.shortDescription = (typeof mongoDoc.description !== "undefined") ? matchesController.getShortDescription(mongoDoc.description) : "";
+              results.push(mongoDoc);
+            }
+          });
+          await Promise.all(promise);
           res.locals.matches = results;
           res.locals.onSearch = true;
           next();
