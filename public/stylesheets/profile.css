@@ -16,16 +16,7 @@
         justify-content: center;
         flex-wrap: wrap;
     }
-
-    .profile-buttons button{
-        margin-top: 5px;
-    }
 }
-
-.fixed-width {
-    width: 240px;
-}
-
 
 .message-btn {
     margin-top: 40px;
@@ -43,6 +34,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 2rem;
+    font-family: 'Roboto Mono', sans-serif;
 }
 
 .tag {
