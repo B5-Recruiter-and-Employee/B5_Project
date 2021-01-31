@@ -8,7 +8,7 @@ const Mailgen = require("mailgen");
 
 const EMAIL = "rematch.htw@gmail.com";
 const PASSWORD = "rematching";
-const MAIN_URL = "http://localhost:3000/";
+const MAIN_URL = "https://rematch-htw.herokuapp.com";
 
 let transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -76,11 +76,11 @@ module.exports = {
         if (user.role === 'candidate') {
           intro = `${senderName} is interested in your job offer <b>${job_title}</b>!`;
           buttonText = `${senderName}'s Profile`;
-          link = `http://localhost:3000/candidates/${user.candidateProfile}`;
+          link = `${MAIN_URL}/candidates/${user.candidateProfile}`;
         } else if (user.role === 'recruiter') {
           intro = `${senderName} thinks that the job <b>${job_title}</b> might interest you!`;
           buttonText = `${senderName}'s Job Offer`;
-          link = `http://localhost:3000/jobs/${jobId}`;
+          link = `${MAIN_URL}/jobs/${jobId}`;
         }
 
         let email = {
