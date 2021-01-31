@@ -17,7 +17,6 @@
 
 #landing-page .section-heading {
   font-size: 3rem;
-  line-height: 1.5;
 }
 
 /* Containers */
@@ -90,18 +89,20 @@
 
 /* Steps */
 
-#landing-page #steps {
-  padding: 0px 0px 100px 0px;
-}
 #landing-page #steps .section-heading {
   color: #3115A0 !important;
-  margin: 16px 0px 30px 0px;
-  height: 80px;
+  margin: 16px 0 30px 0;
   padding-top: 4px;
 }
 
-#landing-page .steps{
-  padding: 0px 100px;
+#landing-page .steps {
+  padding: 0 100px 100px;
+}
+
+@media (max-width: 576px) {
+  #landing-page .steps {
+    padding: 0 20px 50px;
+  }
 }
 
 #landing-page .step-text {
@@ -131,7 +132,7 @@
 
 /*Card, profile page*/
 #landing-page .card{
-  height: 300px;
+  min-height: 330px;
 }
 
 #landing-page .card-header {
