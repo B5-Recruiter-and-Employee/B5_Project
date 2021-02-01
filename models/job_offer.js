@@ -42,28 +42,14 @@ const mongoose = require("mongoose"),
       ref: "User"
     }
   });
-  var port;
-  var host;
-  var auth;
-  var protocol;
-  const BONSAI_URL = process.env.BONSAI_URL;
-  if(BONSAI_URL == null || BONSAI_URL == ""){
-      port = 9200;
-      host = "localhost";
-      protocol = "http";
-      auth = "";
-  }else{
-      port = process.env.BONSAI_URL.port;
-      host = process.env.BONSAI_URL.host;
-      auth = process.env.BONSAI_URL.auth;
-      protocol = process.env.BONSAI_URL.protocol;
-  }
+  const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
+
   //connect to elasticsearch using mongoosastic plugin
   jobSchema.plugin(mongoosastic, {
-      "host": host,
-      "port":port,
-      "auth": auth,
-      "protocol": protocol,
+      "host": bonsai.host,
+      "port":bonsai.port,
+      "auth": bonsai.auth,
+      "protocol": bonsai.protocol,
   });
 
 //created a model for mapping

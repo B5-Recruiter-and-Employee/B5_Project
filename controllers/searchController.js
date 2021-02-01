@@ -1,10 +1,8 @@
 const { Client } = require('elasticsearch');
-var esUrl = process.env.BONSAI_URL;
-if(esUrl == null || esUrl == ""){
-  esUrl = 'http://localhost:9200';
-}
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
-const client = new Client({ node: esUrl });
+
+const client = new Client({ node: bonsai });
 const { respondWithMatches } = require('./matchesController');
 
 module.exports = {

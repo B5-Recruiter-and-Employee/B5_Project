@@ -5,12 +5,11 @@ const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
 
-var esUrl = process.env.BONSAI_URL;
-if(esUrl == null || esUrl == ""){
-  esUrl = 'http://localhost:9200';
-}
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
-const client = new Client({ node: esUrl });
+
+const client = new Client({ node: bonsai });
+
 const matchesController = require("./matchesController");
 
 module.exports = {
