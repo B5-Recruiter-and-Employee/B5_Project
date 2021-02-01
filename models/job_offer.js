@@ -45,11 +45,16 @@ const mongoose = require("mongoose"),
   const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
   //connect to elasticsearch using mongoosastic plugin
+  const auth = process.env.BONSAI_AUTH || "";
+  const port = process.env.BONSAI_PORT || "9200";
+  const protocol = process.env.BONSAI_PROTOCOL || "";
+  const host = process.env.BONSAI_HOST || "localhost";
+  //connect to elasticsearch using mongoosastic plugin
   jobSchema.plugin(mongoosastic, {
-      "host": bonsai.host,
-      "port":bonsai.port,
-      "auth": bonsai.auth,
-      "protocol": bonsai.protocol,
+      "host": host,
+      "port": port,
+      "auth": auth,
+      "protocol": protocol,
   });
 
 //created a model for mapping
