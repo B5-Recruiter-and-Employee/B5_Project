@@ -39,12 +39,29 @@ const mongoose = require("mongoose"),
       ref: "User"
     }
   });
-
-//connect to elasticsearch using mongoosastic plugin
-candidateSchema.plugin(mongoosastic, {
-  "host": "localhost",
-  "port": 9200
-});
+  var port;
+  var host;
+  var auth;
+  var protocol;
+  const BONSAI_URL = process.env.BONSAI_URL;
+  if(BONSAI_URL == null || BONSAI_URL == ""){
+      port = 9200;
+      host = localhost;
+      protocol = "http";
+      auth = "";
+  }else{
+      port = process.env.BONSAI_URL.port;
+      host = process.env.BONSAI_URL.host;
+      auth = process.env.BONSAI_URL.auth;
+      protocol = process.env.BONSAI_URL.protocol;
+  }
+  //connect to elasticsearch using mongoosastic plugin
+  candidateSchema.plugin(mongoosastic, {
+      "host": host,
+      "port":port,
+      "auth": auth,
+      "protocol": protocol,
+  });
 
 //create a mongoDB model for the mapping
 var Candidate = mongoose.model('Candidate', candidateSchema);

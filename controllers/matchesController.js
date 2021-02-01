@@ -2,7 +2,12 @@ const User = require("../models/user");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
+const esUrl = process.env.BONSAI_URL;
+if(esUrl == null || esUrl == ""){
+  esUrl = 'http://localhost:9200';
+}
+
+const client = new Client({ node: esUrl });
 
 module.exports = {
   renderAllMatches: (req, res) => {
