@@ -3,7 +3,12 @@ const user = require("../models/user");
 const User = require("../models/user");
 const userController = require("./userController");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
+var esUrl = process.env.BONSAI_URL;
+if(esUrl == null || esUrl == ""){
+  esUrl = 'http://localhost:9200';
+}
+
+const client = new Client({ node: esUrl });
 
 module.exports = {
 

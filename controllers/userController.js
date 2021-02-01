@@ -4,7 +4,13 @@ const { roles } = require('../roles');
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
+
+var esUrl = process.env.BONSAI_URL;
+if(esUrl == null || esUrl == ""){
+  esUrl = 'http://localhost:9200';
+}
+
+const client = new Client({ node: esUrl });
 const matchesController = require("./matchesController");
 
 module.exports = {
