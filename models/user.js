@@ -51,7 +51,7 @@ var protocol;
 const BONSAI_URL = process.env.BONSAI_URL;
 if(BONSAI_URL == null || BONSAI_URL == ""){
     port = 9200;
-    host = localhost;
+    host = "localhost";
     protocol = "http";
     auth = "";
 }else{

@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
-const esUrl = process.env.BONSAI_URL;
+var esUrl = process.env.BONSAI_URL;
 if(esUrl == null || esUrl == ""){
   esUrl = 'http://localhost:9200';
 }

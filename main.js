@@ -10,7 +10,7 @@ const expressSession = require("express-session"),
     cookieParser = require("cookie-parser"),
     flash = require("connect-flash");
 const passport = require("passport");
-const mongoUrl = process.env.MONGO_URL;
+var mongoUrl = process.env.MONGO_URL;
 if(mongoUrl == null || mongoUrl == ""){
     mongoUrl = "mongodb://localhost:27017/rem_matching_test";
 }
@@ -26,7 +26,7 @@ db.once("open", () => {
 
 //set the viewing engine to use ejs and the port
 app.set("view engine", "ejs");
-const port = process.env.PORT;
+var port = process.env.PORT;
 if(port == null || port == ""){
     port = 3000;
 }

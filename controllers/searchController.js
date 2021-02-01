@@ -1,5 +1,5 @@
 const { Client } = require('elasticsearch');
-const esUrl = process.env.BONSAI_URL;
+var esUrl = process.env.BONSAI_URL;
 if(esUrl == null || esUrl == ""){
   esUrl = 'http://localhost:9200';
 }
