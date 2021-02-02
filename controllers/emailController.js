@@ -6,9 +6,10 @@ const errorController = require("./errorController");
 const nodemailer = require("nodemailer");
 const Mailgen = require("mailgen");
 
-const EMAIL = "rematch.htw@gmail.com";
-const PASSWORD = "rematching";
-const MAIN_URL = "https://rematch-htw.herokuapp.com";
+//if you run it local change it to your own email account
+const EMAIL = process.env.GMAIL_ADD;
+const PASSWORD = process.env.GMAIL_PWD;
+const MAIN_URL = "http://rematch-htw.herokuapp.com/";
 
 let transporter = nodemailer.createTransport({
   service: "Gmail",

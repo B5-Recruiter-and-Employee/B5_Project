@@ -3,8 +3,9 @@ const user = require("../models/user");
 const User = require("../models/user");
 const userController = require("./userController");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
 const errorController = require("./errorController");
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
+const client = new Client({ host: bonsai });
 
 module.exports = {
 

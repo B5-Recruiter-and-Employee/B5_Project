@@ -42,13 +42,20 @@ const mongoose = require("mongoose"),
       ref: "User"
     }
   });
+  const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
-
-//connect to elasticsearch using mongoosastic plugin
-jobSchema.plugin(mongoosastic, {
-  "host": "localhost",
-  "port": 9200
-});
+  //connect to elasticsearch using mongoosastic plugin
+  const auth = process.env.BONSAI_AUTH || "";
+  const port = process.env.BONSAI_PORT || "9200";
+  const protocol = process.env.BONSAI_PROTOCOL || "";
+  const host = process.env.BONSAI_HOST || "localhost";
+  //connect to elasticsearch using mongoosastic plugin
+  jobSchema.plugin(mongoosastic, {
+      "host": host,
+      "port": port,
+      "auth": auth,
+      "protocol": protocol,
+  });
 
 //created a model for mapping
 var Job = mongoose.model('Job_offer', jobSchema);
