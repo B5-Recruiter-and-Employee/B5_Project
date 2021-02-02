@@ -1,0 +1,74 @@
+version: '2.4'
+
+services:
+  recruiteremployermatch:
+    image: recruiteremployermatch
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - NODE_ENV=local
+      - MONGO_URL=mongodb://mongodb:27017/rem_matching_test
+      - BONSAI_URL=http://elasticsearch:9200
+      - BONSAI_PORT=9200
+      - BONSAI_PROTOCOL=http
+      - BONSAI_HOST=elasticsearch
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    volumes: 
+      - .:/usr/src/app
+    links: 
+      - mongodb
+      - elasticsearch
+    networks: 
+      - appnet
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    volumes:
+      - esdata:/data/elasticsearchData
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    logging:
+      driver: none
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks: 
+      - appnet
+    healthcheck:
+        test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+  mongodb:
+    image: mongo:latest
+    ports: 
+      - "27017:27017"
+    volumes: 
+      - data:/data/db
+    logging:
+      driver: none
+    networks:
+      - appnet
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/rem_matching_test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
+volumes: 
+  data:
+  esdata:
+
+networks:
+  appnet:
