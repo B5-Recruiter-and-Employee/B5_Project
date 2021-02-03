@@ -97,23 +97,50 @@
     background-color: lightgray;
   }
 
-  .circle-border.Excellent {
-    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(70deg, rgb(17, 223, 69) 50%, #f8f9fa 50%);
+  .circle-border.Great3 {
+    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(60deg, rgb(17, 223, 69) 50%, #f8f9fa 50%);
   }
-  .circle-border.Excellent .circle-text {
+
+  .circle-border.Great2 {
+    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(40deg, rgb(17, 223, 69) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Great1 {
+    background: linear-gradient(270deg, rgb(17, 223, 69) 50%, transparent 50%), linear-gradient(20deg, rgb(17, 223, 69) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Great3 .circle-text, .circle-border.Great2 .circle-text, .circle-border.Great1 .circle-text {
       color: rgb(17, 223, 69);
   }
 
-  .circle-border.Great {
-    background: linear-gradient(270deg, rgb(151, 223, 17) 50%, transparent 50%), linear-gradient(20deg, rgb(151, 223, 17) 50%, #f8f9fa 50%);
+  .circle-border.Good3 {
+    background: linear-gradient(270deg, rgb(151, 223, 17) 50%, transparent 50%), linear-gradient(0deg, rgb(151, 223, 17) 50%, #f8f9fa 50%);
   }
-  .circle-border.Great .circle-text {
+
+  .circle-border.Good2 {
+    background: linear-gradient(270deg, rgb(151, 223, 17) 50%, transparent 50%), linear-gradient(340deg, rgb(151, 223, 17) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Good1 {
+    background: linear-gradient(270deg, rgb(151, 223, 17) 50%, transparent 50%), linear-gradient(320deg, rgb(151, 223, 17) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Good3 .circle-text, .circle-border.Good2 .circle-text, .circle-border.Good1 .circle-text {
       color: rgb(151, 223, 17);
   }
 
-  .circle-border.Good {
-    background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(290deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
+  .circle-border.Fair3 {
+    background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(300deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
   }
-  .circle-border.Good .circle-text {
+
+  .circle-border.Fair2 {
+    background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(285deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Fair1 {
+    background: linear-gradient(270deg, rgb(203, 223, 17) 50%, transparent 50%), linear-gradient(270deg, rgb(203, 223, 17) 50%, #f8f9fa 50%);
+  }
+
+  .circle-border.Fair3 .circle-text, .circle-border.Fair2 .circle-text, .circle-border.Fair1 .circle-text {
       color: rgb(203, 223, 17);
   }

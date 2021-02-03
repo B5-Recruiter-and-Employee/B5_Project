@@ -1,195 +1,213 @@
 <div class="row justify-content-center">
-  <div class="col-lg-8 col-12">
-<% if (!loggedIn) { %>
-  <form action="/signup/recruiter" method="post" id="questionnaires" class="p-lg-4">
-    <% } else { %>
-      <form action="<%=`/user/${user._id}/add-job`%>" method="post" id="questionnaires" class="p-lg-4">
-        <% } %>
+  <div class="col-lg-8 col-xl-6 col-12">
+    <% let action=(!loggedIn) ? "/signup/recruiter" : `/user/${user._id}/add-job` %>
+      <form action="<%= action %>" method="post" id="questionnaires" class="p-4">
 
-          <!-- 1. What is the job title? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What is the job title?</div>
-              <div>
-                <input type="text" name="job_title" placeholder="...type here">
-              </div>
-            </section>
-          </div>
+        <!-- 1. What is the job title? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What is the job title?</div>
+            <div>
+              <input type="text" name="job_title" placeholder="...type here">
+            </div>
+          </section>
+        </div>
 
-          <!-- 2. What is the company name? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What is the company name?</div>
-              <div>
-                <input type="text" name="company_name" placeholder="...type here">
-              </div>
-            </section>
-          </div>
+        <!-- 2. What is the company name? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What is the company called?</div>
+            <div>
+              <input type="text" name="company_name" placeholder="...type here">
+            </div>
+          </section>
+        </div>
 
-          <!-- 3. What is the location of the company? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What is the location of the company?</div>
-              <div>
-                <input type="text" name="location" placeholder="...type here">
-              </div>
-              <div class="ml-4">
-                <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
-                <label for="remote" class="form-check-label">This job offers remote work.</label>
-              </div>
-            </section>
-          </div>
+        <!-- 3. What is the location of the company? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What is the location of the company?</div>
+            <div>
+              <input type="text" name="location" placeholder="...type here">
+            </div>
+            <div class="ml-4">
+              <input type="checkbox" name="remote" class="form-check-input" id="remote" value="remote">
+              <label for="remote" class="form-check-label">This job offers remote work.</label>
+            </div>
+          </section>
+        </div>
 
-          <!-- 4. What type of contract are you offering? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What type of contract are you offering?</div>
-              <div>
-                <select name="job_type">
-                  <option value="Permanent">Permanent employment (full-time)</option>
-                  <option value="Internship">Internship (full-time)</option>
-                  <option value="Working-Student">Working student (part-time)</option>
-                  <option value="Flexible">Flexible</option>
-                </select>
-              </div>
-            </section>
-          </div>
+        <!-- 4. What type of contract are you offering? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What type of contract are you offering?</div>
+            <div>
+              <select name="job_type">
+                <option value="Permanent">Permanent employment (full-time)</option>
+                <option value="Internship">Internship (full-time)</option>
+                <option value="Working-Student">Working student (part-time)</option>
+                <option value="Flexible">Flexible</option>
+              </select>
+            </div>
+          </section>
+        </div>
 
-          <!-- 5. What is the company expecting to pay? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What is the company expecting to pay?</div>
-              <div>
-                <input type="text" name="salary" placeholder="...type here">
-              </div>
-            </section>
-          </div>
+        <!-- 5. What is the company expecting to pay? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What is the company expecting to pay?</div>
+            <div>
+              <input type="text" name="salary" placeholder="...type here">
+            </div>
+          </section>
+        </div>
 
-          <!-- 6. What tech-stack do you expect from the employee -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What tech-stack do you expect from the employee?</div>
-              <p class="sub_sentence">Please sort the expected tech stack by proficiency.</p>
+        <!-- 6. What tech-stack do you expect from the employee -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What tech-stack do you expect from the employee?</div>
+            <p class="sub_sentence">Please sort the expected tech stack by proficiency and separated by comma.</p>
 
-              <label for="techstack3" class="sub_sub_sentence">Proficient knowledge:</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="techstack3" type="text" name="techstack3"
-                  placeholder="...type here" data-role="tagsinput"></select>
-              </div>
-              <label class="sub_sub_sentence">Intermediate:</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="techstack2" type="text" name="techstack2"
-                  placeholder="...type here" data-role="tagsinput"></select>
-              </div>
-              <label class="sub_sub_sentence">Beginner (not mandatory but good to know):</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="techstack1" type="text" name="techstack1"
-                  placeholder="...type here" data-role="tagsinput"></select>
-              </div>
-            </section>
-          </div>
+            <label for="techstack3" class="sub_sub_sentence">Proficient knowledge:</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="techstack3" type="text" name="techstack3"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+            <label class="sub_sub_sentence">Intermediate:</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="techstack2" type="text" name="techstack2"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+            <label class="sub_sub_sentence">Beginner (not mandatory but good to know):</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="techstack1" type="text" name="techstack1"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+          </section>
+        </div>
 
-          <!-- 7. Which soft skills are essential for the job? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">Which soft skills are essential for the job?</div>
-              <p class="sub_sentence">Please sort your preferences by importance.</p>
+        <!-- 7. Which soft skills are essential for the job? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">Which soft skills are essential for the job?</div>
+            <p class="sub_sentence">Please sort your preferences by importance and separated by comma.</p>
+            <p class="sub_sentence">E.g. empathy / teamwork / problem solving skills / leadership skills / learning desire...</p>
 
-              <label for="softskill3" class="sub_sub_sentence">Most important:</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="softskill3" type="text" name="softskill3"
-                  placeholder="...type here" data-role="tagsinput"></select>
+            <label for="softskill3" class="sub_sub_sentence">Most important:</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="softskill3" type="text" name="softskill3"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+            <label for="softskill2" class="sub_sub_sentence">Quite important:</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="softskill2" type="text" name="softskill2"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+            <label for="softskill1" class="sub_sub_sentence">Somewhat important:</label>
+            <div class="tag-container">
+              <select multiple class="inputanswer" id="softskill1" type="text" name="softskill1"
+                placeholder="...type here" data-role="tagsinput"></select>
+            </div>
+          </section>
+        </div>
+
+        <!-- 9. Do you offer any of these options? -->
+        <div class="tab">
+          <section class="questions">
+            <div class="sentence">What do you offer in terms of work culture and benefits?</div>
+
+            <div class="checkboxes">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="annual bonus" id="annual_bonus" name="extras">
+                <label class="form-check-label" for="annual_bonus">Annual bonus</label>
               </div>
-              <label for="softskill2" class="sub_sub_sentence">Quite important:</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="softskill2" type="text" name="softskill2"
-                  placeholder="...type here" data-role="tagsinput"></select>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="work life balance" id="worklife"
+                  name="extras">
+                <label class="form-check-label" for="worklife">Work life balance</label>
               </div>
-              <label for="softskill1" class="sub_sub_sentence">Somewhat important:</label>
-              <div class="tag-container">
-                <select multiple class="inputanswer" id="softskill1" type="text" name="softskill1"
-                  placeholder="...type here" data-role="tagsinput"></select>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="social events" id="social_events" name="extras">
+                <label class="form-check-label" for="social_events">Social events</label>
               </div>
-            </section>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="regular feedback" id="feedback"
+                  name="extras">
+                <label class="form-check-label" for="feedback">Regular feedback</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="training programs / workshops" id="pto" name="extras">
+                <label class="form-check-label" for="pto">Training programs / workshops</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="disability inclusion" id="disability_inclusion"
+                  name="extras">
+                <label class="form-check-label" for="disability_inclusion">Disability inclusion</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="flexible schedule" id="flexible_schedule"
+                  name="extras">
+                <label class="form-check-label" for="flexible_schedule">Flexible schedule</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="diversity" id="diversity"
+                  name="extras">
+                <label class="form-check-label" for="diversity">Diversity</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="free snacks and beverages" id="free_food/drink"
+                  name="extras">
+                <label class="form-check-label" for="free_food/drink">Free snacks and beverages</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="LGBTQ+ friendly" id="lgbtq"
+                  name="extras">
+                <label class="form-check-label" for="lgbtq">LGBTQ+ friendly</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="employee discounts" id="employee_discounts"
+                  name="extras">
+                <label class="form-check-label" for="employee_discounts">Employee discounts</label>
+              </div>
+            </div>
+            <div>
+              <select multiple class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords"
+                placeholder="Add more..." data-role="tagsinput" value=""></select>
+            </div>
+
+          </section>
+        </div>
 
           <!-- 8. What will be the detailed tasks of the employee? -->
           <div class="tab">
             <section class="questions">
-              <div class="sentence">What will be the detailed tasks of the employee?</div>
+              <div class="sentence">What will be the detailed tasks of the employee? (optional)</div>
+              <p class="sub_sentence">You can also add the job description later.</p>
               <div>
                 <textarea class="form-control" name="description" placeholder="...type here" rows="6"></textarea>
               </div>
             </section>
           </div>
 
-          <!-- 9. Do you offer any of these options? -->
-          <div class="tab">
-            <section class="questions">
-              <div class="sentence">What benefits or work-related extras do you offer?</div>
+        <div class="buttons">
+          <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-outline-primary">«
+            Previous</button>
+          <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next »</button>
+        </div>
 
-              <div class="checkboxes">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="annual_bonus" id="annual_bonus" name="extras">
-                  <label class="form-check-label" for="annual_bonus">Annual bonus potential</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="social_events" id="social_events"
-                    name="extras">
-                  <label class="form-check-label" for="social_events">Social events</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="pto" id="pto" name="extras">
-                  <label class="form-check-label" for="pto">Training programs/Workshops</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="flexible_schedule" id="flexible_schedule"
-                    name="extras">
-                  <label class="form-check-label" for="flexible_schedule">Flexible schedule</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="free_food/drink" id="free_food/drink"
-                    name="extras">
-                  <label class="form-check-label" for="free_food/drink">Free Food/Drinks</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="fitness_wellness" id="fitness_wellness"
-                    name="extras">
-                  <label class="form-check-label" for="fitness_wellness">Onsite Fitness and Wellness Centers</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="special_pricing" id="special_pricing"
-                    name="extras">
-                  <label class="form-check-label" for="special_pricing">Special pricing on company’s products</label>
-                </div>
-              </div>
-
-              <div>
-                <select multiple class="inputanswer" id="input_workculture" type="text" name="work_culture_keywords"
-                  placeholder="Other..." data-role="tagsinput" value=""></select>
-              </div>
-              
-            </section>
-          </div>
-          <div>
-            <div class="float-right">
-              <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-outline-primary">« Previous</button>
-              <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next »</button>
-            </div>
-          </div>
-    
-          <!-- Circles which indicates the steps of the form: -->
-          <div style="text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-          </div>
+        <!-- Circles which indicates the steps of the form: -->
+        <div style="text-align:center;margin-top:40px;">
+          <a onclick="nextPrev(0-currentTab)" class="step"></a>
+          <a onclick="nextPrev(1-currentTab)" class="step"></a>
+          <a onclick="nextPrev(2-currentTab)" class="step"></a>
+          <a onclick="nextPrev(3-currentTab)" class="step"></a>
+          <a onclick="nextPrev(4-currentTab)" class="step"></a>
+          <a onclick="nextPrev(5-currentTab)" class="step"></a>
+          <a onclick="nextPrev(6-currentTab)" class="step"></a>
+          <a onclick="nextPrev(7-currentTab)" class="step"></a>
+          <a onclick="nextPrev(8-currentTab)" class="step"></a>
+        </div>
       </form>
-    </div>
   </div>
+</div>
+<script src="/javascripts/questionnaires/questionnaire.js"></script>

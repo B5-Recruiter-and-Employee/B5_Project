@@ -15,8 +15,6 @@ header{
   background-color: #FFFFFF;
   position: sticky;
   top: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
   width: 100%;
   left: 0;
   text-align: center;
@@ -34,13 +32,13 @@ a.headerItem:hover {
 }
 
 header .nav-link {
-  color: #120078 !important;
+  color: #3115A0 !important;
   font-size: 1.2rem;
   font-weight: 300;
   margin: 0 1rem;
 }
 
-.btn-primary:hover, .btn-outline-primary:hover{
+.btn-primary:hover{
   background-color: #9AB3F5;
   color: #120078 !important;
 }
@@ -50,8 +48,27 @@ header a.nav-link:hover:not(.btn) {
 }
 
 header .nav-link.btn {
-  font-weight: bold;
-  padding: 0.3rem 1rem 0.5rem !important;
+  font-weight: 400;
+  padding: 0.4rem 1rem !important;
+  font-family: 'Roboto Mono', sans-serif;
+  font-size: 1rem;
+}
+
+header .nav-link.btn-primary{
+  background-color: #9AB3F5 !important;
+  color: white !important;
+}
+
+header .nav-link.btn-primary:hover{
+  background-color: #7579E7 !important;
+}
+
+header .nav-link.btn-outline-primary{
+  color: #7579E7 !important;
+}
+
+header .nav-link.btn-outline-primary:hover{
+  color: white !important;
 }
 
 header .navbar-brand{
@@ -124,10 +141,20 @@ a {
    color: white !important;
    background-color: #9AB3F5 !important;
    border-color: #9AB3F5 !important;
+   font-size: 14px;
 }
 
 .btn-primary:hover {
   background-color: #7579E7 !important;
+}
+
+.btn-outline-primary {
+  color: #9AB3F5 !important;
+}
+
+.btn-outline-primary:hover{
+  background-color: #9AB3F5 !important;
+  color: white !important;
 }
 
 .btn-success {

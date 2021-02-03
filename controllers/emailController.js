@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Job = require("../models/job_offer");
 const Candidate = require("../models/candidate");
+const errorController = require("./errorController");
 
 const nodemailer = require("nodemailer");
 const Mailgen = require("mailgen");
@@ -8,8 +9,6 @@ const Mailgen = require("mailgen");
 //if you run it local change it to your own email account
 const EMAIL = process.env.GMAIL_ADD;
 const PASSWORD = process.env.GMAIL_PWD;
-
-
 const MAIN_URL = "http://rematch-htw.herokuapp.com/";
 
 let transporter = nodemailer.createTransport({
@@ -31,14 +30,21 @@ let MailGenerator = new Mailgen({
 
 module.exports = {
   sendMail: async (req, res) => {
+  
     let user = res.locals.user;
     let cardId = req.params.id;
+
+    if (typeof user === "undefined") {
+        errorController.respondNotLoggedin(req, res);
+    }
+
     let job_title;
     let jobId;
     let recipient;
     let redirect;
 
     let card
+    
     if (user.role === 'candidate') {
       try {
         card = await Job.findById(cardId);
@@ -46,7 +52,7 @@ module.exports = {
         redirect = `/jobs/${cardId}`;
       } catch (error) {
         console.error(`Error while trying to find the job ${cardId}:\n`, error);
-        // RESPOND WITH INTERNAL ERROR
+        errorController.respondInternalError(req, res);
       }
     } else if (user.role === 'recruiter') {
       try {
@@ -57,8 +63,7 @@ module.exports = {
         redirect = `/candidates/${cardId}`;
       } catch (error) {
         console.error(`Error while trying to find the job (${jobId}) or candidate (${cardId}):\n`, error);
-        // RESPOND WITH INTERNAL ERROR
-      }
+        errorController.respondInternalError(req, res);      }
     }
 
     if (card.user) {
@@ -72,11 +77,11 @@ module.exports = {
         if (user.role === 'candidate') {
           intro = `${senderName} is interested in your job offer <b>${job_title}</b>!`;
           buttonText = `${senderName}'s Profile`;
-          link = `http://localhost:3000/candidates/${user.candidateProfile}`;
+          link = `${MAIN_URL}/candidates/${user.candidateProfile}`;
         } else if (user.role === 'recruiter') {
           intro = `${senderName} thinks that the job <b>${job_title}</b> might interest you!`;
           buttonText = `${senderName}'s Job Offer`;
-          link = `http://localhost:3000/jobs/${jobId}`;
+          link = `${MAIN_URL}/jobs/${jobId}`;
         }
 
         let email = {
@@ -119,11 +124,11 @@ module.exports = {
         res.redirect(redirect);
       } catch (error) {
         console.error(`Error while send an email to card owner (${card.user}):\n`, error);
+        errorController.respondInternalError(req, res);
       }
     } else {
-      console.log("ERROR: No user ID exists for this card.");
-      req.flash("error", "Message was not sent due to an error. Please try again later or contact the site administrator.");
-      res.redirect(redirect);
+      console.error("ERROR: No user ID exists for this card.");
+      errorController.respondInternalError(req, res);
     }
   }
 }

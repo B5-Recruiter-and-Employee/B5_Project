@@ -2,27 +2,34 @@ const User = require("../models/user");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
+const errorController = require("./errorController");
 const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
-
-
-  const client = new Client({ host: bonsai });
-
+const client = new Client({ host: bonsai });
 
 module.exports = {
   renderAllMatches: (req, res) => {
-    if (typeof res.locals.matches != 'undefined') {
+    if (typeof res.locals.matches != "undefined") {
       res.render("matches/index");
-    } else if (typeof res.locals.jobs != 'undefined') {
+    } else if (typeof res.locals.jobs != "undefined") {
       res.render("jobs/index");
     }
   },
 
   renderSingleJobMatch: (req, res) => {
-    res.render("matches/index", { jobId: req.params.jobId });
+    res.render("matches/index", { jobId: req.params.jobId }); 
   },
 
   getMatches: (req, res, next) => {
-    let userId = req.params.id;
+    let userId = req.params.id; 
+
+    if (typeof req.user === "undefined") {
+      let redirect = `/matches/${userId}/`;
+      errorController.respondNotLoggedin(req, res, redirect);
+    }
+
+    if (req.user._id != userId) {
+      errorController.respondAccessDenied(req, res);
+    }
 
     User.findById(userId).then(user => {
       if (user.role === "recruiter") {
@@ -32,6 +39,9 @@ module.exports = {
           let mappedOffers = offers.filter(offer => { return JSON.stringify(offer.user) === JSON.stringify(currentUser._id) });
           res.locals.jobs = mappedOffers;
           next();
+        }).catch(error => {
+          console.error(`Error while indexing jobs for recruiter`, error)
+          errorController.respondInternalError(req, res);
         });
       } else {
         Candidate.findById(user.candidateProfile).then(candidate => {
@@ -47,17 +57,29 @@ module.exports = {
           module.exports.respondWithMatches(req, res, next, query, candidate);
         })
           .catch((error) => {
-            next(error);
+            console.error(`Error while getting matches for candidate`, error)
+            errorController.respondInternalError(req, res); 
           });
       }
     })
       .catch((error) => {
-        next(error);
+        console.error(`Error while trying to fetch matches`, error);
+        errorController.respondInternalError(req, res); 
       });
   },
 
   getSingleJobMatch: (req, res, next) => {
     let jobId = req.params.jobId;
+
+    if (typeof req.app.locals.user === "undefined") {
+			let redirect = `/matches/jobs/${jobId}/`;
+			errorController.respondNotLoggedin(req, res, redirect);
+      }
+
+    //if role not recruiter or job isn't in the job offers
+    if (!(req.user.role = "recruiter" && req.user.jobOffers.includes(jobId))) {
+      errorController.respondAccessDenied(req, res);
+    }
 
     Job.findById(jobId).then(job => {
       // sort the keywords by importance
@@ -70,48 +92,56 @@ module.exports = {
 
       // send results as "matches" array to ejs
       module.exports.respondWithMatches(req, res, next, query, job);
+    }).catch((error) => {
+      console.error(`Error while trying to fetch matches`, error);
+      errorController.respondNotFound(req, res); 
     });
   },
 
   calculateScore: (max_score, score) => {
-    if (typeof max_score === 'undefined' || max_score === 0) {
+    if (typeof max_score === "undefined" || max_score === 0) {
       max_score = -1;
     }
     let percentage = score / max_score * 100;
-    let compatibility;
-    switch (true) {
-      case (percentage >= 60.0):
-        compatibility = "Excellent";
-        break;
-      case (percentage < 60.0 && percentage >= 30.0):
-        compatibility = "Great";
-        break;
-      case (percentage < 30.0 && percentage >= 10.0):
-        compatibility = "Good";
-        break;
-      case (percentage < 10.0 && percentage >= 0):
-        compatibility = "Bad";
-        break;
-      default:
-        compatibility = "N/A";
-        break;
-    }
-    return compatibility;
+    return percentage;
   },
 
   respondWithMatches: (req, res, next, query, searcher) => {
-    client.search(query, (err, result) => {
-      if (err) { console.log(err) }
+    client.search(query, async (err, result) => {
+      if (err) { 
+        console.error(`Error when trying to find matches for profile: ${searcher._id}\n`, err);
+				errorController.respondInternalError(req, res);
+      }
       let hits = result.hits.hits;
-      // add "shortDescription" and "compatibility" and filter bad ones
-      let results = hits.reduce((matches, h) => {
-        h._source.compatibility = module.exports.calculateScore(searcher.max_score, h._score);
-        if (h._source.compatibility !== 'Bad') {
-          h._source.shortDescription = (typeof h._source.description !== 'undefined') ? module.exports.getShortDescription(h._source.description) : "";
-          matches.push(h);
+      let results = [];
+      let promise = hits.map(async (hit) => {
+        let mongoDoc;
+        // check if searcher is job or candidate
+        if (typeof searcher.job_title === 'undefined') {
+          try {
+            mongoDoc = await Job.findById(hit._id);
+          } catch (error) {
+            mongoDoc = null;
+          }
+        } else {
+          try {
+            mongoDoc = await Candidate.findById(hit._id);
+          } catch (error) {
+            mongoDoc = null;
+          }
         }
-        return matches;
-      }, []);
+
+        // only show this hit if it's also a document in MongoDB
+        if (mongoDoc !== null) {
+          mongoDoc.compatibility = module.exports.calculateScore(searcher.max_score, hit._score);
+          // add "shortDescription" and "compatibility" and filter bad ones
+          if (mongoDoc.compatibility >= 10.0) {
+            mongoDoc.shortDescription = (typeof mongoDoc.description !== "undefined") ? module.exports.getShortDescription(mongoDoc.description) : "";
+            results.push(mongoDoc);
+          }
+        }
+      });
+      await Promise.all(promise);
       res.locals.matches = results;
       next();
     });

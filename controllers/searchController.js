@@ -3,7 +3,10 @@ const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
   const client = new Client({ host: bonsai });
 
-const { respondWithMatches } = require('./matchesController');
+const errorController = require('./errorController');
+const Candidate = require('../models/candidate');
+const Job = require('../models/job_offer');
+const matchesController = require('./matchesController');
 
 module.exports = {
   renderSearch: (req, res) => {
@@ -24,6 +27,15 @@ module.exports = {
   },
 
   getJobSearchResult: (req, res, next) => {
+
+    if (typeof req.app.locals.user === "undefined") {
+      let redirect = `/search`;
+      errorController.respondNotLoggedin(req, res, redirect);
+    }
+
+    if (req.app.locals.user.role !== 'candidate') {
+      errorController.respondAccessDenied(req, res);
+    }
 
     if (req.query.job_title) {
       // define elasticsearch query
@@ -63,7 +75,7 @@ module.exports = {
         } else {
           job_type = [req.query.job_type];
         }
-        
+
         let job_type_query = {
           "bool": {
             "should": [],
@@ -79,8 +91,40 @@ module.exports = {
         res.locals.job_type = req.query.job_type;
       }
 
-      // send results as "matches" array to ejs
-      respondWithMatches(req, res, next, query);
+      Candidate.findById(res.locals.user.candidateProfile).then(candidate => {
+        // send results as "matches" array to ejs
+        client.search(query, async (err, result) => {
+          if (err) {
+            console.error(`Error when trying to find matches for profile: ${candidate._id}\n`, err);
+            errorController.respondInternalError(req, res);
+          }
+          let hits = result.hits.hits;
+          let results = [];
+          let promise = hits.map(async (hit) => {
+            let mongoDoc;
+            try {
+              mongoDoc = await Job.findById(hit._id);
+            } catch (error) {
+              mongoDoc = null;
+            }
+
+            // only show this hit if it's also a document in MongoDB
+            if (mongoDoc !== null) {
+              mongoDoc.shortDescription = (typeof mongoDoc.description !== "undefined") ? matchesController.getShortDescription(mongoDoc.description) : "";
+              results.push(mongoDoc);
+            }
+          });
+          await Promise.all(promise);
+          res.locals.matches = results;
+          res.locals.onSearch = true;
+          next();
+        });
+      })
+        .catch((error) => {
+          console.error("Error while trying to find search results", error);
+          errorController.respondInternalError(req, res);
+        });
+
     } else {
       next();
     }
