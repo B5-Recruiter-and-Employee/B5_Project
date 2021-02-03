@@ -53,7 +53,7 @@ if (onSearch === false) { %>
   }
   if(matches.length> 0) { %>
       <% for (let i=0; i < matches.length; i++) { 
-        let source=matches[i]._source %>
+        let source=matches[i] %>
         <%- include('card.ejs', { source: source, score: defineCompatibility(source.compatibility), id: matches[i]._id, onSearch: onSearch }); %>
       <% } %>
     <% } else { %>
