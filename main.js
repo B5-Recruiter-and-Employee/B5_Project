@@ -1,5 +1,4 @@
-const port = 3000,
-    express = require("express"),
+const express = require("express"),
     app = express(),
     layouts = require("express-ejs-layouts"),
     path = require("path"),
@@ -8,11 +7,14 @@ const port = 3000,
     cookieParser = require("cookie-parser"),
     flash = require("connect-flash"),
     passport = require("passport");
-
+var mongoUrl = process.env.MONGO_URL;
+if(mongoUrl == null || mongoUrl == ""){
+    mongoUrl = "mongodb://localhost:27017/rem_matching_test";
+}
 //set up mongoose & connection to db "rem_matching_test" locally.
 //if db does not exist, mongoose will create db when first doc is inserted to db.
 mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/rem_matching_test", { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(mongoUrl, {useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -21,7 +23,11 @@ db.once("open", () => {
 
 //set the viewing engine to use ejs and the port
 app.set("view engine", "ejs");
-app.set("port", process.env.PORT || 3000);
+var port = process.env.PORT;
+if(port == null || port == ""){
+    port = 3000;
+}
+app.set("port", port);
 
 app.use(layouts);
 //defines the folder for static files (css f.e.)

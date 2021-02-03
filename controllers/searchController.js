@@ -1,5 +1,8 @@
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
+
+  const client = new Client({ host: bonsai });
+
 const errorController = require('./errorController');
 const Candidate = require('../models/candidate');
 const Job = require('../models/job_offer');
@@ -118,7 +121,8 @@ module.exports = {
         });
       })
         .catch((error) => {
-          errorController.respondInternalError(req, res); //TO DO: print error
+          console.error("Error while trying to find search results", error);
+          errorController.respondInternalError(req, res);
         });
 
     } else {

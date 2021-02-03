@@ -45,10 +45,16 @@ userSchema.plugin(passportLocalMongoose, {
     usernameField: "email"
 });
 
+const auth = process.env.BONSAI_AUTH || "";
+const port = process.env.BONSAI_PORT || "9200";
+const protocol = process.env.BONSAI_PROTOCOL || "";
+const host = process.env.BONSAI_HOST || "localhost";
 //connect to elasticsearch using mongoosastic plugin
 userSchema.plugin(mongoosastic, {
-    "host": "localhost",
-    "port" : 9200
+    "host": host,
+    "port": port,
+    "auth": auth,
+    "protocol": protocol,
 });
 
 //create a mongoDB model for the mapping

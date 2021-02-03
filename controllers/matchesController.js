@@ -2,8 +2,9 @@ const User = require("../models/user");
 const Candidate = require("../models/candidate");
 const Job = require("../models/job_offer");
 const { Client } = require('elasticsearch');
-const client = new Client({ node: 'http://localhost:9200' });
 const errorController = require("./errorController");
+const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
+const client = new Client({ host: bonsai });
 
 module.exports = {
   renderAllMatches: (req, res) => {
