@@ -39,7 +39,6 @@ const mongoose = require("mongoose"),
       ref: "User"
     }
   });
-  const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
   const auth = process.env.BONSAI_AUTH || "";
   const port = process.env.BONSAI_PORT || "9200";
   const protocol = process.env.BONSAI_PROTOCOL || "";

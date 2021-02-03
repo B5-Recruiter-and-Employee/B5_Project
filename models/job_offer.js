@@ -42,7 +42,6 @@ const mongoose = require("mongoose"),
       ref: "User"
     }
   });
-  const bonsai = process.env.BONSAI_URL || "http://localhost:9200";
 
   //connect to elasticsearch using mongoosastic plugin
   const auth = process.env.BONSAI_AUTH || "";

@@ -141,6 +141,7 @@ a {
    color: white !important;
    background-color: #9AB3F5 !important;
    border-color: #9AB3F5 !important;
+   font-size: 14px;
 }
 
 .btn-primary:hover {

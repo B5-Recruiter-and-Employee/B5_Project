@@ -1,20 +1,15 @@
 const express = require("express"),
-    app = express(),
-    layouts = require("express-ejs-layouts"),
-    path = require("path"),
-    User = require("./models/user"),
-    expressSession = require("express-session"),
-    cookieParser = require("cookie-parser"),
-    flash = require("connect-flash"),
-    passport = require("passport");
-var mongoUrl = process.env.MONGO_URL;
-if(mongoUrl == null || mongoUrl == ""){
-    mongoUrl = "mongodb://localhost:27017/rem_matching_test";
-}
-//set up mongoose & connection to db "rem_matching_test" locally.
-//if db does not exist, mongoose will create db when first doc is inserted to db.
-mongoose = require("mongoose");
-mongoose.connect(mongoUrl, {useNewUrlParser: true, useFindAndModify: false });
+  app = express(),
+  layouts = require("express-ejs-layouts"),
+  path = require("path"),
+  User = require("./models/user"),
+  expressSession = require("express-session"),
+  cookieParser = require("cookie-parser"),
+  flash = require("connect-flash"),
+  passport = require("passport"),
+  mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/rem_matching_test";
+  mongoose = require("mongoose");
+  mongoose.connect(mongoUrl, {useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -43,7 +38,7 @@ app.use(express.json());
 app.use(cookieParser("secret_passcode"));
 //flash messages
 app.use(expressSession({
-    secret: "secret_passcode",  //obviously need to change that to something more secure
+    secret: "secret_passcode",
     cookie: {
         maxAge: 4000000
     },
