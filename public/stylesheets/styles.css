@@ -141,7 +141,11 @@ a {
    color: white !important;
    background-color: #9AB3F5 !important;
    border-color: #9AB3F5 !important;
-   font-size: 14px;
+}
+
+.badge-primary {
+  font-size: 80%;
+  padding: 0.25rem 0.6rem 0.35rem;
 }
 
 .btn-primary:hover {
