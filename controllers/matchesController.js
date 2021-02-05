@@ -140,9 +140,10 @@ module.exports = {
             results.push(mongoDoc);
           }
         }
+        
       });
       await Promise.all(promise);
-      res.locals.matches = results;
+      res.locals.matches = results.sort(function(a, b){return b.compatibility - a.compatibility});
       next();
     });
   },

@@ -60,8 +60,16 @@
 }
 
 #questionnaires div.sentence{
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-family: 'Roboto Mono', sans-serif;
+  color: #444;
+  padding-top: 2rem;
 }
+#questionnaires div.sentence::before {
+  content: '> ';
+  color: #9AB3F5;
+}
+
 #questionnaires div.sub_sentence{
   margin-top: 1.5rem;
 }
