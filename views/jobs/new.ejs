@@ -1,8 +1,29 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center">  
   <div class="col-lg-8 col-xl-6 col-12">
     <% let action=(!loggedIn) ? "/signup/recruiter" : `/user/${user._id}/add-job` %>
       <form action="<%= action %>" method="post" id="questionnaires" class="p-4">
-
+             <!-- Disclaimer -->
+             <div id="myModal" class="modal fade">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Disclaimer</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Please don't use real data. Just for test purposes.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
         <!-- 1. What is the job title? -->
         <div class="tab">
           <section class="questions">
@@ -194,7 +215,10 @@
             Previous</button>
           <button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Next »</button>
         </div>
+      </div>
 
+          </div>
+        </div>
         <!-- Circles which indicates the steps of the form: -->
         <div style="text-align:center;margin-top:40px;">
           <a onclick="nextPrev(0-currentTab)" class="step"></a>
