@@ -10,7 +10,7 @@
 /* Headings */
 
 #landing-page .big-heading {
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1.5;
   margin-top: 3rem;
 }
@@ -55,7 +55,7 @@
 }
 
 #landing-page #title .container-fluid {
-  padding: 5% 12% 7%;
+  padding: 5% 10% 7%;
 }
 
 /* Title Image */
@@ -76,6 +76,7 @@
 
 #landing-page .feature-title {
   font-size: 1.5rem;
+  color: #3115A0;
 }
 
 #landing-page .feature-box {
