@@ -1,7 +1,28 @@
 <div class="row justify-content-center">
   <div class="col-lg-8 col-xl-6 col-12">
-    <form action="/signup/candidate" method="post" id="questionnaires" class="p-4">
-
+    <form action="/signup/candidate" method="post" id="questionnaires" class="p-4">   
+  <!-- Disclaimer -->
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Disclaimer</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>This App is still in Development, please use fake data for testing the application. You don't need to enter your real credentials.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
       <!-- 1. What is your full name? -->
       <div class="tab">
         <section class="questions">

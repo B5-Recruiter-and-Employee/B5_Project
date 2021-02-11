@@ -11,7 +11,7 @@ module.exports = {
 		let user = req.app.locals.user;
 
 		if (typeof req.app.locals.user === "undefined") {
-			let redirect = `/candidate/${candidateId}/`;
+			let redirect = `/candidates/${candidateId}/`;
 			errorController.respondNotLoggedin(req, res, redirect);
 		}
 
