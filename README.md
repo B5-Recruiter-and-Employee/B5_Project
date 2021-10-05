@@ -2,7 +2,7 @@
 
 ReMatch is a web application that matches employees and recruiters by use of the Elasticsearch data analytics engine which determines a compatibility score based on their individual profiles. The users are able to view matches that have the highest compatibility to their own criteria, see the detailed information of their matches and express interest if they choose to.
 
-This is a project created for the IMI Showtime, you can visit our project page [here](https://htw-imi-showtime.github.io/ws20/bachelor/b5-ReMatch-project).
+This is a project created for the IMI Showtime, you can visit our project page [here](https://htw-imi-showtime.github.io/ws20/bachelor/b4-rematch-project/).
 
 For detailed information visit our [Wiki](https://github.com/B5-Recruiter-and-Employee/B5_Project/wiki).
 
